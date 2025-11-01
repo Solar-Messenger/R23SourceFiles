@@ -12,7 +12,7 @@
 			Percent="90" />
 		<Armor
 			Damage="CANNON"
-			Percent="5" />
+			Percent="10" />
 		<Armor
 			Damage="ROCKET"
 			Percent="20" />

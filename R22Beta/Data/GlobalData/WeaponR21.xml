@@ -1588,14 +1588,13 @@
 		AcceptableAimDelta="20d"
 		PreAttackType="PER_SHOT"
 		ReAcquireDetailType="PRE_FIRE"
-		ForbiddenFiringObjectStatus="USER_PARALYZED"
 		FireFX="FX_NODMilitantMissileFire"
 		FireVeteranFX="FX_NODMilitantMissileFireHeroic"
 		ClipSize="1"
 		AntiMask="ANTI_GROUND ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY"
 		CanFireWhileMoving="false"
 		ScatterIndependently="true"
-		ForbiddenFiringObjectStatus="CLONED"
+		ForbiddenFiringObjectStatus="USER_PARALYZED CLONED"
 	>
 		<PreAttackDelay
 			MinSeconds=".2s"
