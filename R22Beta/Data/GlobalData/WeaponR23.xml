@@ -1,5 +1,69 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
+
+	<!-- modifier vs other scorps applied -->
+
+	<WeaponTemplate
+		id="NODRaiderTankCannonLaser"
+		Name="NODRaiderTankCannonLaser"
+		AttackRange="275.0"
+		PreAttackType="PER_SHOT"
+		ReAcquireDetailType="POST_FIRE"
+		ClipSize="1"
+		AntiMask="ANTI_GROUND"
+		CanFireWhileMoving="true"
+		FireSound="Multisound:NOD_ScorpionTank_BeamWeaponLoopMS"
+		RequiredFiringObjectStatus="WEAPON_UPGRADED_01"
+		FireFX="FX_NODSpitfireFire"
+		FireVeteranFX="FX_NODSpitfireFireHeroic"
+ 		>
+		<!--
+		FiringLoopSound="NOD_ScorpionTank_BeamWeaponLoopMS"
+		FiringLoopSoundContinuesDuringReload="false"
+-->
+		<PreAttackDelay
+			MinSeconds="0.1s"
+			MaxSeconds="0.1s" />
+		<FiringDuration
+			MinSeconds="2.36s"
+			MaxSeconds="2.36s" />
+		<ClipReloadTime
+			MinSeconds="0.95s"
+			MaxSeconds="1.0s" />
+		<Nuggets>
+			<DamageNugget
+				Damage="520.0"
+				DelayTimeSeconds="0.05s"
+				DamageType="CANNON"
+				DamageFXType="NOD_LASER"
+				DeathType="NORMAL">
+
+				<DamageScalarDetails Scalar= "50%">
+					<Filter
+						Rule="NONE"
+						Include="INFANTRY" />
+				</DamageScalarDetails>
+
+				<DamageScalarDetails Scalar= "90%">
+					<Filter Rule="NONE">
+						<IncludeThing>NODRaiderTank</IncludeThing>
+						<IncludeThing>MarkedOfKaneRaiderTank</IncludeThing>
+						<IncludeThing>BlackHandRaiderTank</IncludeThing>
+					</Filter>
+				</DamageScalarDetails>
+
+			</DamageNugget>
+			<SuppressionNugget
+				Radius="10.0"
+				Suppression="40"
+				DurationSeconds="5s" />
+			<ActivateLaserNugget
+				Lifetime="0.75s"
+				LaserId="1"
+				HitGroundFX="FX_NODSpitfireHit"/>
+		</Nuggets>
+	</WeaponTemplate>
+
 	<!--
 	<WeaponTemplate
 		id="PreventCrystalDeath"

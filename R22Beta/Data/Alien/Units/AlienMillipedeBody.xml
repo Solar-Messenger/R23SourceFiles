@@ -16,7 +16,7 @@
 		RadarPriority="UNIT"
 		ProductionQueueType="VEHICLE"
 		UnitCategory="VEHICLE"
-		WeaponCategory="MISSILE"
+		WeaponCategory="BLAST"
 		VoicePriority="215"
 		EditorName="AlienMillipedeBody"
 		Description="Desc:AlienMillipedeBody"

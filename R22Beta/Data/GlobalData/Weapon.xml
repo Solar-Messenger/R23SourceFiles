@@ -1852,6 +1852,9 @@
 						RejectModelCondition="">
 						<IncludeThing>AlienMillipedeHead</IncludeThing>
 						<IncludeThing>AlienMillipedeBody</IncludeThing>
+						<IncludeThing>Reaper17DevourerTank</IncludeThing>
+						<IncludeThing>Reaper17AnnihilatorTripod</IncludeThing>
+						<IncludeThing>AlienDevourerTank</IncludeThing>
 					</Filter>
 				</DamageScalarDetails>
 			</DamageNugget>

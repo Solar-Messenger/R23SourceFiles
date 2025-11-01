@@ -672,9 +672,9 @@
 				id="ModuleTag_RadarHack"
 				StartsPaused="true"
 				SpecialPowerTemplate="NODSignatureGenerator"
-				NumFalseReturns="5"
-				Radius="75"
-				HackDuration="20s" />
+				NumFalseReturns="10"
+				Radius="150"
+				HackDuration="60s" />
 			<StatusBitsUpgrade
 				id="ModuleTag_UpgradeWeapon"
 				StatusToSet="WEAPON_UPGRADED_01">

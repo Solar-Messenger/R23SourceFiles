@@ -83,6 +83,25 @@
 		<Include source="GlobalData/upgrade.xml" type="all"/>
 		<Include source="CreateHuskEffect.xml" type="all"/> 
 		<Include source="GlobalData/WeaponR21.xml" type="all"/>	
+		<Include source="traveler59\Structures\Traveler59TemporalWormhole.xml" type="all"/>	
+		<Include source="GlobalData\WeaponR20.xml" type="all"/>	
+		<Include source="Alien\Structures\AlienTibHive.xml" type="all"/>	
+		<Include source="CGF\Traveler59ShockTrooperSquad.xml" type="all"/>	
+		<Include source="traveler59\Units\T59ShockTrooper.xml" type="all"/>	
+		<Include source="GlobalData\WeaponR23.xml" type="all"/>	
+		<Include source="Alien\Units\AlienCustomizableVehicle.xml" type="all"/>	
+		<Include source="Alien\Units\AlienMillipedeBody.xml" type="all"/>	
+		<Include source="Alien\Units\AlienMillipedeHead.xml" type="all"/>	
+		<Include source="Reaper17\Units\R17CustomizableVehicle.xml" type="all"/>	
+		<Include source="traveler59\Units\T59CustomizableVehicle.xml" type="all"/>	
+		<Include source="GlobalData\Armor.xml" type="all"/>	
+		<Include source="GlobalData\Weapon.xml" type="all"/>	
+		<Include source="GlobalData\SpecialPowerTemplates.xml" type="all"/>	
+		<Include source="Nod\Units\NODVenom.xml" type="all"/>	
+		<Include source="MarkedOfKane\Units\MoKVenom.xml" type="all"/>	
+		<Include source="Nod\Units\NODMilitantRocket.xml" type="all"/>	
+		<Include source="BlackHand\Units\BlackHandMilitantRocket.xml" type="all"/>	
+		<Include source="MarkedOfKane\Units\MarkedOfKaneMilitantRocket.xml" type="all"/>
 		<!-- r23g 
 	    <Include source="Nod\Units\NODCommando.xml" type="all"/>
 	    <Include source="MarkedOfKane/Units/MoKCommando.xml" type="all"/>	

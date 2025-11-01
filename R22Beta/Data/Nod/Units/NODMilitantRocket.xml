@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xai="uri:ea.com:eala:asset:instance">
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude">
 	<GameObject
-		id="MarkedOfKaneMilitantRocket"
+		id="NODMilitantRocket"
 		inheritFrom="BaseInfantry"
 		SelectPortrait="Portrait_NODMilitantMissile"
 		ButtonImage="Portrait_NODMilitantMissile"
-		Side="MarkedOfKane"
+		Side="NOD"
 		EditorSorting="UNIT"
 		TransportSlotCount="1"
 		BuildCost="200"
@@ -20,15 +20,16 @@
 		WeaponCategory="MISSILE"
 		VoicePriority="92"
 		CrowdResponse="NOD_Infantry"
-		EditorName="MarkedOfKaneMilitantRocket"
-		Description="Desc:MarkedOfKaneMilitantRocket"
-		TypeDescription="Type:MarkedOfKaneMilitantRocket"
-		WorldMapArmoryUpgradesAllowed="Upgrade_MoKTiberiumInfusion">
-		<DisplayName>Name:NODMilitantRocket</DisplayName>
+		EditorName="NODMilitantRocket"
+		Description="Desc:NODMilitantRocket"
+		TypeDescription="Type:NODMilitantRocket"
+		WorldMapArmoryUpgradesAllowed="Upgrade_TiberiumInfusion Upgrade_NODConfessorUpgrade">
+		<DisplayName
+			xai:joinAction="Replace" xmlns:xai="uri:ea.com:eala:asset:instance">Name:NODMilitantRocket</DisplayName>
 		<DisplayUpgrade
-			id="Tag_DisplayUpgrade1">Upgrade_MoKTiberiumInfusion</DisplayUpgrade>
-		<!--<DisplayUpgrade
-			id="Tag_DisplayUpgrade2">Upgrade_NODConfessorUpgrade</DisplayUpgrade> -->
+			id="Tag_DisplayUpgrade1">Upgrade_TiberiumInfusion</DisplayUpgrade>
+		<DisplayUpgrade
+			id="Tag_DisplayUpgrade2">Upgrade_NODConfessorUpgrade</DisplayUpgrade>
 		<ArmorSet
 			Armor="NODRocketMilitantArmor"
 			DamageFX="InfantryDamageFX" />
@@ -63,6 +64,11 @@
 					<Model
 						Name="W3DContainer:FXInfantry_FP" />
 				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="FORMATION_PREVIEW">
+					<!-- no anim -->
+				</AnimationState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="INSIDE_GARRISON">
@@ -75,11 +81,6 @@
 						WeaponSlotType="PRIMARY_WEAPON"
 						BoneName="B_WEAPONA_FX" />
 				</ModelConditionState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="FORMATION_PREVIEW">
-					<!-- no anim -->
-				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="INSIDE_GARRISON">
@@ -474,76 +475,6 @@
 			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
-			<AttributeModifierPoolUpdate 
-				id="DefaultAttributeModifierPoolUpdate"/>
-			<SquishCollide
-				id ="DefaultSquishCollide"/>
-			<CrushDie
-				id="ModuleTAg_CrushDie">
-				<DieMuxData
-					DeathTypes="CRUSHED" />
-			</CrushDie>
-			<FXListBehavior
-				id="SquishedFXPlayer">
-				<DieMuxData
-					DeathTypes="CRUSHED" />
-				<Event
-					Index="onDeath"
-					FX="FX_InfantrySquished" />
-			</FXListBehavior>
-			<FireWeaponWhenDead
-				id="ModuleTag_CatalystDeathWeapon"
-				InitiallyActive="true"
-				DeathWeapon="CatalystInfantryDeathWeapon"
-				ContinueToBezierDestination="false">
-				<DieMuxData DeathTypes="CATALYST" />
-			</FireWeaponWhenDead>
-			<AutoHealBehavior
-				id="Upgrade_HeroicHeal"
-				InitiallyActive="false"
-				HealOnlyIfNotInCombat="false"
-				HealOnlyIfNotUnderAttack="false"
-				StartHealingDelay="1s"
-				HealingAmount="10"
-				HealingDelay=".5s">
-				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
-			</AutoHealBehavior>
-			<AttributeModifierUpgrade
-				id="ModuleTag_AttributeModifierUpgradeMUCSpeed"
-				AttributeModifier="Modifier_MultifunctionUpgradeCenterSpeed">
-				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterSpeed</TriggeredBy>
-			</AttributeModifierUpgrade>
-			<AttributeModifierUpgrade
-				id="ModuleTag_AttributeModifierUpgradeMUCDamage"
-				AttributeModifier="Modifier_MultifunctionUpgradeCenterDamage">
-				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterDamage</TriggeredBy>
-			</AttributeModifierUpgrade>
-			<AttributeModifierUpgrade
-				id="ModuleTag_AttributeModifierUpgradeMUCArmor"
-				AttributeModifier="Modifier_MultifunctionUpgradeCenterArmor">
-				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterArmor</TriggeredBy>
-			</AttributeModifierUpgrade>
-			<LevelUpUpgrade
-				id="ModuleTag_LevelUpUpgrade_Veteran"
-				LevelCap="4"
-				LevelsToGain="1">
-				<TriggeredBy>Upgrade_ProductionVeterancy_VETERAN</TriggeredBy>
-			</LevelUpUpgrade>
-			<LevelUpUpgrade
-				id="ModuleTag_LevelUpUpgrade_Elite"
-				LevelCap="4"
-				LevelsToGain="2">
-				<TriggeredBy>Upgrade_ProductionVeterancy_ELITE</TriggeredBy>
-			</LevelUpUpgrade>
-			<LevelUpUpgrade
-				id="ModuleTag_LevelUpUpgrade_Heroic"
-				LevelCap="4"
-				LevelsToGain="3">
-				<TriggeredBy>Upgrade_ProductionVeterancy_HEROIC</TriggeredBy>
-			</LevelUpUpgrade>
-      <TemporarilyDefectUpdate
-        id="ModuleTag_TemporarilyDefect"
-        DefectionFrameCount="300" />
 			<WeaponSetUpdate>
 				<WeaponSlotHardpoint
 					ID="1"
@@ -585,24 +516,22 @@
 				id="Upgrade_TiberiumInfusion"
 				AttributeModifier="AttributeModifier_TiberiumInfusion">
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
-				<TriggeredBy>Upgrade_MoKTiberiumInfusion</TriggeredBy>
 			</AttributeModifierUpgrade>
 			<StatusBitsUpgrade
 				id="ModuleTag_TiberiumInfusion2"
 				StatusToSet="HAS_TIBERIUM_UPGRADE">
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
-				<TriggeredBy>Upgrade_MoKTiberiumInfusion</TriggeredBy>
 			</StatusBitsUpgrade>
 			<FindCoverBehavior
 				id="ModuleTag_FCB"
 				CoverScanRange="10.0"
 				AttributeModifierInCover="Modifier_Cover" />
 			<!--Tiberium Infusion Armor Upgrade-->
-			<ArmorUpgrade
-					id="Upgrade_TiberiumInfusionArmor"
-					Permanent="true"
-					ArmorSetFlag="PLAYER_UPGRADE">
-				<TriggeredBy>Upgrade_MoKTiberiumInfusion</TriggeredBy>
+			<ArmorUpgrade xmlns="uri:ea.com:eala:asset"
+							id="Upgrade_TiberiumInfusionArmor"
+							Permanent="true"
+							ArmorSetFlag="PLAYER_UPGRADE"
+				>
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
 			</ArmorUpgrade>
 			<LargeGroupAudioUpdate
@@ -614,24 +543,19 @@
 				StatusToSet="WEAPON_UPGRADED_01">
 				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
 			</StatusBitsUpgrade>
-			<!--
-			<AudioLoopUpgrade id="NOD_BlackDisciples_Upgrade" SoundToPlay="NOD_BlackDisciples_Upgrade">
+			<AudioLoopUpgrade id="NOD_BlackDisciples_Upgrade" SoundToPlay="AudioEvent:NOD_BlackDisciples_Upgrade">
 				<TriggeredBy>Upgrade_BlackHandBlackDisciplesUpgrade</TriggeredBy>
 			</AudioLoopUpgrade>
-			-->
 			<AudioLoopUpgrade
 				id="TiberiumInfusionUpgradeSound"
 				SoundToPlay="AudioEvent:NOD_TiberiumUpgrade">
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
-				<TriggeredBy>Upgrade_MoKTiberiumInfusion</TriggeredBy>
 			</AudioLoopUpgrade>
-			<!--
 			<AudioLoopUpgrade
 				id="NODConfessorUpgradeSound"
 				SoundToPlay="AudioEvent:NOD_Confessor_Upgrade">
 				<TriggeredBy>Upgrade_NODConfessorUpgrade</TriggeredBy>
 			</AudioLoopUpgrade>
-			-->
 		</Behaviors>
 		<AI>
 			<AIUpdate
@@ -695,15 +619,6 @@
 				Sound="Multisound:NOD_RocketMilitant_VoiceSelectBattleMS"
 				AudioType="voiceSelectBattle" />
 		</AudioArrayVoice>
-		<!--
-	NOD_RocketMilitant_VoiceSuppress
--->
-		<!--
-		<AudioArraySound>
-			<AudioEntry Sound="AudioEvent:TEMP_PredatorMoveStart" AudioType="soundMoveStart" />
-			<AudioEntry Sound="AudioEvent:PredatorAmbientLoop" AudioType="soundAmbient" />
-		</AudioArraySound>
--->
 		<EvaEvents
 			EvaEventDieOwner="UnitLost"
 			EvaEventProductionStarted="UnitConstructionStarted" 
@@ -720,6 +635,15 @@
 			EvaEventBuildCancelled="BuildCancelled" 
 			EvaEventPromotedOwner="UnitPromoted" />
 			<!-- EvaEventSecondDamageFarFromFirstOwner="UnitUnderAttackAgain"  -->
+		<!--
+	NOD_RocketMilitant_VoiceSuppress
+-->
+		<!--
+		<AudioArraySound>
+			<AudioEntry Sound="AudioEvent:TEMP_PredatorMoveStart" AudioType="soundMoveStart" />
+			<AudioEntry Sound="AudioEvent:PredatorAmbientLoop" AudioType="soundAmbient" />
+		</AudioArraySound>
+-->
 		<ShadowInfo
 			Type="DECAL"
 			SizeX="14"

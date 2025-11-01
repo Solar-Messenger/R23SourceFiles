@@ -20,7 +20,7 @@
 		ThreatLevel="0"
 		ProductionQueueType="VEHICLE"
 		UnitCategory="VEHICLE"
-		WeaponCategory="MISSILE"
+		WeaponCategory="GUN"
 		EditorName="Reaper17CustomizableVehicle"
 		Description="Desc:AlienCustomizableVehicle"
 		TypeDescription="Type:AlienCustomizableVehicle"

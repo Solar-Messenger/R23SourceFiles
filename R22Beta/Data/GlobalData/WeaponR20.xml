@@ -942,17 +942,12 @@
 		AntiMask="ANTI_GROUND ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY">
 		<Nuggets>
 			<DamageNugget
-				Damage="400.0"
+				Damage="300.0"
 				Radius="15.0"
 				DamageTaperOff="0"
 				DamageType="ROCKET"
 				DamageFXType="GDI_MISSILE"
 				DeathType="EXPLODED">
-				<DamageScalarDetails Scalar="75%">
-					<Filter
-						Rule="NONE"
-						Include="AIRCRAFT" />
-				</DamageScalarDetails>
 			</DamageNugget>
 			<SuppressionNugget
 				Radius="20.0"

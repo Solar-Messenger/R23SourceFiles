@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude">	
+
+	<!-- cannon armor buffed-->
+	<ArmorTemplate
+		id="AlienStalkerArmor"
+		Default="100"
+		SideDamageScalar="100"
+		RearDamageScalar="100">
+		<Armor
+			Damage="SNIPER"
+			Percent="90" />
+		<Armor
+			Damage="CANNON"
+			Percent="5" />
+		<Armor
+			Damage="ROCKET"
+			Percent="20" />
+		<Armor
+			Damage="GRENADE"
+			Percent="100" />
+		<Armor
+			Damage="GUN"
+			Percent="75" />
+	</ArmorTemplate>
+
 	
 	<!-- t59 armor nerf reverted, instead nerfed speed from 185 to 170. -->
 	<!--
@@ -26,7 +50,6 @@
 			Damage="MINE"
 			Percent="90%" />	
 	</ArmorTemplate>
-	
 	
 	<ArmorTemplate
 		id="NODCyborgInfantryArmor"

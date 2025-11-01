@@ -1595,6 +1595,7 @@
 		AntiMask="ANTI_GROUND ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY"
 		CanFireWhileMoving="false"
 		ScatterIndependently="true"
+		ForbiddenFiringObjectStatus="CLONED"
 	>
 		<PreAttackDelay
 			MinSeconds=".2s"
@@ -1627,6 +1628,82 @@
 				Include="INFANTRY" />
 		</ScatterRadiusVsType>
 	</WeaponTemplate>
+
+	<!-- decoy weapon -->
+
+	<WeaponTemplate
+		id="NODMilitantRocketWeaponCloned"
+		Name="NODMilitantRocketWeaponCloned"
+		AttackRange="350.0"
+		WeaponSpeed="200"
+		MinWeaponSpeed="300"
+		MaxWeaponSpeed="310"
+		AcceptableAimDelta="20d"
+		PreAttackType="PER_SHOT"
+		ReAcquireDetailType="PRE_FIRE"
+		ForbiddenFiringObjectStatus="USER_PARALYZED"
+		FireFX="FX_NODMilitantMissileFire"
+		FireVeteranFX="FX_NODMilitantMissileFireHeroic"
+		ClipSize="1"
+		AntiMask="ANTI_GROUND ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY"
+		CanFireWhileMoving="false"
+		ScatterIndependently="true"
+	>
+		<PreAttackDelay
+			MinSeconds=".2s"
+			MaxSeconds=".2s" />
+		<FiringDuration
+			MinSeconds="2s"
+			MaxSeconds="2s" />
+		<ClipReloadTime
+			MinSeconds="0.8s"
+			MaxSeconds="1.2s" />
+		<Nuggets>
+			<ProjectileNugget
+				WarheadTemplate="NODMilitantRocketWeaponWarheadCloned"
+				ProjectileTemplate="NODMilitantRocketWeaponProjectile">
+				<VeterancyProjectiles
+					VeterancyLevel="HEROIC"
+					ProjectileTemplate="NODMilitantRocketWeaponProjectile_Veteran" />
+
+			</ProjectileNugget>
+			<SuppressionNugget
+				Radius="20.0"
+				Suppression="100"
+				DurationSeconds="5s"
+			/>
+		</Nuggets>
+		<ScatterRadiusVsType
+			Radius="30.0">
+			<Filter
+				Rule="NONE"
+				Include="INFANTRY" />
+		</ScatterRadiusVsType>
+	</WeaponTemplate>
+
+	<WeaponTemplate
+		id="NODMilitantRocketWeaponWarheadCloned"
+		Name="NODMilitantRocketWeaponWarheadCloned"
+		ProjectileCollidesWith="ALLIES ENEMIES NEUTRAL STRUCTURES WALLS"
+		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
+		AntiMask="ANTI_GROUND ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY">
+		<Nuggets>
+			<DamageNugget
+				Damage="2.5"
+				Radius="5.0"
+				DamageTaperOff="0"
+				DamageType="ROCKET"
+				DamageFXType="NOD_MISSILE"
+				DeathType="EXPLODED">
+				<DamageScalarDetails Scalar= "75%">
+					<Filter
+						Rule="NONE"
+						Include="AIRCRAFT" />
+				</DamageScalarDetails>
+			</DamageNugget>
+		</Nuggets>
+	</WeaponTemplate>
+
 
 	<WeaponTemplate
 		id="MilitantRocketSquadRangeFinder"

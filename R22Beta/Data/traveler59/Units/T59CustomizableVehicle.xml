@@ -20,7 +20,7 @@
 		ThreatLevel="0"
 		ProductionQueueType="VEHICLE"
 		UnitCategory="VEHICLE"
-		WeaponCategory="MISSILE"
+		WeaponCategory="GUN"
 		EditorName="Traveler59CustomizableVehicle"
 		Description="Desc:AlienCustomizableVehicle"
 		TypeDescription="Type:AlienCustomizableVehicle"

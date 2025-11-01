@@ -2,6 +2,17 @@
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
 	<SpecialPowerTemplate
+		id="NODSignatureGenerator"
+		ReloadTime="60s"
+		TargetType="NONE"
+		InitiateSound="AudioEvent:NOD_Venom_SignatureGenerators"
+		WaypointModeTerminal="false">
+		<GameDependency>
+			<NeededUpgrade>Upgrade_NODSignatureGenerator</NeededUpgrade>
+		</GameDependency>
+	</SpecialPowerTemplate>
+
+	<SpecialPowerTemplate
 		id="SpecialPower_SpawnHuskOCL"
 		TargetType="LOCATION" />
 
@@ -374,6 +385,13 @@
 			<IncludeThing>NodPowerPlant</IncludeThing>
 			<IncludeThing>BlackHandPowerPlant</IncludeThing>
 			<IncludeThing>MarkedOfKanePowerPlant</IncludeThing>
+			<!-- excluded stalkers -->
+			<ExcludeThing>AlienStalkerSquad</ExcludeThing>
+			<ExcludeThing>AlienStalker</ExcludeThing>
+			<ExcludeThing>Traveler59Stalker</ExcludeThing>
+			<ExcludeThing>Traveler59StalkerSquad</ExcludeThing>
+			<ExcludeThing>Reaper17StalkerSquad</ExcludeThing>
+			<ExcludeThing>Reaper17Stalker</ExcludeThing>
 		</ObjectFilter>
 	</SpecialPowerTemplate>
 
