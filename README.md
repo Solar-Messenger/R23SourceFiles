@@ -2,6 +2,23 @@
 1.02+ R23 source files for reference. Assets may be used but credit would be appreciated.
 This cannot be compiled as a standalone mod as it does not contain all of the 1.02+ files, only the ones I have modified or added over the years.
 
+# R23x Changelog
+* Mammoth Tank rockets now deal 300 damage vs all targets.
+* Laser Scorpion Tanks now deal 10% less damage against Scorpion Tanks.
+* Signature generator ability duration increased from 20s to 60s, cooldown increased from 1s to 60s. false positives doubled, radius doubled.
+* Nod/BH/MoK Rocket Squad decoys no longer deal full damage sometimes.
+* Temporal Wormhole duration reduced from 30s to 25s.
+* Mechapede target priorities reverted to vanilla.
+* Cannon damage taken by Ravagers reduced by 50%, Gun damage taken increased by 50%.
+* Ravagers can no longer use Tiberium Agitation on other Ravagers.
+* Ravager Tiberium Agitation damage vs Reaper Tripods, Devourer Tanks reduced by 50%.
+* T59 Shock Trooper speed decreased by 15% 76.5 -> 65.
+* Infestation hive hp increased by 50% 1000 -> 1500.
+* Stasis Shield no longer tints phased units for a longer than expected duration.
+* A new map made by UnderworldFox “Tournament Eclipse” has been added to the 1v1 map pack.
+* Ranked support added for when Shatabrick returns.
+
+
 # R23g Changelog
 * Tiberium type detection while harvesting has been improved significantly. [Video Link](https://youtu.be/sA016u1djmI)  
 * Ceramic Armor Hammerheads no longer show an extra model while dying.
