@@ -98,10 +98,11 @@
 		<Include source="GlobalData\Weapon.xml" type="all"/>	
 		<Include source="GlobalData\SpecialPowerTemplates.xml" type="all"/>	
 		<Include source="Nod\Units\NODVenom.xml" type="all"/>	
-		<Include source="MarkedOfKane\Units\MoKVenom.xml" type="all"/>	-->
 		<Include source="Nod\Units\NODMilitantRocket.xml" type="all"/>	
 		<Include source="BlackHand\Units\BlackHandMilitantRocket.xml" type="all"/>	
 		<Include source="MarkedOfKane\Units\MarkedOfKaneMilitantRocket.xml" type="all"/>
+		<Include source="MarkedOfKane\Units\MoKVenom.xml" type="all"/>	-->
+		
 		<!-- r23g 
 	    <Include source="Nod\Units\NODCommando.xml" type="all"/>
 	    <Include source="MarkedOfKane/Units/MoKCommando.xml" type="all"/>	
@@ -118,5 +119,10 @@
 		<Include source="ZOCOM\Units\ZOCOMHammerhead.xml" type="all"/>
 		<Include source="GDI\Units\GDIHarvester.xml" type="all"/>
 		<Include source="Nod\Units\NODHarvester.xml" type="all"/>	 -->
+
+		<!-- post r23z changes -->
+		<Include source="Reaper17\Units\Reaper17Mothership.xml" type="all"/>	
+		<Include source="traveler59\Units\Traveler59Mothership.xml" type="all"/>		
+		<Include source="Alien/Units/AlienMothership.xml" type="all"/>
 	</Includes>
 </AssetDeclaration>

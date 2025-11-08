@@ -50,7 +50,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="FORMATION_PREVIEW">
 					<Model
-						Name="W3DContainer:AUMother_FP" />
+						Name="W3DMesh:AUMother_FP" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
