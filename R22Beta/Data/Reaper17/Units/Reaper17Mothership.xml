@@ -576,7 +576,7 @@
 			VisionRange="200"
 			ShroudClearingRange="1000" />
 		<CrusherInfo
-			CrusherLevel="1"
-			CrushableLevel="2" />
+			CrusherLevel="0"
+			CrushableLevel="0" />
 	</GameObject>
 </AssetDeclaration>
