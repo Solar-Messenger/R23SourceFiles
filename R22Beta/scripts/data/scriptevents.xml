@@ -59,6 +59,68 @@
 			<Conditions>+REALLYDAMAGED</Conditions>
 		</ModelConditionEvent>
 
+		<ObjectStatusEvent Name="OnReverse">
+			<Conditions>+NEXT_MOVE_IS_REVERSE</Conditions>
+		</ObjectStatusEvent>	
+
+		<ObjectStatusEvent Name="OnReverseEnd">
+			<Conditions>-NEXT_MOVE_IS_REVERSE</Conditions>
+		</ObjectStatusEvent>
+
+		<ObjectStatusEvent Name="OnCollisions">
+			<Conditions>+NO_COLLISIONS</Conditions>
+		</ObjectStatusEvent>
+
+		<ObjectStatusEvent Name="OnForceMoving">
+			<Conditions>+NEXT_MOVE_IS_FORCE_ATTACK_MOVE</Conditions>
+		</ObjectStatusEvent>	
+
+		<ObjectStatusEvent Name="OnForceMovingEnd">
+			<Conditions>-NEXT_MOVE_IS_FORCE_ATTACK_MOVE</Conditions>
+		</ObjectStatusEvent>	
+
+		<ModelConditionEvent Name="OnBackingUp">
+			<Conditions>+BACKING_UP</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUp1">
+			<Conditions>-BACKING_UP</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpFast">
+			<Conditions>+BACKING_UP</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnMovingOutOfWay">
+			<Conditions>+MOVING_OUT_OF_THE_WAY</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpFastLeft">
+			<Conditions>+BACKING_UP +TURN_LEFT_HIGH_SPEED</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpFastRight">
+			<Conditions>+BACKING_UP +TURN_RIGHT_HIGH_SPEED</Conditions>
+		</ModelConditionEvent>
+
+		<!-- off events for reverse -->
+
+		<ModelConditionEvent Name="OnBackingUpFastLeftEnd">
+			<Conditions>+BACKING_UP -TURN_LEFT_HIGH_SPEED</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpFastRightEnd">
+			<Conditions>+BACKING_UP -TURN_RIGHT_HIGH_SPEED</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpRight">
+			<Conditions>+BACKING_UP +TURN_RIGHT</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpLeft">
+			<Conditions>+BACKING_UP +TURN_LEFT</Conditions>
+		</ModelConditionEvent>
+
 		<ModelConditionEvent Name="OnDeployed">
 			<Conditions>+DEPLOYED</Conditions>
 		</ModelConditionEvent>
@@ -448,6 +510,10 @@
 
 		<ModelConditionEvent Name="OnUser69">
 			<Conditions>+USER_69</Conditions>
+		</ModelConditionEvent>		
+
+		<ModelConditionEvent Name="OnUser69End">
+			<Conditions>-USER_69</Conditions>
 		</ModelConditionEvent>			
 		
 		<ModelConditionEvent Name="OnUser70">
@@ -473,7 +539,11 @@
 		</ModelConditionEvent>			
 		<ModelConditionEvent Name="OnUser75">
 			<Conditions>+USER_75</Conditions>
-		</ModelConditionEvent>			
+		</ModelConditionEvent>		
+
+		<ModelConditionEvent Name="OnSelected">
+			<Conditions>+SELECTED</Conditions>
+		</ModelConditionEvent>		
 		
 		<!-- R23 tib events -->
 
@@ -782,10 +852,29 @@
 		<ScriptedEvent Name="OnBeamTargetInit" />	
 
 		<ScriptedEvent Name="TiberiumEvent" />		
+		<ScriptedEvent Name="SaveSnapshot" />	
     </Events>
     
     <EventList Name="BaseScriptFunctions">
-		<!-- If there are any events that need to apply to all units, put them here. jba -->
+		<!-- If there are any events that need to apply to all units, put them here. jba 
+	
+			-->
+		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>
+		<EventHandler EventName="OnBackingUp"	ScriptFunctionName="BackingUp" DebugSingleStep="false"/>
+
+		<EventHandler EventName="OnMovingOutOfWay"	ScriptFunctionName="MovingOutOfWay" DebugSingleStep="false"/>
+
+		<EventHandler EventName="OnBackingUpFastRight"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
+		<EventHandler EventName="OnBackingUpFastLeft"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
+
+		<EventHandler EventName="OnBackingUpFastRightEnd"	ScriptFunctionName="BackingUpFastEnd" DebugSingleStep="false"/>
+		<EventHandler EventName="OnBackingUpFastLeftEnd"	ScriptFunctionName="BackingUpFastEnd" DebugSingleStep="false"/>
+
+		<EventHandler EventName="SaveSnapshot"	ScriptFunctionName="SaveSnapshot" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser69End"	ScriptFunctionName="OnUser69End" DebugSingleStep="false"/>
+
+		<!-- detection event
+		 <EventHandler EventName="OnBackingUpFast"	ScriptFunctionName="BackingUp" DebugSingleStep="false"/>   -->
     </EventList>
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">
@@ -1050,6 +1139,18 @@
 
 	<EventList Name="NODScorpionBuggyFunctions" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnCreated"	ScriptFunctionName="OnNODScorpionBuggyCreated" DebugSingleStep="false"/>
+			
+
+		<!--
+		<EventHandler EventName="OnReverse"	ScriptFunctionName="UnitReversing" DebugSingleStep="false"/>
+		<EventHandler EventName="OnReverseEnd"	ScriptFunctionName="UnitReversingEnd" DebugSingleStep="false"/>
+		<EventHandler EventName="OnForceMoving"	ScriptFunctionName="UnitForceMoving" DebugSingleStep="false"/>
+		<EventHandler EventName="OnForceMovingEnd"	ScriptFunctionName="UnitForceMovingEnd" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected"	ScriptFunctionName="UnitSelected" DebugSingleStep="false"/>
+		<EventHandler EventName="OnReverse"	ScriptFunctionName="RemoveReverseMove" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser3End"	ScriptFunctionName="ReverseTimer" DebugSingleStep="false"/>  
+		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>	
+		-->
 	</EventList>
 
 	<EventList Name="NODVenomFunctions" Inherit="BaseScriptFunctions">

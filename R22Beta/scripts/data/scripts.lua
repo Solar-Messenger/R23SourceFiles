@@ -66,6 +66,12 @@ bar4 = {} -- for tracking the bar four of the harvester.
 
 harvesterData = {}
 crystalData = {}
+reverseMaster = nil
+
+snapshotBefore = {}
+snapshotAfter = {}
+
+unitsReversing = {}
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
 MAX_FRAMES_BEING_HARVESTED = 50 -- 15 frames is 1s (gdi/scrin harvest action time)
@@ -827,12 +833,105 @@ end
 
 -- ###################################################################
 
--- lua specter / juggernaut undeploy fix
---function OnArtilleryUndeploy(self)
---	 if ObjectTestModelCondition(self, "ATTACKING") then
---		 ExecuteAction("NAMED_STOP", self)
---	end
---end
+-- ####################### REVERSE MOVE WORKAROUND ############################
+
+function BackingUpFast(self)
+	--ExecuteAction("NAMED_FLASH", self, 2)
+	local a = getObjectId(self)
+	unitsReversing[a] = GetFrame()
+end
+
+function BackingUpFastEnd(self)
+	local a = getObjectId(self)
+
+	-- pitbulls = 7 frames
+	if((GetFrame() - unitsReversing[a]) == 7) then 
+		-- guard the master 
+		ExecuteAction("NAMED_FLASH", self, 2)
+		local ObjectStringRef = "object_" .. floor(GetRandomNumber()*99999999)
+		ExecuteAction("SET_UNIT_REFERENCE", ObjectStringRef , self)
+
+		-- set unit to have NEXT_MOVE_IS_REVERSE object status ["NEXT_MOVE_IS_REVERSE"]=48
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", self, 48, true)
+
+		ExecuteAction("UNIT_GUARD_OBJECT", self, reverseMaster)
+	end
+	unitsReversing[a] = nil
+end
+
+function MovingOutOfWay(self)
+	--print("moving out of the way")
+end
+
+-- i could capture how many units are in the area that are selected and can reverse move and save it in a table and then after x time i could check again and if the value is different apply the UNIT_GUARD_OBJECT function
+-- i need to capture the units selected when reverse comamand issued and the after 0.2s do another check to see if the same units are around it.
+-- ill have a table containing the unit and that unit will have a nested table that contains the units around it. (radius to be determined)
+
+-- Triggered by BACKING_UP
+function BackingUp(self)
+	--print("backing up")
+	local a = getObjectId(self)
+	-- remove the table of this unit if it already exists
+	--if snapshotBefore[a] ~= nil then
+		--snapshotBefore[a] = nil 
+	--end
+	-- add to the before snapshot
+	--ObjectBroadcastEventToAllies(self, "SaveSnapshot", 250)
+	-- set a temp model state that when expires will trigger an offevent that executes the CompareFirstToSecondSnapshot function
+	--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_69", 0.5, 100)
+
+	-- broadcasted events dont work on stealthed units
+	if(reverseMaster == nil) then 
+		-- assign self as the master
+		reverseMaster = self
+	end
+end
+
+function BackingUpEnd(self)
+	local object = SetUnitReference(self) 
+	if self == reverseMaster then 
+		-- clear master when it stops moving
+		print("master has stopped moving")
+		reverseMaster = nil
+		ExecuteAction("NAMED_FLASH", self, 0)
+	end
+	--tremove(unitsSelected, self)
+end
+
+-- data storage, triggered by ObjectBroadcastEventToAllies SaveSnapshot event.
+function SaveSnapshot(self, other)
+    local snapshotObject = getObjectId(other)
+    local objectToAdd = getObjectId(self)
+	local targetSnapshot
+	local isSecondSnapshot = ObjectTestModelCondition(other, "USER_69")
+
+	if isSecondSnapshot then 
+		targetSnapshot = snapshotAfter
+	else
+		targetSnapshot = snapshotBefore
+	end		
+
+	snapshotBefore[snapshotObject] = snapshotBefore[snapshotObject] or {}
+	snapshotAfter[snapshotObject] = snapshotAfter[snapshotObject] or {}
+
+	if(getn(snapshotAfter[snapshotObject]) == getn(snapshotBefore[snapshotObject]) -1 and not isSecondSnapshot) then
+		-- this is the last unit being processed in the second snapshot
+		CompareTables(snapshotBefore[snapshotObject], snapshotAfter[snapshotObject])
+	end
+    tinsert(t, objectToAdd)
+end
+
+-- fire another broadcast 
+function OnUser69End(self)
+	ObjectBroadcastEventToAllies(self, "SaveSnapshot", 250)
+end
+
+-- compare if the tables are the same
+function CompareTables(beforeTable, afterTable)
+
+end
+
+-- ###################################################################
 
 function OnGDIWatchTowerCreated(self)
 	ObjectHideSubObjectPermanently( self, "MuzzleFlash_01", true )
@@ -968,6 +1067,7 @@ end
 
 function OnNODScorpionBuggyCreated(self)
 	ObjectHideSubObjectPermanently( self, "EMP", true )
+	--UnitCreated(self)
 end
 
 function OnNODVenomCreated(self)
