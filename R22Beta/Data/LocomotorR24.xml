@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- turn radius increased by 10 to decrease false positives -->
+	<LocomotorTemplate
+		id="GDIPitbullLocomotor"
+		Name="GDIPitbullLocomotor"
+		Surfaces="GROUND CRUSHABLE_OBSTACLE" 
+		TurnTimeSeconds="1.0s" 
+		TurnTimeDamagedSeconds="1.0s" 
+		MaxSpeedDamaged="75%"
+		AccelerationSeconds="0.5s"
+		BrakingSeconds="0.01s"
+		SlowTurnRadius="30.0" 
+		FastTurnRadius="35.0" 
+
+		MinTurnSpeed="20%"
+		TurnPivotOffset="-0.33"
+		BehaviorZ="NO_MOTIVE_FORCE"	
+		Appearance="FOUR_WHEELS" 
+
+		AccelPitchLimit="5d"
+		BounceKick="5d"
+		PitchStiffness="0.1"
+		RollStiffness="0.1"
+		PitchDamping="0.5"
+		RollDamping="0.4"
+		YawStiffness="0.8"
+		YawDamping="0.5"
+		ForwardAccelerationPitchFactor="0.05"
+		LateralAccelerationRollFactor="0.4"
+		
+		HasSuspension="true"
+		CanMoveBackward="false"
+		MaximumWheelExtension="-2.5"
+		MaximumWheelCompression="1.75"
+		WheelTurnAngle="35d"
+		/>
+
+</AssetDeclaration>

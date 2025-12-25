@@ -835,102 +835,117 @@ end
 
 -- ####################### REVERSE MOVE WORKAROUND ############################
 
+-- Set the reference of an object in order to assign object status successfully.
+function SetObjectReference(self)
+	local ObjectStringRef = "object_" .. floor(GetRandomNumber()*99999999)
+	ExecuteAction("SET_UNIT_REFERENCE", ObjectStringRef , self)
+	return ObjectStringRef
+end
+
+-- Sets the initial frame when a unit fast turns while backing up
 function BackingUpFast(self)
-	--ExecuteAction("NAMED_FLASH", self, 2)
 	local a = getObjectId(self)
-	unitsReversing[a] = GetFrame()
-end
-
-function BackingUpFastEnd(self)
-	local a = getObjectId(self)
-
-	-- pitbulls = 7 frames
-	if((GetFrame() - unitsReversing[a]) == 7) then 
-		-- guard the master 
-		ExecuteAction("NAMED_FLASH", self, 2)
-		local ObjectStringRef = "object_" .. floor(GetRandomNumber()*99999999)
-		ExecuteAction("SET_UNIT_REFERENCE", ObjectStringRef , self)
-
-		-- set unit to have NEXT_MOVE_IS_REVERSE object status ["NEXT_MOVE_IS_REVERSE"]=48
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", self, 48, true)
-
-		ExecuteAction("UNIT_GUARD_OBJECT", self, reverseMaster)
+	local curFrame = GetFrame()
+	if unitsReversing[a].firstFrame == 0 and not unitsReversing[a].isReverseMoving then
+		unitsReversing[a].firstFrame = curFrame
+		unitsReversing[a].isReverseMoving = true
 	end
-	unitsReversing[a] = nil
 end
 
-function MovingOutOfWay(self)
-	--print("moving out of the way")
+-- Triggered by +BACKING_UP -TURN_LEFT_HIGH_SPEED and +BACKING_UP -TURN_RIGHT_HIGH_SPEED
+function BackingUpFastEnd(self)	
+	local a = getObjectId(self)
+	if unitsReversing[a] ~= nil then 
+
+		unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
+
+		--if(unitsReversing[a].timesTriggered == 2) then
+		--	print("triggered twice")
+		--elseif (unitsReversing[a].timesTriggered == 3) then
+		--	print("triggered three times")
+		--elseif (unitsReversing[a].timesTriggered == 4) then
+		--	print("triggered four times")
+		--elseif (unitsReversing[a].timesTriggered == 5) then
+		--	print("triggered five times")
+		--end
+	
+		-- maybe if the times triggered is more than two, dont execute this
+		if unitsReversing[a].timesTriggered == 2 then 
+			-- pitbulls = 7 frames
+			if GetFrame() - unitsReversing[a].firstFrame == 7 then 
+				ExecuteAction("NAMED_FLASH", self, 2)
+				-- set NO_COLLISIONS
+				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
+				-- guard the master 
+				ExecuteAction("UNIT_GUARD_OBJECT", self, reverseMaster)
+				-- set stopping distance to prevent overlapping units
+				ExecuteAction("NAMED_SET_STOPPING_DISTANCE", self, 100)
+
+				-- set backing up state 
+				--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "BACKING_UP", 999999, 100) 
+			end
+		end
+	end
 end
 
--- i could capture how many units are in the area that are selected and can reverse move and save it in a table and then after x time i could check again and if the value is different apply the UNIT_GUARD_OBJECT function
--- i need to capture the units selected when reverse comamand issued and the after 0.2s do another check to see if the same units are around it.
--- ill have a table containing the unit and that unit will have a nested table that contains the units around it. (radius to be determined)
+-- Remove collisions when unit no longer is guarding
+function UnitNoLongerGuarding(self)
+	local object = SetObjectReference(self)
+	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", object , 4) then
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", object, 4, 0)
+		-- remove stopping distance to prevent overlapping units
+		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", self, 0)
+	end
+end
 
 -- Triggered by BACKING_UP
 function BackingUp(self)
 	--print("backing up")
-	local a = getObjectId(self)
-	-- remove the table of this unit if it already exists
-	--if snapshotBefore[a] ~= nil then
-		--snapshotBefore[a] = nil 
-	--end
-	-- add to the before snapshot
-	--ObjectBroadcastEventToAllies(self, "SaveSnapshot", 250)
-	-- set a temp model state that when expires will trigger an offevent that executes the CompareFirstToSecondSnapshot function
-	--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_69", 0.5, 100)
+	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, true)
 
+	local a = getObjectId(self)
+
+	-- create table for this unit
+	unitsReversing[a] = {
+		firstFrame = 0,
+		isReverseMoving = false,
+		timesTriggered = 0
+	}
 	-- broadcasted events dont work on stealthed units
-	if(reverseMaster == nil) then 
+	if reverseMaster == nil then 
 		-- assign self as the master
 		reverseMaster = self
 	end
 end
 
+-- 
 function BackingUpEnd(self)
-	local object = SetUnitReference(self) 
+	local a = getObjectId(self)
+	
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetUnitReference(self), 4, 0)
+	print("backing up end")
+
+	-- remove from the table
+	unitsReversing[a] = nil
+
 	if self == reverseMaster then 
 		-- clear master when it stops moving
 		print("master has stopped moving")
 		reverseMaster = nil
-		ExecuteAction("NAMED_FLASH", self, 0)
 	end
-	--tremove(unitsSelected, self)
 end
 
--- data storage, triggered by ObjectBroadcastEventToAllies SaveSnapshot event.
-function SaveSnapshot(self, other)
-    local snapshotObject = getObjectId(other)
-    local objectToAdd = getObjectId(self)
-	local targetSnapshot
-	local isSecondSnapshot = ObjectTestModelCondition(other, "USER_69")
+-- Sets units selected to a table, each of the 8 players has their own table where objects get added here.
+function AddToUnitSelection(self)
 
-	if isSecondSnapshot then 
-		targetSnapshot = snapshotAfter
-	else
-		targetSnapshot = snapshotBefore
-	end		
-
-	snapshotBefore[snapshotObject] = snapshotBefore[snapshotObject] or {}
-	snapshotAfter[snapshotObject] = snapshotAfter[snapshotObject] or {}
-
-	if(getn(snapshotAfter[snapshotObject]) == getn(snapshotBefore[snapshotObject]) -1 and not isSecondSnapshot) then
-		-- this is the last unit being processed in the second snapshot
-		CompareTables(snapshotBefore[snapshotObject], snapshotAfter[snapshotObject])
-	end
-    tinsert(t, objectToAdd)
-end
-
--- fire another broadcast 
-function OnUser69End(self)
-	ObjectBroadcastEventToAllies(self, "SaveSnapshot", 250)
-end
-
--- compare if the tables are the same
-function CompareTables(beforeTable, afterTable)
 
 end
 
+-- Removes selected unit from the table, each of the 8 players has their own table where objects get removed here.
+function RemoveFromUnitSelection(self)
+
+
+end
 -- ###################################################################
 
 function OnGDIWatchTowerCreated(self)

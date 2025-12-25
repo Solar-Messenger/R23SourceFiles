@@ -96,14 +96,30 @@
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpFastLeft">
-			<Conditions>+BACKING_UP +TURN_LEFT_HIGH_SPEED</Conditions>
+			<Conditions>-MOVING +BACKING_UP +TURN_LEFT_HIGH_SPEED</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpFastRight">
+			<Conditions>-MOVING +BACKING_UP +TURN_RIGHT_HIGH_SPEED</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpFastLeft1">
+			<Conditions>+BACKING_UP +TURN_LEFT_HIGH_SPEED</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpFastRight1">
 			<Conditions>+BACKING_UP +TURN_RIGHT_HIGH_SPEED</Conditions>
 		</ModelConditionEvent>
 
-		<!-- off events for reverse -->
+		<ModelConditionEvent Name="OnBackingUpChangeDirectionRight">
+			<Conditions>-MOVING +BACKING_UP -TURN_RIGHT_HIGH_SPEED +TURN_LEFT_HIGH_SPEED</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpChangeDirectioLeft">
+			<Conditions>-MOVING +BACKING_UP -TURN_LEFT_HIGH_SPEED +TURN_RIGHT_HIGH_SPEED</Conditions>
+		</ModelConditionEvent>
+
+		<!-- off events for reverse -->	
 
 		<ModelConditionEvent Name="OnBackingUpFastLeftEnd">
 			<Conditions>+BACKING_UP -TURN_LEFT_HIGH_SPEED</Conditions>
@@ -856,25 +872,21 @@
     </Events>
     
     <EventList Name="BaseScriptFunctions">
-		<!-- If there are any events that need to apply to all units, put them here. jba 
-	
-			-->
+		<!-- If there are any events that need to apply to all units, put them here. jba -->
+
 		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUp"	ScriptFunctionName="BackingUp" DebugSingleStep="false"/>
-
-		<EventHandler EventName="OnMovingOutOfWay"	ScriptFunctionName="MovingOutOfWay" DebugSingleStep="false"/>
-
+		<!--
 		<EventHandler EventName="OnBackingUpFastRight"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpFastLeft"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
+		-->
+		<EventHandler EventName="OnBackingUpFastRight1"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
+		<EventHandler EventName="OnBackingUpFastLeft1"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
 
 		<EventHandler EventName="OnBackingUpFastRightEnd"	ScriptFunctionName="BackingUpFastEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpFastLeftEnd"	ScriptFunctionName="BackingUpFastEnd" DebugSingleStep="false"/>
 
-		<EventHandler EventName="SaveSnapshot"	ScriptFunctionName="SaveSnapshot" DebugSingleStep="false"/>
-		<EventHandler EventName="OnUser69End"	ScriptFunctionName="OnUser69End" DebugSingleStep="false"/>
-
-		<!-- detection event
-		 <EventHandler EventName="OnBackingUpFast"	ScriptFunctionName="BackingUp" DebugSingleStep="false"/>   -->
+		<EventHandler EventName="OnGuardingEnd"	ScriptFunctionName="UnitNoLongerGuarding" DebugSingleStep="false"/>
     </EventList>
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">
