@@ -91,10 +91,6 @@
 			<Conditions>+BACKING_UP</Conditions>
 		</ModelConditionEvent>
 
-		<ModelConditionEvent Name="OnMovingOutOfWay">
-			<Conditions>+MOVING_OUT_OF_THE_WAY</Conditions>
-		</ModelConditionEvent>
-
 		<ModelConditionEvent Name="OnBackingUpFastLeft">
 			<Conditions>-MOVING +BACKING_UP +TURN_LEFT_HIGH_SPEED</Conditions>
 		</ModelConditionEvent>
@@ -104,11 +100,19 @@
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpFastLeft1">
-			<Conditions>+BACKING_UP +TURN_LEFT_HIGH_SPEED</Conditions>
+			<Conditions>+TURN_LEFT_HIGH_SPEED +BACKING_UP</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpFastRight1">
-			<Conditions>+BACKING_UP +TURN_RIGHT_HIGH_SPEED</Conditions>
+			<Conditions>+TURN_RIGHT_HIGH_SPEED +BACKING_UP</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpFastLeft1order">
+			<Conditions>+BACKING_UP +TURN_LEFT_HIGH_SPEED </Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpFastRight1order">
+			<Conditions> +BACKING_UP +TURN_RIGHT_HIGH_SPEED</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpChangeDirectionRight">
@@ -117,6 +121,10 @@
 
 		<ModelConditionEvent Name="OnBackingUpChangeDirectioLeft">
 			<Conditions>-MOVING +BACKING_UP -TURN_LEFT_HIGH_SPEED +TURN_RIGHT_HIGH_SPEED</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnLocomotorEvent">
+			<Conditions>+LOCOMOTOR_CHANGING_FIRINGARC</Conditions>
 		</ModelConditionEvent>
 
 		<!-- off events for reverse -->	
@@ -143,6 +151,10 @@
 
 		<ModelConditionEvent Name="OnDeployed1">
 			<Conditions>-DEPLOYED</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnGuardingEnd">
+			<Conditions>-GUARDING</Conditions>
 		</ModelConditionEvent>
 	
 		<ModelConditionEvent Name="RecoverFromTerror">
@@ -873,6 +885,8 @@
     
     <EventList Name="BaseScriptFunctions">
 		<!-- If there are any events that need to apply to all units, put them here. jba -->
+		<EventHandler EventName="OnMovingOutOfWay"	ScriptFunctionName="LocomotorEvent" DebugSingleStep="false"/>
+
 
 		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUp"	ScriptFunctionName="BackingUp" DebugSingleStep="false"/>
@@ -882,6 +896,8 @@
 		-->
 		<EventHandler EventName="OnBackingUpFastRight1"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpFastLeft1"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
+		<EventHandler EventName="OnBackingUpFastRight1order"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
+		<EventHandler EventName="OnBackingUpFastLeft1order"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
 
 		<EventHandler EventName="OnBackingUpFastRightEnd"	ScriptFunctionName="BackingUpFastEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpFastLeftEnd"	ScriptFunctionName="BackingUpFastEnd" DebugSingleStep="false"/>

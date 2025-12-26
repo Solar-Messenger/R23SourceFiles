@@ -14,7 +14,7 @@
 		SlowTurnRadius="30.0" 
 		FastTurnRadius="35.0" 
 
-		MinTurnSpeed="20%"
+		MinTurnSpeed="100%"
 		TurnPivotOffset="-0.33"
 		BehaviorZ="NO_MOTIVE_FORCE"	
 		Appearance="FOUR_WHEELS" 

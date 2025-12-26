@@ -872,10 +872,10 @@ function BackingUpFastEnd(self)
 		-- maybe if the times triggered is more than two, dont execute this
 		if unitsReversing[a].timesTriggered == 2 then 
 			-- pitbulls = 7 frames
-			if GetFrame() - unitsReversing[a].firstFrame == 7 then 
+			if floor(GetFrame() - unitsReversing[a].firstFrame) == 7 then 
 				ExecuteAction("NAMED_FLASH", self, 2)
 				-- set NO_COLLISIONS
-				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
+				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 48, 1)
 				-- guard the master 
 				ExecuteAction("UNIT_GUARD_OBJECT", self, reverseMaster)
 				-- set stopping distance to prevent overlapping units
@@ -890,6 +890,8 @@ end
 
 -- Remove collisions when unit no longer is guarding
 function UnitNoLongerGuarding(self)
+	ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+	print("no longer guarding!")
 	local object = SetObjectReference(self)
 	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", object , 4) then
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", object, 4, 0)
@@ -898,10 +900,10 @@ function UnitNoLongerGuarding(self)
 	end
 end
 
--- Triggered by BACKING_UP
+-- Triggered by +BACKING_UP
 function BackingUp(self)
 	--print("backing up")
-	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, true)
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 48, 1)
 
 	local a = getObjectId(self)
 
@@ -918,12 +920,11 @@ function BackingUp(self)
 	end
 end
 
--- 
+-- Triggered by -BACKING_UP
 function BackingUpEnd(self)
 	local a = getObjectId(self)
 	
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetUnitReference(self), 4, 0)
-	print("backing up end")
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 48, 0)
 
 	-- remove from the table
 	unitsReversing[a] = nil
