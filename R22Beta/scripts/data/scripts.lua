@@ -855,9 +855,8 @@ end
 -- Triggered by +BACKING_UP -TURN_LEFT_HIGH_SPEED and +BACKING_UP -TURN_RIGHT_HIGH_SPEED
 function BackingUpFastEnd(self)	
 	local a = getObjectId(self)
-	if unitsReversing[a] ~= nil then 
+	if unitsReversing[a] ~= nil and reverseMaster ~= nil then 
 		unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
-
 		--if(unitsReversing[a].timesTriggered == 2) then
 		--	print("triggered twice")
 		--elseif (unitsReversing[a].timesTriggered == 3) then
@@ -869,14 +868,25 @@ function BackingUpFastEnd(self)
 		--end
 	
 		-- maybe if the times triggered is more than two, dont execute this
-		if unitsReversing[a].timesTriggered >= 2 then 
+		if unitsReversing[a].timesTriggered == 2 then 
 			-- pitbulls = 7 frames
 			-- if object current distance plus 100 units is further away than the original captured distance from master, it could be bugging also.
-			-- floor(GetFrame() - unitsReversing[a].firstFrame) == 7 or 
-			if (GetObjectDistance(self) > (unitsReversing[a].distanceToMaster + 25)) then 
+			if (floor(GetFrame() - unitsReversing[a].firstFrame) == 7) then 
 				ExecuteAction("NAMED_FLASH", self, 2)
 				-- set NO_COLLISIONS
-				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 48, 1)
+				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
+				-- guard the master 		
+				ExecuteAction("UNIT_GUARD_OBJECT", self, reverseMaster)
+				-- set stopping distance to prevent overlapping units
+				ExecuteAction("NAMED_SET_STOPPING_DISTANCE", self, 100)
+				-- set backing up state 
+				--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "BACKING_UP", 999999, 100) 
+			end
+		else
+			if (GetObjectDistance(self) > (unitsReversing[a].distanceToMaster + 50)) then 
+				ExecuteAction("NAMED_FLASH", self, 2)
+				-- set NO_COLLISIONS
+				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
 				-- guard the master 		
 				ExecuteAction("UNIT_GUARD_OBJECT", self, reverseMaster)
 				-- set stopping distance to prevent overlapping units
@@ -886,6 +896,8 @@ function BackingUpFastEnd(self)
 			end
 		end
 	end
+	-- if unitsReversing[a].timesTriggered > 2
+	return true
 end
 
 -- Remove collisions when unit no longer is guarding
@@ -903,7 +915,7 @@ end
 -- Triggered by +BACKING_UP
 function BackingUp(self)
 	--print("backing up")
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 48, 1)
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
 	local a = getObjectId(self)
 
 	-- create table for this unit
@@ -934,15 +946,15 @@ end
 function BackingUpEnd(self)
 	local a = getObjectId(self)
 	
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 48, 0)
-
-	-- remove from the table
-	unitsReversing[a] = nil
-
-	if self == reverseMaster then 
-		-- clear master when it stops moving
-		print("master has stopped moving")
-		reverseMaster = nil
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 0)
+	if BackingUpFastEnd(self) then
+		-- remove from the table
+		unitsReversing[a] = nil	
+		if self == reverseMaster then 
+			-- clear master when it stops moving
+			--print("master has stopped moving")
+			reverseMaster = nil
+		end
 	end
 end
 
