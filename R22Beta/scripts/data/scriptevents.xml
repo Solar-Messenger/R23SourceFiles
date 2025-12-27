@@ -107,14 +107,6 @@
 			<Conditions>+TURN_RIGHT_HIGH_SPEED +BACKING_UP</Conditions>
 		</ModelConditionEvent>
 
-		<ModelConditionEvent Name="OnBackingUpFastLeft1order">
-			<Conditions>+BACKING_UP +TURN_LEFT_HIGH_SPEED </Conditions>
-		</ModelConditionEvent>
-
-		<ModelConditionEvent Name="OnBackingUpFastRight1order">
-			<Conditions> +BACKING_UP +TURN_RIGHT_HIGH_SPEED</Conditions>
-		</ModelConditionEvent>
-
 		<ModelConditionEvent Name="OnBackingUpChangeDirectionRight">
 			<Conditions>-MOVING +BACKING_UP -TURN_RIGHT_HIGH_SPEED +TURN_LEFT_HIGH_SPEED</Conditions>
 		</ModelConditionEvent>
@@ -896,8 +888,6 @@
 		-->
 		<EventHandler EventName="OnBackingUpFastRight1"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpFastLeft1"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
-		<EventHandler EventName="OnBackingUpFastRight1order"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
-		<EventHandler EventName="OnBackingUpFastLeft1order"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
 
 		<EventHandler EventName="OnBackingUpFastRightEnd"	ScriptFunctionName="BackingUpFastEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpFastLeftEnd"	ScriptFunctionName="BackingUpFastEnd" DebugSingleStep="false"/>

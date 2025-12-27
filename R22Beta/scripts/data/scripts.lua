@@ -856,7 +856,6 @@ end
 function BackingUpFastEnd(self)	
 	local a = getObjectId(self)
 	if unitsReversing[a] ~= nil then 
-
 		unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
 
 		--if(unitsReversing[a].timesTriggered == 2) then
@@ -870,17 +869,18 @@ function BackingUpFastEnd(self)
 		--end
 	
 		-- maybe if the times triggered is more than two, dont execute this
-		if unitsReversing[a].timesTriggered == 2 then 
+		if unitsReversing[a].timesTriggered >= 2 then 
 			-- pitbulls = 7 frames
-			if floor(GetFrame() - unitsReversing[a].firstFrame) == 7 then 
+			-- if object current distance plus 100 units is further away than the original captured distance from master, it could be bugging also.
+			-- floor(GetFrame() - unitsReversing[a].firstFrame) == 7 or 
+			if (GetObjectDistance(self) > (unitsReversing[a].distanceToMaster + 25)) then 
 				ExecuteAction("NAMED_FLASH", self, 2)
 				-- set NO_COLLISIONS
 				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 48, 1)
-				-- guard the master 
+				-- guard the master 		
 				ExecuteAction("UNIT_GUARD_OBJECT", self, reverseMaster)
 				-- set stopping distance to prevent overlapping units
 				ExecuteAction("NAMED_SET_STOPPING_DISTANCE", self, 100)
-
 				-- set backing up state 
 				--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "BACKING_UP", 999999, 100) 
 			end
@@ -904,19 +904,29 @@ end
 function BackingUp(self)
 	--print("backing up")
 	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 48, 1)
-
 	local a = getObjectId(self)
 
 	-- create table for this unit
 	unitsReversing[a] = {
 		firstFrame = 0,
 		isReverseMoving = false,
-		timesTriggered = 0
+		timesTriggered = 0, 
+		distanceToMaster = 0, 
+		isMaster = false
 	}
 	-- broadcasted events dont work on stealthed units
 	if reverseMaster == nil then 
 		-- assign self as the master
 		reverseMaster = self
+		unitsReversing[a].isMaster = true
+	end 
+	
+	-- only do this if not the master, in the future ill need to make a second candidate for this to check if the "master" is reverse bugging.
+	if not unitsReversing[a].isMaster then
+		unitsReversing[a].distanceToMaster = GetObjectDistance(self) 
+	else 
+		-- flash the master
+		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 	end
 end
 
@@ -947,6 +957,24 @@ function RemoveFromUnitSelection(self)
 
 
 end
+
+function GetObjectDistance(self) 
+	if reverseMaster ~= nil and self ~= nil then
+		local val = 10
+		--  1 is less than or equal to
+		while not EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(reverseMaster), 1, val) do
+			val = val + 25
+		end
+		-- from here val is the distance between the units
+		return val
+		--local file = openfile("C:\\Users\\Public\\Documents\\kw_test.txt", "w")
+		--if file then
+		--	write(file, "Distance between master and this unit is: " .. val)
+		--	closefile(file)
+		--end
+	end
+end
+
 -- ###################################################################
 
 function OnGDIWatchTowerCreated(self)
