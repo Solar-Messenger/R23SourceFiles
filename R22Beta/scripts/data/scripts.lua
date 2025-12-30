@@ -512,6 +512,7 @@ end
 -- self is the crystal, other is the harvester
 function TiberiumEvent(self, other)
 	if self ~= nil and other ~= nil then
+		-- replace with a less costly method
 		local ObjectStringRef = "object_" .. floor(GetRandomNumber()*99999999)
 		ExecuteAction("SET_UNIT_REFERENCE", ObjectStringRef , self)
 		-- if IS_BEING_HARVESTED is true
@@ -855,55 +856,34 @@ end
 -- Triggered by +BACKING_UP -TURN_LEFT_HIGH_SPEED and +BACKING_UP -TURN_RIGHT_HIGH_SPEED
 function BackingUpFastEnd(self)	
 	local a = getObjectId(self)
-	if unitsReversing[a] ~= nil and reverseMaster ~= nil then 
+	if unitsReversing[a] ~= nil and reverseMaster ~= nil then
 		unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
-		--if(unitsReversing[a].timesTriggered == 2) then
-		--	print("triggered twice")
-		--elseif (unitsReversing[a].timesTriggered == 3) then
-		--	print("triggered three times")
-		--elseif (unitsReversing[a].timesTriggered == 4) then
-		--	print("triggered four times")
-		--elseif (unitsReversing[a].timesTriggered == 5) then
-		--	print("triggered five times")
-		--end
-	
-		-- maybe if the times triggered is more than two, dont execute this
-		if unitsReversing[a].timesTriggered == 2 then 
-			-- pitbulls = 7 frames
-			-- if object current distance plus 100 units is further away than the original captured distance from master, it could be bugging also.
-			if (floor(GetFrame() - unitsReversing[a].firstFrame) == 7) then 
-				ExecuteAction("NAMED_FLASH", self, 2)
-				-- set NO_COLLISIONS
-				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
-				-- guard the master 		
-				ExecuteAction("UNIT_GUARD_OBJECT", self, reverseMaster)
-				-- set stopping distance to prevent overlapping units
-				ExecuteAction("NAMED_SET_STOPPING_DISTANCE", self, 100)
-				-- set backing up state 
-				--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "BACKING_UP", 999999, 100) 
-			end
-		else
-			if (GetObjectDistance(self) > (unitsReversing[a].distanceToMaster + 50)) then 
-				ExecuteAction("NAMED_FLASH", self, 2)
-				-- set NO_COLLISIONS
-				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
-				-- guard the master 		
-				ExecuteAction("UNIT_GUARD_OBJECT", self, reverseMaster)
-				-- set stopping distance to prevent overlapping units
-				ExecuteAction("NAMED_SET_STOPPING_DISTANCE", self, 100)
-				-- set backing up state 
-				--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "BACKING_UP", 999999, 100) 
-			end
+
+		local shouldTrigger =
+			(unitsReversing[a].timesTriggered == 2 and
+			 floor(GetFrame() - unitsReversing[a].firstFrame) == 7)
+			or
+			(unitsReversing[a].timesTriggered ~= 2 and
+			 GetObjectDistance(self) > (unitsReversing[a].distanceToMaster + 50))
+
+		-- if true the unit has reverse bugged.
+		if shouldTrigger then
+			ExecuteAction("NAMED_FLASH", self, 2)
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
+			ExecuteAction("UNIT_GUARD_OBJECT", self, reverseMaster)
+			-- set hasBugged to true to this unit 
+			unitsReversing[a].hasBugged = true
+			ExecuteAction("NAMED_SET_STOPPING_DISTANCE", self, 100)
 		end
 	end
-	-- if unitsReversing[a].timesTriggered > 2
+
 	return true
 end
 
--- Remove collisions when unit no longer is guarding
+-- Remove collisions when unit no longer is guarding (this event handler doesnt work)
 function UnitNoLongerGuarding(self)
 	ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-	print("no longer guarding!")
+	print("guarding!")
 	local object = SetObjectReference(self)
 	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", object , 4) then
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", object, 4, 0)
@@ -914,23 +894,26 @@ end
 
 -- Triggered by +BACKING_UP
 function BackingUp(self)
-	--print("backing up")
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
 	local a = getObjectId(self)
-
-	-- create table for this unit
-	unitsReversing[a] = {
-		firstFrame = 0,
-		isReverseMoving = false,
+	-- apparently unitsReversing[a] is nil when set from OnCreated.
+	unitsReversing[a] = unitsReversing[a] or {
+		firstFrame = 0, -- first frame after reversing while turning fast
+		isReverseMoving = false, -- flag to stop the re-assignment of firstFrame
 		timesTriggered = 0, 
 		distanceToMaster = 0, 
-		isMaster = false
+		isMaster = false,
+		hasBugged = false
 	}
+
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
+
 	-- broadcasted events dont work on stealthed units
 	if reverseMaster == nil then 
-		-- assign self as the master
-		reverseMaster = self
 		unitsReversing[a].isMaster = true
+		--unitsReversing[a].ObjectRef = self
+		-- assign self as the master (global var)
+		-- reverseMaster = unitsReversing[a]
+		reverseMaster = self
 	end 
 	
 	-- only do this if not the master, in the future ill need to make a second candidate for this to check if the "master" is reverse bugging.
@@ -939,22 +922,6 @@ function BackingUp(self)
 	else 
 		-- flash the master
 		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-	end
-end
-
--- Triggered by -BACKING_UP
-function BackingUpEnd(self)
-	local a = getObjectId(self)
-	
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 0)
-	if BackingUpFastEnd(self) then
-		-- remove from the table
-		unitsReversing[a] = nil	
-		if self == reverseMaster then 
-			-- clear master when it stops moving
-			--print("master has stopped moving")
-			reverseMaster = nil
-		end
 	end
 end
 
@@ -971,6 +938,7 @@ function RemoveFromUnitSelection(self)
 end
 
 function GetObjectDistance(self) 
+	local a = getObjectId(self)
 	if reverseMaster ~= nil and self ~= nil then
 		local val = 10
 		--  1 is less than or equal to
@@ -978,11 +946,55 @@ function GetObjectDistance(self)
 			val = val + 25
 		end
 		-- from here val is the distance between the units
-		return val
 		--local file = openfile("C:\\Users\\Public\\Documents\\kw_test.txt", "w")
 		--if file then
-		--	write(file, "Distance between master and this unit is: " .. val)
+		--	local i = reverseMaster.ObjectReferenceId
+		--	write(file, "Distance between master and this unit is: " .. val .. "unit id: " .. i)
 		--	closefile(file)
+		--end
+		return val	
+	end
+end
+
+-- clears the table 
+function ReverseUnitOnDeath(self)
+	-- mayube store objectid and reference (GetObjectReference) in their own properties of this table instead of repeatedly calling it every function.
+	local a = getObjectId(self)
+	if unitsReversing[a] ~= nil then
+		unitsReversing[a] = nil
+	end
+
+	if self == reverseMaster then 
+		-- clear master when it stops moving
+		reverseMaster = nil
+	end
+end
+
+-- Triggered by -BACKING_UP
+function BackingUpEnd(self)
+	local a = getObjectId(self)
+	
+	-- somehow is nil
+	if unitsReversing[a] ~= nil and not unitsReversing[a].hasBugged then
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 0)
+	end
+	--print("triggered backing up end")
+	
+	if BackingUpFastEnd(self) then
+		-- reset bug flag before cleanup
+		if unitsReversing[a] then
+			-- reset values instead of assinging table to nil
+			unitsReversing[a].firstFrame = 0 
+			unitsReversing[a].isReverseMoving = false
+			unitsReversing[a].timesTriggered = 0
+			unitsReversing[a].distanceToMaster = 0
+			unitsReversing[a].isMaster = false
+			unitsReversing[a].hasBugged = false
+		end	
+		-- to be replaced with ocl RELATIVE_ANGLE object offset by -200
+		--if self == reverseMaster then 
+		-- clear master when it stops moving
+		-- reverseMaster = nil
 		--end
 	end
 end

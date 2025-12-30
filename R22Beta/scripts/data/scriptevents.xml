@@ -892,7 +892,10 @@
 		<EventHandler EventName="OnBackingUpFastRightEnd"	ScriptFunctionName="BackingUpFastEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpFastLeftEnd"	ScriptFunctionName="BackingUpFastEnd" DebugSingleStep="false"/>
 
+		<!-- no worky -->
 		<EventHandler EventName="OnGuardingEnd"	ScriptFunctionName="UnitNoLongerGuarding" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="ReverseUnitOnDeath" DebugSingleStep="false"/>
+		<!-- <EventHandler EventName="OnCreated"	ScriptFunctionName="ReverseUnitCreated" DebugSingleStep="false"/> -->
     </EventList>
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">
