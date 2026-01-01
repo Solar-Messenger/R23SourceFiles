@@ -563,6 +563,10 @@
 
 		<ModelConditionEvent Name="OnSelected">
 			<Conditions>+SELECTED</Conditions>
+		</ModelConditionEvent>	
+
+		<ModelConditionEvent Name="OnSelectedEnd">
+			<Conditions>-SELECTED</Conditions>
 		</ModelConditionEvent>		
 		
 		<!-- R23 tib events -->
@@ -896,6 +900,10 @@
 		<EventHandler EventName="OnGuardingEnd"	ScriptFunctionName="UnitNoLongerGuarding" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="ReverseUnitOnDeath" DebugSingleStep="false"/>
 		<!-- <EventHandler EventName="OnCreated"	ScriptFunctionName="ReverseUnitCreated" DebugSingleStep="false"/> -->
+
+		<!-- selected events -->
+		<EventHandler EventName="OnSelected"	ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd"	ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
     </EventList>
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">

@@ -72,6 +72,7 @@ snapshotBefore = {}
 snapshotAfter = {}
 
 unitsReversing = {}
+reverseUnits = {}
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
 MAX_FRAMES_BEING_HARVESTED = 50 -- 15 frames is 1s (gdi/scrin harvest action time)
@@ -896,6 +897,12 @@ end
 function BackingUp(self)
 	local a = getObjectId(self)
 	-- apparently unitsReversing[a] is nil when set from OnCreated.
+
+
+	-- fire weapon that spawns an object that this unit then follows if bugging, save in unitsReversing table a reference to that object.
+	-- firing weapons appears to break the move command.
+	-- ObjectCreateAndFireTempWeapon(self, "ReverseAnchorWeapon")
+
 	unitsReversing[a] = unitsReversing[a] or {
 		firstFrame = 0, -- first frame after reversing while turning fast
 		isReverseMoving = false, -- flag to stop the re-assignment of firstFrame
@@ -905,7 +912,7 @@ function BackingUp(self)
 		hasBugged = false
 	}
 
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 48, 1)
 
 	-- broadcasted events dont work on stealthed units
 	if reverseMaster == nil then 
@@ -925,16 +932,52 @@ function BackingUp(self)
 	end
 end
 
--- Sets units selected to a table, each of the 8 players has their own table where objects get added here.
 function AddToUnitSelection(self)
+    local playerTeam = tostring(ObjectTeamName(self))
+    local unit = tostring(getObjectId(self))
 
+    if not reverseUnits[playerTeam] then
+        reverseUnits[playerTeam] = {}
+        reverseUnits[playerTeam].selectedCount = 0 
+    end
 
+    -- Add the unit to the table and increment the current units selected counter
+    if not reverseUnits[playerTeam][unit] then
+        reverseUnits[playerTeam][unit] = {
+            isBugging = false
+        }
+        local currentCount = reverseUnits[playerTeam].selectedCount or 0
+        reverseUnits[playerTeam].selectedCount = currentCount + 1
+    end
+
+    --local file = openfile("C:\\Users\\Public\\Documents\\kw_test.txt", "w")
+    --if file then
+    --    write(file, reverseUnits[playerTeam].selectedCount)
+    --    closefile(file)
+    --end
 end
 
--- Removes selected unit from the table, each of the 8 players has their own table where objects get removed here.
 function RemoveFromUnitSelection(self)
+    local playerTeam = tostring(ObjectTeamName(self))
+    local unit = tostring(getObjectId(self))
 
+    -- Check if the team table and the unit actually exist
+    if reverseUnits[playerTeam] and reverseUnits[playerTeam][unit] then
+    
+        reverseUnits[playerTeam][unit] = nil
+        
+        -- Decrement the counter
+        local currentCount = reverseUnits[playerTeam].selectedCount or 1
+        if currentCount > 0 then
+            reverseUnits[playerTeam].selectedCount = currentCount - 1
+        end
 
+        --local file = openfile("C:\\Users\\Public\\Documents\\kw_test.txt", "w")
+        --if file then
+        --    write(file, reverseUnits[playerTeam].selectedCount)
+        --    closefile(file)
+        --end
+    end
 end
 
 function GetObjectDistance(self) 
