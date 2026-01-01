@@ -72,7 +72,7 @@ snapshotBefore = {}
 snapshotAfter = {}
 
 unitsReversing = {}
-reverseUnits = {}
+selectedUnits = {}
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
 MAX_FRAMES_BEING_HARVESTED = 50 -- 15 frames is 1s (gdi/scrin harvest action time)
@@ -857,6 +857,8 @@ end
 -- Triggered by +BACKING_UP -TURN_LEFT_HIGH_SPEED and +BACKING_UP -TURN_RIGHT_HIGH_SPEED
 function BackingUpFastEnd(self)	
 	local a = getObjectId(self)
+	local playerTeam = tostring(ObjectTeamName(self))
+	
 	if unitsReversing[a] ~= nil and reverseMaster ~= nil then
 		unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
 
@@ -868,13 +870,39 @@ function BackingUpFastEnd(self)
 			 GetObjectDistance(self) > (unitsReversing[a].distanceToMaster + 50))
 
 		-- if true the unit has reverse bugged.
-		if shouldTrigger then
-			ExecuteAction("NAMED_FLASH", self, 2)
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
-			ExecuteAction("UNIT_GUARD_OBJECT", self, reverseMaster)
-			-- set hasBugged to true to this unit 
+		if shouldTrigger then		
+			-- flag this unit as being bugged
 			unitsReversing[a].hasBugged = true
-			ExecuteAction("NAMED_SET_STOPPING_DISTANCE", self, 100)
+		end
+
+		--  check if this is the last unit to be checked and it is go through all the selected units and assign them to the first unit that hasnt reverse bugged.
+		if selectedUnits[playerTeam].unitsChecked == selectedUnits[playerTeam].selectedCount then
+			local reverseAnchor = nil
+
+			-- assign the anchor (first occurence of hasBugged=false)
+			for key,value in unitsReversing do 
+				if not unitsReversing[key].hasBugged then
+					--- assign reverseAnchor to be the reference of the unit in this current iteration
+					reverseAnchor = unitsReversing[key].selfReference
+				end
+			end
+
+			-- go through unitsReversing and apply the fixes
+			for key,value in unitsReversing do 
+				if unitsReversing[key].hasBugged then
+					-- only execute this if the global reverse counter has reached the same as 
+					ExecuteAction("NAMED_FLASH", unitsReversing[key].selfReference, 2)
+					ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 4, 1)
+					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, reverseAnchor)
+					ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
+					-- reset the unitsChecked attribute
+				end
+			end
+			-- finally reset unitsChecked back to 0 again
+			selectedUnits[playerTeam].unitsChecked = 0
+		else
+			-- increment the global 
+			selectedUnits[playerTeam].unitsChecked = selectedUnits[playerTeam].unitsChecked + 1
 		end
 	end
 
@@ -897,8 +925,6 @@ end
 function BackingUp(self)
 	local a = getObjectId(self)
 	-- apparently unitsReversing[a] is nil when set from OnCreated.
-
-
 	-- fire weapon that spawns an object that this unit then follows if bugging, save in unitsReversing table a reference to that object.
 	-- firing weapons appears to break the move command.
 	-- ObjectCreateAndFireTempWeapon(self, "ReverseAnchorWeapon")
@@ -909,7 +935,8 @@ function BackingUp(self)
 		timesTriggered = 0, 
 		distanceToMaster = 0, 
 		isMaster = false,
-		hasBugged = false
+		hasBugged = false,
+		selfReference = self
 	}
 
 	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 48, 1)
@@ -936,23 +963,24 @@ function AddToUnitSelection(self)
     local playerTeam = tostring(ObjectTeamName(self))
     local unit = tostring(getObjectId(self))
 
-    if not reverseUnits[playerTeam] then
-        reverseUnits[playerTeam] = {}
-        reverseUnits[playerTeam].selectedCount = 0 
+    if not selectedUnits[playerTeam] then
+        selectedUnits[playerTeam] = {}
+        selectedUnits[playerTeam].selectedCount = 0 
+		selectedUnits[playerTeam].unitsChecked = 0 
     end
 
     -- Add the unit to the table and increment the current units selected counter
-    if not reverseUnits[playerTeam][unit] then
-        reverseUnits[playerTeam][unit] = {
+    if not selectedUnits[playerTeam][unit] then
+        selectedUnits[playerTeam][unit] = {
             isBugging = false
         }
-        local currentCount = reverseUnits[playerTeam].selectedCount or 0
-        reverseUnits[playerTeam].selectedCount = currentCount + 1
+        local currentCount = selectedUnits[playerTeam].selectedCount or 0
+        selectedUnits[playerTeam].selectedCount = currentCount + 1
     end
 
     --local file = openfile("C:\\Users\\Public\\Documents\\kw_test.txt", "w")
     --if file then
-    --    write(file, reverseUnits[playerTeam].selectedCount)
+    --    write(file, selectedUnits[playerTeam].selectedCount)
     --    closefile(file)
     --end
 end
@@ -962,19 +990,19 @@ function RemoveFromUnitSelection(self)
     local unit = tostring(getObjectId(self))
 
     -- Check if the team table and the unit actually exist
-    if reverseUnits[playerTeam] and reverseUnits[playerTeam][unit] then
+    if selectedUnits[playerTeam] and selectedUnits[playerTeam][unit] then
     
-        reverseUnits[playerTeam][unit] = nil
+        selectedUnits[playerTeam][unit] = nil
         
         -- Decrement the counter
-        local currentCount = reverseUnits[playerTeam].selectedCount or 1
+        local currentCount = selectedUnits[playerTeam].selectedCount or 1
         if currentCount > 0 then
-            reverseUnits[playerTeam].selectedCount = currentCount - 1
+            selectedUnits[playerTeam].selectedCount = currentCount - 1
         end
 
         --local file = openfile("C:\\Users\\Public\\Documents\\kw_test.txt", "w")
         --if file then
-        --    write(file, reverseUnits[playerTeam].selectedCount)
+        --    write(file, selectedUnits[playerTeam].selectedCount)
         --    closefile(file)
         --end
     end
@@ -1023,6 +1051,7 @@ function BackingUpEnd(self)
 	end
 	--print("triggered backing up end")
 	
+	-- check again if it has finished backing up
 	if BackingUpFastEnd(self) then
 		-- reset bug flag before cleanup
 		if unitsReversing[a] then
