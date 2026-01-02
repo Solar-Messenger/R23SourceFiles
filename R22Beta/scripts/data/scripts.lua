@@ -877,15 +877,32 @@ function BackingUpFastEnd(self)
 			ExecuteAction("NAMED_FLASH", unitsReversing[a].selfReference, 2)
 		end
 
+		-- increment the global 
+		selectedUnits[playerTeam].unitsChecked = selectedUnits[playerTeam].unitsChecked + 1
+
+		local file = openfile("C:\\Users\\Public\\Documents\\kw_test.txt", "a")
+        if file then
+            write(file, selectedUnits[playerTeam].unitsChecked .. "\n")
+            closefile(file)
+        end
+
 		--  check if this is the last unit to be checked and it is go through all the selected units and assign them to the first unit that hasnt reverse bugged.
-		if selectedUnits[playerTeam].unitsChecked == selectedUnits[playerTeam].selectedCount then
+		if selectedUnits[playerTeam].unitsChecked >= (selectedUnits[playerTeam].selectedCount) then
 			local reverseAnchor = nil
+
+
+			--local file = openfile("C:\\Users\\Public\\Documents\\kw_test.txt", "a")
+			--if file then
+			--	write(file, "\n")
+			--	closefile(file)
+			--end
 
 			-- assign the anchor (first occurence of hasBugged=false)
 			for key,value in unitsReversing do 
 				if not unitsReversing[key].hasBugged then
 					-- assign reverseAnchor to be the reference of the unit in this current iteration
 					reverseAnchor = unitsReversing[key].selfReference
+					ExecuteAction("NAMED_FLASH_WHITE", reverseAnchor, 2)
 					-- first instance of non bugged unit found, break the loop
 					break
 				end
@@ -894,18 +911,18 @@ function BackingUpFastEnd(self)
 			-- go through unitsReversing and apply the fixes
 			for key,value in unitsReversing do 
 				if unitsReversing[key].hasBugged then
+					print("a unit has bugged")
 					-- only execute this if the global reverse counter has reached the same as this teams selectedCount
-					-- ExecuteAction("NAMED_FLASH", unitsReversing[key].selfReference, 2)
+					--ExecuteAction("NAMED_FLASH", unitsReversing[key].selfReference, 2)
 					ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 4, 1)
 					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, reverseAnchor)
 					ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
+
+					unitsReversing[key].hasBugged = false
 				end
 			end
 			-- finally reset unitsChecked back to 0 again
 			selectedUnits[playerTeam].unitsChecked = 0
-		else
-			-- increment the global 
-			selectedUnits[playerTeam].unitsChecked = selectedUnits[playerTeam].unitsChecked + 1
 		end
 	end
 
@@ -966,7 +983,7 @@ function AddToUnitSelection(self)
     local playerTeam = tostring(ObjectTeamName(self))
     local unit = tostring(getObjectId(self))
 
-    if not selectedUnits[playerTeam] then
+    if selectedUnits[playerTeam] == nil then
         selectedUnits[playerTeam] = {}
         selectedUnits[playerTeam].selectedCount = 0 
 		selectedUnits[playerTeam].unitsChecked = 0 
@@ -981,10 +998,10 @@ function AddToUnitSelection(self)
         selectedUnits[playerTeam].selectedCount = currentCount + 1
     end
 
-    --local file = openfile("C:\\Users\\Public\\Documents\\kw_test.txt", "w")
+    --local file = openfile("C:\\Users\\Public\\Documents\\unit_count.txt", "a")
     --if file then
-    --    write(file, selectedUnits[playerTeam].selectedCount)
-    --    closefile(file)
+    --   write(file, selectedUnits[playerTeam].selectedCount)
+    --   closefile(file)
     --end
 end
 
@@ -998,7 +1015,7 @@ function RemoveFromUnitSelection(self)
         selectedUnits[playerTeam][unit] = nil
         
         -- Decrement the counter
-        local currentCount = selectedUnits[playerTeam].selectedCount or 1
+        local currentCount = selectedUnits[playerTeam].selectedCount or 0
         if currentCount > 0 then
             selectedUnits[playerTeam].selectedCount = currentCount - 1
         end
@@ -1057,20 +1074,19 @@ function BackingUpEnd(self)
 	
 	-- check again if it has finished backing up
 	if unitsReversing[a] ~= nil then
-		if BackingUpFastEnd(self) then
+		--if BackingUpFastEnd(self) then
 			-- reset values instead of assinging table to nil
 			unitsReversing[a].firstFrame = 0 
 			unitsReversing[a].isReverseMoving = false
 			unitsReversing[a].timesTriggered = 0
 			unitsReversing[a].distanceToMaster = 0
 			unitsReversing[a].isMaster = false
-			unitsReversing[a].hasBugged = false
 			-- to be replaced with ocl RELATIVE_ANGLE object offset by -200
 			-- if self == reverseMaster then 
 			-- clear master when it stops moving
 			-- reverseMaster = nil
 			-- end
-		end
+		--end
 	end
 	
 end
