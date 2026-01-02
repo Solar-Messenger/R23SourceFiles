@@ -80,7 +80,7 @@
 		</ObjectStatusEvent>	
 
 		<ModelConditionEvent Name="OnBackingUp">
-			<Conditions>+BACKING_UP</Conditions>
+			<Conditions>+SELECTED +BACKING_UP</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUp1">

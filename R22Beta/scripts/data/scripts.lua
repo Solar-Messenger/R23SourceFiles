@@ -862,7 +862,7 @@ function BackingUpFastEnd(self)
 	if unitsReversing[a] ~= nil and reverseMaster ~= nil then
 		unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
 
-		local shouldTrigger =
+		local isBugging =
 			(unitsReversing[a].timesTriggered == 2 and
 			 floor(GetFrame() - unitsReversing[a].firstFrame) == 7)
 			or
@@ -870,9 +870,11 @@ function BackingUpFastEnd(self)
 			 GetObjectDistance(self) > (unitsReversing[a].distanceToMaster + 50))
 
 		-- if true the unit has reverse bugged.
-		if shouldTrigger then		
+		if isBugging then		
 			-- flag this unit as being bugged
 			unitsReversing[a].hasBugged = true
+			-- flash units detected as being bugged
+			ExecuteAction("NAMED_FLASH", unitsReversing[a].selfReference, 2)
 		end
 
 		--  check if this is the last unit to be checked and it is go through all the selected units and assign them to the first unit that hasnt reverse bugged.
@@ -882,20 +884,21 @@ function BackingUpFastEnd(self)
 			-- assign the anchor (first occurence of hasBugged=false)
 			for key,value in unitsReversing do 
 				if not unitsReversing[key].hasBugged then
-					--- assign reverseAnchor to be the reference of the unit in this current iteration
+					-- assign reverseAnchor to be the reference of the unit in this current iteration
 					reverseAnchor = unitsReversing[key].selfReference
+					-- first instance of non bugged unit found, break the loop
+					break
 				end
 			end
 
 			-- go through unitsReversing and apply the fixes
 			for key,value in unitsReversing do 
 				if unitsReversing[key].hasBugged then
-					-- only execute this if the global reverse counter has reached the same as 
-					ExecuteAction("NAMED_FLASH", unitsReversing[key].selfReference, 2)
+					-- only execute this if the global reverse counter has reached the same as this teams selectedCount
+					-- ExecuteAction("NAMED_FLASH", unitsReversing[key].selfReference, 2)
 					ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 4, 1)
 					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, reverseAnchor)
 					ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
-					-- reset the unitsChecked attribute
 				end
 			end
 			-- finally reset unitsChecked back to 0 again
@@ -921,7 +924,7 @@ function UnitNoLongerGuarding(self)
 	end
 end
 
--- Triggered by +BACKING_UP
+-- Triggered by +SELECTED +BACKING_UP
 function BackingUp(self)
 	local a = getObjectId(self)
 	-- apparently unitsReversing[a] is nil when set from OnCreated.
@@ -1008,11 +1011,12 @@ function RemoveFromUnitSelection(self)
     end
 end
 
+-- object distance from self to master
 function GetObjectDistance(self) 
 	local a = getObjectId(self)
 	if reverseMaster ~= nil and self ~= nil then
 		local val = 10
-		--  1 is less than or equal to
+		--  1 is less than or equal, maybe get the nearest object here with a loop within a loop
 		while not EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(reverseMaster), 1, val) do
 			val = val + 25
 		end
@@ -1052,9 +1056,8 @@ function BackingUpEnd(self)
 	--print("triggered backing up end")
 	
 	-- check again if it has finished backing up
-	if BackingUpFastEnd(self) then
-		-- reset bug flag before cleanup
-		if unitsReversing[a] then
+	if unitsReversing[a] ~= nil then
+		if BackingUpFastEnd(self) then
 			-- reset values instead of assinging table to nil
 			unitsReversing[a].firstFrame = 0 
 			unitsReversing[a].isReverseMoving = false
@@ -1062,13 +1065,14 @@ function BackingUpEnd(self)
 			unitsReversing[a].distanceToMaster = 0
 			unitsReversing[a].isMaster = false
 			unitsReversing[a].hasBugged = false
-		end	
-		-- to be replaced with ocl RELATIVE_ANGLE object offset by -200
-		--if self == reverseMaster then 
-		-- clear master when it stops moving
-		-- reverseMaster = nil
-		--end
+			-- to be replaced with ocl RELATIVE_ANGLE object offset by -200
+			-- if self == reverseMaster then 
+			-- clear master when it stops moving
+			-- reverseMaster = nil
+			-- end
+		end
 	end
+	
 end
 
 -- ###################################################################
