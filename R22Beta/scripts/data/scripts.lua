@@ -867,9 +867,9 @@ function BackingUpFastEnd(self)
 			or
 			(unitsReversing[a].timesTriggered == 3 and
 			 floor(GetFrame() - unitsReversing[a].firstFrame) == 7)
-			or 
-			(unitsReversing[a].timesTriggered ~= 2 and
-			DistanceToClosestUnit(self) > (unitsReversing[a].distanceToMaster + 50))
+			--or 
+			--(unitsReversing[a].timesTriggered ~= 2 and
+			--GetClosestUnit(self) > (unitsReversing[a].closestUnit + 50))
 
 		-- if true the unit has reverse bugged.
 		if isBugging then		
@@ -888,15 +888,15 @@ function BackingUpFastEnd(self)
 			
 
 			-- assign the anchor (first occurence of hasBugged=false)
-			for key,value in unitsReversing do 
-				if not unitsReversing[key].hasBugged then
+			--for key,value in unitsReversing do 
+			--	if not unitsReversing[key].hasBugged then
 					-- assign reverseAnchor to be the reference of the unit in this current iteration
-					reverseAnchor = unitsReversing[key].selfReference
+			--		reverseAnchor = unitsReversing[key].selfReference
 					--ExecuteAction("NAMED_FLASH_WHITE", reverseAnchor, 2)
 					-- first instance of non bugged unit found, break the loop
-					break
-				end
-			end
+			--		break
+			--	end
+			--end
 
 			-- go through unitsReversing and apply the fixes
 			for key,value in unitsReversing do 
@@ -916,6 +916,12 @@ function BackingUpFastEnd(self)
 	end
 
 	return true
+end
+
+function AssignReverseAnchor()
+
+
+
 end
 
 -- Remove collisions when unit no longer is guarding (this event handler doesnt work)
@@ -945,7 +951,7 @@ function BackingUp(self)
 		distanceTo = 0, 
 		hasBugged = false,
 		selfReference = self,
-		distanceToMaster = 0 -- can be an array from closest to farthest
+		closestUnit = nil -- can be an array from closest to farthest
 	}
 
 	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 48, 1)
@@ -955,28 +961,34 @@ function BackingUp(self)
 	--TODO 
 	--I need to get the nearest unit from selectedUnits[playerTeam][unit], i need to go through the selectedUnits[playerTeam][unit] array , and assign the nearest unit and then order it from nearest to furthest.
 	--There will be duplicates like if unit a is the closest unit to b then it will be the case vice versa.
+	
+	unitsReversing[a].closestUnit = GetClosestUnit(self) 
 
-	unitsReversing[a].distanceToMaster = DistanceToClosestUnit(self) 
 	-- flash the master
 	--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 
 end
 
--- object distance from self to master
--- Returns the distance to the nearest selected same player unit, and that units reference
-function DistanceToClosestUnit(self) 
+-- gets the closest unit thats also selected of this player
+-- returns the object thats the closest.
+function GetClosestUnit(self)
 	if self ~= nil then
-		local distanceToUnit = 10
-		-- for each unit check if its 10 units near break the loop if it is
-		for key, value in selectedUnits[playerTeam][unit] do
-			local unit = selectedUnits[playerTeam][key]
-			if unit ~= self then
-				print("going through unit")
-				-- if its 10 units nearby break loop
-				if EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unit), 1, distanceToUnit) then
-					--local d = distanceToUnit + 25
-					ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-					return distanceToUnit
+		local playerTeam = tostring(ObjectTeamName(self)) 
+		local unit = tostring(getObjectId(self))
+		-- can be changed, and also later on made more sophisticated to do repeated checks
+		local distanceToUnit = 50
+
+		--WriteToFile("GetClosestUnit.txt",  tostring(ObjectDescription(selectedUnits[playerTeam][unit])) .. "\n")
+		-- for each unit check if its 10 units near break the loop if it is, if it isnt 10 then i need to incrment it by 10 and run it again
+		for unitKey, unitValue in selectedUnits[playerTeam] do
+			if type(unitValue) == "table" then
+				if unitValue ~= self then 
+					--WriteToFile("GetClosestUnit.txt",  tostring(ObjectDescription(value)) .. "\n")		
+					if EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unitValue), 1, distanceToUnit) then
+						-- flash the closest unit
+						ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+						return unitValue
+					end
 				end
 			end
 		end
@@ -993,7 +1005,6 @@ function AddToUnitSelection(self)
         selectedUnits[playerTeam].selectedCount = 0 
         selectedUnits[playerTeam].unitsChecked = 0 
     end
-
 
     -- Check if this specific unit is already in the selection
     if unit ~= nil then
@@ -1046,7 +1057,7 @@ function BackingUpEnd(self)
 			unitsReversing[a].firstFrame = 0 
 			unitsReversing[a].isReverseMoving = false
 			unitsReversing[a].timesTriggered = 0
-			unitsReversing[a].distanceToMaster = 0
+			unitsReversing[a].closestUnit = nil
 			unitsReversing[a].isMaster = false
 			-- to be replaced with ocl RELATIVE_ANGLE object offset by -200
 			-- if self == reverseMaster then 
