@@ -66,7 +66,6 @@ bar4 = {} -- for tracking the bar four of the harvester.
 
 harvesterData = {}
 crystalData = {}
-reverseMaster = nil
 
 snapshotBefore = {}
 snapshotAfter = {}
@@ -859,15 +858,18 @@ function BackingUpFastEnd(self)
 	local a = getObjectId(self)
 	local playerTeam = tostring(ObjectTeamName(self))
 	
-	if unitsReversing[a] ~= nil and reverseMaster ~= nil then
+	if unitsReversing[a] ~= nil then
 		unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
 
 		local isBugging =
 			(unitsReversing[a].timesTriggered == 2 and
 			 floor(GetFrame() - unitsReversing[a].firstFrame) == 7)
 			or
+			(unitsReversing[a].timesTriggered == 3 and
+			 floor(GetFrame() - unitsReversing[a].firstFrame) == 7)
+			or 
 			(unitsReversing[a].timesTriggered ~= 2 and
-			 GetObjectDistance(self) > (unitsReversing[a].distanceToMaster + 50))
+			DistanceToClosestUnit(self) > (unitsReversing[a].distanceToMaster + 50))
 
 		-- if true the unit has reverse bugged.
 		if isBugging then		
@@ -880,29 +882,17 @@ function BackingUpFastEnd(self)
 		-- increment the global 
 		selectedUnits[playerTeam].unitsChecked = selectedUnits[playerTeam].unitsChecked + 1
 
-		local file = openfile("C:\\Users\\Public\\Documents\\kw_test.txt", "a")
-        if file then
-            write(file, selectedUnits[playerTeam].unitsChecked .. "\n")
-            closefile(file)
-        end
-
 		--  check if this is the last unit to be checked and it is go through all the selected units and assign them to the first unit that hasnt reverse bugged.
-		if selectedUnits[playerTeam].unitsChecked >= (selectedUnits[playerTeam].selectedCount) then
+		--if selectedUnits[playerTeam].unitsChecked >= (selectedUnits[playerTeam].selectedCount) then
 			local reverseAnchor = nil
-
-
-			--local file = openfile("C:\\Users\\Public\\Documents\\kw_test.txt", "a")
-			--if file then
-			--	write(file, "\n")
-			--	closefile(file)
-			--end
+			
 
 			-- assign the anchor (first occurence of hasBugged=false)
 			for key,value in unitsReversing do 
 				if not unitsReversing[key].hasBugged then
 					-- assign reverseAnchor to be the reference of the unit in this current iteration
 					reverseAnchor = unitsReversing[key].selfReference
-					ExecuteAction("NAMED_FLASH_WHITE", reverseAnchor, 2)
+					--ExecuteAction("NAMED_FLASH_WHITE", reverseAnchor, 2)
 					-- first instance of non bugged unit found, break the loop
 					break
 				end
@@ -917,13 +907,12 @@ function BackingUpFastEnd(self)
 					ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 4, 1)
 					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, reverseAnchor)
 					ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
-
 					unitsReversing[key].hasBugged = false
 				end
 			end
 			-- finally reset unitsChecked back to 0 again
 			selectedUnits[playerTeam].unitsChecked = 0
-		end
+		--end
 	end
 
 	return true
@@ -953,99 +942,82 @@ function BackingUp(self)
 		firstFrame = 0, -- first frame after reversing while turning fast
 		isReverseMoving = false, -- flag to stop the re-assignment of firstFrame
 		timesTriggered = 0, 
-		distanceToMaster = 0, 
-		isMaster = false,
+		distanceTo = 0, 
 		hasBugged = false,
-		selfReference = self
+		selfReference = self,
+		distanceToMaster = 0 -- can be an array from closest to farthest
 	}
 
 	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 48, 1)
-
-	-- broadcasted events dont work on stealthed units
-	if reverseMaster == nil then 
-		unitsReversing[a].isMaster = true
-		--unitsReversing[a].ObjectRef = self
-		-- assign self as the master (global var)
-		-- reverseMaster = unitsReversing[a]
-		reverseMaster = self
-	end 
 	
 	-- only do this if not the master, in the future ill need to make a second candidate for this to check if the "master" is reverse bugging.
-	if not unitsReversing[a].isMaster then
-		unitsReversing[a].distanceToMaster = GetObjectDistance(self) 
-	else 
-		-- flash the master
-		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+
+	--TODO 
+	--I need to get the nearest unit from selectedUnits[playerTeam][unit], i need to go through the selectedUnits[playerTeam][unit] array , and assign the nearest unit and then order it from nearest to furthest.
+	--There will be duplicates like if unit a is the closest unit to b then it will be the case vice versa.
+
+	unitsReversing[a].distanceToMaster = DistanceToClosestUnit(self) 
+	-- flash the master
+	--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+
+end
+
+-- object distance from self to master
+-- Returns the distance to the nearest selected same player unit, and that units reference
+function DistanceToClosestUnit(self) 
+	if self ~= nil then
+		local distanceToUnit = 10
+		-- for each unit check if its 10 units near break the loop if it is
+		for key, value in selectedUnits[playerTeam][unit] do
+			local unit = selectedUnits[playerTeam][key]
+			if unit ~= self then
+				print("going through unit")
+				-- if its 10 units nearby break loop
+				if EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unit), 1, distanceToUnit) then
+					--local d = distanceToUnit + 25
+					ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+					return distanceToUnit
+				end
+			end
+		end
 	end
 end
 
 function AddToUnitSelection(self)
     local playerTeam = tostring(ObjectTeamName(self))
+    -- Define 'units' here so the code knows what key to check
     local unit = tostring(getObjectId(self))
 
     if selectedUnits[playerTeam] == nil then
         selectedUnits[playerTeam] = {}
         selectedUnits[playerTeam].selectedCount = 0 
-		selectedUnits[playerTeam].unitsChecked = 0 
+        selectedUnits[playerTeam].unitsChecked = 0 
     end
 
-    -- Add the unit to the table and increment the current units selected counter
-    if not selectedUnits[playerTeam][unit] then
-        selectedUnits[playerTeam][unit] = {
-            isBugging = false
-        }
+
+    -- Check if this specific unit is already in the selection
+    if unit ~= nil then
+        selectedUnits[playerTeam][unit] = self 
+		--WriteToFile("unitselection.txt",  tostring(selectedUnits[playerTeam][unit])) 
+		--ExecuteAction("NAMED_FLASH_WHITE", selectedUnits[playerTeam][unit], 2)
+        -- Increment the counter
         local currentCount = selectedUnits[playerTeam].selectedCount or 0
         selectedUnits[playerTeam].selectedCount = currentCount + 1
     end
-
-    --local file = openfile("C:\\Users\\Public\\Documents\\unit_count.txt", "a")
-    --if file then
-    --   write(file, selectedUnits[playerTeam].selectedCount)
-    --   closefile(file)
-    --end
 end
 
 function RemoveFromUnitSelection(self)
     local playerTeam = tostring(ObjectTeamName(self))
     local unit = tostring(getObjectId(self))
-
     -- Check if the team table and the unit actually exist
-    if selectedUnits[playerTeam] and selectedUnits[playerTeam][unit] then
-    
-        selectedUnits[playerTeam][unit] = nil
-        
+    if unit ~= nil then
+        selectedUnits[playerTeam][unit] = nil     
         -- Decrement the counter
         local currentCount = selectedUnits[playerTeam].selectedCount or 0
         if currentCount > 0 then
             selectedUnits[playerTeam].selectedCount = currentCount - 1
         end
-
-        --local file = openfile("C:\\Users\\Public\\Documents\\kw_test.txt", "w")
-        --if file then
-        --    write(file, selectedUnits[playerTeam].selectedCount)
-        --    closefile(file)
-        --end
     end
-end
-
--- object distance from self to master
-function GetObjectDistance(self) 
-	local a = getObjectId(self)
-	if reverseMaster ~= nil and self ~= nil then
-		local val = 10
-		--  1 is less than or equal, maybe get the nearest object here with a loop within a loop
-		while not EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(reverseMaster), 1, val) do
-			val = val + 25
-		end
-		-- from here val is the distance between the units
-		--local file = openfile("C:\\Users\\Public\\Documents\\kw_test.txt", "w")
-		--if file then
-		--	local i = reverseMaster.ObjectReferenceId
-		--	write(file, "Distance between master and this unit is: " .. val .. "unit id: " .. i)
-		--	closefile(file)
-		--end
-		return val	
-	end
 end
 
 -- clears the table 
@@ -1054,11 +1026,6 @@ function ReverseUnitOnDeath(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] ~= nil then
 		unitsReversing[a] = nil
-	end
-
-	if self == reverseMaster then 
-		-- clear master when it stops moving
-		reverseMaster = nil
 	end
 end
 
@@ -1089,6 +1056,14 @@ function BackingUpEnd(self)
 		--end
 	end
 	
+end
+
+function WriteToFile(file, content) 
+	local file = openfile("C:\\Users\\Public\\Documents\\" .. file, "a")
+	if file then
+		write(file, content)
+		closefile(file)
+	end
 end
 
 -- ###################################################################
