@@ -144,11 +144,16 @@
 		<ModelConditionEvent Name="OnDeployed1">
 			<Conditions>-DEPLOYED</Conditions>
 		</ModelConditionEvent>
-
+		<!--
 		<ModelConditionEvent Name="OnGuardingEnd">
-			<Conditions>-GUARDING</Conditions>
+			<Conditions>+GUARDING</Conditions>
 		</ModelConditionEvent>
-	
+		-->
+
+		<ObjectStatusEvent Name="OnReverseState">
+			<Conditions>+NEXT_MOVE_IS_REVERSE</Conditions>
+		</ObjectStatusEvent>	
+
 		<ModelConditionEvent Name="RecoverFromTerror">
 			<Conditions>-EMOTION_TERROR -DYING</Conditions>
 		</ModelConditionEvent>
@@ -156,7 +161,7 @@
 		<ModelConditionEvent Name="UsingSpecialOne">
 			<Conditions>+SPECIAL_POWER_1 -UNPACKING -PACKING</Conditions>
 		</ModelConditionEvent>
-       
+	
 		<ModelConditionEvent Name="UsingSpecialTwo">
 			<Conditions>+SPECIAL_POWER_2 -UNPACKING -PACKING</Conditions>
 		</ModelConditionEvent>
@@ -897,7 +902,7 @@
 		<EventHandler EventName="OnBackingUpFastLeftEnd"	ScriptFunctionName="BackingUpFastEnd" DebugSingleStep="false"/>
 
 		<!-- no worky -->
-		<EventHandler EventName="OnGuardingEnd"	ScriptFunctionName="UnitNoLongerGuarding" DebugSingleStep="false"/>
+		<EventHandler EventName="OnReverseState"	ScriptFunctionName="UnitNowGuarding" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="ReverseUnitOnDeath" DebugSingleStep="false"/>
 		<!-- <EventHandler EventName="OnCreated"	ScriptFunctionName="ReverseUnitCreated" DebugSingleStep="false"/> -->
 

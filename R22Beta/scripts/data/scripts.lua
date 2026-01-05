@@ -865,7 +865,7 @@ function BackingUpFastEnd(self)
 			(unitsReversing[a].timesTriggered == 2 and
 			floor(GetFrame() - unitsReversing[a].firstFrame) == 7) or
 			-- or the distance is more than 100 from closestUnit assigned when backing up started.
-			EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unitsReversing[a].closestUnit), 4, 200)
+			EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unitsReversing[a].closestUnit), 4, 150)
 
 		-- if true the unit has reverse bugged.
 		if isBugging then		
@@ -877,20 +877,21 @@ function BackingUpFastEnd(self)
 
 		-- increment the global 
 		selectedUnits[playerTeam].unitsChecked = selectedUnits[playerTeam].unitsChecked + 1
-
 		--  check if this is the last unit to be checked and it is go through all the selected units and assign them to the first unit that hasnt reverse bugged.
 		-- if selectedUnits[playerTeam].unitsChecked >= (selectedUnits[playerTeam].selectedCount) then
-			local reverseAnchor = unitsReversing[a].closestUnit	
+			--local reverseAnchor = unitsReversing[a].closestUnit	
 			-- go through unitsReversing and apply the fixes
 			for key,value in unitsReversing do 
 				if unitsReversing[key].hasBugged then
-					print("a unit has bugged")
+					--print("a unit has bugged")
 					-- only execute this if the global reverse counter has reached the same as this teams selectedCount
 					--ExecuteAction("NAMED_FLASH", unitsReversing[key].selfReference, 2)
-					ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 48, 1)
+					
 					-- check if the anchor is bugging 
-					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, reverseAnchor)
+					-- now guard it
+					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, unitsReversing[key].closestUnit)
 					ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
+					ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 48, 1)
 					unitsReversing[key].hasBugged = false
 				end
 			end
@@ -938,7 +939,7 @@ function BackingUp(self)
 		closestUnit = nil -- can be an array from closest to farthest
 	}
 
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 48, 1)
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
 	
 	-- only do this if not the master, in the future ill need to make a second candidate for this to check if the "master" is reverse bugging.
 
@@ -947,10 +948,8 @@ function BackingUp(self)
 	--There will be duplicates like if unit a is the closest unit to b then it will be the case vice versa.
 	
 	unitsReversing[a].closestUnit = GetClosestUnit(self) 
-
 	-- flash the master
 	--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-
 end
 
 -- gets the closest unit thats also selected of this player
@@ -1029,6 +1028,7 @@ function BackingUpEnd(self)
 	local a = getObjectId(self)
 	
 	if unitsReversing[a] ~= nil and not unitsReversing[a].hasBugged then
+		-- need to prevent this when guarding
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 0)
 	end
 
