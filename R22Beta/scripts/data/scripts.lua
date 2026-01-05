@@ -854,22 +854,18 @@ function BackingUpFast(self)
 end
 
 -- Triggered by +BACKING_UP -TURN_LEFT_HIGH_SPEED and +BACKING_UP -TURN_RIGHT_HIGH_SPEED
+-- maybe instead of the above condition i could set a timer via a model condition and when it expires i can check the distance. 
 function BackingUpFastEnd(self)	
 	local a = getObjectId(self)
 	local playerTeam = tostring(ObjectTeamName(self))
 	
 	if unitsReversing[a] ~= nil then
 		unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
-
 		local isBugging =
 			(unitsReversing[a].timesTriggered == 2 and
-			 floor(GetFrame() - unitsReversing[a].firstFrame) == 7)
-			or
-			(unitsReversing[a].timesTriggered == 3 and
-			 floor(GetFrame() - unitsReversing[a].firstFrame) == 7)
-			--or 
-			--(unitsReversing[a].timesTriggered ~= 2 and
-			--GetClosestUnit(self) > (unitsReversing[a].closestUnit + 50))
+			floor(GetFrame() - unitsReversing[a].firstFrame) == 7) or
+			-- or the distance is more than 100 from closestUnit assigned when backing up started.
+			EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unitsReversing[a].closestUnit), 4, 200)
 
 		-- if true the unit has reverse bugged.
 		if isBugging then		
@@ -883,28 +879,16 @@ function BackingUpFastEnd(self)
 		selectedUnits[playerTeam].unitsChecked = selectedUnits[playerTeam].unitsChecked + 1
 
 		--  check if this is the last unit to be checked and it is go through all the selected units and assign them to the first unit that hasnt reverse bugged.
-		--if selectedUnits[playerTeam].unitsChecked >= (selectedUnits[playerTeam].selectedCount) then
-			local reverseAnchor = nil
-			
-
-			-- assign the anchor (first occurence of hasBugged=false)
-			--for key,value in unitsReversing do 
-			--	if not unitsReversing[key].hasBugged then
-					-- assign reverseAnchor to be the reference of the unit in this current iteration
-			--		reverseAnchor = unitsReversing[key].selfReference
-					--ExecuteAction("NAMED_FLASH_WHITE", reverseAnchor, 2)
-					-- first instance of non bugged unit found, break the loop
-			--		break
-			--	end
-			--end
-
+		-- if selectedUnits[playerTeam].unitsChecked >= (selectedUnits[playerTeam].selectedCount) then
+			local reverseAnchor = unitsReversing[a].closestUnit	
 			-- go through unitsReversing and apply the fixes
 			for key,value in unitsReversing do 
 				if unitsReversing[key].hasBugged then
 					print("a unit has bugged")
 					-- only execute this if the global reverse counter has reached the same as this teams selectedCount
 					--ExecuteAction("NAMED_FLASH", unitsReversing[key].selfReference, 2)
-					ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 4, 1)
+					ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 48, 1)
+					-- check if the anchor is bugging 
 					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, reverseAnchor)
 					ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
 					unitsReversing[key].hasBugged = false
@@ -912,7 +896,7 @@ function BackingUpFastEnd(self)
 			end
 			-- finally reset unitsChecked back to 0 again
 			selectedUnits[playerTeam].unitsChecked = 0
-		--end
+		-- end
 	end
 
 	return true
@@ -976,7 +960,7 @@ function GetClosestUnit(self)
 		local playerTeam = tostring(ObjectTeamName(self)) 
 		local unit = tostring(getObjectId(self))
 		-- can be changed, and also later on made more sophisticated to do repeated checks
-		local distanceToUnit = 50
+		local distanceToUnit = 100
 
 		--WriteToFile("GetClosestUnit.txt",  tostring(ObjectDescription(selectedUnits[playerTeam][unit])) .. "\n")
 		-- for each unit check if its 10 units near break the loop if it is, if it isnt 10 then i need to incrment it by 10 and run it again
@@ -986,7 +970,7 @@ function GetClosestUnit(self)
 					--WriteToFile("GetClosestUnit.txt",  tostring(ObjectDescription(value)) .. "\n")		
 					if EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unitValue), 1, distanceToUnit) then
 						-- flash the closest unit
-						ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+						-- ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 						return unitValue
 					end
 				end
@@ -1044,29 +1028,17 @@ end
 function BackingUpEnd(self)
 	local a = getObjectId(self)
 	
-	-- somehow is nil
 	if unitsReversing[a] ~= nil and not unitsReversing[a].hasBugged then
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 0)
 	end
-	--print("triggered backing up end")
-	
-	-- check again if it has finished backing up
+
 	if unitsReversing[a] ~= nil then
-		--if BackingUpFastEnd(self) then
-			-- reset values instead of assinging table to nil
-			unitsReversing[a].firstFrame = 0 
-			unitsReversing[a].isReverseMoving = false
-			unitsReversing[a].timesTriggered = 0
-			unitsReversing[a].closestUnit = nil
-			unitsReversing[a].isMaster = false
-			-- to be replaced with ocl RELATIVE_ANGLE object offset by -200
-			-- if self == reverseMaster then 
-			-- clear master when it stops moving
-			-- reverseMaster = nil
-			-- end
-		--end
+		unitsReversing[a].firstFrame = 0 
+		unitsReversing[a].isReverseMoving = false
+		unitsReversing[a].timesTriggered = 0
+		unitsReversing[a].closestUnit = nil
+		unitsReversing[a].isMaster = false
 	end
-	
 end
 
 function WriteToFile(file, content) 
