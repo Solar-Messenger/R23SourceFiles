@@ -861,11 +861,14 @@ function BackingUpFastEnd(self)
 	
 	if unitsReversing[a] ~= nil then
 		unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
-		local isBugging =
-			(unitsReversing[a].timesTriggered == 2 and
-			floor(GetFrame() - unitsReversing[a].firstFrame) == 7) or
-			-- or the distance is more than 100 from closestUnit assigned when backing up started.
-			EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unitsReversing[a].closestUnit), 4, 150)
+		local isBugging = false
+			
+		-- or the distance is more than 100 from closestUnit assigned when backing up started.
+		if (unitsReversing[a].timesTriggered == 2 and floor(GetFrame() - unitsReversing[a].firstFrame) == 7) then
+			isBugging = true
+		elseif not unitsReversing[getObjectId(unitsReversing[a].closestUnit)].hasBugged then
+			isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unitsReversing[a].closestUnit), 4, 75)
+		end
 
 		-- if true the unit has reverse bugged.
 		if isBugging then		
@@ -878,7 +881,7 @@ function BackingUpFastEnd(self)
 		-- increment the global 
 		selectedUnits[playerTeam].unitsChecked = selectedUnits[playerTeam].unitsChecked + 1
 		--  check if this is the last unit to be checked and it is go through all the selected units and assign them to the first unit that hasnt reverse bugged.
-		-- if selectedUnits[playerTeam].unitsChecked >= (selectedUnits[playerTeam].selectedCount) then
+		--if selectedUnits[playerTeam].unitsChecked >= (selectedUnits[playerTeam].selectedCount) then
 			--local reverseAnchor = unitsReversing[a].closestUnit	
 			-- go through unitsReversing and apply the fixes
 			for key,value in unitsReversing do 
@@ -889,15 +892,18 @@ function BackingUpFastEnd(self)
 					
 					-- check if the anchor is bugging 
 					-- now guard it
-					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, unitsReversing[key].closestUnit)
-					ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
-					ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 48, 1)
-					unitsReversing[key].hasBugged = false
+					-- and (floor(GetFrame() - unitsReversing[key].firstFrame) < 15) 
+					if not unitsReversing[getObjectId(unitsReversing[key].closestUnit)].hasBugged then
+						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, unitsReversing[key].closestUnit)
+						ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
+						ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 48, 1)
+					end
+					--unitsReversing[key].hasBugged = false
 				end
 			end
 			-- finally reset unitsChecked back to 0 again
 			selectedUnits[playerTeam].unitsChecked = 0
-		-- end
+		 --end
 	end
 
 	return true
@@ -959,7 +965,7 @@ function GetClosestUnit(self)
 		local playerTeam = tostring(ObjectTeamName(self)) 
 		local unit = tostring(getObjectId(self))
 		-- can be changed, and also later on made more sophisticated to do repeated checks
-		local distanceToUnit = 100
+		local distanceToUnit = 50
 
 		--WriteToFile("GetClosestUnit.txt",  tostring(ObjectDescription(selectedUnits[playerTeam][unit])) .. "\n")
 		-- for each unit check if its 10 units near break the loop if it is, if it isnt 10 then i need to incrment it by 10 and run it again
@@ -1038,6 +1044,7 @@ function BackingUpEnd(self)
 		unitsReversing[a].timesTriggered = 0
 		unitsReversing[a].closestUnit = nil
 		unitsReversing[a].isMaster = false
+		unitsReversing[a].hasBugged = false
 	end
 end
 
