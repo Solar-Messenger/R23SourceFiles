@@ -1,0 +1,8 @@
+Issues
+1. The selectedUnits removes the units before the BackingUpFastEnd function ends, i need to store this table in each of the units reversing as its temporary, players will delect their units constantly - breaking the logiic here.
+
+2.Some edge cases are causing units to flash but not act upon it.
+
+
+Recommendations:
+Instead of repeadely calling "SetObjectReference" i could store this value in the units table, because the issue with this function iis that it generates a random number every time its called. Having the unique number generated already is better for safety.

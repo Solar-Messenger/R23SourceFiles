@@ -866,9 +866,15 @@ function BackingUpFastEnd(self)
 		-- or the distance is more than 100 from closestUnit assigned when backing up started.
 		if (unitsReversing[a].timesTriggered == 2 and floor(GetFrame() - unitsReversing[a].firstFrame) == 7) then
 			isBugging = true
-		elseif not unitsReversing[getObjectId(unitsReversing[a].closestUnit)].hasBugged then
-			isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unitsReversing[a].closestUnit), 4, 75)
-		end	
+		else
+			if not unitsReversing[getObjectId(unitsReversing[a].closestUnit)].hasBugged then
+				isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unitsReversing[a].closestUnit), 4, 75)
+			else
+				-- closestUnit has bugged
+				print("closest unit has bugged")
+				isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(GetANonBuggingUnit(selectedUnits[playerTeam])), 4, 125)
+			end
+		end
 
 		-- if true the unit has reverse bugged.
 		if isBugging then		
@@ -879,7 +885,7 @@ function BackingUpFastEnd(self)
 		end
 
 		-- increment the global 
-		selectedUnits[playerTeam].unitsChecked = selectedUnits[playerTeam].unitsChecked + 1
+		--selectedUnits[playerTeam].unitsChecked = selectedUnits[playerTeam].unitsChecked + 1
 		--  check if this is the last unit to be checked and it is go through all the selected units and assign them to the first unit that hasnt reverse bugged.
 		--if selectedUnits[playerTeam].unitsChecked >= (selectedUnits[playerTeam].selectedCount) then
 			--local reverseAnchor = unitsReversing[a].closestUnit	
@@ -894,14 +900,13 @@ function BackingUpFastEnd(self)
 					end
 					ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
 					ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 48, 1)
-
+					return true
 				end
 			end
 			-- finally reset unitsChecked back to 0 again
-			selectedUnits[playerTeam].unitsChecked = 0
+			--selectedUnits[playerTeam].unitsChecked = 0
 		 --end
 	end
-
 	return true
 end
 
