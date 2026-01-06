@@ -868,7 +868,7 @@ function BackingUpFastEnd(self)
 			isBugging = true
 		elseif not unitsReversing[getObjectId(unitsReversing[a].closestUnit)].hasBugged then
 			isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unitsReversing[a].closestUnit), 4, 75)
-		end
+		end	
 
 		-- if true the unit has reverse bugged.
 		if isBugging then		
@@ -886,19 +886,15 @@ function BackingUpFastEnd(self)
 			-- go through unitsReversing and apply the fixes
 			for key,value in unitsReversing do 
 				if unitsReversing[key].hasBugged then
-					--print("a unit has bugged")
-					-- only execute this if the global reverse counter has reached the same as this teams selectedCount
-					--ExecuteAction("NAMED_FLASH", unitsReversing[key].selfReference, 2)
-					
-					-- check if the anchor is bugging 
-					-- now guard it
-					-- and (floor(GetFrame() - unitsReversing[key].firstFrame) < 15) 
 					if not unitsReversing[getObjectId(unitsReversing[key].closestUnit)].hasBugged then
 						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, unitsReversing[key].closestUnit)
-						ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
-						ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 48, 1)
+					else 
+						-- get a unit that hasnt bugged 
+						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, GetANonBuggingUnit(selectedUnits[playerTeam], self))		
 					end
-					--unitsReversing[key].hasBugged = false
+					ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
+					ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 48, 1)
+
 				end
 			end
 			-- finally reset unitsChecked back to 0 again
@@ -907,6 +903,17 @@ function BackingUpFastEnd(self)
 	end
 
 	return true
+end
+
+-- if the closestUnit has bugged during the reverse move, seek out a unit that hasnt of that players selection.
+function GetANonBuggingUnit(selectedUnitsOfPlayer, unit) 
+	for key, value in selectedUnitsOfPlayer do
+		if type(value) == "table" and value ~= unit then
+			if not unitsReversing[getObjectId(value)].hasBugged then
+				return value
+			end
+		end
+	end
 end
 
 function AssignReverseAnchor()
