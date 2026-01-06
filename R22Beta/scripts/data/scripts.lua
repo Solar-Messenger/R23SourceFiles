@@ -859,7 +859,7 @@ function BackingUpFastEnd(self)
 	local a = getObjectId(self)
 	local playerTeam = tostring(ObjectTeamName(self))
 	
-	if unitsReversing[a] ~= nil then
+	if unitsReversing[a] ~= nil and unitsReversing[a].timesTriggered < 2 then
 		unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
 		local isBugging = false
 			
