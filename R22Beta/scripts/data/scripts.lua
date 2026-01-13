@@ -856,7 +856,12 @@ end
 -- Triggered by +BACKING_UP -TURN_LEFT_HIGH_SPEED and +BACKING_UP -TURN_RIGHT_HIGH_SPEED
 -- maybe instead of the above condition i could set a timer via a model condition and when it expires i can check the distance. 
 function BackingUpFastEnd(self)	
+	-- if the unit is bugging already end the function
+	if ObjectTestModelCondition(self, "USER_72") then return end
 	local a = getObjectId(self)
+
+	--print(unitsReversing[getObjectId(GetANonBuggingUnit(unitsReversing[a].selectedUnits))])
+
 	local playerTeam = tostring(ObjectTeamName(self))
 	
 	if unitsReversing[a] ~= nil and unitsReversing[a].timesTriggered < 2 then
@@ -868,11 +873,10 @@ function BackingUpFastEnd(self)
 			isBugging = true
 		else
 			if not unitsReversing[getObjectId(unitsReversing[a].closestUnit)].hasBugged then
-				isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unitsReversing[a].closestUnit), 4, 75)
+				isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[getObjectId(unitsReversing[a].closestUnit)].selfReference, 4, 75)
 			else
 				-- closestUnit has bugged
-				print("closest unit has bugged")
-				isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(GetANonBuggingUnit(selectedUnits[playerTeam])), 4, 125)
+				isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[getObjectId(GetANonBuggingUnit(unitsReversing[a].selectedUnits))].selfReference, 4, 125)
 			end
 		end
 
@@ -880,6 +884,7 @@ function BackingUpFastEnd(self)
 		if isBugging then		
 			-- flag this unit as being bugged
 			unitsReversing[a].hasBugged = true
+			-- apply a temporary model state to prevent its unitsSelected property being replaced.
 			-- flash units detected as being bugged
 			ExecuteAction("NAMED_FLASH", unitsReversing[a].selfReference, 2)
 		end
@@ -890,22 +895,25 @@ function BackingUpFastEnd(self)
 		--if selectedUnits[playerTeam].unitsChecked >= (selectedUnits[playerTeam].selectedCount) then
 			--local reverseAnchor = unitsReversing[a].closestUnit	
 			-- go through unitsReversing and apply the fixes
-			for key,value in unitsReversing do 
-				if unitsReversing[key].hasBugged then
-					if not unitsReversing[getObjectId(unitsReversing[key].closestUnit)].hasBugged then
-						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, unitsReversing[key].closestUnit)
-					else 
-						-- get a unit that hasnt bugged 
-						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, GetANonBuggingUnit(selectedUnits[playerTeam], self))		
-					end
-					ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
-					ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(unitsReversing[key].selfReference), 48, 1)
-					return true
+
+		for key,value in unitsReversing do 
+			if unitsReversing[key].hasBugged and ObjectTestModelCondition(unitsReversing[key].selfRealReference, "USER_72") == false then
+				if not unitsReversing[getObjectId(unitsReversing[key].closestUnit)].hasBugged then
+					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, unitsReversing[getObjectId(unitsReversing[key].closestUnit)].selfReference)
+				else 
+					-- get a unit that hasnt bugged 
+					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, unitsReversing[getObjectId(GetANonBuggingUnit(unitsReversing[key].selectedUnits))].selfReference, self)		
 				end
+				ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
+				-- reverse move to remove collisions
+				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[key].selfReference, 48, 1)
+				
+				ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 5, 100) 
+				return true
 			end
-			-- finally reset unitsChecked back to 0 again
-			--selectedUnits[playerTeam].unitsChecked = 0
-		 --end
+		end
+		-- finally reset unitsChecked back to 0 again
+		--selectedUnits[playerTeam].unitsChecked = 0
 	end
 	return true
 end
@@ -942,6 +950,7 @@ end
 -- Triggered by +SELECTED +BACKING_UP
 function BackingUp(self)
 	local a = getObjectId(self)
+	local playerTeam = tostring(ObjectTeamName(self)) 
 	-- apparently unitsReversing[a] is nil when set from OnCreated.
 	-- fire weapon that spawns an object that this unit then follows if bugging, save in unitsReversing table a reference to that object.
 	-- firing weapons appears to break the move command.
@@ -953,21 +962,23 @@ function BackingUp(self)
 		timesTriggered = 0, 
 		distanceTo = 0, 
 		hasBugged = false,
-		selfReference = self,
+		selfReference = SetObjectReference(self),
+		selfRealReference = self,
+		selectedUnits = {},
 		closestUnit = nil -- can be an array from closest to farthest
 	}
 
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 1)
-	
-	-- only do this if not the master, in the future ill need to make a second candidate for this to check if the "master" is reverse bugging.
+	-- maybe assigning a temp model state to prevent this from reassigning on a unit that is backing up again due to GUARD state is an option.
+	if ObjectTestModelCondition(self, "USER_72") == false then
+		unitsReversing[a].selectedUnits = selectedUnits[playerTeam]
+	end
+
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 1)
 
 	--TODO 
 	--I need to get the nearest unit from selectedUnits[playerTeam][unit], i need to go through the selectedUnits[playerTeam][unit] array , and assign the nearest unit and then order it from nearest to furthest.
 	--There will be duplicates like if unit a is the closest unit to b then it will be the case vice versa.
-	
 	unitsReversing[a].closestUnit = GetClosestUnit(self) 
-	-- flash the master
-	--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 end
 
 -- gets the closest unit thats also selected of this player
@@ -975,19 +986,20 @@ end
 function GetClosestUnit(self)
 	if self ~= nil then
 		local playerTeam = tostring(ObjectTeamName(self)) 
-		local unit = tostring(getObjectId(self))
+		local a = getObjectId(self)
+		local unit = tostring(a)
 		-- can be changed, and also later on made more sophisticated to do repeated checks
-		local distanceToUnit = 50
+		local distanceToUnit = 75
 
 		--WriteToFile("GetClosestUnit.txt",  tostring(ObjectDescription(selectedUnits[playerTeam][unit])) .. "\n")
 		-- for each unit check if its 10 units near break the loop if it is, if it isnt 10 then i need to incrment it by 10 and run it again
-		for unitKey, unitValue in selectedUnits[playerTeam] do
+		for unitKey, unitValue in unitsReversing[a].selectedUnits do
 			if type(unitValue) == "table" then
 				if unitValue ~= self then 
-					--WriteToFile("GetClosestUnit.txt",  tostring(ObjectDescription(value)) .. "\n")		
-					if EvaluateCondition("DISTANCE_BETWEEN_OBJ", SetObjectReference(self), SetObjectReference(unitValue), 1, distanceToUnit) then
+					--WriteToFile("GetClosestUnit.txt",  unitsReversing[unitKey].selfReference .. "\n")
+					if EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference,  unitsReversing[unitKey].selfReference, 1, distanceToUnit) then
 						-- flash the closest unit
-						-- ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+						--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 						return unitValue
 					end
 				end
@@ -999,7 +1011,7 @@ end
 function AddToUnitSelection(self)
     local playerTeam = tostring(ObjectTeamName(self))
     -- Define 'units' here so the code knows what key to check
-    local unit = tostring(getObjectId(self))
+    local unit = getObjectId(self)
 
     if selectedUnits[playerTeam] == nil then
         selectedUnits[playerTeam] = {}
@@ -1020,7 +1032,7 @@ end
 
 function RemoveFromUnitSelection(self)
     local playerTeam = tostring(ObjectTeamName(self))
-    local unit = tostring(getObjectId(self))
+    local unit = getObjectId(self)
     -- Check if the team table and the unit actually exist
     if unit ~= nil then
         selectedUnits[playerTeam][unit] = nil     
@@ -1047,7 +1059,7 @@ function BackingUpEnd(self)
 	
 	if unitsReversing[a] ~= nil and not unitsReversing[a].hasBugged then
 		-- need to prevent this when guarding
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 4, 0)
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 0)
 	end
 
 	if unitsReversing[a] ~= nil then
