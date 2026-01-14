@@ -501,7 +501,8 @@ function GetCrystalData(self)
 			framesBeingHarvested = 0, -- the amount of frames the crystal has been harvested
 			crystalHasBeenReset = false, -- the crystal has undergone a reset
 			dontKillCrystal = false, -- flag to prevent the crystal from being killed with NAMED_KILL
-			beingHarvestedBy = nil -- harvester thats currently harvesting this crystal
+			beingHarvestedBy = nil, -- harvester thats currently harvesting this crystal
+			crystalObjectRef = SetObjectReference(self, a) -- set the object reference once instead of relying on GetRandomNumber()
 		}
 		return a, crystalData[a]
 	end
@@ -513,12 +514,12 @@ end
 function TiberiumEvent(self, other)
 	if self ~= nil and other ~= nil then
 		-- replace with a less costly method
-		local ObjectStringRef = "object_" .. floor(GetRandomNumber()*99999999)
-		ExecuteAction("SET_UNIT_REFERENCE", ObjectStringRef , self)
+		local _, crystal = GetCrystalData(self)
+		-- local ObjectStringRef = "object_" .. floor(GetRandomNumber()*99999999)
+		-- ExecuteAction("SET_UNIT_REFERENCE", crystal.crystalObjectRef, self)
 		-- if IS_BEING_HARVESTED is true
-		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", ObjectStringRef , 116) then
+		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", crystal.crystalObjectRef , 116) then
 			local _, data = GetHarvesterData(other)
-			local _, crystal = GetCrystalData(self)
 			--  the harvester is not already harvesting nor crystal is the crystal also being harvested (prevents nearby crystals in the 75 radius from triggering the same event on the same harvester)
 			if not data.isAlreadyHarvesting and crystal.beingHarvestedBy == nil then
 				-- assign the crystal this harvester is currently harvesting to the table 
@@ -790,7 +791,6 @@ function OnHuskCapture(self, slaughterer)
 			else
 				for i = 1, getn(playerTable), 1 do
 					local teamStr = "team" .. playerTable[i]
-
 					if strfind(huskOwner, teamStr) and strfind(engiOwner, teamStr) == nil and i <= 8 then
 						ObjectCreateAndFireTempWeapon(slaughterer, "AlertHuskPlayer" .. i)
 						break
@@ -837,9 +837,10 @@ end
 -- ####################### REVERSE MOVE WORKAROUND ############################
 
 -- Set the reference of an object in order to assign object status successfully.
-function SetObjectReference(self)
-	local ObjectStringRef = "object_" .. floor(GetRandomNumber()*99999999)
-	ExecuteAction("SET_UNIT_REFERENCE", ObjectStringRef , self)
+function SetObjectReference(self, ref)
+	local ObjectStringRef = "object_" .. ref
+	-- WriteToFile("objref.txt",  ObjectStringRef .. "\n")
+	ExecuteAction("SET_UNIT_REFERENCE", ObjectStringRef, self)
 	return ObjectStringRef
 end
 
@@ -867,7 +868,6 @@ function BackingUpFastEnd(self)
 	if unitsReversing[a] ~= nil and unitsReversing[a].timesTriggered < 2 then
 		unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
 		local isBugging = false
-			
 		-- or the distance is more than 100 from closestUnit assigned when backing up started.
 		if (unitsReversing[a].timesTriggered == 2 and floor(GetFrame() - unitsReversing[a].firstFrame) == 7) then
 			isBugging = true
@@ -879,7 +879,7 @@ function BackingUpFastEnd(self)
 				isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[getObjectId(GetANonBuggingUnit(unitsReversing[a].selectedUnits))].selfReference, 4, 125)
 			end
 		end
-
+		
 		-- if true the unit has reverse bugged.
 		if isBugging then		
 			-- flag this unit as being bugged
@@ -888,7 +888,7 @@ function BackingUpFastEnd(self)
 			-- flash units detected as being bugged
 			ExecuteAction("NAMED_FLASH", unitsReversing[a].selfReference, 2)
 		end
-
+		
 		-- increment the global 
 		--selectedUnits[playerTeam].unitsChecked = selectedUnits[playerTeam].unitsChecked + 1
 		--  check if this is the last unit to be checked and it is go through all the selected units and assign them to the first unit that hasnt reverse bugged.
@@ -897,23 +897,31 @@ function BackingUpFastEnd(self)
 			-- go through unitsReversing and apply the fixes
 
 		for key,value in unitsReversing do 
-			if unitsReversing[key].hasBugged and ObjectTestModelCondition(unitsReversing[key].selfRealReference, "USER_72") == false then
-				if not unitsReversing[getObjectId(unitsReversing[key].closestUnit)].hasBugged then
-					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, unitsReversing[getObjectId(unitsReversing[key].closestUnit)].selfReference)
+			if unitsReversing[key].hasBugged then
+				local closestUnit = unitsReversing[getObjectId(unitsReversing[key].closestUnit)]
+				-- if the closestUnit has not bugged and also this unit is not already being corrected
+				if not closestUnit.hasBugged and ObjectTestModelCondition(unitsReversing[key].selfRealReference, "USER_72") == false then
+					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, closestUnit.selfReference)
 				else 
 					-- get a unit that hasnt bugged 
-					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, unitsReversing[getObjectId(GetANonBuggingUnit(unitsReversing[key].selectedUnits))].selfReference, self)		
+					local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[key].selectedUnits)
+					-- assign new closestUnit value 
+					unitsReversing[key].closestUnit = nonBuggingUnit
+					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference, self)		
 				end
 				ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
 				-- reverse move to remove collisions
 				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[key].selfReference, 48, 1)
 				
-				ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 5, 100) 
+				-- if the unit hasnt already got USER_72, assign it 
+				if ObjectTestModelCondition(unitsReversing[key].selfRealReference, "USER_72") == false then
+					ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 5, 100) 
+				end
 				return true
 			end
 		end
 		-- finally reset unitsChecked back to 0 again
-		--selectedUnits[playerTeam].unitsChecked = 0
+		-- selectedUnits[playerTeam].unitsChecked = 0
 	end
 	return true
 end
@@ -930,8 +938,6 @@ function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 end
 
 function AssignReverseAnchor()
-
-
 
 end
 
@@ -962,7 +968,7 @@ function BackingUp(self)
 		timesTriggered = 0, 
 		distanceTo = 0, 
 		hasBugged = false,
-		selfReference = SetObjectReference(self),
+		selfReference = SetObjectReference(self, a),
 		selfRealReference = self,
 		selectedUnits = {},
 		closestUnit = nil -- can be an array from closest to farthest
