@@ -909,6 +909,9 @@
 		<!-- selected events -->
 		<EventHandler EventName="OnSelected"	ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
 		<EventHandler EventName="OnSelectedEnd"	ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+
+		<!-- on user 72 end-->
+		<EventHandler EventName="OnUser72End"	ScriptFunctionName="BuggedUnitTimeout" DebugSingleStep="false"/>
     </EventList>
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">

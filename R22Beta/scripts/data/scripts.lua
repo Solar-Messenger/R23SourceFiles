@@ -876,7 +876,7 @@ function BackingUpFastEnd(self)
 				isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[getObjectId(unitsReversing[a].closestUnit)].selfReference, 4, 75)
 			else
 				-- closestUnit has bugged
-				isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[getObjectId(GetANonBuggingUnit(unitsReversing[a].selectedUnits))].selfReference, 4, 125)
+				isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[getObjectId(GetANonBuggingUnit(unitsReversing[a].selectedUnits, self))].selfReference, 4, 125)
 			end
 		end
 		
@@ -904,7 +904,7 @@ function BackingUpFastEnd(self)
 					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, closestUnit.selfReference)
 				else 
 					-- get a unit that hasnt bugged 
-					local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[key].selectedUnits)
+					local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[key].selectedUnits, self)
 					-- assign new closestUnit value 
 					unitsReversing[key].closestUnit = nonBuggingUnit
 					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference, self)		
@@ -1074,8 +1074,13 @@ function BackingUpEnd(self)
 		unitsReversing[a].timesTriggered = 0
 		unitsReversing[a].closestUnit = nil
 		unitsReversing[a].isMaster = false
-		unitsReversing[a].hasBugged = false
+		unitsReversing[a].hasBugged = false 
 	end
+end
+
+-- units cant clear this status normally unless i can get the object or model state for when UNIT_GUARD is triggered.
+function BuggedUnitTimeout(self)
+	unitsReversing[a].hasBugged = false
 end
 
 function WriteToFile(file, content) 
