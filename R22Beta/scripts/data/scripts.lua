@@ -901,7 +901,9 @@ function BackingUpFastEnd(self)
 					-- get a unit that hasnt bugged that isnt itself
 					local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[selectedUnitList[i]].selectedUnits, unitsReversing[selectedUnitList[i]].selfRealReference)
 					-- assign new closestUnit value 
-					print("assigning unit")
+					
+					-- this is nil
+					print(nonBuggingUnit)
 
 					-- bug is here --
 
@@ -1070,6 +1072,7 @@ end
 -- units cant clear this status normally unless i can get the object or model state for when UNIT_GUARD is triggered.
 function BuggedUnitTimeoutEnd(self)
 	unitsReversing[a].hasBugged = false
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 0)
 end
 
 function BuggedUnitTimeout(self)
