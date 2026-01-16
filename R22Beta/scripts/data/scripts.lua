@@ -876,6 +876,9 @@ function BackingUpFastEnd(self)
 		end
 		-- if true the unit has reverse bugged.
 		if isBugging then		
+			if ObjectTestModelCondition(self, "USER_72") == false then
+				ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 2, 100) 
+			end
 			-- flag this unit as being bugged
 			unitsReversing[a].hasBugged = true
 			-- flash units detected as being bugged
@@ -889,17 +892,22 @@ function BackingUpFastEnd(self)
 
 			-- first check if this unit has bugged and if it has go through all the units selected and see if their closestUnit matches this unit and it does , get another unit that hasnt bugged rather than looping every unit for each
 			-- that way it only will correct units when this unit bugs
-			for unitId, unit in unitsReversing[a].selectedUnits do
-				--print("unit is bugging")
-				if unitsReversing[unitId].closestUnit == unitsReversing[a].selfRealReference then
-					ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[unitId].selfRealReference, 2)
+			-- WriteToFile("closeunit.txt",  "table size: " .. tostring(getn(unitsReversing[a].selectedUnits.units)) .. "\n")
+			--for selectedUnitList[i], unit in unitsReversing[a].selectedUnits do
+			local selectedUnitList = unitsReversing[a].selectedUnits.units
+			for i = 1, getn(selectedUnitList), 1 do
+				if unitsReversing[selectedUnitList[i]].closestUnit == unitsReversing[a].selfRealReference then
+					ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[selectedUnitList[i]].selfRealReference, 2)
 					-- get a unit that hasnt bugged that isnt itself
-					local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[unitId].selectedUnits, unitsReversing[unitId].selfRealReference)
+					local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[selectedUnitList[i]].selectedUnits, unitsReversing[selectedUnitList[i]].selfRealReference)
 					-- assign new closestUnit value 
-					unitsReversing[unitId].closestUnit = nonBuggingUnit
-					ExecuteAction("NAMED_STOP", unitsReversing[unitId].selfReference)
-					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitId].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference, self)	
-					WriteToFile("closeunit.txt",  unitsReversing[getObjectId(nonBuggingUnit)].selfReference .. "\n")
+					print("assigning unit")
+
+					-- bug is here --
+
+					unitsReversing[selectedUnitList[i]].closestUnit = nonBuggingUnit
+					ExecuteAction("NAMED_STOP", unitsReversing[selectedUnitList[i]].selfReference)
+					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[selectedUnitList[i]].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference, self)	
 				end
 			end
 		end
@@ -909,10 +917,10 @@ end
 
 -- if the closestUnit has bugged during the reverse move, seek out a unit that hasnt of that players selection.
 function GetANonBuggingUnit(selectedUnitsOfPlayer, unit) 
-	for key, value in selectedUnitsOfPlayer do
-		if type(value) == "table" and value ~= unit then
-			if ObjectTestModelCondition(unitsReversing[getObjectId(value)].selfRealReference, "USER_72") == false then
-				return value
+	for i = 1, getn(selectedUnitsOfPlayer), 1 do
+		if unitsReversing[selectedUnitsOfPlayer[i]].selfRealReference ~= unit then
+			if ObjectTestModelCondition(unitsReversing[selectedUnitsOfPlayer[i]].selfRealReference, "USER_72") == false then
+				return unitsReversing[selectedUnitsOfPlayer[i]].selfRealReference
 			end
 		end
 	end
@@ -980,15 +988,16 @@ function GetClosestUnit(self)
 
 		--WriteToFile("GetClosestUnit.txt",  tostring(ObjectDescription(selectedUnits[playerTeam][unit])) .. "\n")
 		-- for each unit check if its 10 units near break the loop if it is, if it isnt 10 then i need to incrment it by 10 and run it again
-		for unitKey, unitValue in unitsReversing[a].selectedUnits do
-			if type(unitValue) == "table" then
-				if unitValue ~= self then 
-					--WriteToFile("GetClosestUnit.txt",  unitsReversing[unitKey].selfReference .. "\n")
-					if EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference,  unitsReversing[unitKey].selfReference, 1, distanceToUnit) then
-						-- flash the closest unit
-						--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-						return unitValue
-					end
+
+		-- now is an array of units
+		local selectedUnitList = unitsReversing[a].selectedUnits.units
+		for i = 1, getn(selectedUnitList), 1 do
+			if selectedUnitList[i] ~= self then 
+				--WriteToFile("GetClosestUnit.txt",  unitsReversing[selectedUnitList[i]].selfReference .. "\n")
+				if EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference,  unitsReversing[selectedUnitList[i]].selfReference, 1, distanceToUnit) then
+					-- flash the closest unit
+					--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+					return unitsReversing[selectedUnitList[i]].selfRealReference
 				end
 			end
 		end
@@ -1001,15 +1010,16 @@ function AddToUnitSelection(self)
     local unit = getObjectId(self)
 
     if selectedUnits[playerTeam] == nil then
-        selectedUnits[playerTeam] = {}
+		selectedUnits[playerTeam] = {}
+        selectedUnits[playerTeam].units = {}
         selectedUnits[playerTeam].selectedCount = 0 
         selectedUnits[playerTeam].unitsChecked = 0 
     end
 
     -- Check if this specific unit is already in the selection
     if unit ~= nil then
-        selectedUnits[playerTeam][unit] = self 
-		--WriteToFile("unitselection.txt",  tostring(selectedUnits[playerTeam][unit])) 
+        tinsert(selectedUnits[playerTeam].units, unit)
+		WriteToFile("unitselection.txt",  tostring(selectedUnits[playerTeam].units)) 
 		--ExecuteAction("NAMED_FLASH_WHITE", selectedUnits[playerTeam][unit], 2)
         -- Increment the counter
         local currentCount = selectedUnits[playerTeam].selectedCount or 0
@@ -1022,7 +1032,8 @@ function RemoveFromUnitSelection(self)
     local unit = getObjectId(self)
     -- Check if the team table and the unit actually exist
     if unit ~= nil then
-        selectedUnits[playerTeam][unit] = nil     
+        --selectedUnits[playerTeam][unit] = nil     
+		tremove(selectedUnits[playerTeam].units, unit)
         -- Decrement the counter
         local currentCount = selectedUnits[playerTeam].selectedCount or 0
         if currentCount > 0 then
@@ -1053,13 +1064,16 @@ function BackingUpEnd(self)
 		unitsReversing[a].firstFrame = 0 
 		unitsReversing[a].isReverseMoving = false
 		unitsReversing[a].timesTriggered = 0
-		unitsReversing[a].hasBugged = false 
 	end
 end
 
 -- units cant clear this status normally unless i can get the object or model state for when UNIT_GUARD is triggered.
-function BuggedUnitTimeout(self)
+function BuggedUnitTimeoutEnd(self)
 	unitsReversing[a].hasBugged = false
+end
+
+function BuggedUnitTimeout(self)
+	unitsReversing[a].hasBugged = true
 end
 
 function WriteToFile(file, content) 
