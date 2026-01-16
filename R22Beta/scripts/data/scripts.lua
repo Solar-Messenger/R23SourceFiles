@@ -839,7 +839,6 @@ end
 -- Set the reference of an object in order to assign object status successfully.
 function SetObjectReference(self, ref)
 	local ObjectStringRef = "object_" .. ref
-	-- WriteToFile("objref.txt",  ObjectStringRef .. "\n")
 	ExecuteAction("SET_UNIT_REFERENCE", ObjectStringRef, self)
 	return ObjectStringRef
 end
@@ -858,13 +857,9 @@ end
 -- maybe instead of the above condition i could set a timer via a model condition and when it expires i can check the distance. 
 function BackingUpFastEnd(self)	
 	-- if the unit is bugging already end the function
-	if ObjectTestModelCondition(self, "USER_72") then return end
+	--if ObjectTestModelCondition(self, "USER_72") then return end
 	local a = getObjectId(self)
-
-	--print(unitsReversing[getObjectId(GetANonBuggingUnit(unitsReversing[a].selectedUnits))])
-
-	local playerTeam = tostring(ObjectTeamName(self))
-	
+	local playerTeam = tostring(ObjectTeamName(self))	
 	if unitsReversing[a] ~= nil and unitsReversing[a].timesTriggered < 2 then
 		unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
 		local isBugging = false
@@ -879,49 +874,35 @@ function BackingUpFastEnd(self)
 				isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[getObjectId(GetANonBuggingUnit(unitsReversing[a].selectedUnits, self))].selfReference, 4, 125)
 			end
 		end
-		
 		-- if true the unit has reverse bugged.
 		if isBugging then		
 			-- flag this unit as being bugged
 			unitsReversing[a].hasBugged = true
-			-- apply a temporary model state to prevent its unitsSelected property being replaced.
 			-- flash units detected as being bugged
-			ExecuteAction("NAMED_FLASH", unitsReversing[a].selfReference, 2)
-		end
-		
-		-- increment the global 
-		--selectedUnits[playerTeam].unitsChecked = selectedUnits[playerTeam].unitsChecked + 1
-		--  check if this is the last unit to be checked and it is go through all the selected units and assign them to the first unit that hasnt reverse bugged.
-		--if selectedUnits[playerTeam].unitsChecked >= (selectedUnits[playerTeam].selectedCount) then
-			--local reverseAnchor = unitsReversing[a].closestUnit	
-			-- go through unitsReversing and apply the fixes
+			ExecuteAction("NAMED_FLASH", self, 2)
+			-- fix this unit
+			ExecuteAction("NAMED_STOP", unitsReversing[a].selfReference)
+			ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[a].selfReference, unitsReversing[a].closestUnit)	
+			ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[a].selfReference, 100)
+			-- reverse move to remove collisions
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 1)	
 
-		for key,value in unitsReversing do 
-			if unitsReversing[key].hasBugged then
-				local closestUnit = unitsReversing[getObjectId(unitsReversing[key].closestUnit)]
-				-- if the closestUnit has not bugged and also this unit is not already being corrected
-				if not closestUnit.hasBugged and ObjectTestModelCondition(unitsReversing[key].selfRealReference, "USER_72") == false then
-					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, closestUnit.selfReference)
-				else 
-					-- get a unit that hasnt bugged 
-					local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[key].selectedUnits, self)
+			-- first check if this unit has bugged and if it has go through all the units selected and see if their closestUnit matches this unit and it does , get another unit that hasnt bugged rather than looping every unit for each
+			-- that way it only will correct units when this unit bugs
+			for unitId, unit in unitsReversing[a].selectedUnits do
+				--print("unit is bugging")
+				if unitsReversing[unitId].closestUnit == unitsReversing[a].selfRealReference then
+					ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[unitId].selfRealReference, 2)
+					-- get a unit that hasnt bugged that isnt itself
+					local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[unitId].selectedUnits, unitsReversing[unitId].selfRealReference)
 					-- assign new closestUnit value 
-					unitsReversing[key].closestUnit = nonBuggingUnit
-					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[key].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference, self)		
+					unitsReversing[unitId].closestUnit = nonBuggingUnit
+					ExecuteAction("NAMED_STOP", unitsReversing[unitId].selfReference)
+					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitId].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference, self)	
+					WriteToFile("closeunit.txt",  unitsReversing[getObjectId(nonBuggingUnit)].selfReference .. "\n")
 				end
-				ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[key].selfReference, 100)
-				-- reverse move to remove collisions
-				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[key].selfReference, 48, 1)
-				
-				-- if the unit hasnt already got USER_72, assign it 
-				if ObjectTestModelCondition(unitsReversing[key].selfRealReference, "USER_72") == false then
-					ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 5, 100) 
-				end
-				return true
 			end
 		end
-		-- finally reset unitsChecked back to 0 again
-		-- selectedUnits[playerTeam].unitsChecked = 0
 	end
 	return true
 end
@@ -930,7 +911,7 @@ end
 function GetANonBuggingUnit(selectedUnitsOfPlayer, unit) 
 	for key, value in selectedUnitsOfPlayer do
 		if type(value) == "table" and value ~= unit then
-			if not unitsReversing[getObjectId(value)].hasBugged then
+			if ObjectTestModelCondition(unitsReversing[getObjectId(value)].selfRealReference, "USER_72") == false then
 				return value
 			end
 		end
@@ -1072,8 +1053,6 @@ function BackingUpEnd(self)
 		unitsReversing[a].firstFrame = 0 
 		unitsReversing[a].isReverseMoving = false
 		unitsReversing[a].timesTriggered = 0
-		unitsReversing[a].closestUnit = nil
-		unitsReversing[a].isMaster = false
 		unitsReversing[a].hasBugged = false 
 	end
 end
