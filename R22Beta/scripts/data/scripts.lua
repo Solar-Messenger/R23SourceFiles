@@ -867,7 +867,7 @@ function BackingUpFastEnd(self)
 		if (unitsReversing[a].timesTriggered == 2 and floor(GetFrame() - unitsReversing[a].firstFrame) == 7) then
 			isBugging = true
 		else
-			isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[getObjectId(unitsReversing[a].closestUnit)].selfReference, 4, 75)
+			isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[getObjectId(unitsReversing[a].closestUnit)].selfReference, 4, 100)
 		end
 		-- if true the unit has reverse bugged.
 		if isBugging then		
@@ -893,7 +893,7 @@ function BackingUpFastEnd(self)
 			for i = 1, getn(selectedUnitList), 1 do
 				-- this unit is bugging so lets go through all the closest units and see if it coincides with this one
 				if unitsReversing[selectedUnitList[i]].closestUnit == unitsReversing[a].selfRealReference then
-					ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[selectedUnitList[i]].selfRealReference, 2)
+					-- ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[selectedUnitList[i]].selfRealReference, 2)
 					-- get a unit that hasnt bugged that isnt itself
 					local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[selectedUnitList[i]].selectedUnits.units, unitsReversing[selectedUnitList[i]].selfRealReference)
 					-- assign the new closeestUnit to a unit not flagged as being bugged
@@ -918,7 +918,7 @@ function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 		if unitsReversing[selectedUnitsOfPlayer[i]].selfRealReference ~= unit then
 			-- check to see if unit is bugging
 			if ObjectTestModelCondition(unitsReversing[selectedUnitsOfPlayer[i]].selfRealReference, "USER_72") == false then
-				print(ObjectDescription(unitsReversing[selectedUnitsOfPlayer[i]].selfRealReference))
+				--print(ObjectDescription(unitsReversing[selectedUnitsOfPlayer[i]].selfRealReference))
 				return unitsReversing[selectedUnitsOfPlayer[i]].selfRealReference
 			end
 		end
@@ -1043,8 +1043,7 @@ function RemoveFromUnitSelection(self)
                 local currentCount = selectedUnits[playerTeam].selectedCount or 0
                 if currentCount > 0 then
                     selectedUnits[playerTeam].selectedCount = currentCount - 1
-                end
-                
+                end             
                 -- If a unit can only exist once in the list, 
                 -- break here to save performance
                 break 
