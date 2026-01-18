@@ -865,7 +865,7 @@ function BackingUpFastEnd(self)
         local frameDiff = floor(GetFrame() - unitsReversing[a].firstFrame)
         -- FIX: Change == 7 to a window (>= 6 and <= 9)
         -- This ensures that even if a client skips a frame, it catches it.
-        if (unitsReversing[a].timesTriggered == 2 and frameDiff >= 6 and frameDiff <= 9) then
+        if (unitsReversing[a].timesTriggered <= 2 and frameDiff >= 6 and frameDiff <= 9) then
             isBugging = true
         else
             -- Ensure selfReference and closestUnit exist before checking distance to prevent crashes
@@ -896,7 +896,7 @@ function BackingUpFastEnd(self)
 			for id, unitRef in selectedUnitList do
 				-- this unit is bugging so lets go through all the closest units and see if it coincides with this one
 				if unitsReversing[unitRef].closestUnit == unitsReversing[a].selfRealReference then
-					ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[unitRef].selfRealReference, 2)
+					-- ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[unitRef].selfRealReference, 2)
 					-- get a unit that hasnt bugged that isnt itself
 					local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[unitRef].selectedUnits.units, unitsReversing[unitRef].selfRealReference)
 					-- assign the new closeestUnit to a unit not flagged as being bugged
