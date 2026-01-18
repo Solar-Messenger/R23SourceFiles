@@ -67,9 +67,6 @@ bar4 = {} -- for tracking the bar four of the harvester.
 harvesterData = {}
 crystalData = {}
 
-snapshotBefore = {}
-snapshotAfter = {}
-
 unitsReversing = {}
 selectedUnits = {}
 
@@ -905,6 +902,7 @@ function BackingUpFastEnd(self)
 					if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
 						ExecuteAction("NAMED_STOP", unitsReversing[unitRef].selfRealReference)
 						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference)	
+						ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 1)	
 					end
 					-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[getObjectId(nonBuggingUnit)].selfReference) .. "\n")
 				end

@@ -100,11 +100,11 @@
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpFastLeft1">
-			<Conditions>+TURN_LEFT_HIGH_SPEED +BACKING_UP</Conditions>
+			<Conditions>+BACKING_UP +TURN_LEFT</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpFastRight1">
-			<Conditions>+TURN_RIGHT_HIGH_SPEED +BACKING_UP</Conditions>
+			<Conditions>+BACKING_UP +TURN_RIGHT</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpChangeDirectionRight">
@@ -122,11 +122,11 @@
 		<!-- off events for reverse -->	
 
 		<ModelConditionEvent Name="OnBackingUpFastLeftEnd">
-			<Conditions>+BACKING_UP -TURN_LEFT_HIGH_SPEED</Conditions>
+			<Conditions>+BACKING_UP -TURN_LEFT</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpFastRightEnd">
-			<Conditions>+BACKING_UP -TURN_RIGHT_HIGH_SPEED</Conditions>
+			<Conditions>+BACKING_UP -TURN_RIGHT</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpRight">
