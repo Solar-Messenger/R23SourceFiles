@@ -892,7 +892,7 @@ function BackingUpFastEnd(self)
 			-- flash units detected as being bugged
 			ExecuteAction("NAMED_FLASH", self, 2)
 			-- fix this unit
-			ExecuteAction("NAMED_STOP", unitsReversing[a].selfRealReference)
+			--ExecuteAction("NAMED_STOP", unitsReversing[a].selfRealReference)
 			ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[a].selfReference, unitsReversing[getObjectId(unitsReversing[a].closestUnit)].selfReference)	
 			ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[a].selfRealReference, 100)
 			-- reverse move to remove collisions
@@ -910,7 +910,7 @@ function BackingUpFastEnd(self)
 					unitsReversing[unitRef].closestUnit = nonBuggingUnit
 					-- move this unit to the previously assigned non bugging unit
 					if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
-						ExecuteAction("NAMED_STOP", unitsReversing[unitRef].selfRealReference)
+						--ExecuteAction("NAMED_STOP", unitsReversing[unitRef].selfRealReference)
 						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference)	
 						ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 1)	
 					end
