@@ -70,6 +70,14 @@ crystalData = {}
 unitsReversing = {}
 selectedUnits = {}
 
+
+bugDurationTable = {
+-- BUGGIES
+["E3C841B0"]=6, -- Mok Raider Buggy
+["79609108"]=6, -- Black Hand Raider Buggy
+["6354531D"]=6 -- Nod Raider Buggy
+}
+
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
 MAX_FRAMES_BEING_HARVESTED = 50 -- 15 frames is 1s (gdi/scrin harvest action time)
 MAX_FRAMES_BEING_HARVESTED_NOD = 40 -- 15 frames is 1s (1.7s harvest action time)
@@ -860,9 +868,11 @@ function BackingUpFastEnd(self)
         
         -- Calculate frame difference once
         local frameDiff = floor(GetFrame() - unitsReversing[a].firstFrame)
-        -- FIX: Change == 7 to a window (>= 6 and <= 9)
-        -- This ensures that even if a client skips a frame, it catches it.
-        if (unitsReversing[a].timesTriggered <= 2 and frameDiff >= 6 and frameDiff <= 9) then
+
+		-- get the unit type
+		local duration = bugDurationTable[getObjectName(self)]
+
+        if (unitsReversing[a].timesTriggered <= 2 and frameDiff >= duration and frameDiff <= duration+3) then
             isBugging = true
         else
             -- Ensure selfReference and closestUnit exist before checking distance to prevent crashes
@@ -5114,7 +5124,7 @@ function getObjectId(x)
 end
 
 function getObjectName(x)
-	return strsub(ObjectDescription(x),strfind(ObjectDescription(x),'%[')+1,strfind(ObjectDescription(x),', ')-1) -- Object name
+	return strsub(ObjectDescription(x),strfind(ObjectDescription(x),'%[')+6,strfind(ObjectDescription(x),', ')-1) -- Object name
 end
 
 function getPlayerId(x)
