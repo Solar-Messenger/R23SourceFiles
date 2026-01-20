@@ -879,7 +879,7 @@ function BackingUpFastEnd(self)
 		-- get the unit type
 		local duration = bugDurationTable[getObjectName(self)]
 
-        if (unitsReversing[a].timesTriggered <= 2 and frameDiff >= duration and frameDiff <= duration+3) then
+        if (frameDiff >= duration and frameDiff <= duration+3) then
             isBugging = true
         else
             -- Ensure selfReference and closestUnit exist before checking distance to prevent crashes
@@ -894,7 +894,7 @@ function BackingUpFastEnd(self)
 		-- if true the unit has reverse bugged.
 		if isBugging then		
 			if ObjectTestModelCondition(self, "USER_72") == false then
-				ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 2, 100) 
+				ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 2.5, 100) 
 				-- temporarily remove collisions to facilitate the reverse move
 				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 1)	
 			end
@@ -917,15 +917,18 @@ function BackingUpFastEnd(self)
 					-- ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[unitRef].selfRealReference, 2)
 					-- get a unit that hasnt bugged that isnt itself
 					local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[unitRef].selectedUnits.units, unitsReversing[unitRef].selfRealReference)
-					-- assign the new closeestUnit to a unit not flagged as being bugged
-					unitsReversing[unitRef].closestUnit = nonBuggingUnit
-					-- move this unit to the previously assigned non bugging unit
-					if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
-						--ExecuteAction("NAMED_STOP", unitsReversing[unitRef].selfRealReference)
-						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference)	
-						ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 1)	
+					-- only proceed if we found a non-bugging unit
+					if nonBuggingUnit ~= nil then
+						-- assign the new closeestUnit to a unit not flagged as being bugged
+						unitsReversing[unitRef].closestUnit = nonBuggingUnit
+						-- move this unit to the previously assigned non bugging unit
+						if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
+							--ExecuteAction("NAMED_STOP", unitsReversing[unitRef].selfRealReference)
+							ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference)
+							ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 1)
+						end
+						-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[getObjectId(nonBuggingUnit)].selfReference) .. "\n")
 					end
-					-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[getObjectId(nonBuggingUnit)].selfReference) .. "\n")
 				end
 			end
 		end
