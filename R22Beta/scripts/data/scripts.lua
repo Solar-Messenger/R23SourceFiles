@@ -69,7 +69,7 @@ crystalData = {}
 
 unitsReversing = {}
 selectedUnits = {}
-DISTANCE_TO_UNIT_OFFSET = 25
+DISTANCE_TO_UNIT_OFFSET = 15
 
 
 bugDurationTable = {
@@ -885,7 +885,7 @@ function BackingUpFastEnd(self)
             -- Ensure selfReference and closestUnit exist before checking distance to prevent crashes
             if unitsReversing[a].closestUnit then 
                  local targetRef = unitsReversing[getObjectId(unitsReversing[a].closestUnit)].selfReference
-				 WriteToFile("unitoffset.txt",  unitsReversing[a].distanceToclosestUnit+DISTANCE_TO_UNIT_OFFSET .. "\n")
+				 -- WriteToFile("unitoffset.txt",  unitsReversing[a].distanceToclosestUnit+DISTANCE_TO_UNIT_OFFSET .. "\n")
 				 -- 3rd param ["<"]=0, ["<="]=1, ["=="]=2, [">="]=3, [">"]=4, ["~="]=5
                  isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, targetRef, 4, unitsReversing[a].distanceToclosestUnit+DISTANCE_TO_UNIT_OFFSET)
             end
@@ -896,7 +896,7 @@ function BackingUpFastEnd(self)
 			if ObjectTestModelCondition(self, "USER_72") == false then
 				ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 2, 100) 
 				-- temporarily remove collisions to facilitate the reverse move
-				-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 1)	
+				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 1)	
 			end
 			-- flag this unit as being bugged
 			unitsReversing[a].hasBugged = true
@@ -1083,12 +1083,14 @@ end
 
 -- units cant clear this status normally unless i can get the object or model state for when UNIT_GUARD is triggered.
 function BuggedUnitTimeoutEnd(self)
+	local a = getObjectId(self)
 	unitsReversing[a].hasBugged = false
 	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 0)
-	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 0)	
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 0)	
 end
 
 function BuggedUnitTimeout(self)
+	local a = getObjectId(self)
 	unitsReversing[a].hasBugged = true
 end
 
