@@ -1002,27 +1002,61 @@ end
 function GetClosestUnit(self)
     if self ~= nil then
         local a = getObjectId(self)
-        local distanceToUnit = 25
         local selectedUnitList = unitsReversing[a].selectedUnits.units
-        
-		-- maybe make this more preecise and find the actual closest unit rather than checking for 100 radius, we can check recursively eeach unit from 50,75 to 100 in increments of 25
+
+		-- Check if we have at least 2 units in the selection (self + at least one other)
 		if next(selectedUnitList) ~= nil and next(selectedUnitList, next(selectedUnitList)) ~= nil then
-			for i = 25, 99999, distanceToUnit do
-				for id, unitRef in selectedUnitList do
-					-- Ensure we don't check against self
-					if id ~= a then 
-						-- Assuming unitsReversing[id] exists; strict checking added
-						if unitsReversing[id] and EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[id].selfReference, 1, i) then
-							--return unitsReversing[id].selfRealReference
-							unitsReversing[a].closestUnit = unitsReversing[id].selfRealReference	
-							unitsReversing[a].distanceToclosestUnit	= i
-							return
+			local closestUnit = nil
+			local closestDistance = 99999
+
+			-- Iterate through all selected units once to find the closest
+			for id, unitRef in selectedUnitList do
+				-- Ensure we don't check against self
+				if id ~= a then
+					-- Ensure the unit entry exists in unitsReversing
+					if unitsReversing[id] and unitsReversing[id].selfReference then
+						-- Binary search to find approximate distance to this unit
+						local distance = BinarySearchDistance(unitsReversing[a].selfReference, unitsReversing[id].selfReference, 25, 5000, 10)
+
+						-- Track the closest unit found so far
+						if distance < closestDistance then
+							closestDistance = distance
+							closestUnit = unitsReversing[id].selfRealReference
 						end
 					end
 				end
 			end
+
+			-- Assign the closest unit and its distance
+			if closestUnit ~= nil then
+				unitsReversing[a].closestUnit = closestUnit
+				unitsReversing[a].distanceToclosestUnit = closestDistance
+			end
 		end
     end
+end
+
+-- Binary search to find approximate distance between two objects
+-- Precision defines the granularity (e.g., 25 units)
+function BinarySearchDistance(obj1Ref, obj2Ref, minDist, maxDist, precision)
+	local low = minDist
+	local high = maxDist
+	local result = maxDist
+
+	-- Binary search for the distance threshold where the objects are within range
+	while low <= high do
+		local mid = floor((low + high) / 2)
+
+		-- Check if objects are within 'mid' distance (using <= comparison, operator 1)
+		if EvaluateCondition("DISTANCE_BETWEEN_OBJ", obj1Ref, obj2Ref, 1, mid) then
+			result = mid
+			high = mid - precision  -- Try smaller distance
+		else
+			low = mid + precision  -- Try larger distance
+		end
+	end
+
+	return result
 end
 
 function AddToUnitSelection(self)
