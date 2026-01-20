@@ -69,6 +69,7 @@ crystalData = {}
 
 unitsReversing = {}
 selectedUnits = {}
+DISTANCE_TO_UNIT_OFFSET = 25
 
 
 bugDurationTable = {
@@ -862,6 +863,12 @@ end
 -- maybe instead of the above condition i could set a timer via a model condition and when it expires i can check the distance. 
 function BackingUpFastEnd(self) 
     local a = getObjectId(self)
+
+	--if unitsReversing[a] ~= nil and unitsReversing[a].timesTriggered == 1 then
+	--	ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+	--end
+
+
     if unitsReversing[a] ~= nil and unitsReversing[a].timesTriggered < 2 then
         unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
         local isBugging = false
@@ -878,7 +885,9 @@ function BackingUpFastEnd(self)
             -- Ensure selfReference and closestUnit exist before checking distance to prevent crashes
             if unitsReversing[a].closestUnit then 
                  local targetRef = unitsReversing[getObjectId(unitsReversing[a].closestUnit)].selfReference
-                 isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, targetRef, 4, 100)
+				 WriteToFile("unitoffset.txt",  unitsReversing[a].distanceToclosestUnit+DISTANCE_TO_UNIT_OFFSET .. "\n")
+				 -- 3rd param ["<"]=0, ["<="]=1, ["=="]=2, [">="]=3, [">"]=4, ["~="]=5
+                 isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, targetRef, 4, unitsReversing[a].distanceToclosestUnit+DISTANCE_TO_UNIT_OFFSET)
             end
         end
 
@@ -886,6 +895,8 @@ function BackingUpFastEnd(self)
 		if isBugging then		
 			if ObjectTestModelCondition(self, "USER_72") == false then
 				ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 2, 100) 
+				-- temporarily remove collisions to facilitate the reverse move
+				-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 1)	
 			end
 			-- flag this unit as being bugged
 			unitsReversing[a].hasBugged = true
@@ -970,6 +981,7 @@ function BackingUp(self)
 		selfReference = SetObjectReference(self, a),
 		selfRealReference = self,
 		selectedUnits = {},
+		distanceToclosestUnit = 0,
 		closestUnit = nil -- can be an array from closest to farthest
 	}
 
@@ -979,7 +991,7 @@ function BackingUp(self)
 	end
 
 	-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 1)
-	unitsReversing[a].closestUnit = GetClosestUnit(self) 
+	GetClosestUnit(self) 
 end
 
 -- gets the closest unit thats also selected of this player
@@ -987,19 +999,26 @@ end
 function GetClosestUnit(self)
     if self ~= nil then
         local a = getObjectId(self)
-        local distanceToUnit = 75
-
+        local distanceToUnit = 25
         local selectedUnitList = unitsReversing[a].selectedUnits.units
         
-        for id, unitRef in selectedUnitList do
-            -- Ensure we don't check against self
-            if id ~= a then 
-                -- Assuming unitsReversing[id] exists; strict checking added
-                if unitsReversing[id] and EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[id].selfReference, 1, distanceToUnit) then
-                    return unitsReversing[id].selfRealReference
-                end
-            end
-        end
+		-- maybe make this more preecise and find the actual closest unit rather than checking for 100 radius, we can check recursively eeach unit from 50,75 to 100 in increments of 25
+		if next(selectedUnitList) ~= nil and next(selectedUnitList, next(selectedUnitList)) ~= nil then
+			for i = 25, 99999, distanceToUnit do
+				for id, unitRef in selectedUnitList do
+					-- Ensure we don't check against self
+					if id ~= a then 
+						-- Assuming unitsReversing[id] exists; strict checking added
+						if unitsReversing[id] and EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[id].selfReference, 1, i) then
+							--return unitsReversing[id].selfRealReference
+							unitsReversing[a].closestUnit = unitsReversing[id].selfRealReference	
+							unitsReversing[a].distanceToclosestUnit	= i
+							return
+						end
+					end
+				end
+			end
+		end
     end
 end
 
@@ -1066,6 +1085,7 @@ end
 function BuggedUnitTimeoutEnd(self)
 	unitsReversing[a].hasBugged = false
 	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 0)
+	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 0)	
 end
 
 function BuggedUnitTimeout(self)
