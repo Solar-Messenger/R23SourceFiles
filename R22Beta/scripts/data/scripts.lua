@@ -69,14 +69,18 @@ crystalData = {}
 
 unitsReversing = {}
 selectedUnits = {}
-DISTANCE_TO_UNIT_OFFSET = 15
+DISTANCE_TO_UNIT_OFFSET = 25
 
 
 bugDurationTable = {
 -- BUGGIES
 ["E3C841B0"]=6, -- Mok Raider Buggy
 ["79609108"]=6, -- Black Hand Raider Buggy
-["6354531D"]=6 -- Nod Raider Buggy
+["6354531D"]=6, -- Nod Raider Buggy
+-- SCORPION TANKS
+["1B44D6AE"]=8, -- Mok Scorpion Tank
+["A33F11AF"]=8, -- Black Hand Scorpion Tank
+["2F9131D"]=8 -- Nod Scorpion Tank
 }
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
@@ -1016,7 +1020,7 @@ function GetClosestUnit(self)
 					-- Ensure the unit entry exists in unitsReversing
 					if unitsReversing[id] and unitsReversing[id].selfReference then
 						-- Binary search to find approximate distance to this unit
-						local distance = BinarySearchDistance(unitsReversing[a].selfReference, unitsReversing[id].selfReference, 25, 5000, 10)
+						local distance = BinarySearchDistance(unitsReversing[a].selfReference, unitsReversing[id].selfReference, 10, 5000, 10)
 
 						-- Track the closest unit found so far
 						if distance < closestDistance then
