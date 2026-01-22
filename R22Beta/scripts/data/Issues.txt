@@ -1,8 +1,6 @@
 Issues
-1. The selectedUnits removes the units before the BackingUpFastEnd function ends, i need to store this table in each of the units reversing as its temporary, players will delect their units constantly - breaking the logiic here.
+1. Currently theres a resource contention issue when multiple players access the selectedUnits table.
+	- Proposed solution: split selectedUnits into 8 individual tables.
 
-2.Some edge cases are causing units to flash but not act upon it.
+2. If a unit dies that was assigned as the anchor of another which is currently bugging, it should acquire a new anchor and subsequently be re-assigned the move command.
 
-
-Recommendations:
-Instead of repeadely calling "SetObjectReference" i could store this value in the units table, because the issue with this function iis that it generates a random number every time its called. Having the unique number generated already is better for safety.

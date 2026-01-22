@@ -911,7 +911,7 @@ function BackingUpFastEnd(self)
 			ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[a].selfReference, unitsReversing[getObjectId(unitsReversing[a].closestUnit)].selfReference)	
 			ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[a].selfRealReference, 100)
 			-- reverse move to remove collisions
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 1)	
+			-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 1)	
 
 			-- WriteToFile("closeunit.txt",  "table size: " .. tostring(unitsReversing[a].selectedUnits.units) .. "\n")
 			local selectedUnitList = unitsReversing[a].selectedUnits.units
@@ -929,7 +929,7 @@ function BackingUpFastEnd(self)
 						if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
 							--ExecuteAction("NAMED_STOP", unitsReversing[unitRef].selfRealReference)
 							ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference)
-							ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 1)
+							-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 1)
 						end
 						-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[getObjectId(nonBuggingUnit)].selfReference) .. "\n")
 					end
@@ -1049,7 +1049,7 @@ function BinarySearchDistance(obj1Ref, obj2Ref, minDist, maxDist, precision)
 
 	-- Binary search for the distance threshold where the objects are within range
 	while low <= high do
-		local mid = floor((low + high) * 0.5)
+		local mid = (low + high) * 0.5
 
 		-- Check if objects are within 'mid' distance (using <= comparison, operator 1)
 		if EvaluateCondition("DISTANCE_BETWEEN_OBJ", obj1Ref, obj2Ref, 1, mid) then
@@ -1110,10 +1110,10 @@ end
 function BackingUpEnd(self)
 	local a = getObjectId(self)
 	
-	if unitsReversing[a] ~= nil and not unitsReversing[a].hasBugged then
+	--if unitsReversing[a] ~= nil and not unitsReversing[a].hasBugged then
 		-- need to prevent this when guarding
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 0)
-	end
+		--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 0)
+	--end
 
 	if unitsReversing[a] ~= nil then
 		unitsReversing[a].firstFrame = 0 
@@ -1125,9 +1125,12 @@ end
 -- units cant clear this status normally unless i can get the object or model state for when UNIT_GUARD is triggered.
 function BuggedUnitTimeoutEnd(self)
 	local a = getObjectId(self)
-	unitsReversing[a].hasBugged = false
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 0)
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 0)	
+	if unitsReversing[a] ~= nil then
+		unitsReversing[a].hasBugged = false
+		unitsReversing[a].closestUnit = nil
+		--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 0)
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 0)	
+	end
 end
 
 function BuggedUnitTimeout(self)
