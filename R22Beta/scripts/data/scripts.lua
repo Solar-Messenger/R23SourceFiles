@@ -69,7 +69,7 @@ crystalData = {}
 
 unitsReversing = {}
 selectedUnits = {}
-DISTANCE_TO_UNIT_OFFSET = 25
+DISTANCE_TO_UNIT_OFFSET = 15
 
 
 bugDurationTable = {
@@ -1049,7 +1049,7 @@ function BinarySearchDistance(obj1Ref, obj2Ref, minDist, maxDist, precision)
 
 	-- Binary search for the distance threshold where the objects are within range
 	while low <= high do
-		local mid = floor((low + high) / 2)
+		local mid = floor((low + high) * 0.5)
 
 		-- Check if objects are within 'mid' distance (using <= comparison, operator 1)
 		if EvaluateCondition("DISTANCE_BETWEEN_OBJ", obj1Ref, obj2Ref, 1, mid) then

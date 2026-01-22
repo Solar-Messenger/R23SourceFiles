@@ -100,19 +100,11 @@
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpFastLeft1">
-			<Conditions>+BACKING_UP +TURN_LEFT</Conditions>
+			<Conditions>+MOVING +BACKING_UP +TURN_LEFT_HIGH_SPEED</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpFastRight1">
-			<Conditions>+BACKING_UP +TURN_RIGHT</Conditions>
-		</ModelConditionEvent>
-
-		<ModelConditionEvent Name="OnBackingUpChangeDirectionRight">
-			<Conditions>-MOVING +BACKING_UP -TURN_RIGHT_HIGH_SPEED +TURN_LEFT_HIGH_SPEED</Conditions>
-		</ModelConditionEvent>
-
-		<ModelConditionEvent Name="OnBackingUpChangeDirectioLeft">
-			<Conditions>-MOVING +BACKING_UP -TURN_LEFT_HIGH_SPEED +TURN_RIGHT_HIGH_SPEED</Conditions>
+			<Conditions>+MOVING +BACKING_UP +TURN_RIGHT_HIGH_SPEED</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnLocomotorEvent">
