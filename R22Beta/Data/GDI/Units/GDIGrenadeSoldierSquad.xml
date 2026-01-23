@@ -878,14 +878,14 @@
 				ReinforceDistance="0"
 				SpellMakesAStructure=""
 				SpecificUnit=""
-				UnitKindOf="VEHICLE"
+				UnitKindOf="VEHICLE STRUCTURE"
 				AllyUnitInclude=""
 				AllyUnitExclude=""
-				EnemyUnitInclude="VEHICLE"
-				EnemyUnitExclude="INFANTRY"
+				EnemyUnitInclude=""
+				EnemyUnitExclude="INFANTRY AIRCRAFT HUSK CIVILIAN_BUILDING WALL_HUB WALL_SEGMENT"
 				MinimumCutoff="0"
 				UpdateTime="2.5s"
-				MaxFrequency="0"
+				MaxFrequency="100"
 				RandomizeTargetLocation="False" />
 		</Behaviors>
 		<AI>
