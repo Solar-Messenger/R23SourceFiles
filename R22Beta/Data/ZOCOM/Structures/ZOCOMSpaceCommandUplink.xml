@@ -375,6 +375,7 @@
 				CommandButtonName="Command_SpaceCommandZOCOMRaiderPods"
 				SpecialPowerAIType="SPECIAL_POWER_ENEMY_TYPE_KILLER_STRUCTURES"
 				SpecialPowerRadius="99999"
+				ReinforceDistance="99999"
 				UnitKindOf="HARVESTER"
 				EnemyUnitInclude="HARVESTER"
 				RandomizeTargetLocation="True"
