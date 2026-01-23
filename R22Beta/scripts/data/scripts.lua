@@ -966,17 +966,28 @@ function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 	end
 end
 
+-- Creates a shallow copy of a table (snapshot)
+function ShallowCopyTable(original)
+	if type(original) ~= "table" then
+		return original
+	end
+	local copy = {}
+	for k, v in original do
+		copy[k] = v
+	end
+	return copy
+end
+
 -- Triggered by +SELECTED +BACKING_UP
 function BackingUp(self)
 	local _,unitReversing = GetUnitReversingData(self)
-	local playerTeam = tostring(ObjectTeamName(self)) 
-	local teamTable = getglobal(playerTeam)
+	local playerTeam = tostring(ObjectTeamName(self))
+	local teamTable = ShallowCopyTable(getglobal(playerTeam))
 
 	-- maybe assigning a temp model state to prevent this from reassigning on a unit that is backing up again due to GUARD state is an option.
 	if ObjectTestModelCondition(self, "USER_72") == false then
 		unitReversing.selectedUnits = teamTable
 	end
-
 	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)
 	GetClosestUnit(self) 
 end
@@ -985,7 +996,7 @@ end
 -- returns the object thats the closest.
 function GetClosestUnit(self)
     if self ~= nil then
-        local _,unitReversing = GetUnitReversingData(self)
+        local a,unitReversing = GetUnitReversingData(self)
         local selectedUnitList = unitReversing.selectedUnits.units
 
 		-- Check if we have at least 2 units in the selection (self + at least one other)
