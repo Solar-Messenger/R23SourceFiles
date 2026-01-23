@@ -28,6 +28,12 @@
   </LogicCommand>
 
 -->
+	<LogicCommand
+		id="Command_NODDecoyTemple"
+		Type="SPECIAL_POWER"
+		Options="">
+		<SpecialPower>SpecialPower_DecoyTemple</SpecialPower>
+	</LogicCommand>
 
   <LogicCommand
 		Type="OBJECT_UPGRADE"
