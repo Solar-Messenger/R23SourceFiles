@@ -76,9 +76,9 @@ bugDurationTable = {
 ["79609108"]=6, -- Black Hand Raider Buggy
 ["6354531D"]=6, -- Nod Raider Buggy
 -- SCORPION TANKS
-["1B44D6AE"]=8, -- Mok Scorpion Tank
-["A33F11AF"]=8, -- Black Hand Scorpion Tank
-["2F9131D"]=8 -- Nod Scorpion Tank
+["1B44D6AE"]=9, -- Mok Scorpion Tank
+["A33F11AF"]=9, -- Black Hand Scorpion Tank
+["2F9131D"]=9 -- Nod Scorpion Tank
 }	
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
@@ -908,7 +908,7 @@ function BackingUpFastEnd(self)
 	-- if the distance to the closestUnit is not less than DISTANCE_TO_UNIT_OFFSET units difference compared to when it first reverse moved check the bugging condition
 	--if unitsReversing[a].closestUnit and not EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[getObjectId(unitsReversing[a].closestUnit)].selfReference, 1, unitsReversing[a].distanceToClosestUnit+DISTANCE_TO_UNIT_OFFSET) then 
 		-- WriteToFile("unitoffset.txt",  unitsReversing[a].distanceToClosestUnit+DISTANCE_TO_UNIT_OFFSET .. "\n")
-	if frameDiff >= duration and frameDiff <= duration+5 then
+	if frameDiff >= duration and frameDiff <= duration+4 then
 		isBugging = true
 	end
 	--end
