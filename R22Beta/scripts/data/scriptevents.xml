@@ -100,11 +100,11 @@
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpFastLeft1">
-			<Conditions>+MOVING +BACKING_UP +TURN_LEFT_HIGH_SPEED</Conditions>
+			<Conditions>+BACKING_UP +TURN_LEFT_HIGH_SPEED</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpFastRight1">
-			<Conditions>+MOVING +BACKING_UP +TURN_RIGHT_HIGH_SPEED</Conditions>
+			<Conditions>+BACKING_UP +TURN_RIGHT_HIGH_SPEED</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnLocomotorEvent">
@@ -114,19 +114,11 @@
 		<!-- off events for reverse -->	
 
 		<ModelConditionEvent Name="OnBackingUpFastLeftEnd">
-			<Conditions>+BACKING_UP -TURN_LEFT</Conditions>
+			<Conditions>+BACKING_UP -TURN_LEFT_HIGH_SPEED</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpFastRightEnd">
-			<Conditions>+BACKING_UP -TURN_RIGHT</Conditions>
-		</ModelConditionEvent>
-
-		<ModelConditionEvent Name="OnBackingUpRight">
-			<Conditions>+BACKING_UP +TURN_RIGHT</Conditions>
-		</ModelConditionEvent>
-
-		<ModelConditionEvent Name="OnBackingUpLeft">
-			<Conditions>+BACKING_UP +TURN_LEFT</Conditions>
+			<Conditions>+BACKING_UP -TURN_RIGHT_HIGH_SPEED</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnDeployed">
@@ -905,6 +897,10 @@
 		<!-- on user 72 end-->
 		<EventHandler EventName="OnUser72End"	ScriptFunctionName="BuggedUnitTimeoutEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser72"	ScriptFunctionName="BuggedUnitTimeout" DebugSingleStep="false"/> 
+
+		<!-- moving states -->
+		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitEntersMoveState" DebugSingleStep="false"/>
+		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitLeavesMoveState" DebugSingleStep="false"/> 
     </EventList>
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">

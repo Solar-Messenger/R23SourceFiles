@@ -68,7 +68,7 @@ harvesterData = {}
 crystalData = {}
 
 unitsReversing = {}
-DISTANCE_TO_UNIT_OFFSET = 15
+DISTANCE_TO_UNIT_OFFSET = 25
 
 bugDurationTable = {
 -- BUGGIES
@@ -79,7 +79,7 @@ bugDurationTable = {
 ["1B44D6AE"]=8, -- Mok Scorpion Tank
 ["A33F11AF"]=8, -- Black Hand Scorpion Tank
 ["2F9131D"]=8 -- Nod Scorpion Tank
-}
+}	
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
 MAX_FRAMES_BEING_HARVESTED = 50 -- 15 frames is 1s (gdi/scrin harvest action time)
@@ -844,6 +844,32 @@ end
 
 -- ####################### REVERSE MOVE WORKAROUND ############################
 
+-- unit enters moving state, triggered by +MOVING
+function UnitEntersMoveState(self)
+	local a = getObjectId(self)
+	-- call with helper function
+	unitsReversing[a] = unitsReversing[a] or {
+		firstFrame = 0, -- first frame after reversing while turning fast
+		isReverseMoving = false, -- flag to stop the re-assignment of firstFrame
+		timesTriggered = 0, 
+		distanceTo = 0, 
+		hasBugged = false,
+		selfReference = SetObjectReference(self, a),
+		selfRealReference = self,
+		selectedUnits = {},
+		distanceToClosestUnit = 0,
+		isMoving = false,
+		closestUnit = nil -- can be an array from closest to farthest
+	}
+	--unitsReversing[a].isMoving = true
+end
+
+-- unit leaves moving state, triggered by -MOVING
+function UnitLeavesMoveState(self)
+	local a = getObjectId(self)
+	unitsReversing[a].isMoving = false
+end
+
 -- Set the reference of an object in order to assign object status successfully.
 function SetObjectReference(self, ref)
 	local ObjectStringRef = "object_" .. ref
@@ -866,76 +892,68 @@ end
 function BackingUpFastEnd(self) 
     local a = getObjectId(self)
 
-	--if unitsReversing[a] ~= nil and unitsReversing[a].timesTriggered == 1 then
-	--	ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+	-- and unitsReversing[a].isMoving
+    if unitsReversing[a] ~= nil and unitsReversing[a].timesTriggered < 2 then
+		unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
+	else 
+		-- end the function if it has triggered more than two times
+		return
+	end
+	local isBugging = false	
+	-- Calculate frame difference once
+	local frameDiff = GetFrame() - unitsReversing[a].firstFrame
+	-- get the unit type
+	local duration = bugDurationTable[getObjectName(self)]
+	-- 3rd param ["<"]=0, ["<="]=1, ["=="]=2, [">="]=3, [">"]=4, ["~="]=5
+	-- if the distance to the closestUnit is not less than DISTANCE_TO_UNIT_OFFSET units difference compared to when it first reverse moved check the bugging condition
+	--if unitsReversing[a].closestUnit and not EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, unitsReversing[getObjectId(unitsReversing[a].closestUnit)].selfReference, 1, unitsReversing[a].distanceToClosestUnit+DISTANCE_TO_UNIT_OFFSET) then 
+		-- WriteToFile("unitoffset.txt",  unitsReversing[a].distanceToClosestUnit+DISTANCE_TO_UNIT_OFFSET .. "\n")
+	if frameDiff >= duration and frameDiff <= duration+5 then
+		isBugging = true
+	end
 	--end
 
+	-- if true the unit has reverse bugged.
+	if isBugging then		
+		if ObjectTestModelCondition(self, "USER_72") == false then
+			ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 2.5, 100) 
+			-- temporarily remove collisions to facilitate the reverse move, assign this on backing up 
+			-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 1)	
+		end
+		-- flag this unit as being bugged
+		unitsReversing[a].hasBugged = true
+		-- flash units detected as being bugged
+		ExecuteAction("NAMED_FLASH", self, 2)
+		-- fix this unit
+		--ExecuteAction("NAMED_STOP", unitsReversing[a].selfRealReference)
+		ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[a].selfReference, unitsReversing[getObjectId(unitsReversing[a].closestUnit)].selfReference)	
+		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[a].selfRealReference, 100)
+		-- reverse move to remove collisions
+		-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 1)	
 
-    if unitsReversing[a] ~= nil and unitsReversing[a].timesTriggered < 2 then
-        unitsReversing[a].timesTriggered = unitsReversing[a].timesTriggered + 1
-        local isBugging = false
-        
-        -- Calculate frame difference once
-        local frameDiff = floor(GetFrame() - unitsReversing[a].firstFrame)
-
-		-- get the unit type
-		local duration = bugDurationTable[getObjectName(self)]
-
-        if (frameDiff >= duration and frameDiff <= duration+3) then
-            isBugging = true
-        else
-            -- Ensure selfReference and closestUnit exist before checking distance to prevent crashes
-            if unitsReversing[a].closestUnit then 
-                 local targetRef = unitsReversing[getObjectId(unitsReversing[a].closestUnit)].selfReference
-				 -- WriteToFile("unitoffset.txt",  unitsReversing[a].distanceToclosestUnit+DISTANCE_TO_UNIT_OFFSET .. "\n")
-				 -- 3rd param ["<"]=0, ["<="]=1, ["=="]=2, [">="]=3, [">"]=4, ["~="]=5
-                 isBugging = EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitsReversing[a].selfReference, targetRef, 4, unitsReversing[a].distanceToclosestUnit+DISTANCE_TO_UNIT_OFFSET)
-            end
-        end
-
-		-- if true the unit has reverse bugged.
-		if isBugging then		
-			if ObjectTestModelCondition(self, "USER_72") == false then
-				ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 2.5, 100) 
-				-- temporarily remove collisions to facilitate the reverse move
-				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 1)	
-			end
-			-- flag this unit as being bugged
-			unitsReversing[a].hasBugged = true
-			-- flash units detected as being bugged
-			ExecuteAction("NAMED_FLASH", self, 2)
-			-- fix this unit
-			--ExecuteAction("NAMED_STOP", unitsReversing[a].selfRealReference)
-			ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[a].selfReference, unitsReversing[getObjectId(unitsReversing[a].closestUnit)].selfReference)	
-			ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitsReversing[a].selfRealReference, 100)
-			-- reverse move to remove collisions
-			-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 1)	
-
-			-- WriteToFile("closeunit.txt",  "table size: " .. tostring(unitsReversing[a].selectedUnits.units) .. "\n")
-			local selectedUnitList = unitsReversing[a].selectedUnits.units
-			for id, unitRef in selectedUnitList do
-				-- this unit is bugging so lets go through all the closest units and see if it coincides with this one
-				if unitsReversing[unitRef].closestUnit == unitsReversing[a].selfRealReference then
-					-- ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[unitRef].selfRealReference, 2)
-					-- get a unit that hasnt bugged that isnt itself
-					local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[unitRef].selectedUnits.units, unitsReversing[unitRef].selfRealReference)
-					-- only proceed if we found a non-bugging unit
-					if nonBuggingUnit ~= nil then
-						-- assign the new closeestUnit to a unit not flagged as being bugged
-						unitsReversing[unitRef].closestUnit = nonBuggingUnit
-						-- move this unit to the previously assigned non bugging unit
-						if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
-							--ExecuteAction("NAMED_STOP", unitsReversing[unitRef].selfRealReference)
-							ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference)
-							-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 1)
-						end
-						-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[getObjectId(nonBuggingUnit)].selfReference) .. "\n")
+		-- WriteToFile("closeunit.txt",  "table size: " .. tostring(unitsReversing[a].selectedUnits.units) .. "\n")
+		local selectedUnitList = unitsReversing[a].selectedUnits.units
+		for id, unitRef in selectedUnitList do
+			-- this unit is bugging so lets go through all the closest units and see if it coincides with this one
+			if unitsReversing[unitRef].closestUnit == unitsReversing[a].selfRealReference then
+				-- ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[unitRef].selfRealReference, 2)
+				-- get a unit that hasnt bugged that isnt itself
+				local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[unitRef].selectedUnits.units, unitsReversing[unitRef].selfRealReference)
+				-- only proceed if we found a non-bugging unit
+				if nonBuggingUnit ~= nil then
+					-- assign the new closeestUnit to a unit not flagged as being bugged
+					unitsReversing[unitRef].closestUnit = nonBuggingUnit
+					-- move this unit to the previously assigned non bugging unit
+					if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
+						--ExecuteAction("NAMED_STOP", unitsReversing[unitRef].selfRealReference)
+						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference)
+						-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 1)
 					end
+					-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[getObjectId(nonBuggingUnit)].selfReference) .. "\n")
 				end
 			end
 		end
 	end
-	return true
 end
 
 -- if the closestUnit has bugged during the reverse move, seek out a unit that hasnt of that players selection.
@@ -973,30 +991,13 @@ function BackingUp(self)
 	local a = getObjectId(self)
 	local playerTeam = tostring(ObjectTeamName(self)) 
 	local teamTable = getglobal(playerTeam)
-	-- apparently unitsReversing[a] is nil when set from OnCreated.
-	-- fire weapon that spawns an object that this unit then follows if bugging, save in unitsReversing table a reference to that object.
-	-- firing weapons appears to break the move command.
-	-- ObjectCreateAndFireTempWeapon(self, "ReverseAnchorWeapon")
-
-	unitsReversing[a] = unitsReversing[a] or {
-		firstFrame = 0, -- first frame after reversing while turning fast
-		isReverseMoving = false, -- flag to stop the re-assignment of firstFrame
-		timesTriggered = 0, 
-		distanceTo = 0, 
-		hasBugged = false,
-		selfReference = SetObjectReference(self, a),
-		selfRealReference = self,
-		selectedUnits = {},
-		distanceToclosestUnit = 0,
-		closestUnit = nil -- can be an array from closest to farthest
-	}
 
 	-- maybe assigning a temp model state to prevent this from reassigning on a unit that is backing up again due to GUARD state is an option.
 	if ObjectTestModelCondition(self, "USER_72") == false then
 		unitsReversing[a].selectedUnits = teamTable
 	end
 
-	-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 1)
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 1)
 	GetClosestUnit(self) 
 end
 
@@ -1033,7 +1034,7 @@ function GetClosestUnit(self)
 			-- Assign the closest unit and its distance
 			if closestUnit ~= nil then
 				unitsReversing[a].closestUnit = closestUnit
-				unitsReversing[a].distanceToclosestUnit = closestDistance
+				unitsReversing[a].distanceToClosestUnit = closestDistance
 			end
 		end
     end
@@ -1115,10 +1116,10 @@ end
 function BackingUpEnd(self)
 	local a = getObjectId(self)
 	
-	--if unitsReversing[a] ~= nil and not unitsReversing[a].hasBugged then
+	if unitsReversing[a] ~= nil and not unitsReversing[a].hasBugged then
 		-- need to prevent this when guarding
-		--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 48, 0)
-	--end
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 0)
+	end
 
 	if unitsReversing[a] ~= nil then
 		unitsReversing[a].firstFrame = 0 
