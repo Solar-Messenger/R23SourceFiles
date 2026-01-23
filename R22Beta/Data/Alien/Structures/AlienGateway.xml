@@ -98,7 +98,7 @@
 			DamageFX="FactionStructureDamageFX"
 			Conditions="" />
 		<SkirmishAIInformation
-			BaseBuildingLocation="FRONT"
+			BaseBuildingLocation="TIBERIUM"
 			ConquerMetricsOverrideDamageType="UNDEFINED"
 			ConquerMetricsOverrideAntiMask="ANTI_GROUND"
 			UnitBuilderStandardCombatUnit="False" />
