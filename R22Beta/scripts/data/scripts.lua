@@ -68,9 +68,7 @@ harvesterData = {}
 crystalData = {}
 
 unitsReversing = {}
-selectedUnits = {}
 DISTANCE_TO_UNIT_OFFSET = 15
-
 
 bugDurationTable = {
 -- BUGGIES
@@ -974,6 +972,7 @@ end
 function BackingUp(self)
 	local a = getObjectId(self)
 	local playerTeam = tostring(ObjectTeamName(self)) 
+	local teamTable = getglobal(playerTeam)
 	-- apparently unitsReversing[a] is nil when set from OnCreated.
 	-- fire weapon that spawns an object that this unit then follows if bugging, save in unitsReversing table a reference to that object.
 	-- firing weapons appears to break the move command.
@@ -994,7 +993,7 @@ function BackingUp(self)
 
 	-- maybe assigning a temp model state to prevent this from reassigning on a unit that is backing up again due to GUARD state is an option.
 	if ObjectTestModelCondition(self, "USER_72") == false then
-		unitsReversing[a].selectedUnits = selectedUnits[playerTeam]
+		unitsReversing[a].selectedUnits = teamTable
 	end
 
 	-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[a].selfReference, 4, 1)
@@ -1066,33 +1065,39 @@ end
 function AddToUnitSelection(self)
     local playerTeam = tostring(ObjectTeamName(self))
     local unitId = getObjectId(self)
+    local teamTable = getglobal(playerTeam)
 
-    if selectedUnits[playerTeam] == nil then
-        selectedUnits[playerTeam] = {}
-        selectedUnits[playerTeam].units = {} 
-        selectedUnits[playerTeam].selectedCount = 0 
+    if teamTable == nil then
+        teamTable = {}
+        setglobal(playerTeam, teamTable)
     end
 
-    if selectedUnits[playerTeam].units[unitId] == nil then
-        selectedUnits[playerTeam].units[unitId] = unitId 
+    if teamTable.units == nil then
+        teamTable.units = {}
+        teamTable.selectedCount = 0
+    end
+	
+    if teamTable.units[unitId] == nil then
+        teamTable.units[unitId] = unitId 
         
-        local currentCount = selectedUnits[playerTeam].selectedCount or 0
-        selectedUnits[playerTeam].selectedCount = currentCount + 1
+        local currentCount = teamTable.selectedCount or 0
+        teamTable.selectedCount = currentCount + 1
     end
 end
 
 function RemoveFromUnitSelection(self)
     local playerTeam = tostring(ObjectTeamName(self))
     local unitId = getObjectId(self)
+	local teamTable = getglobal(playerTeam)
     
-    if unitId ~= nil and selectedUnits[playerTeam] ~= nil then
+    if unitId ~= nil and teamTable ~= nil then
         -- distinct check using the Key
-        if selectedUnits[playerTeam].units[unitId] ~= nil then
+        if teamTable.units[unitId] ~= nil then
             -- Set to nil to remove
-            selectedUnits[playerTeam].units[unitId] = nil             
-            local currentCount = selectedUnits[playerTeam].selectedCount or 0
+            teamTable.units[unitId] = nil             
+            local currentCount = teamTable.selectedCount or 0
             if currentCount > 0 then
-                selectedUnits[playerTeam].selectedCount = currentCount - 1
+                teamTable.selectedCount = currentCount - 1
             end             
         end
     end
