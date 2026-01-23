@@ -870,9 +870,6 @@
     
     <EventList Name="BaseScriptFunctions">
 		<!-- If there are any events that need to apply to all units, put them here. jba -->
-		<EventHandler EventName="OnMovingOutOfWay"	ScriptFunctionName="LocomotorEvent" DebugSingleStep="false"/>
-
-
 		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUp"	ScriptFunctionName="BackingUp" DebugSingleStep="false"/>
 		<!--
@@ -884,7 +881,6 @@
 
 		<EventHandler EventName="OnBackingUpFastRightEnd"	ScriptFunctionName="BackingUpFastEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpFastLeftEnd"	ScriptFunctionName="BackingUpFastEnd" DebugSingleStep="false"/>
-
 		<!-- no worky -->
 		<EventHandler EventName="OnReverseState"	ScriptFunctionName="UnitNowGuarding" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="ReverseUnitOnDeath" DebugSingleStep="false"/>
@@ -898,9 +894,6 @@
 		<EventHandler EventName="OnUser72End"	ScriptFunctionName="BuggedUnitTimeoutEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser72"	ScriptFunctionName="BuggedUnitTimeout" DebugSingleStep="false"/> 
 
-		<!-- moving states -->
-		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitEntersMoveState" DebugSingleStep="false"/>
-		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitLeavesMoveState" DebugSingleStep="false"/> 
     </EventList>
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">
