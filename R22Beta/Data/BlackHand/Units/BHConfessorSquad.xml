@@ -1048,25 +1048,27 @@
 					AcceptModelCondition=""
 					RejectModelCondition="" />
 			</HordeDispatchSpecialPower>
-
+			
+			<!-- Hallunades for AI -->
 			<AISpecialPowerUpdate
-					id="ModuleTag_BlackHandConfessorCabalSquadFireGrenade"
-					CommandButtonName="Command_BlackHandConfessorCabalSquadFireGrenade"
-					SecondaryCommandButtonName=""
-					SpecialPowerAIType="SPECIAL_POWER_RANGED_AOE_ATTACK"
-					SpecialPowerRadius="275"
-					ReinforceDistance="0"
-					SpellMakesAStructure=""
-					SpecificUnit=""
-					UnitKindOf="INFANTRY"
-					AllyUnitInclude=""
-					AllyUnitExclude=""
-					EnemyUnitInclude=""
-					EnemyUnitExclude="VEHICLE AIRCRAFT STRUCTURE CIVILIAN_BUILDING NEUTRAL_TECH HUSK UNIQUE_UNIT"
-					MinimumCutoff="0"
-					UpdateTime="2.5s"
-					MaxFrequency="0"
-					RandomizeTargetLocation="False" />			
+				id="95C23D01"
+				CommandButtonName="Command_BlackHandConfessorCabalSquadFireGrenade"
+				SecondaryCommandButtonName=""
+				SpecialPowerAIType="SPECIAL_POWER_RANGED_AOE_ATTACK"
+				SpecialPowerRadius="250"
+				ReinforceDistance="0"
+				SpellMakesAStructure=""
+				SpecificUnit=""
+				UnitKindOf="INFANTRY"
+				AllyUnitInclude=""
+				AllyUnitExclude=""
+				EnemyUnitInclude="INFANTRY"
+				EnemyUnitExclude="VEHICLE"
+				MinimumCutoff="0"
+				UpdateTime="3s"
+				MaxFrequency="0"
+				RandomizeTargetLocation="False" />			
+			
 			
 		</Behaviors>
 		<AI>
