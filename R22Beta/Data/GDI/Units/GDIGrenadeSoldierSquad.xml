@@ -883,9 +883,9 @@
 				AllyUnitExclude=""
 				EnemyUnitInclude=""
 				EnemyUnitExclude="INFANTRY AIRCRAFT HUSK CIVILIAN_BUILDING WALL_HUB WALL_SEGMENT"
-				MinimumCutoff="0"
+				MinimumCutoff="100"
 				UpdateTime="2.5s"
-				MaxFrequency="100"
+				MaxFrequency="0"
 				RandomizeTargetLocation="False" />
 		</Behaviors>
 		<AI>
