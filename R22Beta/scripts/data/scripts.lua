@@ -76,9 +76,9 @@ bugDurationTable = {
 ["79609108"]=6, -- Black Hand Raider Buggy
 ["6354531D"]=6, -- Nod Raider Buggy
 -- SCORPION TANKS
-["1B44D6AE"]=9, -- Mok Scorpion Tank
-["A33F11AF"]=9, -- Black Hand Scorpion Tank
-["2F9131D"]=9 -- Nod Scorpion Tank
+["1B44D6AE"]=8, -- Mok Scorpion Tank
+["A33F11AF"]=8, -- Black Hand Scorpion Tank
+["2F9131D"]=8 -- Nod Scorpion Tank
 }	
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
@@ -858,6 +858,7 @@ function GetUnitReversingData(self)
 			distanceToClosestUnit = 0,
 			isMovingFlag = false,
 			timeOffset = 0,
+			lastCheck = 0,
 			closestUnit = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
@@ -885,7 +886,7 @@ end
 -- triggered by +BACKING_UP +TURN_RIGHT and +BACKING_UP +TURN_LEFT
 function BackingUpNormal(self)
 	local _,unitReversing = GetUnitReversingData(self)
-	if unitReversing.isMovingFlag then return end
+	if not unitReversing.isMovingFlag then return end
 	--unitReversing.firstFrame = unitReversing.firstFrame+1
 	if ObjectTestModelCondition(self, "TURN_RIGHT_HIGH_SPEED") == false and ObjectTestModelCondition(self, "TURN_LEFT_HIGH_SPEED") == false then
 		unitReversing.timeOffset = unitReversing.timeOffset + 200
@@ -896,7 +897,24 @@ end
 -- prevents timeOffset being assigned if the wasnt moving before, triggered by -MOVING
 function UnitNoLongerMoving(self)
 	local _,unitReversing = GetUnitReversingData(self)
-	unitReversing.isMovingFlag = false
+	-- check if most units selected are not moving 
+	local selectedUnitList = unitReversing.selectedUnits.units
+	local unitsNotMoving = 0
+	for id, unitRef in selectedUnitList do
+		if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") == false then
+			unitsNotMoving = unitsNotMoving + 1
+		end
+	end
+
+	--WriteToFile("data.txt",  "selectedCount: " .. tostring(unitReversing.selectedUnits.selectedCount) .. " " .. "unitsNotMoving: " .. tostring(unitsNotMoving) .. "\n")
+	
+	-- apply changes to all units after checking the first one in the group.
+	if unitsNotMoving >= (unitReversing.selectedUnits.selectedCount * 0.5) and unitReversing.lastCheck ~= GetFrame() then
+		for id, unitRef in selectedUnitList do
+			unitsReversing[unitRef].isMovingFlag = false
+			unitsReversing[unitRef].lastCheck = GetFrame()
+		end
+	end
 end
 
 -- Triggered by +BACKING_UP -TURN_LEFT_HIGH_SPEED and +BACKING_UP -TURN_RIGHT_HIGH_SPEED
@@ -904,7 +922,7 @@ end
 function BackingUpFastEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
 	-- Prevents execution of this function if the last move order was when this unit was idle and not moving.
-    if unitReversing.isMovingFlag then return end
+    if not unitReversing.isMovingFlag then return end
 	local timesToTrigger = 2
 	local duration = bugDurationTable[getObjectName(self)]
 	if unitReversing.timeOffset > 0 then
@@ -942,7 +960,7 @@ function BackingUpFastEnd(self)
 		-- ExecuteAction("NAMED_FLASH", self, 2)
 		-- fix this unit
 		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference)	
-		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, 75)
+		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, 100)
 		-- reverse move to remove collisions
 		-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
 		-- WriteToFile("closeunit.txt",  "table size: " .. tostring(unitReversing.selectedUnits.units) .. "\n")
