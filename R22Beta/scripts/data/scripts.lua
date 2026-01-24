@@ -851,18 +851,17 @@ function GetUnitReversingData(self)
 			firstFrame = 0, -- first frame after reversing while turning fast
 			isReverseMoving = false, -- flag to stop the re-assignment of firstFrame
 			timesTriggered = 0, 
-			distanceTo = 0, 
 			hasBugged = false,
 			selfReference = SetObjectReference(self, a),
 			selfRealReference = self,
 			selectedUnits = {},
 			distanceToClosestUnit = 0,
-			isMoving = false,
+			isMovingFlag = false,
+			timeOffset = 0,
 			closestUnit = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
 	end
-
 	return nil, nil
 end
 
@@ -873,7 +872,7 @@ function SetObjectReference(self, ref)
 	return ObjectStringRef
 end
 
--- Sets the initial frame when a unit fast turns while backing up
+-- Sets the initial frame when a unit fast turns while backing up, triggered by +BACKING_UP +TURN_LEFT_HIGH_SPEED
 function BackingUpFast(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	local curFrame = GetFrame()
@@ -883,13 +882,36 @@ function BackingUpFast(self)
 	end
 end
 
+-- triggered by +BACKING_UP +TURN_RIGHT and +BACKING_UP +TURN_LEFT
+function BackingUpNormal(self)
+	local _,unitReversing = GetUnitReversingData(self)
+	if unitReversing.isMovingFlag then return end
+	--unitReversing.firstFrame = unitReversing.firstFrame+1
+	if ObjectTestModelCondition(self, "TURN_RIGHT_HIGH_SPEED") == false and ObjectTestModelCondition(self, "TURN_LEFT_HIGH_SPEED") == false then
+		unitReversing.timeOffset = unitReversing.timeOffset + 200
+		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+	end
+end
+
+-- prevents timeOffset being assigned if the wasnt moving before, triggered by -MOVING
+function UnitNoLongerMoving(self)
+	local _,unitReversing = GetUnitReversingData(self)
+	unitReversing.isMovingFlag = false
+end
+
 -- Triggered by +BACKING_UP -TURN_LEFT_HIGH_SPEED and +BACKING_UP -TURN_RIGHT_HIGH_SPEED
 -- maybe instead of the above condition i could set a timer via a model condition and when it expires i can check the distance. 
 function BackingUpFastEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
-
-	-- and unitReversing.isMoving
-    if unitReversing ~= nil and unitReversing.timesTriggered < 2 then
+	-- Prevents execution of this function if the last move order was when this unit was idle and not moving.
+    if unitReversing.isMovingFlag then return end
+	local timesToTrigger = 2
+	local duration = bugDurationTable[getObjectName(self)]
+	if unitReversing.timeOffset > 0 then
+		timesToTrigger = 10
+		duration = duration - 4
+	end
+    if unitReversing ~= nil and unitReversing.timesTriggered < timesToTrigger then
 		unitReversing.timesTriggered = unitReversing.timesTriggered + 1
 	else 
 		-- end the function if it has triggered more than two times
@@ -899,15 +921,13 @@ function BackingUpFastEnd(self)
 	-- Calculate frame difference once
 	local frameDiff = GetFrame() - unitReversing.firstFrame
 	-- get the unit type
-	local duration = bugDurationTable[getObjectName(self)]
 	-- 3rd param ["<"]=0, ["<="]=1, ["=="]=2, [">="]=3, [">"]=4, ["~="]=5
 	-- if the distance to the closestUnit is not less than DISTANCE_TO_UNIT_OFFSET units difference compared to when it first reverse moved check the bugging condition
-	--if unitReversing.closestUnit and not EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference, 1, unitReversing.distanceToClosestUnit+DISTANCE_TO_UNIT_OFFSET) then 
-	-- WriteToFile("unitoffset.txt",  unitReversing.distanceToClosestUnit+DISTANCE_TO_UNIT_OFFSET .. "\n")
-	if frameDiff >= duration and frameDiff <= duration+8 then
+	-- if unitReversing.closestUnit and not EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference, 1, unitReversing.distanceToClosestUnit+DISTANCE_TO_UNIT_OFFSET) then 
+
+	if frameDiff >= duration and frameDiff <= duration+3+unitReversing.timeOffset then
 		isBugging = true
 	end
-	--end
 
 	-- if true the unit has reverse bugged.
 	if isBugging then		
@@ -919,14 +939,12 @@ function BackingUpFastEnd(self)
 		-- flag this unit as being bugged
 		unitReversing.hasBugged = true
 		-- flash units detected as being bugged
-		ExecuteAction("NAMED_FLASH", self, 2)
+		-- ExecuteAction("NAMED_FLASH", self, 2)
 		-- fix this unit
-		--ExecuteAction("NAMED_STOP", unitReversing.selfRealReference)
 		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference)	
 		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, 75)
 		-- reverse move to remove collisions
 		-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
-
 		-- WriteToFile("closeunit.txt",  "table size: " .. tostring(unitReversing.selectedUnits.units) .. "\n")
 		local selectedUnitList = unitReversing.selectedUnits.units
 		for id, unitRef in selectedUnitList do
@@ -1110,9 +1128,14 @@ function BackingUpEnd(self)
 	end
 
 	if unitReversing ~= nil then
+		-- subsequent reverse moves will be accounted for 
+		if ObjectTestModelCondition(self, "MOVING") then
+			unitReversing.isMovingFlag = true
+		end
 		unitReversing.firstFrame = 0 
 		unitReversing.isReverseMoving = false
 		unitReversing.timesTriggered = 0
+		unitReversing.timeOffset = 0
 	end
 end
 

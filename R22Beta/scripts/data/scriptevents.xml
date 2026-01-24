@@ -91,20 +91,28 @@
 			<Conditions>+BACKING_UP</Conditions>
 		</ModelConditionEvent>
 
-		<ModelConditionEvent Name="OnBackingUpFastLeft">
-			<Conditions>-MOVING +BACKING_UP +TURN_LEFT_HIGH_SPEED</Conditions>
-		</ModelConditionEvent>
-
-		<ModelConditionEvent Name="OnBackingUpFastRight">
-			<Conditions>-MOVING +BACKING_UP +TURN_RIGHT_HIGH_SPEED</Conditions>
-		</ModelConditionEvent>
-
 		<ModelConditionEvent Name="OnBackingUpFastLeft1">
 			<Conditions>+BACKING_UP +TURN_LEFT_HIGH_SPEED</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnBackingUpFastRight1">
 			<Conditions>+BACKING_UP +TURN_RIGHT_HIGH_SPEED</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpLeft">
+			<Conditions>+BACKING_UP +TURN_LEFT</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpRight">
+			<Conditions>+BACKING_UP +TURN_RIGHT</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpLeftEnd">
+			<Conditions>+BACKING_UP -TURN_LEFT</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnBackingUpLeftEnd">
+			<Conditions>+BACKING_UP -TURN_RIGHT</Conditions>
 		</ModelConditionEvent>
 
 		<ModelConditionEvent Name="OnLocomotorEvent">
@@ -872,10 +880,14 @@
 		<!-- If there are any events that need to apply to all units, put them here. jba -->
 		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUp"	ScriptFunctionName="BackingUp" DebugSingleStep="false"/>
+		
+		<EventHandler EventName="OnBackingUpRight"	ScriptFunctionName="BackingUpNormal" DebugSingleStep="false"/>
+		<EventHandler EventName="OnBackingUpLeft"	ScriptFunctionName="BackingUpNormal" DebugSingleStep="false"/>
 		<!--
-		<EventHandler EventName="OnBackingUpFastRight"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
-		<EventHandler EventName="OnBackingUpFastLeft"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
+		<EventHandler EventName="OnBackingUpRightEnd"	ScriptFunctionName="BackingUpNormalEnd" DebugSingleStep="false"/>
+		<EventHandler EventName="OnBackingUpLeftEnd"	ScriptFunctionName="BackingUpNormalEnd" DebugSingleStep="false"/>
 		-->
+		
 		<EventHandler EventName="OnBackingUpFastRight1"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpFastLeft1"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
 
@@ -893,7 +905,8 @@
 		<!-- on user 72 end-->
 		<EventHandler EventName="OnUser72End"	ScriptFunctionName="BuggedUnitTimeoutEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser72"	ScriptFunctionName="BuggedUnitTimeout" DebugSingleStep="false"/> 
-
+		<!-- no longer moving event -->
+		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
     </EventList>
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">
