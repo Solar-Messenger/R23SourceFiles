@@ -68,7 +68,11 @@ harvesterData = {}
 crystalData = {}
 
 unitsReversing = {}
+
 DISTANCE_TO_UNIT_OFFSET = 25
+DURATION_OFFSET = 2
+UPPER_LIMIT_NORMAL_DETECTION = 5
+TIMES_TO_TRIGGER_ALT = 6
 
 bugDurationTable = {
 -- BUGGIES
@@ -930,8 +934,8 @@ function BackingUpFastEnd(self)
 	local timesToTrigger = 2
 	local duration = bugDurationTable[getObjectName(self)]
 	if unitReversing.timeOffset > 0 then
-		timesToTrigger = 4
-		duration = duration - 2
+		timesToTrigger = TIMES_TO_TRIGGER_ALT
+		duration = duration - DURATION_OFFSET
 	end
     if unitReversing ~= nil and unitReversing.timesTriggered < timesToTrigger then
 		unitReversing.timesTriggered = unitReversing.timesTriggered + 1
@@ -947,7 +951,7 @@ function BackingUpFastEnd(self)
 	-- if the distance to the closestUnit is not less than DISTANCE_TO_UNIT_OFFSET units difference compared to when it first reverse moved check the bugging condition
 	-- if unitReversing.closestUnit and not EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference, 1, unitReversing.distanceToClosestUnit+DISTANCE_TO_UNIT_OFFSET) then 
 
-	if frameDiff >= duration and frameDiff <= duration+5+unitReversing.timeOffset then
+	if frameDiff >= duration and frameDiff <= duration+UPPER_LIMIT_NORMAL_DETECTION+unitReversing.timeOffset then
 		isBugging = true
 	end
 
@@ -961,7 +965,7 @@ function BackingUpFastEnd(self)
 		-- flag this unit as being bugged
 		unitReversing.hasBugged = true
 		-- flash units detected as being bugged
-		-- ExecuteAction("NAMED_FLASH", self, 2)
+		ExecuteAction("NAMED_FLASH", self, 2)
 		-- fix this unit
 		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference)	
 		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, 100)
@@ -1029,12 +1033,63 @@ function BackingUp(self)
 		unitReversing.selectedUnits = teamTable
 	end
 	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)
-	GetClosestUnit(self) 
+	-- assign the anchor to a random unit in ths selection (significantly less costly.)
+	AssignRandomAnchor(self)
+
+	-- assign the anchor to the aprox closest unit in the selection (more costly.)
+	-- AssignClosestAnchor(self) 
 end
 
+-- gets a random selected unit of this players selection and assigns it to unitReversing.closestUnit = closestUnit
+function AssignRandomAnchor(self)
+    if self ~= nil then
+        local a,unitReversing = GetUnitReversingData(self)
+		-- list of ids
+        local selectedUnitList = unitReversing.selectedUnits.units
+
+		-- Check if we have at least 2 units in the selection (self + at least one other)
+		if next(selectedUnitList) ~= nil and next(selectedUnitList, next(selectedUnitList)) ~= nil then	
+			-- gets a unit that isnt self randomly.
+			unitReversing.closestUnit = unitsReversing[getRandomKey(selectedUnitList, a)].selfRealReference
+		end
+    end
+end
+
+-- Gets the random key to assign to the unit for anchor purposes.
+function getRandomKey(t, unitId)
+    local keys = {}
+    for k, v in t do
+        tinsert(keys, k)
+    end
+    local count = getn(keys)
+    if count == 0 then 
+        return nil 
+    end    
+    local randomIndex = 0    
+	-- keep assigning a random unit until its not the same as self
+	repeat
+		randomIndex = random(1, count)
+	until keys[randomIndex] ~= unitId
+
+    return keys[randomIndex]
+end
+
+function random(...) --overwritting lua native function for multiplayer compatibility 
+    local randomNumber = function(a,b) return floor(a+((b-a)*GetRandomNumber())+0.5) end
+    if getn(arg) == 0 then 
+        return floor(GetRandomNumber()+0.5)
+    elseif getn(arg) == 1 then 
+        return randomNumber(1,arg[1])
+    elseif getn(arg) == 2 then 
+        return randomNumber(arg[1],arg[2])
+    else 
+        return arg[randomNumber(1,getn(arg))] 
+    end
+end 
+
 -- gets the closest unit thats also selected of this player
--- returns the object thats the closest.
-function GetClosestUnit(self)
+-- assiigns it to unitReversing.closestUnit = closestUnit
+function AssignClosestAnchor(self)
     if self ~= nil then
         local a,unitReversing = GetUnitReversingData(self)
         local selectedUnitList = unitReversing.selectedUnits.units
