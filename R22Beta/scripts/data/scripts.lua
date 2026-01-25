@@ -72,13 +72,17 @@ DISTANCE_TO_UNIT_OFFSET = 25
 
 bugDurationTable = {
 -- BUGGIES
-["E3C841B0"]=6, -- Mok Raider Buggy
-["79609108"]=6, -- Black Hand Raider Buggy
-["6354531D"]=6, -- Nod Raider Buggy
+["E3C841B0"]=7, -- Mok Raider Buggy
+["79609108"]=7, -- Black Hand Raider Buggy
+["6354531D"]=7, -- Nod Raider Buggy
 -- SCORPION TANKS
 ["1B44D6AE"]=7, -- Mok Scorpion Tank
 ["A33F11AF"]=7, -- Black Hand Scorpion Tank
-["2F9131D"]=7 -- Nod Scorpion Tank
+["2F9131D"]=7, -- Nod Scorpion Tank
+-- SEEKERS
+["B8802763"]=8, -- Scrin Seeker
+["DB2B7D2F"]=8, -- Reaper-17 Seeker
+["7296891C"]=8 -- Traveler-59 Seeker
 }	
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
@@ -890,7 +894,7 @@ function BackingUpNormal(self)
 	--unitReversing.firstFrame = unitReversing.firstFrame+1
 	if ObjectTestModelCondition(self, "TURN_RIGHT_HIGH_SPEED") == false and ObjectTestModelCondition(self, "TURN_LEFT_HIGH_SPEED") == false then
 		unitReversing.timeOffset = unitReversing.timeOffset + 200
-		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 	end
 end
 
