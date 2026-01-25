@@ -76,9 +76,9 @@ bugDurationTable = {
 ["79609108"]=6, -- Black Hand Raider Buggy
 ["6354531D"]=6, -- Nod Raider Buggy
 -- SCORPION TANKS
-["1B44D6AE"]=9, -- Mok Scorpion Tank
-["A33F11AF"]=9, -- Black Hand Scorpion Tank
-["2F9131D"]=9 -- Nod Scorpion Tank
+["1B44D6AE"]=7, -- Mok Scorpion Tank
+["A33F11AF"]=7, -- Black Hand Scorpion Tank
+["2F9131D"]=7 -- Nod Scorpion Tank
 }	
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
@@ -909,7 +909,7 @@ function UnitNoLongerMoving(self)
 	--WriteToFile("data.txt",  "selectedCount: " .. tostring(unitReversing.selectedUnits.selectedCount) .. " " .. "unitsNotMoving: " .. tostring(unitsNotMoving) .. "\n")
 	
 	-- apply changes to all units after checking the first one in the group.
-	if unitsNotMoving >= (unitReversing.selectedUnits.selectedCount * 0.5) and unitReversing.lastCheck ~= GetFrame() then
+	if unitsNotMoving >= (floor(unitReversing.selectedUnits.selectedCount * 0.75)) and unitReversing.lastCheck ~= GetFrame() then
 		for id, unitRef in selectedUnitList do
 			unitsReversing[unitRef].isMovingFlag = false
 			unitsReversing[unitRef].lastCheck = GetFrame()
@@ -922,7 +922,7 @@ end
 function BackingUpFastEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
 	-- Prevents execution of this function if the last move order was when this unit was idle and not moving.
-    if not unitReversing.isMovingFlag then return end
+    -- if not unitReversing.isMovingFlag then return end
 	local timesToTrigger = 2
 	local duration = bugDurationTable[getObjectName(self)]
 	if unitReversing.timeOffset > 0 then
@@ -943,7 +943,7 @@ function BackingUpFastEnd(self)
 	-- if the distance to the closestUnit is not less than DISTANCE_TO_UNIT_OFFSET units difference compared to when it first reverse moved check the bugging condition
 	-- if unitReversing.closestUnit and not EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference, 1, unitReversing.distanceToClosestUnit+DISTANCE_TO_UNIT_OFFSET) then 
 
-	if frameDiff >= duration and frameDiff <= duration+3+unitReversing.timeOffset then
+	if frameDiff >= duration and frameDiff <= duration+5+unitReversing.timeOffset then
 		isBugging = true
 	end
 

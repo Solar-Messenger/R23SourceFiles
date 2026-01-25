@@ -5,3 +5,5 @@ Issues
 2. If a unit dies that was assigned as the anchor of another which is currently bugging, it should acquire a new anchor and subsequently be re-assigned the move command.
 
 3. I need a way to check if the player has stopped his units instead of unit bumping into another, I think checking through all selected units and seeing if more than half of them aren't moving is the way.
+
+4. Units after force firing don't seem to work with the current implementation of the fix.
