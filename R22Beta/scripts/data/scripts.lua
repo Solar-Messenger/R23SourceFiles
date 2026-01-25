@@ -76,9 +76,9 @@ bugDurationTable = {
 ["79609108"]=6, -- Black Hand Raider Buggy
 ["6354531D"]=6, -- Nod Raider Buggy
 -- SCORPION TANKS
-["1B44D6AE"]=8, -- Mok Scorpion Tank
-["A33F11AF"]=8, -- Black Hand Scorpion Tank
-["2F9131D"]=8 -- Nod Scorpion Tank
+["1B44D6AE"]=9, -- Mok Scorpion Tank
+["A33F11AF"]=9, -- Black Hand Scorpion Tank
+["2F9131D"]=9 -- Nod Scorpion Tank
 }	
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
@@ -894,7 +894,7 @@ function BackingUpNormal(self)
 	end
 end
 
--- prevents timeOffset being assigned if the wasnt moving before, triggered by -MOVING
+-- prevents timeOffset being assigned if the unit wasnt moving before, triggered by -MOVING
 function UnitNoLongerMoving(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	-- check if most units selected are not moving 
@@ -926,8 +926,8 @@ function BackingUpFastEnd(self)
 	local timesToTrigger = 2
 	local duration = bugDurationTable[getObjectName(self)]
 	if unitReversing.timeOffset > 0 then
-		timesToTrigger = 10
-		duration = duration - 4
+		timesToTrigger = 4
+		duration = duration - 2
 	end
     if unitReversing ~= nil and unitReversing.timesTriggered < timesToTrigger then
 		unitReversing.timesTriggered = unitReversing.timesTriggered + 1
@@ -1047,7 +1047,7 @@ function GetClosestUnit(self)
 					-- Ensure the unit entry exists in unitsReversing
 					if unitsReversing[id] and unitsReversing[id].selfReference then
 						-- Binary search to find approximate distance to this unit
-						local distance = BinarySearchDistance(unitReversing.selfReference, unitsReversing[id].selfReference, 10, 5000, 10)
+						local distance = BinarySearchDistance(unitReversing.selfReference, unitsReversing[id].selfReference, 50, 5000, 50)
 
 						-- Track the closest unit found so far
 						if distance < closestDistance then
