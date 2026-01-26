@@ -894,6 +894,7 @@ end
 -- triggered by +BACKING_UP +TURN_RIGHT and +BACKING_UP +TURN_LEFT
 function BackingUpNormal(self)
 	local _,unitReversing = GetUnitReversingData(self)
+	-- deny if attacking 
 	if not unitReversing.isMovingFlag then return end
 	--unitReversing.firstFrame = unitReversing.firstFrame+1
 	if ObjectTestModelCondition(self, "TURN_RIGHT_HIGH_SPEED") == false and ObjectTestModelCondition(self, "TURN_LEFT_HIGH_SPEED") == false then
@@ -909,7 +910,8 @@ function UnitNoLongerMoving(self)
 	local selectedUnitList = unitReversing.selectedUnits.units
 	local unitsNotMoving = 0
 	for id, unitRef in selectedUnitList do
-		if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") == false then
+		-- ["IS_ATTACKING"]=22
+		if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") == false and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitsReversing[unitRef].selfReference , 22) then
 			unitsNotMoving = unitsNotMoving + 1
 		end
 	end
@@ -1071,6 +1073,8 @@ function getRandomKey(t, unitId)
 		randomIndex = random(1, count)
 	until keys[randomIndex] ~= unitId
 
+	-- WriteToFile("random units.txt",  "unit being assigned: " .. tostring(unitId) .. "   random unit assigned to it: "  .. tostring(keys[randomIndex]) .. "\n")
+
     return keys[randomIndex]
 end
 
@@ -1208,6 +1212,8 @@ function BackingUpEnd(self)
 		-- subsequent reverse moves will be accounted for 
 		if ObjectTestModelCondition(self, "MOVING") then
 			unitReversing.isMovingFlag = true
+		else 
+			unitReversing.isMovingFlag = false
 		end
 		unitReversing.firstFrame = 0 
 		unitReversing.isReverseMoving = false
