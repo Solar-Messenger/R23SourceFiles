@@ -68,27 +68,22 @@ harvesterData = {}
 crystalData = {}
 
 unitsReversing = {}
-
-DISTANCE_TO_UNIT_OFFSET = 35
-DURATION_OFFSET = 2
-UPPER_LIMIT_NORMAL_DETECTION = 5
-TIMES_TO_TRIGGER_ALT = 6
 TIMES_TO_TRIGGER = 2
-TIME_OFFSET_INCREMENT = 150
+TIME_OFFSET_INCREMENT = 200
 
 bugDurationTable = {
 -- BUGGIES
-["E3C841B0"]=7, -- Mok Raider Buggy
-["79609108"]=7, -- Black Hand Raider Buggy
-["6354531D"]=7, -- Nod Raider Buggy
+["E3C841B0"]=30, -- Mok Raider Buggy
+["79609108"]=30, -- Black Hand Raider Buggy
+["6354531D"]=30, -- Nod Raider Buggy
 -- SCORPION TANKS
-["1B44D6AE"]=7, -- Mok Scorpion Tank
-["A33F11AF"]=7, -- Black Hand Scorpion Tank
-["2F9131D"]=7, -- Nod Scorpion Tank
+["1B44D6AE"]=25, -- Mok Scorpion Tank
+["A33F11AF"]=25, -- Black Hand Scorpion Tank
+["2F9131D"]=25, -- Nod Scorpion Tank
 -- SEEKERS
-["B8802763"]=8, -- Scrin Seeker
-["DB2B7D2F"]=8, -- Reaper-17 Seeker
-["7296891C"]=8 -- Traveler-59 Seeker
+["B8802763"]=25, -- Scrin Seeker
+["DB2B7D2F"]=25, -- Reaper-17 Seeker
+["7296891C"]=25 -- Traveler-59 Seeker
 }	
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
@@ -917,9 +912,7 @@ function UnitNoLongerMoving(self)
 			unitsNotMoving = unitsNotMoving + 2
 		end
 	end
-
 	--WriteToFile("data.txt",  "selectedCount: " .. tostring(unitReversing.selectedUnits.selectedCount) .. " " .. "unitsNotMoving: " .. tostring(unitsNotMoving) .. "\n")
-	
 	-- apply changes to all units after checking the first one in the group.
 	if unitsNotMoving >= (floor(unitReversing.selectedUnits.selectedCount * 0.75)) and unitReversing.lastCheck ~= GetFrame() then
 		for id, unitRef in selectedUnitList do
@@ -933,40 +926,36 @@ end
 -- maybe instead of the above condition i could set a timer via a model condition and when it expires i can check the distance. 
 function BackingUpFastEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
-	-- Prevents execution of this function if the last move order was when this unit was idle and not moving.
     -- if not unitReversing.isMovingFlag then return end
 	local timesToTrigger = TIMES_TO_TRIGGER
-	local duration = bugDurationTable[getObjectName(self)]
-	if unitReversing.timeOffset > 0 then
-		-- if the unit has done a regular +BACKING_UP +TURN_RIGHT without it being fast, increase the trigger times.
-		timesToTrigger = TIMES_TO_TRIGGER_ALT
-	    duration = duration - DURATION_OFFSET
-	end
     if unitReversing ~= nil and unitReversing.timesTriggered < timesToTrigger then
 		unitReversing.timesTriggered = unitReversing.timesTriggered + 1
+		CheckObjDistanceTurning(self, unitReversing)
 	else 
 		-- end the function if it has triggered more than two times
 		return
 	end
+end
+
+function CheckObjDistanceTurning(self, unitReversing)
+	--local _,unitReversing = GetUnitReversingData(self)
+	local distanceOffset = bugDurationTable[getObjectName(self)]
 	--if unitReversing.timesTriggered ~= timesToTrigger then return end 
 	local isBugging = false	
 	-- Calculate frame difference once
 	local frameDiff = GetFrame() - unitReversing.firstFrame
-	-- get the unit type
 	-- 3rd param ["<"]=0, ["<="]=1, ["=="]=2, [">="]=3, [">"]=4, ["~="]=5
 	-- if the distance to the closestUnit is not less than DISTANCE_TO_UNIT_OFFSET units difference compared to when it first reverse moved check the bugging condition
 	--if frameDiff >= duration and frameDiff <= duration+UPPER_LIMIT_NORMAL_DETECTION+unitReversing.timeOffset then
-	if frameDiff >= duration and frameDiff <= duration+UPPER_LIMIT_NORMAL_DETECTION+unitReversing.timeOffset and unitReversing.closestUnit and not EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference, 1, unitReversing.distanceToClosestUnit+DISTANCE_TO_UNIT_OFFSET) then
-		-- refine condition more here
+	if unitReversing.closestUnit and not EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference, 1, unitReversing.distanceToClosestUnit+distanceOffset) then
 		isBugging = true
 	end
-
 	-- if true the unit has reverse bugged.
 	if isBugging then		
 		if ObjectTestModelCondition(self, "USER_72") == false then
 			ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 2.5, 100) 
 			-- temporarily remove collisions to facilitate the reverse move, assign this on backing up 
-			-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)	
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)	
 		end
 		-- flag this unit as being bugged
 		unitReversing.hasBugged = true

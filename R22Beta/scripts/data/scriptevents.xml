@@ -907,6 +907,8 @@
 		<EventHandler EventName="OnUser72"	ScriptFunctionName="BuggedUnitTimeout" DebugSingleStep="false"/> 
 		<!-- no longer moving event -->
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
+		<!-- on user 73 end
+		<EventHandler EventName="OnUser73End"	ScriptFunctionName="CheckObjDistanceAfterTimer" DebugSingleStep="false"/>   -->
     </EventList>
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">
