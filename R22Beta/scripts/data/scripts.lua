@@ -69,7 +69,7 @@ crystalData = {}
 
 unitsReversing = {}
 
-DISTANCE_TO_UNIT_OFFSET = 25
+DISTANCE_TO_UNIT_OFFSET = 35
 DURATION_OFFSET = 2
 UPPER_LIMIT_NORMAL_DETECTION = 5
 TIMES_TO_TRIGGER_ALT = 6
@@ -955,10 +955,8 @@ function BackingUpFastEnd(self)
 	-- get the unit type
 	-- 3rd param ["<"]=0, ["<="]=1, ["=="]=2, [">="]=3, [">"]=4, ["~="]=5
 	-- if the distance to the closestUnit is not less than DISTANCE_TO_UNIT_OFFSET units difference compared to when it first reverse moved check the bugging condition
-	-- if unitReversing.closestUnit and not EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference, 1, unitReversing.distanceToClosestUnit+DISTANCE_TO_UNIT_OFFSET) then 
-
 	--if frameDiff >= duration and frameDiff <= duration+UPPER_LIMIT_NORMAL_DETECTION+unitReversing.timeOffset then
-	if frameDiff >= duration and frameDiff <= duration+UPPER_LIMIT_NORMAL_DETECTION+unitReversing.timeOffset then
+	if frameDiff >= duration and frameDiff <= duration+UPPER_LIMIT_NORMAL_DETECTION+unitReversing.timeOffset and unitReversing.closestUnit and not EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference, 1, unitReversing.distanceToClosestUnit+DISTANCE_TO_UNIT_OFFSET) then
 		-- refine condition more here
 		isBugging = true
 	end
@@ -1042,10 +1040,10 @@ function BackingUp(self)
 	end
 	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)
 	-- assign the anchor to a random unit in ths selection (significantly less costly.)
-	AssignRandomAnchor(self)
+	-- AssignRandomAnchor(self)
 
 	-- assign the anchor to the aprox closest unit in the selection (more costly.)
-	-- AssignClosestAnchor(self) 
+	AssignClosestAnchor(self) 
 end
 
 -- gets a random selected unit of this players selection and assigns it to unitReversing.closestUnit = closestUnit
@@ -1116,7 +1114,7 @@ function AssignClosestAnchor(self)
 					-- Ensure the unit entry exists in unitsReversing
 					if unitsReversing[id] and unitsReversing[id].selfReference then
 						-- Binary search to find approximate distance to this unit
-						local distance = BinarySearchDistance(unitReversing.selfReference, unitsReversing[id].selfReference, 50, 5000, 50)
+						local distance = BinarySearchDistance(unitReversing.selfReference, unitsReversing[id].selfReference, 5, 5000, 5)
 
 						-- Track the closest unit found so far
 						if distance < closestDistance then
