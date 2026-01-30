@@ -868,7 +868,7 @@ function GetUnitReversingData(self)
 			isMovingFlag = false,
 			timeOffset = 0,
 			lastCheck = 0,
-			tempFlag = false,
+			fastTurnWas0Frames = false,
 			closestUnit = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
@@ -960,7 +960,7 @@ function BackingUpTurnEnd(self)
     if unitReversing ~= nil and unitReversing.timesTriggeredNormal < timesToTrigger then
 		unitReversing.timesTriggeredNormal = unitReversing.timesTriggeredNormal + 1
 		--CheckForObjReverseBugging(self, unitReversing)
-		if unitReversing.tempFlag then
+		if unitReversing.fastTurnWas0Frames then
 			CheckForObjReverseBugging(self, frameDiff)
 		end
 	else 
@@ -974,17 +974,18 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local distanceOffset = bugDurationTable[getObjectName(self)]
 	local isBugging = false	
 
-	if unitReversing.tempFlag then 
+	if unitReversing.fastTurnWas0Frames then 
 		-- if two fast turns yields framediff of 0, it can bee assumed the number of frames in this -TURN_LEFT or -TURN_RIGHT is 7 (for buggies)
 		if frameDiff == 7 then
 			isBugging = true
 		end
+		-- there are some units that arent 7 that bug still , maybe put a WriteToFile  here
 		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 	elseif frameDiff >= 4 and frameDiff <= 9 then
 		isBugging = true
 	elseif frameDiff == 0 then
 		-- some bugging units probably have frame diff of 7 at second trigger if first trigger is 0 
-		unitReversing.tempFlag = true
+		unitReversing.fastTurnWas0Frames = true
 	end
 
 	if isBugging then
@@ -1017,7 +1018,9 @@ function FixBuggingUnits(self)
 	ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference)	
 	ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, 100)
 	-- reverse move to remove collisions
-	-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
+	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
+	end
 	-- WriteToFile("closeunit.txt",  "table size: " .. tostring(unitReversing.selectedUnits.units) .. "\n")
 	local selectedUnitList = unitReversing.selectedUnits.units
 	for id, unitRef in selectedUnitList do
@@ -1034,7 +1037,9 @@ function FixBuggingUnits(self)
 				if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
 					--ExecuteAction("NAMED_STOP", unitsReversing[unitRef].selfRealReference)
 					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference)
-					-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)
+					if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
+						ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
+					end
 				end
 				-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[getObjectId(nonBuggingUnit)].selfReference) .. "\n")
 			end
@@ -1271,7 +1276,9 @@ function BackingUpEnd(self)
 	local _,unitReversing = GetUnitReversingData(self)	
 	if unitReversing ~= nil and not unitReversing.hasBugged then
 		-- need to prevent this when guarding
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)
+		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
+		end
 	end
 
 	if unitReversing ~= nil then
@@ -1286,7 +1293,7 @@ function BackingUpEnd(self)
 		unitReversing.timesTriggeredFast = 0
 		unitReversing.timesTriggeredNormal = 0
 		unitReversing.timeOffset = 0
-		unitReversing.tempFlag = false
+		unitReversing.fastTurnWas0Frames = false
 	end
 end
 
@@ -1296,8 +1303,12 @@ function BuggedUnitTimeoutEnd(self)
 	if unitReversing ~= nil then
 		unitReversing.hasBugged = false
 		unitReversing.closestUnit = nil
-		-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
+		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)	
+		end
+		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
+		end
 	end
 end
 
