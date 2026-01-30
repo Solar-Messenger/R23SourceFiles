@@ -868,6 +868,8 @@ function GetUnitReversingData(self)
 			isMovingFlag = false,
 			timeOffset = 0,
 			lastCheck = 0,
+			lastReverseMoveFrame = 0,
+			hasAlreadyReversed = false,
 			fastTurnWas0Frames = false,
 			closestUnit = nil -- can be an array from closest to farthest
 		}
@@ -904,24 +906,33 @@ function BackingUpNormal(self)
 	end
 end
 
--- prevents timeOffset being assigned if the unit wasnt moving before, triggered by -MOVING
+-- prevents timeOffset being assigned if the unit wasnt moving before, triggered by -MOVING, triggered after IS_ATTACKING finishes
 function UnitNoLongerMoving(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	-- check if most units selected are not moving 
 	local selectedUnitList = unitReversing.selectedUnits.units
 	local unitsNotMoving = 0
+	local curFrame = GetFrame()
 	for id, unitRef in selectedUnitList do
-		-- ["IS_ATTACKING"]=22
-		if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") == false and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitsReversing[unitRef].selfReference , 22) then
-			unitsNotMoving = unitsNotMoving + 2
+		-- doesnt seem to work unless player explicitly press "s" key
+		if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") == false then
+			unitsNotMoving = unitsNotMoving + 1
 		end
 	end
-	-- WriteToFile("data.txt",  "selectedCount: " .. tostring(unitReversing.selectedUnits.selectedCount) .. " " .. "unitsNotMoving: " .. tostring(unitsNotMoving) .. "\n")
-	-- apply changes to all units after checking the first one in the group.
-	if unitsNotMoving >= (floor(unitReversing.selectedUnits.selectedCount * 0.75)) and unitReversing.lastCheck ~= GetFrame() then
+
+	-- for debugging number of units not moving when -MOVING state triggers.
+	--WriteToFile("data.txt",  "selectedCount: " .. tostring(unitReversing.selectedUnits.selectedCount) .. " " .. "unitsNotMoving: " .. tostring(unitsNotMoving) .. "\n")
+
+	-- apply changes to all units after checking the first one in the group.	
+	-- if more than 85% of the units are not moving, then set this flag to all of them ["IS_ATTACKING"]=22
+
+	if unitsNotMoving >= (floor(unitReversing.selectedUnits.selectedCount * 0.85)) and unitReversing.lastCheck ~= curFrame and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitsReversing[unitRef].selfReference , 22) then
 		for id, unitRef in selectedUnitList do
-			unitsReversing[unitRef].isMovingFlag = false
-			unitsReversing[unitRef].lastCheck = GetFrame()
+			if unitsReversing[unitRef].isMovingFlag then
+				ExecuteAction("NAMED_FLASH", unitsReversing[unitRef].selfRealReference, 2)
+				unitsReversing[unitRef].isMovingFlag = false
+				unitsReversing[unitRef].lastCheck = curFrame
+			end
 		end
 	end
 end
@@ -929,7 +940,7 @@ end
 -- Triggered by +BACKING_UP -TURN_LEFT_HIGH_SPEED and +BACKING_UP -TURN_RIGHT_HIGH_SPEED
 function BackingUpFastTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
-    -- if not unitReversing.isMovingFlag then return end
+    if unitReversing.hasAlreadyReversed then return end
 	local timesToTrigger = TIMES_TO_TRIGGER
 	local frameDiff = GetFrame() - unitReversing.firstFrame
 
@@ -938,7 +949,7 @@ function BackingUpFastTurnEnd(self)
 		--WriteToFile("backingupfastend.txt",  "object went this long with 1 trigger: " .. tostring(frameDiff) .. "\n")
 	end
 
-	if unitReversing.timesTriggeredFast == 1 then
+	if unitReversing.timesTriggeredFast == 1 then	
 		CheckForObjReverseBugging(self, frameDiff)
 	end
 
@@ -954,6 +965,7 @@ end
 -- Triggered by +BACKING_UP -TURN_LEFT and +BACKING_UP -TURN_RIGHT
 function BackingUpTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
+	if unitReversing.hasAlreadyReversed then return end
 	local timesToTrigger = TIMES_TO_TRIGGER
 	local frameDiff = GetFrame() - unitReversing.firstFrame
 
@@ -1014,15 +1026,14 @@ function FixBuggingUnits(self)
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)	
 		end
 	end
-	-- flash units detected as being bugged
-	-- fix this unit
 
 	-- check if closestUnit is destroyed or is nil
 	local closestUnit = unitsReversing[getObjectId(unitReversing.closestUnit)]
-	if closestUnit ~= nil or not EvaluateCondition("NAMED_NOT_DESTROYED",closestUnit.selfReference) then 
+	if closestUnit ~= nil or EvaluateCondition("NAMED_NOT_DESTROYED",closestUnit.selfReference) then 
 		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, closestUnit.selfReference)	
 	else 
 		-- assign a new closestUnit 
+		-- print(selectedUnitList) (debug this after to verify it works)
 		GetANonBuggingUnit(selectedUnitList, self)
 	end
 
@@ -1064,7 +1075,7 @@ function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 		if unitsReversing[unitRef] ~= nil then
 			if unitsReversing[unitRef].selfRealReference ~= unit then
 				-- check to see if unit is bugging and isnt destroyed 
-				if not EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") == false then
+				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") == false then
 					--print(ObjectDescription(unitsReversing[unitRef].selfRealReference))
 					return unitsReversing[unitRef].selfRealReference
 				end
@@ -1085,26 +1096,33 @@ function ShallowCopyTable(original)
 	return copy
 end
 
--- Triggered by +SELECTED +BACKING_UP
+-- Triggered by +SELECTED +BACKING_UP, triggered 
 function BackingUp(self)
 	local a,unitReversing = GetUnitReversingData(self)
+	local curFrame = GetFrame()
+	-- this prevent subsequent reverse moves from executing the checks
+	if curFrame - unitReversing.lastReverseMoveFrame <= 2 then
+		--print("has already reverse moved")
+		unitReversing.hasAlreadyReversed = true
+	else 
+		unitReversing.hasAlreadyReversed = false
+	end
 	local playerTeam = tostring(ObjectTeamName(self))
 	local teamTable = ShallowCopyTable(getglobal(playerTeam))
-	unitReversing.firstFrame = GetFrame()
+	unitReversing.firstFrame = curFrame
 	-- maybe assigning a temp model state to prevent this from reassigning on a unit that is backing up again due to GUARD state is an option.
 	if ObjectTestModelCondition(self, "USER_72") == false then
 		unitReversing.selectedUnits = teamTable
+		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)	
+		end
+		-- assign the anchor to a random unit in ths selection (significantly less costly.)
+		AssignRandomAnchor(self)
+		-- assign the anchor to the aprox closest unit in the selection (more costly.)
+		-- AssignClosestAnchor(self) 
 	else 
 		return
 	end
-	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)	
-	end
-
-	-- assign the anchor to a random unit in ths selection (significantly less costly.)
-	AssignRandomAnchor(self)
-	-- assign the anchor to the aprox closest unit in the selection (more costly.)
-	-- AssignClosestAnchor(self) 
 end
 
 function ReverseDummyDestroyed(self)
@@ -1153,7 +1171,7 @@ function getRandomKey(t, unitId)
     local randomIndex = 0    
 	-- keep assigning a random unit until its not the same as self
 	repeat
-		randomIndex = random(1, count)
+	randomIndex = random(1, count)
 	until keys[randomIndex] ~= unitId
 
 	-- WriteToFile("random units.txt",  "unit being assigned: " .. tostring(unitId) .. "   random unit assigned to it: "  .. tostring(keys[randomIndex]) .. "\n")
@@ -1234,10 +1252,11 @@ function BinarySearchDistance(obj1Ref, obj2Ref, minDist, maxDist, precision)
 	return result
 end
 
+-- only updated on +BACKING_UP 
 function AddToUnitSelection(self)
     local playerTeam = tostring(ObjectTeamName(self))
     local unitId = getObjectId(self)
-    local teamTable = getglobal(playerTeam)
+    local teamTable = getglobal(playerTeam) or nil
 
     if teamTable == nil then
         teamTable = {}
@@ -1286,6 +1305,7 @@ end
 -- Triggered by -BACKING_UP, this triggers when multiple reverse move commands
 function BackingUpEnd(self)
 	local _,unitReversing = GetUnitReversingData(self)	
+	unitReversing.lastReverseMoveFrame = GetFrame()
 	if unitReversing ~= nil and not unitReversing.hasBugged then
 		-- need to prevent this when guarding
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
