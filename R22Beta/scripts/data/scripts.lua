@@ -66,16 +66,19 @@ bar4 = {} -- for tracking the bar four of the harvester.
 
 harvesterData = {}
 crystalData = {}
+tempReference = {}
+dummyReference = {}
 
 unitsReversing = {}
 TIMES_TO_TRIGGER = 2
 TIME_OFFSET_INCREMENT = 200
 
 bugDurationTable = {
+-- currently some bugs happen below these values, im trying to setup a timer to check it properly: lifetimeupdate 0.25 via ocl could be the solution.
 -- BUGGIES
-["E3C841B0"]=30, -- Mok Raider Buggy
-["79609108"]=30, -- Black Hand Raider Buggy
-["6354531D"]=30, -- Nod Raider Buggy
+["E3C841B0"]=2, -- Mok Raider Buggy
+["79609108"]=2, -- Black Hand Raider Buggy
+["6354531D"]=2, -- Nod Raider Buggy
 -- SCORPION TANKS
 ["1B44D6AE"]=25, -- Mok Scorpion Tank
 ["A33F11AF"]=25, -- Black Hand Scorpion Tank
@@ -855,7 +858,8 @@ function GetUnitReversingData(self)
 		unitsReversing[a] = unitsReversing[a] or {
 			firstFrame = 0, -- first frame after reversing while turning fast
 			isReverseMoving = false, -- flag to stop the re-assignment of firstFrame
-			timesTriggered = 0, 
+			timesTriggeredFast = 0, 
+			timesTriggeredNormal = 0, 
 			hasBugged = false,
 			selfReference = SetObjectReference(self, a),
 			selfRealReference = self,
@@ -864,6 +868,7 @@ function GetUnitReversingData(self)
 			isMovingFlag = false,
 			timeOffset = 0,
 			lastCheck = 0,
+			tempFlag = false,
 			closestUnit = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
@@ -883,7 +888,7 @@ function BackingUpFast(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	local curFrame = GetFrame()
 	if unitReversing.firstFrame == 0 and not unitReversing.isReverseMoving then
-		unitReversing.firstFrame = curFrame
+		--unitReversing.firstFrame = curFrame
 		unitReversing.isReverseMoving = true
 	end
 end
@@ -892,11 +897,10 @@ end
 function BackingUpNormal(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	-- deny if attacking 
-	if not unitReversing.isMovingFlag then return end
+	-- if not unitReversing.isMovingFlag then return end
 	--unitReversing.firstFrame = unitReversing.firstFrame+1
 	if ObjectTestModelCondition(self, "TURN_RIGHT_HIGH_SPEED") == false and ObjectTestModelCondition(self, "TURN_LEFT_HIGH_SPEED") == false then
-		unitReversing.timeOffset = unitReversing.timeOffset + TIME_OFFSET_INCREMENT 
-		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+		--unitReversing.timeOffset = unitReversing.timeOffset + TIME_OFFSET_INCREMENT 
 	end
 end
 
@@ -923,49 +927,100 @@ function UnitNoLongerMoving(self)
 end
 
 -- Triggered by +BACKING_UP -TURN_LEFT_HIGH_SPEED and +BACKING_UP -TURN_RIGHT_HIGH_SPEED
--- maybe instead of the above condition i could set a timer via a model condition and when it expires i can check the distance. 
-function BackingUpFastEnd(self) 
+function BackingUpFastTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
     -- if not unitReversing.isMovingFlag then return end
 	local timesToTrigger = TIMES_TO_TRIGGER
-    if unitReversing ~= nil and unitReversing.timesTriggered < timesToTrigger then
-		unitReversing.timesTriggered = unitReversing.timesTriggered + 1
-		CheckObjDistanceTurning(self, unitReversing)
+	local frameDiff = GetFrame() - unitReversing.firstFrame
+
+	-- first index is 0 so this is really second exec
+	if unitReversing.timesTriggeredFast == 1 then
+		--WriteToFile("backingupfastend.txt",  "object went this long with 1 trigger: " .. tostring(frameDiff) .. "\n")
+	end
+
+	if unitReversing.timesTriggeredFast == 1 then
+		CheckForObjReverseBugging(self, frameDiff)
+	end
+
+    if unitReversing ~= nil and unitReversing.timesTriggeredFast < timesToTrigger then
+		unitReversing.timesTriggeredFast = unitReversing.timesTriggeredFast + 1
+		--CheckForObjReverseBugging(self, unitReversing)
 	else 
 		-- end the function if it has triggered more than two times
 		return
 	end
 end
 
-function CheckObjDistanceTurning(self, unitReversing)
-	--local _,unitReversing = GetUnitReversingData(self)
+-- Triggered by +BACKING_UP -TURN_LEFT and +BACKING_UP -TURN_RIGHT
+function BackingUpTurnEnd(self) 
+    local _,unitReversing = GetUnitReversingData(self)
+	local timesToTrigger = TIMES_TO_TRIGGER
+	local frameDiff = GetFrame() - unitReversing.firstFrame
+
+    if unitReversing ~= nil and unitReversing.timesTriggeredNormal < timesToTrigger then
+		unitReversing.timesTriggeredNormal = unitReversing.timesTriggeredNormal + 1
+		--CheckForObjReverseBugging(self, unitReversing)
+		if unitReversing.tempFlag then
+			CheckForObjReverseBugging(self, frameDiff)
+			ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+		end
+	else 
+		-- end the function if it has triggered more than two times
+		return
+	end
+end
+
+
+function CheckForObjReverseBugging(self, frameDiff)
+	local a,unitReversing = GetUnitReversingData(self)
 	local distanceOffset = bugDurationTable[getObjectName(self)]
-	--if unitReversing.timesTriggered ~= timesToTrigger then return end 
+	--if unitReversing.timesTriggeredFast ~= timesToTrigger then return end 
 	local isBugging = false	
 	-- Calculate frame difference once
-	local frameDiff = GetFrame() - unitReversing.firstFrame
+	--local frameDiff = GetFrame() - unitReversing.firstFrame
+	--if unitReversing.closestUnit and not EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference, 1, unitReversing.distanceToClosestUnit+distanceOffset) then
+	--	isBugging = true
+	--end
+
+	-- second condition: seems to work but with side effects
+	if frameDiff >= 4 and frameDiff <= 9 then
+		isBugging = true
+	elseif frameDiff == 0 then
+		-- some bugging units probably have frame diff of 7 at second trigger if first trigger is 0 
+		unitReversing.tempFlag = true
+
+			-- WORKAROUND FOR DELAYING A FUNCTION CALL
+
+			--local playerTeam = tostring(ObjectTeamName(self))
+			--tinsert(tempReference, a)
+			--local shortName = strsub(playerTeam, 5)
+			--local fullTeamName = tostring(shortName .. "/" .. playerTeam)
+			--ExecuteAction("CREATE_OBJECT","ReverseDummy",fullTeamName,"0.00,0.00,0.00",0)
+	end
+
 	-- 3rd param ["<"]=0, ["<="]=1, ["=="]=2, [">="]=3, [">"]=4, ["~="]=5
 	-- if the distance to the closestUnit is not less than DISTANCE_TO_UNIT_OFFSET units difference compared to when it first reverse moved check the bugging condition
-	--if frameDiff >= duration and frameDiff <= duration+UPPER_LIMIT_NORMAL_DETECTION+unitReversing.timeOffset then
-	if unitReversing.closestUnit and not EvaluateCondition("DISTANCE_BETWEEN_OBJ", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference, 1, unitReversing.distanceToClosestUnit+distanceOffset) then
-		isBugging = true
-	end
+	-- +UPPER_LIMIT_NORMAL_DETECTION+unitReversing.timeOffse
+	
 	-- if true the unit has reverse bugged.
 	if isBugging then		
 		if ObjectTestModelCondition(self, "USER_72") == false then
-			ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 2.5, 100) 
+			ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 3.5, 100) 
 			-- temporarily remove collisions to facilitate the reverse move, assign this on backing up 
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)	
+			if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
+				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)	
+			end
 		end
 		-- flag this unit as being bugged
-		unitReversing.hasBugged = true
+		if not unitReversing.hasBugged then
+			unitReversing.hasBugged = true
+		end
 		-- flash units detected as being bugged
-		-- ExecuteAction("NAMED_FLASH", self, 2)
 		-- fix this unit
 		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference)	
 		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, 100)
 		-- reverse move to remove collisions
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
+		-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
 		-- WriteToFile("closeunit.txt",  "table size: " .. tostring(unitReversing.selectedUnits.units) .. "\n")
 		local selectedUnitList = unitReversing.selectedUnits.units
 		for id, unitRef in selectedUnitList do
@@ -982,7 +1037,7 @@ function CheckObjDistanceTurning(self, unitReversing)
 					if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
 						--ExecuteAction("NAMED_STOP", unitsReversing[unitRef].selfRealReference)
 						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference)
-						ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)
+						-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)
 					end
 					-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[getObjectId(nonBuggingUnit)].selfReference) .. "\n")
 				end
@@ -1019,20 +1074,46 @@ end
 
 -- Triggered by +SELECTED +BACKING_UP
 function BackingUp(self)
-	local _,unitReversing = GetUnitReversingData(self)
+	local a,unitReversing = GetUnitReversingData(self)
 	local playerTeam = tostring(ObjectTeamName(self))
 	local teamTable = ShallowCopyTable(getglobal(playerTeam))
-
+	unitReversing.firstFrame = GetFrame()
 	-- maybe assigning a temp model state to prevent this from reassigning on a unit that is backing up again due to GUARD state is an option.
 	if ObjectTestModelCondition(self, "USER_72") == false then
 		unitReversing.selectedUnits = teamTable
+	else 
+		return
 	end
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)
+	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)	
+	end
+
 	-- assign the anchor to a random unit in ths selection (significantly less costly.)
 	-- AssignRandomAnchor(self)
 
 	-- assign the anchor to the aprox closest unit in the selection (more costly.)
 	AssignClosestAnchor(self) 
+	-- finally spawn an object belonging to this player that has a lifespan of .25s that when ondeath checks if the obj distance is more than the offset.
+	-- add to the table tempReference this object and assign it when dummy is created
+end
+
+function ReverseDummyDestroyed(self)
+	local a = getObjectId(self)
+	local _,unitReversing = GetUnitReversingData(unitsReversing[dummyReference[a]].selfRealReference)
+	-- check the unit 
+	-- ExecuteAction("NAMED_FLASH", unitReversing.selfRealReference, 2)
+	--CheckForObjReverseBugging(unitReversing.selfRealReference, unitReversing)
+	dummyReference[a] = nil
+end
+
+function ReverseDummyCreated(self)
+	local a = getObjectId(self)
+	-- check if the table is not empty, remove the first entry if not.
+	if next(tempReference) ~= nil then
+		dummyReference[a] = tempReference[1]
+		-- remove the first element from the list 
+		tremove(tempReference, 1)
+	end
 end
 
 -- gets a random selected unit of this players selection and assigns it to unitReversing.closestUnit = closestUnit
@@ -1041,7 +1122,6 @@ function AssignRandomAnchor(self)
         local a,unitReversing = GetUnitReversingData(self)
 		-- list of ids
         local selectedUnitList = unitReversing.selectedUnits.units
-
 		-- Check if we have at least 2 units in the selection (self + at least one other)
 		if next(selectedUnitList) ~= nil and next(selectedUnitList, next(selectedUnitList)) ~= nil then	
 			-- gets a unit that isnt self randomly.
@@ -1085,7 +1165,7 @@ function random(...) --overwritting lua native function for multiplayer compatib
 end 
 
 -- gets the closest unit thats also selected of this player
--- assiigns it to unitReversing.closestUnit = closestUnit
+-- assigns it to unitReversing.closestUnit
 function AssignClosestAnchor(self)
     if self ~= nil then
         local a,unitReversing = GetUnitReversingData(self)
@@ -1103,7 +1183,7 @@ function AssignClosestAnchor(self)
 					-- Ensure the unit entry exists in unitsReversing
 					if unitsReversing[id] and unitsReversing[id].selfReference then
 						-- Binary search to find approximate distance to this unit
-						local distance = BinarySearchDistance(unitReversing.selfReference, unitsReversing[id].selfReference, 5, 5000, 5)
+						local distance = BinarySearchDistance(unitReversing.selfReference, unitsReversing[id].selfReference, 25, 5000, 50)
 
 						-- Track the closest unit found so far
 						if distance < closestDistance then
@@ -1210,8 +1290,10 @@ function BackingUpEnd(self)
 		end
 		unitReversing.firstFrame = 0 
 		unitReversing.isReverseMoving = false
-		unitReversing.timesTriggered = 0
+		unitReversing.timesTriggeredFast = 0
+		unitReversing.timesTriggeredNormal = 0
 		unitReversing.timeOffset = 0
+		unitReversing.tempFlag = false
 	end
 end
 
@@ -1221,7 +1303,7 @@ function BuggedUnitTimeoutEnd(self)
 	if unitReversing ~= nil then
 		unitReversing.hasBugged = false
 		unitReversing.closestUnit = nil
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)
+		-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
 	end
 end
@@ -1229,7 +1311,6 @@ end
 function BuggedUnitTimeout(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	unitReversing.hasBugged = true
-
 	-- apply a minor speed boost to the affected unit via upgrade
 	-- ObjectCreateAndFireTempWeapon(self, "BuggedUnitSpeedBoost")
 end

@@ -121,6 +121,8 @@
 		<Include source="Nod\Units\NODHarvester.xml" type="all"/>	 -->
 
 		<!-- post r23z changes -->
+		<Include source="ReverseDummy.xml" type="all"/>	
+
 		<Include source="LocomotorR24.xml" type="all"/>	
 		<Include source="Reaper17\Units\Reaper17Mothership.xml" type="all"/>	
 		<Include source="traveler59\Units\Traveler59Mothership.xml" type="all"/>		

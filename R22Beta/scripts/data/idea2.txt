@@ -1,3 +1,0 @@
-fire a special power that spawns an object at units location, modify geometry of the object to have an offset so that its significantly behind the unit, spawn with angle of the unit. 
-
-make this crushable and a neutral team, simply associate the object with the creator.

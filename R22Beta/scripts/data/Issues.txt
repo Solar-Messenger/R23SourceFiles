@@ -1,9 +1,5 @@
 Issues
-1. Currently theres a resource contention issue when multiple players access the selectedUnits table.
-	- Proposed solution: split selectedUnits into 8 individual tables.
+1. Selecting more than 25 units seems to trigger a lot of false positives.
 
-2. If a unit dies that was assigned as the anchor of another which is currently bugging, it should acquire a new anchor and subsequently be re-assigned the move command.
-
-3. I need a way to check if the player has stopped his units instead of unit bumping into another, I think checking through all selected units and seeing if more than half of them aren't moving is the way.
-
-4. Units after force firing don't seem to work with the current implementation of the fix.
+TODO: 
+Spawn an obj and after .1s check if most units are bugging, if they are it means they really aren't, just they were ordered to reverse move a long distance.
