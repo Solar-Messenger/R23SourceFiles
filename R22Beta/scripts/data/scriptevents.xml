@@ -878,8 +878,6 @@
     
     <EventList Name="BaseScriptFunctions">
 		<!-- If there are any events that need to apply to all units, put them here. jba -->
-		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>
-		<EventHandler EventName="OnBackingUp"	ScriptFunctionName="BackingUp" DebugSingleStep="false"/>
 			<!--
 		<EventHandler EventName="OnBackingUpRight"	ScriptFunctionName="BackingUpNormal" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpLeft"	ScriptFunctionName="BackingUpNormal" DebugSingleStep="false"/>
@@ -887,6 +885,8 @@
 		<EventHandler EventName="OnBackingUpRightEnd"	ScriptFunctionName="BackingUpNormalEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpLeftEnd"	ScriptFunctionName="BackingUpNormalEnd" DebugSingleStep="false"/>
 		-->
+		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>
+		<EventHandler EventName="OnBackingUp"	ScriptFunctionName="BackingUp" DebugSingleStep="false"/>
 		
 		<EventHandler EventName="OnBackingUpFastRight1"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpFastLeft1"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
@@ -897,8 +897,8 @@
 		<EventHandler EventName="OnBackingUpRightEnd"	ScriptFunctionName="BackingUpTurnEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpLeftEnd"	ScriptFunctionName="BackingUpTurnEnd" DebugSingleStep="false"/>
 
-		<!-- no worky -->
-		<EventHandler EventName="OnReverseState"	ScriptFunctionName="UnitNowGuarding" DebugSingleStep="false"/>
+		<!-- no worky 
+		<EventHandler EventName="OnReverseState"	ScriptFunctionName="UnitNowGuarding" DebugSingleStep="false"/> -->
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="ReverseUnitOnDeath" DebugSingleStep="false"/>
 		<!-- <EventHandler EventName="OnCreated"	ScriptFunctionName="ReverseUnitCreated" DebugSingleStep="false"/> -->
 

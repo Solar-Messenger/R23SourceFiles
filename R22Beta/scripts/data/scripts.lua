@@ -1006,6 +1006,7 @@ end
 
 function FixBuggingUnits(self)
 	local a,unitReversing = GetUnitReversingData(self)
+	local selectedUnitList = unitReversing.selectedUnits.units
 	if ObjectTestModelCondition(self, "USER_72") == false then
 		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 3.5, 100) 
 		-- temporarily remove collisions to facilitate the reverse move, assign this on backing up 
@@ -1015,14 +1016,22 @@ function FixBuggingUnits(self)
 	end
 	-- flash units detected as being bugged
 	-- fix this unit
-	ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference)	
+
+	-- check if closestUnit is destroyed or is nil
+	local closestUnit = unitsReversing[getObjectId(unitReversing.closestUnit)]
+	if closestUnit ~= nil or not EvaluateCondition("NAMED_NOT_DESTROYED",closestUnit.selfReference) then 
+		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, closestUnit.selfReference)	
+	else 
+		-- assign a new closestUnit 
+		GetANonBuggingUnit(selectedUnitList, self)
+	end
+
 	ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, 100)
 	-- reverse move to remove collisions
 	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
 	end
 	-- WriteToFile("closeunit.txt",  "table size: " .. tostring(unitReversing.selectedUnits.units) .. "\n")
-	local selectedUnitList = unitReversing.selectedUnits.units
 	for id, unitRef in selectedUnitList do
 		-- this unit is bugging so lets go through all the closest units and see if it coincides with this one
 		if unitsReversing[unitRef].closestUnit == unitReversing.selfRealReference then
@@ -1047,15 +1056,18 @@ function FixBuggingUnits(self)
 	end
 end
 
+
 -- if the closestUnit has bugged during the reverse move, seek out a unit that hasnt of that players selection.
 -- selectedUnitsOfPlayer is thee array of units whose value is ObjectId
 function GetANonBuggingUnit(selectedUnitsOfPlayer, unit) 
 	for id, unitRef in selectedUnitsOfPlayer do
-		if unitsReversing[unitRef].selfRealReference ~= unit then
-			-- check to see if unit is bugging
-			if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") == false then
-				--print(ObjectDescription(unitsReversing[unitRef].selfRealReference))
-				return unitsReversing[unitRef].selfRealReference
+		if unitsReversing[unitRef] ~= nil then
+			if unitsReversing[unitRef].selfRealReference ~= unit then
+				-- check to see if unit is bugging and isnt destroyed 
+				if not EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") == false then
+					--print(ObjectDescription(unitsReversing[unitRef].selfRealReference))
+					return unitsReversing[unitRef].selfRealReference
+				end
 			end
 		end
 	end
@@ -1090,9 +1102,9 @@ function BackingUp(self)
 	end
 
 	-- assign the anchor to a random unit in ths selection (significantly less costly.)
-	-- AssignRandomAnchor(self)
+	AssignRandomAnchor(self)
 	-- assign the anchor to the aprox closest unit in the selection (more costly.)
-	AssignClosestAnchor(self) 
+	-- AssignClosestAnchor(self) 
 end
 
 function ReverseDummyDestroyed(self)
