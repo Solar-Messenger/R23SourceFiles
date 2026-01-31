@@ -871,6 +871,7 @@ function GetUnitReversingData(self)
 			lastReverseMoveFrame = 0,
 			hasAlreadyReversed = false,
 			fastTurnWas0Frames = false,
+			isAttacking = false,
 			closestUnit = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
@@ -895,52 +896,48 @@ function BackingUpFast(self)
 	end
 end
 
--- triggered by +BACKING_UP +TURN_RIGHT and +BACKING_UP +TURN_LEFT
-function BackingUpNormal(self)
-	local _,unitReversing = GetUnitReversingData(self)
-	-- deny if attacking 
-	-- if not unitReversing.isMovingFlag then return end
-	--unitReversing.firstFrame = unitReversing.firstFrame+1
-	if ObjectTestModelCondition(self, "TURN_RIGHT_HIGH_SPEED") == false and ObjectTestModelCondition(self, "TURN_LEFT_HIGH_SPEED") == false then
-		--unitReversing.timeOffset = unitReversing.timeOffset + TIME_OFFSET_INCREMENT 
-	end
-end
-
--- prevents timeOffset being assigned if the unit wasnt moving before, triggered by -MOVING, triggered after IS_ATTACKING finishes
 function UnitNoLongerMoving(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	-- check if most units selected are not moving 
+	-- rather than increment/decrement make a table of each selected unit with true /false for moving
+	-- update list
+	unitReversing.isMovingFlag = true
+	local unitsMoving = 0
 	local selectedUnitList = unitReversing.selectedUnits.units
-	local unitsNotMoving = 0
-	local curFrame = GetFrame()
 	for id, unitRef in selectedUnitList do
-		-- doesnt seem to work unless player explicitly press "s" key
-		if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") == false then
-			unitsNotMoving = unitsNotMoving + 1
+		if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") then
+			unitsMoving = unitsMoving + 1
 		end
 	end
 
-	-- for debugging number of units not moving when -MOVING state triggers.
-	--WriteToFile("data.txt",  "selectedCount: " .. tostring(unitReversing.selectedUnits.selectedCount) .. " " .. "unitsNotMoving: " .. tostring(unitsNotMoving) .. "\n")
-
-	-- apply changes to all units after checking the first one in the group.	
-	-- if more than 85% of the units are not moving, then set this flag to all of them ["IS_ATTACKING"]=22
-
-	if unitsNotMoving >= (floor(unitReversing.selectedUnits.selectedCount * 0.85)) and unitReversing.lastCheck ~= curFrame and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitsReversing[unitRef].selfReference , 22) then
+	--WriteToFile("unitsMoving.txt",  tostring(floor(unitReversing.selectedUnits.selectedCount * 0.1)) .. "\n")
+	if unitsMoving <= (floor(unitReversing.selectedUnits.selectedCount * 0.1)) then
 		for id, unitRef in selectedUnitList do
-			if unitsReversing[unitRef].isMovingFlag then
-				ExecuteAction("NAMED_FLASH", unitsReversing[unitRef].selfRealReference, 2)
+			-- if not attacking (state applied, and removed on backingupend)
+			if not unitsReversing[unitRef].isAttacking then
 				unitsReversing[unitRef].isMovingFlag = false
-				unitsReversing[unitRef].lastCheck = curFrame
 			end
 		end
+		-- debug after ... (31/01/2026)
 	end
+end
+
+function UnitIsAttacking(self)
+	local _,unitReversing = GetUnitReversingData(self)
+	unitReversing.isAttacking = true
+end
+
+-- decrement the unitsMoving counter triggered by +MOVING (need a way to see if already moving)
+function UnitIsMoving(self)
+	local _,unitReversing = GetUnitReversingData(self)
+	--unitReversing.isMovingFlag = true
 end
 
 -- Triggered by +BACKING_UP -TURN_LEFT_HIGH_SPEED and +BACKING_UP -TURN_RIGHT_HIGH_SPEED
 function BackingUpFastTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
-    if unitReversing.hasAlreadyReversed then return end
+	-- prevents this from executing
+	if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
 	local timesToTrigger = TIMES_TO_TRIGGER
 	local frameDiff = GetFrame() - unitReversing.firstFrame
 
@@ -965,7 +962,7 @@ end
 -- Triggered by +BACKING_UP -TURN_LEFT and +BACKING_UP -TURN_RIGHT
 function BackingUpTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
-	if unitReversing.hasAlreadyReversed then return end
+	if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
 	local timesToTrigger = TIMES_TO_TRIGGER
 	local frameDiff = GetFrame() - unitReversing.firstFrame
 
@@ -1104,6 +1101,7 @@ function BackingUp(self)
 	if curFrame - unitReversing.lastReverseMoveFrame <= 2 then
 		--print("has already reverse moved")
 		unitReversing.hasAlreadyReversed = true
+		return 
 	else 
 		unitReversing.hasAlreadyReversed = false
 	end
@@ -1314,18 +1312,13 @@ function BackingUpEnd(self)
 	end
 
 	if unitReversing ~= nil then
-		-- subsequent reverse moves will be accounted for 
-		if ObjectTestModelCondition(self, "MOVING") then
-			unitReversing.isMovingFlag = true
-		else 
-			unitReversing.isMovingFlag = false
-		end
 		unitReversing.firstFrame = 0 
 		unitReversing.isReverseMoving = false
 		unitReversing.timesTriggeredFast = 0
 		unitReversing.timesTriggeredNormal = 0
 		unitReversing.timeOffset = 0
 		unitReversing.fastTurnWas0Frames = false
+		unitReversing.isAttacking = false
 	end
 end
 
