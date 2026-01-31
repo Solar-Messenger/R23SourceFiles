@@ -71,22 +71,22 @@ dummyReference = {}
 
 unitsReversing = {}
 TIMES_TO_TRIGGER = 2
-TIME_OFFSET_INCREMENT = 200
+NO_COLLISION_DURATION = 4
 
 bugDurationTable = {
 -- currently some bugs happen below these values, im trying to setup a timer to check it properly: lifetimeupdate 0.25 via ocl could be the solution.
 -- BUGGIES
-["E3C841B0"]=2, -- Mok Raider Buggy
-["79609108"]=2, -- Black Hand Raider Buggy
-["6354531D"]=2, -- Nod Raider Buggy
+["E3C841B0"]=7, -- Mok Raider Buggy
+["79609108"]=7, -- Black Hand Raider Buggy
+["6354531D"]=7, -- Nod Raider Buggy
 -- SCORPION TANKS
-["1B44D6AE"]=25, -- Mok Scorpion Tank
-["A33F11AF"]=25, -- Black Hand Scorpion Tank
-["2F9131D"]=25, -- Nod Scorpion Tank
+["1B44D6AE"]=8, -- Mok Scorpion Tank
+["A33F11AF"]=8, -- Black Hand Scorpion Tank
+["2F9131D"]=8, -- Nod Scorpion Tank
 -- SEEKERS
-["B8802763"]=25, -- Scrin Seeker
-["DB2B7D2F"]=25, -- Reaper-17 Seeker
-["7296891C"]=25 -- Traveler-59 Seeker
+["B8802763"]=11, -- Scrin Seeker
+["DB2B7D2F"]=11, -- Reaper-17 Seeker
+["7296891C"]=11 -- Traveler-59 Seeker
 }	
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
@@ -980,17 +980,18 @@ end
 
 function CheckForObjReverseBugging(self, frameDiff)
 	local a,unitReversing = GetUnitReversingData(self)
-	local distanceOffset = bugDurationTable[getObjectName(self)]
+	local bugDuration = bugDurationTable[getObjectName(self)]
 	local isBugging = false	
 
 	if unitReversing.fastTurnWas0Frames then 
 		-- if two fast turns yields framediff of 0, it can bee assumed the number of frames in this -TURN_LEFT or -TURN_RIGHT is 7 (for buggies)
-		if frameDiff == 7 then
+		if frameDiff == bugDuration then
 			isBugging = true
 		end
 		-- there are some units that arent 7 that bug still , maybe put a WriteToFile  here
 		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-	elseif frameDiff >= 4 and frameDiff <= 9 then
+		-- 7 is bug duration so range is 7 - 3 and 7 + 2
+	elseif frameDiff >= bugDuration-3 and frameDiff <= bugDuration+2 then
 		isBugging = true
 	elseif frameDiff == 0 then
 		-- some bugging units probably have frame diff of 7 at second trigger if first trigger is 0 
@@ -1017,7 +1018,7 @@ function FixBuggingUnits(self)
 	local a,unitReversing = GetUnitReversingData(self)
 	local selectedUnitList = unitReversing.selectedUnits.units
 	if ObjectTestModelCondition(self, "USER_72") == false then
-		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 3.5, 100) 
+		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", NO_COLLISION_DURATION, 100) 
 		-- temporarily remove collisions to facilitate the reverse move, assign this on backing up 
 		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)	
