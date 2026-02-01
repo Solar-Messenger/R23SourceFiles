@@ -1007,7 +1007,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 		end
 
 		if not unitReversing.hasChecked then
-			WriteToFile("objects created.txt",  "object created" .. "\n")
+			--WriteToFile("objects created.txt",  "object created" .. "\n")
 			-- WORKAROUND FOR DELAYING A FUNCTION CALL
 			local playerTeam = tostring(ObjectTeamName(self))
 			tinsert(tempReference, a)
@@ -1026,9 +1026,6 @@ function ReverseDummyDestroyed(self)
 	local a = getObjectId(self)
 	local selectedUnits = unitsReversing[dummyReference[a]].selectedUnits.units
 	local selectedCount = unitsReversing[dummyReference[a]].selectedUnits.selectedCount
-	for id, unitRef in selectedUnits do
-		unitsReversing[unitRef].hasChecked = false
-	end
 
 	--FixBuggingUnits(self)
 	FixAllBuggingUnits(selectedUnits, selectedCount)
@@ -1037,36 +1034,43 @@ function ReverseDummyDestroyed(self)
 end
 
 function ReverseDummyCreated(self)
-	local a = getObjectId(self)
-	-- check if the table is not empty, remove the first entry if not.
-	if next(tempReference) ~= nil then
-		-- thesee are all the units
-		dummyReference[a] = tempReference[1]
-		-- remove the first element from the list 
-		tremove(tempReference, 1)
-	end
+    local a = getObjectId(self)
+    -- Safety check for the first index
+    if tempReference[1] ~= nil then
+        dummyReference[a] = tempReference[1]
+        tremove(tempReference, 1)
+    end
 end
 
 function FixAllBuggingUnits(selectedUnitList, selectedCount)
-	local numberOfBuggedUnits = 0
-	local buggedUnits = {}
-	for id, unitRef in selectedUnitList do
-		if unitsReversing[unitRef].hasBugged then
-			numberOfBuggedUnits = numberOfBuggedUnits + 1
-			tinsert(buggedUnits, unitsReversing[unitRef].selfRealReference)
-		end
-	end
-	if numberOfBuggedUnits <= (floor(selectedCount * 0.5)) then
-		for i = 1, getn(buggedUnits), 1 do
-			FixBuggingUnit(buggedUnits[i])
+    local numberOfBuggedUnits = 0
+    local buggedUnits = {}
+    
+    for id, unitRef in selectedUnitList do
+        if unitsReversing[unitRef].hasBugged then
+            numberOfBuggedUnits = numberOfBuggedUnits + 1
+            tinsert(buggedUnits, unitsReversing[unitRef].selfRealReference)
+        end
+    end
 
-			if ObjectTestModelCondition(buggedUnits[i], "USER_72") == false then
-				ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", buggedUnits[i], "USER_72", NO_COLLISION_DURATION, 100) 
-			end
-		end
-	end
+    if numberOfBuggedUnits <= (floor(selectedCount * 0.5)) then
+        for i = 1, getn(buggedUnits), 1 do
+            FixBuggingUnit(buggedUnits[i])
+            if ObjectTestModelCondition(buggedUnits[i], "USER_72") == false then
+                ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", buggedUnits[i], "USER_72", NO_COLLISION_DURATION, 100) 
+            end
+        end
+    end
+
+    -- ### CRITICAL FIX ###
+    for id, unitRef in selectedUnitList do
+        -- Clear the bugged flag
+        unitsReversing[unitRef].hasBugged = false
+        
+        -- Clear the checked flag so a NEW dummy can be created if units bug later
+        unitsReversing[unitRef].hasChecked = false 
+    end
 end
-
 
 function FixBuggingUnit(self)
 	local a,unitReversing = GetUnitReversingData(self)
@@ -1147,32 +1151,38 @@ end
 
 -- Triggered by +SELECTED +BACKING_UP, triggered 
 function BackingUp(self)
-	local a,unitReversing = GetUnitReversingData(self)
-	local curFrame = GetFrame()
-	-- this prevent subsequent reverse moves from executing the checks
-	if curFrame - unitReversing.lastReverseMoveFrame <= 2 then
-		--print("has already reverse moved")
-		unitReversing.hasAlreadyReversed = true
-		return 
-	else 
-		unitReversing.hasAlreadyReversed = false
-	end
-	local playerTeam = tostring(ObjectTeamName(self))
-	local teamTable = ShallowCopyTable(getglobal(playerTeam))
-	unitReversing.firstFrame = curFrame
-	-- maybe assigning a temp model state to prevent this from reassigning on a unit that is backing up again due to GUARD state is an option.
-	if ObjectTestModelCondition(self, "USER_72") == false then
-		unitReversing.selectedUnits = teamTable
-		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)	
-		end
-		-- assign the anchor to a random unit in ths selection (significantly less costly.)
-		AssignRandomAnchor(self)
-		-- assign the anchor to the aprox closest unit in the selection (more costly.)
-		-- AssignClosestAnchor(self) 
-	else 
-		return
-	end
+    local a, unitReversing = GetUnitReversingData(self)
+    local curFrame = GetFrame()
+    
+    -- Check if this is a spam/repeat command (within 2 frames) or a generic new command
+    if curFrame - unitReversing.lastReverseMoveFrame <= 2 then
+        unitReversing.hasAlreadyReversed = true
+        return 
+    else 
+        -- ### NEW COMMAND DETECTED ###
+        -- Reset the flags here to ensure we don't carry over bugs from previous moves
+        unitReversing.hasAlreadyReversed = false
+        unitReversing.hasBugged = false         -- <--- ADD THIS
+        unitReversing.closestUnit = nil         -- <--- ADD THIS to be safe
+        unitReversing.fastTurnWas0Frames = false -- <--- Recommended reset
+    end
+
+    local playerTeam = tostring(ObjectTeamName(self))
+    -- Lua 4.0 does not support 'getglobal' dynamically in all versions efficiently, 
+    -- but assuming your wrapper works:
+    local teamTable = ShallowCopyTable(getglobal(playerTeam))
+    
+    unitReversing.firstFrame = curFrame
+
+    if ObjectTestModelCondition(self, "USER_72") == false then
+        unitReversing.selectedUnits = teamTable
+        if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
+            ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
+        end
+        AssignRandomAnchor(self)
+    else 
+        return
+    end
 end
 
 -- gets a random selected unit of this players selection and assigns it to unitReversing.closestUnit = closestUnit
@@ -1355,6 +1365,7 @@ function BackingUpEnd(self)
 		unitReversing.timeOffset = 0
 		unitReversing.fastTurnWas0Frames = false
 		unitReversing.isAttacking = false
+		unitReversing.hasChecked = false
 	end
 end
 
