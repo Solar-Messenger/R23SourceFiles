@@ -872,6 +872,7 @@ function GetUnitReversingData(self)
 			hasAlreadyReversed = false,
 			fastTurnWas0Frames = false,
 			isAttacking = false,
+			hasChecked = false,
 			closestUnit = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
@@ -981,6 +982,7 @@ end
 function CheckForObjReverseBugging(self, frameDiff)
 	local a,unitReversing = GetUnitReversingData(self)
 	local bugDuration = bugDurationTable[getObjectName(self)]
+	local selectedUnitList = unitReversing.selectedUnits.units
 	local isBugging = false	
 
 	if unitReversing.fastTurnWas0Frames then 
@@ -1003,28 +1005,78 @@ function CheckForObjReverseBugging(self, frameDiff)
 		if not unitReversing.hasBugged then
 			unitReversing.hasBugged = true
 		end
-		FixBuggingUnits(self)
+
+		if not unitReversing.hasChecked then
+			WriteToFile("objects created.txt",  "object created" .. "\n")
+			-- WORKAROUND FOR DELAYING A FUNCTION CALL
+			local playerTeam = tostring(ObjectTeamName(self))
+			tinsert(tempReference, a)
+			local shortName = strsub(playerTeam, 5)
+			local fullTeamName = tostring(shortName .. "/" .. playerTeam)
+			ExecuteAction("CREATE_OBJECT","ReverseDummy",fullTeamName,"0.00,0.00,0.00",0)
+		end
+
+		for id, unitRef in selectedUnitList do
+			unitsReversing[unitRef].hasChecked = true
+		end
 	end
 end
 
--- WORKAROUND FOR DELAYING A FUNCTION CALL
---local playerTeam = tostring(ObjectTeamName(self))
---tinsert(tempReference, a)
---local shortName = strsub(playerTeam, 5)
---local fullTeamName = tostring(shortName .. "/" .. playerTeam)
---ExecuteAction("CREATE_OBJECT","ReverseDummy",fullTeamName,"0.00,0.00,0.00",0)
+function ReverseDummyDestroyed(self)
+	local a = getObjectId(self)
+	local selectedUnits = unitsReversing[dummyReference[a]].selectedUnits.units
+	local selectedCount = unitsReversing[dummyReference[a]].selectedUnits.selectedCount
+	for id, unitRef in selectedUnits do
+		unitsReversing[unitRef].hasChecked = false
+	end
 
-function FixBuggingUnits(self)
+	--FixBuggingUnits(self)
+	FixAllBuggingUnits(selectedUnits, selectedCount)
+	-- apply fixes here.
+	dummyReference[a] = nil
+end
+
+function ReverseDummyCreated(self)
+	local a = getObjectId(self)
+	-- check if the table is not empty, remove the first entry if not.
+	if next(tempReference) ~= nil then
+		-- thesee are all the units
+		dummyReference[a] = tempReference[1]
+		-- remove the first element from the list 
+		tremove(tempReference, 1)
+	end
+end
+
+function FixAllBuggingUnits(selectedUnitList, selectedCount)
+	local numberOfBuggedUnits = 0
+	local buggedUnits = {}
+	for id, unitRef in selectedUnitList do
+		if unitsReversing[unitRef].hasBugged then
+			numberOfBuggedUnits = numberOfBuggedUnits + 1
+			tinsert(buggedUnits, unitsReversing[unitRef].selfRealReference)
+		end
+	end
+	if numberOfBuggedUnits <= (floor(selectedCount * 0.5)) then
+		for i = 1, getn(buggedUnits), 1 do
+			FixBuggingUnit(buggedUnits[i])
+
+			if ObjectTestModelCondition(buggedUnits[i], "USER_72") == false then
+				ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", buggedUnits[i], "USER_72", NO_COLLISION_DURATION, 100) 
+			end
+		end
+	end
+end
+
+
+function FixBuggingUnit(self)
 	local a,unitReversing = GetUnitReversingData(self)
 	local selectedUnitList = unitReversing.selectedUnits.units
-	if ObjectTestModelCondition(self, "USER_72") == false then
-		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", NO_COLLISION_DURATION, 100) 
+	if ObjectTestModelCondition(self, "USER_72") then
 		-- temporarily remove collisions to facilitate the reverse move, assign this on backing up 
 		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)	
 		end
 	end
-
 	-- check if closestUnit is destroyed or is nil
 	local closestUnit = unitsReversing[getObjectId(unitReversing.closestUnit)]
 	if closestUnit ~= nil or EvaluateCondition("NAMED_NOT_DESTROYED",closestUnit.selfReference) then 
@@ -1064,7 +1116,6 @@ function FixBuggingUnits(self)
 		end
 	end
 end
-
 
 -- if the closestUnit has bugged during the reverse move, seek out a unit that hasnt of that players selection.
 -- selectedUnitsOfPlayer is thee array of units whose value is ObjectId
@@ -1121,25 +1172,6 @@ function BackingUp(self)
 		-- AssignClosestAnchor(self) 
 	else 
 		return
-	end
-end
-
-function ReverseDummyDestroyed(self)
-	local a = getObjectId(self)
-	local _,unitReversing = GetUnitReversingData(unitsReversing[dummyReference[a]].selfRealReference)
-	-- check the unit 
-	-- ExecuteAction("NAMED_FLASH", unitReversing.selfRealReference, 2)
-	--CheckForObjReverseBugging(unitReversing.selfRealReference, unitReversing)
-	dummyReference[a] = nil
-end
-
-function ReverseDummyCreated(self)
-	local a = getObjectId(self)
-	-- check if the table is not empty, remove the first entry if not.
-	if next(tempReference) ~= nil then
-		dummyReference[a] = tempReference[1]
-		-- remove the first element from the list 
-		tremove(tempReference, 1)
 	end
 end
 
@@ -1309,6 +1341,9 @@ function BackingUpEnd(self)
 		-- need to prevent this when guarding
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
+		end
+		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)	
 		end
 	end
 
