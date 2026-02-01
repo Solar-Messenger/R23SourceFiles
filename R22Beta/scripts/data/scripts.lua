@@ -993,7 +993,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 		-- there are some units that arent 7 that bug still , maybe put a WriteToFile  here
 		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 		-- 7 is bug duration so range is 7 - 3 and 7 + 2
-	elseif frameDiff >= bugDuration-3 and frameDiff <= bugDuration+2 then
+	elseif frameDiff >= bugDuration-5 and frameDiff <= bugDuration+5 then
 		isBugging = true
 	elseif frameDiff == 0 then
 		-- some bugging units probably have frame diff of 7 at second trigger if first trigger is 0 
