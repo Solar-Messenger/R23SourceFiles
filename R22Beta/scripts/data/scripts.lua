@@ -1005,7 +1005,11 @@ function CheckForObjReverseBugging(self, frameDiff)
 	
 	local fixUnits = false 
 	-- checksDone is more than ceil(unitReversing.selectedUnits.selectedCount*0.5)
-	checksDone = checksDone + 1
+	-- increment depending if fastTurnWas0Frames was true or not 
+	if not unitReversing.fastTurnWas0Frames then 
+		checksDone = checksDone + 1
+	end
+
 	-- if number of units bugging is less than the count * 0.5
 	if checksDone >= ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT) then 
 		if getn(unitsToFix) < ceil(unitReversing.selectedUnits.selectedCount*0.25) then 
