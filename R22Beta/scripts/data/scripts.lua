@@ -72,6 +72,9 @@ dummyReference = {}
 unitsReversing = {}
 TIMES_TO_TRIGGER = 2
 NO_COLLISION_DURATION = 4
+UNITS_BUGGING_MULT = 0.2
+checksDone = 0
+unitsToFix = {}
 
 bugDurationTable = {
 -- currently some bugs happen below these values, im trying to setup a timer to check it properly: lifetimeupdate 0.25 via ocl could be the solution.
@@ -991,36 +994,76 @@ function CheckForObjReverseBugging(self, frameDiff)
 			isBugging = true
 		end
 		-- there are some units that arent 7 that bug still , maybe put a WriteToFile  here
-		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+		-- ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 		-- 7 is bug duration so range is 7 - 3 and 7 + 2
-	elseif frameDiff >= bugDuration-5 and frameDiff <= bugDuration+5 then
+	elseif frameDiff >= bugDuration-3 and frameDiff <= bugDuration+2 then
 		isBugging = true
 	elseif frameDiff == 0 then
 		-- some bugging units probably have frame diff of 7 at second trigger if first trigger is 0 
 		unitReversing.fastTurnWas0Frames = true
 	end
+	
+	local fixUnits = false 
+	-- checksDone is more than ceil(unitReversing.selectedUnits.selectedCount*0.5)
+	checksDone = checksDone + 1
+	-- if number of units bugging is less than the count * 0.5
+	if checksDone >= ceil(unitReversing.selectedUnits.selectedCount*0.5) then 
+		if getn(unitsToFix) < ceil(unitReversing.selectedUnits.selectedCount*0.25) then 
+			fixUnits = true
+			WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " total count: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*0.5)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
+			--print("fixing units")
+		else
+			WriteToFile("tooManyBugging.txt",  "checksDone: " .. tostring(checksDone) .. " total count: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*0.5)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
+		end
+	end
 
 	if isBugging then
+		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 		-- flag this unit as being bugged
 		if not unitReversing.hasBugged then
 			unitReversing.hasBugged = true
-		end
+			if checksDone <= ceil(unitReversing.selectedUnits.selectedCount*0.5) then
+				-- cache the units if they are to be fixed in this table
+				tinsert(unitsToFix, unitReversing.selfRealReference)
+			end
+		end	
 
-		if not unitReversing.hasChecked then
-			--WriteToFile("objects created.txt",  "object created" .. "\n")
-			-- WORKAROUND FOR DELAYING A FUNCTION CALL
-			local playerTeam = tostring(ObjectTeamName(self))
-			tinsert(tempReference, a)
-			local shortName = strsub(playerTeam, 5)
-			local fullTeamName = tostring(shortName .. "/" .. playerTeam)
-			ExecuteAction("CREATE_OBJECT","ReverseDummy",fullTeamName,"0.00,0.00,0.00",0)
-		end
-
-		for id, unitRef in selectedUnitList do
-			unitsReversing[unitRef].hasChecked = true
+		if fixUnits then 
+			if getn(unitsToFix) > 0 then
+				print("unitsToFix is more than 0")
+				for i = getn(unitsToFix), 1, -1 do
+					FixBuggingUnits(unitsToFix[i])
+					--tremove(unitsToFix, i)
+					ExecuteAction("NAMED_WHITE_FLASH", unitsToFix[i], 2)
+				end
+			else
+				ExecuteAction("NAMED_FLASH", self, 2)
+				FixBuggingUnits(self)
+			end
+			 
 		end
 	end
+
+	--if checksDone >= unitReversing.selectedUnits.selectedCount then
+	--	checksDone = 0
+	--	print("resetting")
+	--end
 end
+
+--if not unitReversing.hasChecked then
+	--WriteToFile("objects created.txt",  "object created" .. "\n")
+	-- WORKAROUND FOR DELAYING A FUNCTION CALL
+--	local playerTeam = tostring(ObjectTeamName(self))
+--	tinsert(tempReference, a)
+--	local shortName = strsub(playerTeam, 5)
+--	local fullTeamName = tostring(shortName .. "/" .. playerTeam)
+--	ExecuteAction("CREATE_OBJECT","ReverseDummy",fullTeamName,"0.00,0.00,0.00",0)
+
+--	for id, unitRef in selectedUnitList do
+--		unitsReversing[unitRef].hasChecked = true
+--	end
+--end
+		
 
 function ReverseDummyDestroyed(self)
 	local a = getObjectId(self)
@@ -1042,33 +1085,85 @@ function ReverseDummyCreated(self)
     end
 end
 
+function FixBuggingUnits(self)
+	local a,unitReversing = GetUnitReversingData(self)
+	local selectedUnitList = unitReversing.selectedUnits.units
+	if ObjectTestModelCondition(self, "USER_72") == false then
+		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", NO_COLLISION_DURATION, 100) 
+		-- temporarily remove collisions to facilitate the reverse move, assign this on backing up 
+		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)	
+		end
+	end
+
+	-- check if closestUnit is destroyed or is nil
+	local closestUnit = unitsReversing[getObjectId(unitReversing.closestUnit)]
+	if closestUnit ~= nil or EvaluateCondition("NAMED_NOT_DESTROYED",closestUnit.selfReference) then 
+		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, closestUnit.selfReference)	
+	else 
+		-- assign a new closestUnit 
+		-- print(selectedUnitList) (debug this after to verify it works)
+		GetANonBuggingUnit(selectedUnitList, self)
+	end
+
+	ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, 100)
+	-- reverse move to remove collisions
+	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
+	end
+	-- WriteToFile("closeunit.txt",  "table size: " .. tostring(unitReversing.selectedUnits.units) .. "\n")
+	for id, unitRef in selectedUnitList do
+		-- this unit is bugging so lets go through all the closest units and see if it coincides with this one
+		if unitsReversing[unitRef].closestUnit == unitReversing.selfRealReference then
+			-- ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[unitRef].selfRealReference, 2)
+			-- get a unit that hasnt bugged that isnt itself
+			local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[unitRef].selectedUnits.units, unitsReversing[unitRef].selfRealReference)
+			-- only proceed if we found a non-bugging unit
+			if nonBuggingUnit ~= nil then
+				-- assign the new closeestUnit to a unit not flagged as being bugged
+				unitsReversing[unitRef].closestUnit = nonBuggingUnit
+				-- move this unit to the previously assigned non bugging unit
+				if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
+					--ExecuteAction("NAMED_STOP", unitsReversing[unitRef].selfRealReference)
+					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference)
+					if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
+						ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
+					end
+				end
+				-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[getObjectId(nonBuggingUnit)].selfReference) .. "\n")
+			end
+		end
+	end
+end
+
 function FixAllBuggingUnits(selectedUnitList, selectedCount)
     local numberOfBuggedUnits = 0
-    local buggedUnits = {}
-    
+
+    -- First pass: count all bugged units
     for id, unitRef in selectedUnitList do
         if unitsReversing[unitRef].hasBugged then
             numberOfBuggedUnits = numberOfBuggedUnits + 1
-            tinsert(buggedUnits, unitsReversing[unitRef].selfRealReference)
         end
     end
 
-    if numberOfBuggedUnits <= (floor(selectedCount * 0.5)) then
-        for i = 1, getn(buggedUnits), 1 do
-            FixBuggingUnit(buggedUnits[i])
-            if ObjectTestModelCondition(buggedUnits[i], "USER_72") == false then
-                ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", buggedUnits[i], "USER_72", NO_COLLISION_DURATION, 100) 
+    -- Second pass: fix bugged units if within threshold, and clear flags
+    if numberOfBuggedUnits <= (floor(selectedCount * UNITS_BUGGING_MULT)) then
+        for id, unitRef in selectedUnitList do
+            if unitsReversing[unitRef].hasBugged then
+                local selfRealRef = unitsReversing[unitRef].selfRealReference
+                FixBuggingUnit(selfRealRef)
+                if ObjectTestModelCondition(selfRealRef, "USER_72") == false then
+                    ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", selfRealRef, "USER_72", NO_COLLISION_DURATION, 100)
+                end
             end
+            -- Clear the bugged flag
+            unitsReversing[unitRef].hasBugged = false
         end
-    end
-
-    -- ### CRITICAL FIX ###
-    for id, unitRef in selectedUnitList do
-        -- Clear the bugged flag
-        unitsReversing[unitRef].hasBugged = false
-        
-        -- Clear the checked flag so a NEW dummy can be created if units bug later
-        unitsReversing[unitRef].hasChecked = false 
+    else
+        -- Just clear flags if over threshold
+        for id, unitRef in selectedUnitList do
+            unitsReversing[unitRef].hasBugged = false
+        end
     end
 end
 
@@ -1347,6 +1442,7 @@ end
 function BackingUpEnd(self)
 	local _,unitReversing = GetUnitReversingData(self)	
 	unitReversing.lastReverseMoveFrame = GetFrame()
+	local selectedUnitList = unitReversing.selectedUnits.units
 	if unitReversing ~= nil and not unitReversing.hasBugged then
 		-- need to prevent this when guarding
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
@@ -1367,6 +1463,21 @@ function BackingUpEnd(self)
 		unitReversing.isAttacking = false
 		unitReversing.hasChecked = false
 	end
+
+	--if checksDone == unitReversing.selectedUnits.selectedCount-1 then
+	local clearList = true
+	for id, unitRef in selectedUnitList do
+		if unitsReversing[unitRef].isReverseMoving then
+			clearList = false
+		end
+	end
+	
+	if clearList then
+		unitsToFix = {}
+		checksDone = 0
+	end
+	
+	--print("resetting")
 end
 
 -- units cant clear this status normally unless i can get the object or model state for when UNIT_GUARD is triggered.
