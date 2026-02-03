@@ -72,7 +72,7 @@ dummyReference = {}
 unitsReversing = {}
 TIMES_TO_TRIGGER = 2
 NO_COLLISION_DURATION = 4
-UNITS_BUGGING_MULT = 0.5
+UNITS_BUGGING_MULT = 0.1
 checksDone = 0
 unitsToFix = {}
 
@@ -920,9 +920,9 @@ function UnitNoLongerMoving(self)
 			-- if not attacking (state applied, and removed on backingupend)
 			if not unitsReversing[unitRef].isAttacking then
 				unitsReversing[unitRef].isMovingFlag = false
+				-- debug after ... (03/02/2026)
 			end
 		end
-		-- debug after ... (31/01/2026)
 	end
 end
 
@@ -994,7 +994,8 @@ function CheckForObjReverseBugging(self, frameDiff)
 			isBugging = true
 		end
 		-- there are some units that arent 7 that bug still , maybe put a WriteToFile  here
-		-- ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+
 		-- 7 is bug duration so range is 7 - 3 and 7 + 2
 	elseif frameDiff >= bugDuration-3 and frameDiff <= bugDuration+2 then
 		isBugging = true
@@ -1010,12 +1011,11 @@ function CheckForObjReverseBugging(self, frameDiff)
 		checksDone = checksDone + 1
 	end
 
-	-- if number of units bugging is less than the count * 0.5
 	if checksDone >= ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT) then 
-		if getn(unitsToFix) < ceil(unitReversing.selectedUnits.selectedCount*0.25) then 
+		-- if number of units bugging is less than the count * 0.25
+		if getn(unitsToFix) < ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT) then 
 			fixUnits = true
 			WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " total count: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
-			--print("fixing units")
 		else
 			WriteToFile("tooManyBugging.txt",  "checksDone: " .. tostring(checksDone) .. " total count: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
 		end
@@ -1038,10 +1038,9 @@ function CheckForObjReverseBugging(self, frameDiff)
 				for i = getn(unitsToFix), 1, -1 do
 					FixBuggingUnits(unitsToFix[i])
 					--tremove(unitsToFix, i)
-					ExecuteAction("NAMED_WHITE_FLASH", unitsToFix[i], 2)
+					--ExecuteAction("NAMED_WHITE_FLASH", unitsToFix[i], 2)
 				end
 			else
-				ExecuteAction("NAMED_FLASH", self, 2)
 				-- some units arent fixing with this 
 				FixBuggingUnits(self)
 			end
@@ -1069,7 +1068,6 @@ end
 --	end
 --end
 		
-
 function ReverseDummyDestroyed(self)
 	local a = getObjectId(self)
 	local selectedUnits = unitsReversing[dummyReference[a]].selectedUnits.units
@@ -1093,6 +1091,9 @@ end
 function FixBuggingUnits(self)
 	local a,unitReversing = GetUnitReversingData(self)
 	local selectedUnitList = unitReversing.selectedUnits.units
+	--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+
+
 	if ObjectTestModelCondition(self, "USER_72") == false then
 		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", NO_COLLISION_DURATION, 100) 
 		-- temporarily remove collisions to facilitate the reverse move, assign this on backing up 
@@ -1100,17 +1101,21 @@ function FixBuggingUnits(self)
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)	
 		end
 	end
-
 	-- check if closestUnit is destroyed or is nil
-	local closestUnit = unitsReversing[getObjectId(unitReversing.closestUnit)]
-	if closestUnit ~= nil or EvaluateCondition("NAMED_NOT_DESTROYED",closestUnit.selfReference) then 
-		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, closestUnit.selfReference)	
-	else 
-		-- assign a new closestUnit 
-		-- print(selectedUnitList) (debug this after to verify it works)
-		GetANonBuggingUnit(selectedUnitList, self)
+	ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+	--local currentAnchor = unitsReversing[getObjectId(unitReversing.closestUnit)].selfReference or nil
+	if unitReversing.closestUnit ~= nil then
+		if not EvaluateCondition("NAMED_NOT_DESTROYED",unitReversing.closestUnit) then 
+			unitReversing.closestUnit = GetANonBuggingUnit(selectedUnitList, self)
+		end
+	else
+		 unitReversing.closestUnit = GetANonBuggingUnit(selectedUnitList, self)
 	end
 
+	WriteToFile("closestUnit.txt",  tostring(unitReversing.closestUnit) .. "\n")
+	ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitReversing.closestUnit)	
+
+	ExecuteAction("NAMED_FLASH", self, 2)
 	ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, 100)
 	-- reverse move to remove collisions
 	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
@@ -1199,7 +1204,7 @@ function FixBuggingUnit(self)
 	-- WriteToFile("closeunit.txt",  "table size: " .. tostring(unitReversing.selectedUnits.units) .. "\n")
 	for id, unitRef in selectedUnitList do
 		-- this unit is bugging so lets go through all the closest units and see if it coincides with this one
-		if unitsReversing[unitRef].closestUnit == unitReversing.selfRealReference then
+		if unitsReversing[unitRef].closestUnit == unitReversing.selfReference then
 			-- ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[unitRef].selfRealReference, 2)
 			-- get a unit that hasnt bugged that isnt itself
 			local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[unitRef].selectedUnits.units, unitsReversing[unitRef].selfRealReference)
@@ -1210,7 +1215,7 @@ function FixBuggingUnit(self)
 				-- move this unit to the previously assigned non bugging unit
 				if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
 					--ExecuteAction("NAMED_STOP", unitsReversing[unitRef].selfRealReference)
-					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[getObjectId(nonBuggingUnit)].selfReference)
+					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[unitRef].closestUnit)
 					if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
 						ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
 					end
@@ -1230,7 +1235,7 @@ function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 				-- check to see if unit is bugging and isnt destroyed 
 				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") == false then
 					--print(ObjectDescription(unitsReversing[unitRef].selfRealReference))
-					return unitsReversing[unitRef].selfRealReference
+					return unitsReversing[unitRef].selfReference
 				end
 			end
 		end
@@ -1475,7 +1480,6 @@ function BackingUpEnd(self)
 	for id, unitRef in selectedUnitList do
 		if unitsReversing[unitRef].isReverseMoving then
 			-- if a unit is reverse moving, dont clear the list
-			print("dont clear list")
 			clearList = false
 			break
 		end
