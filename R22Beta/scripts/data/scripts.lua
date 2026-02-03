@@ -896,7 +896,7 @@ function BackingUpFast(self)
 	local curFrame = GetFrame()
 	if unitReversing.firstFrame == 0 and not unitReversing.isReverseMoving then
 		--unitReversing.firstFrame = curFrame
-		unitReversing.isReverseMoving = true
+		--unitReversing.isReverseMoving = true
 	end
 end
 
@@ -1257,9 +1257,9 @@ function BackingUp(self)
         -- ### NEW COMMAND DETECTED ###
         -- Reset the flags here to ensure we don't carry over bugs from previous moves
         unitReversing.hasAlreadyReversed = false
-        unitReversing.hasBugged = false         -- <--- ADD THIS
-        unitReversing.closestUnit = nil         -- <--- ADD THIS to be safe
-        unitReversing.fastTurnWas0Frames = false -- <--- Recommended reset
+        unitReversing.hasBugged = false        
+        unitReversing.closestUnit = nil        
+        unitReversing.fastTurnWas0Frames = false 
     end
 
     local playerTeam = tostring(ObjectTeamName(self))
@@ -1268,6 +1268,7 @@ function BackingUp(self)
     local teamTable = ShallowCopyTable(getglobal(playerTeam))
     
     unitReversing.firstFrame = curFrame
+	unitReversing.isReverseMoving = true
 
     if ObjectTestModelCondition(self, "USER_72") == false then
         unitReversing.selectedUnits = teamTable
@@ -1468,16 +1469,18 @@ function BackingUpEnd(self)
 	local clearList = true
 	for id, unitRef in selectedUnitList do
 		if unitsReversing[unitRef].isReverseMoving then
+			-- if a unit is reverse moving, dont clear the list
+			print("dont clear list")
 			clearList = false
+			break
 		end
 	end
 	
 	if clearList then
 		unitsToFix = {}
 		checksDone = 0
+		--print("clearing unitsToFix")
 	end
-	
-	--print("resetting")
 end
 
 -- units cant clear this status normally unless i can get the object or model state for when UNIT_GUARD is triggered.

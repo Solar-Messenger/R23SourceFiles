@@ -916,11 +916,12 @@
 		<!-- on user 73 end
 		<EventHandler EventName="OnUser73End"	ScriptFunctionName="CheckObjDistanceAfterTimer" DebugSingleStep="false"/>   -->
     </EventList>
-	
+	<!--
 	<EventList Name="ReverseMoveDummy_R23" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="ReverseDummyDestroyed" DebugSingleStep="false"/> 
 		<EventHandler EventName="OnCreated"	ScriptFunctionName="ReverseDummyCreated" DebugSingleStep="false"/>
 	</EventList>
+	-->
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OffTiberiumGrowing" DebugSingleStep="false"/> 
