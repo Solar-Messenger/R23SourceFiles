@@ -72,7 +72,7 @@ dummyReference = {}
 unitsReversing = {}
 TIMES_TO_TRIGGER = 2
 NO_COLLISION_DURATION = 4
-UNITS_BUGGING_MULT = 0.1
+UNITS_BUGGING_MULT = 0.5
 checksDone = 0
 unitsToFix = {}
 
@@ -997,23 +997,43 @@ function CheckForObjReverseBugging(self, frameDiff)
 		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 
 		-- 7 is bug duration so range is 7 - 3 and 7 + 2
-	elseif frameDiff >= bugDuration-3 and frameDiff <= bugDuration+2 then
+	elseif frameDiff >= bugDuration-3 and frameDiff <= bugDuration then
 		isBugging = true
 	elseif frameDiff == 0 then
 		-- some bugging units probably have frame diff of 7 at second trigger if first trigger is 0 
 		unitReversing.fastTurnWas0Frames = true
 	end
 	
-	local fixUnits = false 
+	local fixUnits = false
 	-- checksDone is more than ceil(unitReversing.selectedUnits.selectedCount*0.5)
-	-- increment depending if fastTurnWas0Frames was true or not 
-	if not unitReversing.fastTurnWas0Frames then 
-		checksDone = checksDone + 1
+	-- increment depending if fastTurnWas0Frames was true or not
+
+	checksDone = checksDone + 1
+	if unitReversing.timesTriggeredFast + unitReversing.timesTriggeredNormal == TIMES_TO_TRIGGER then
+		checksDone = checksDone - 1
+	end
+	WriteToFile("checksDoneInt.txt",  tostring(checksDone) .. "\n")
+
+	-- First determine if this unit is bugging and add it to the list
+	if isBugging then
+		if not unitReversing.hasBugged then
+			unitReversing.hasBugged = true
+			if checksDone <= ceil(unitReversing.selectedUnits.selectedCount*0.5) then
+				-- cache the units if they are to be fixed in this table
+				tinsert(unitsToFix, unitReversing.selfRealReference)
+			end
+		end
 	end
 
-	if checksDone >= ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT) then 
+	-- Now check threshold after unitsToFix has been updated
+	if checksDone >= ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT) then
 		-- if number of units bugging is less than the count * 0.25
-		if getn(unitsToFix) < ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT) then 
+		local bugThreshold = 0.25
+		-- if more than 20 units are selected, make the detection more forgiving
+		if unitReversing.selectedUnits.selectedCount > 10 then
+			bugThreshold = 0.10
+		end
+		if getn(unitsToFix) < ceil(unitReversing.selectedUnits.selectedCount*bugThreshold) then
 			fixUnits = true
 			WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " total count: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
 		else
@@ -1021,31 +1041,26 @@ function CheckForObjReverseBugging(self, frameDiff)
 		end
 	end
 
-	if isBugging then
-		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-		-- flag this unit as being bugged
-		if not unitReversing.hasBugged then
-			unitReversing.hasBugged = true
-			if checksDone <= ceil(unitReversing.selectedUnits.selectedCount*0.5) then
-				-- cache the units if they are to be fixed in this table
-				tinsert(unitsToFix, unitReversing.selfRealReference)
+	-- Apply fixes if threshold was met
+	if isBugging and fixUnits then
+		if getn(unitsToFix) > 0 then
+			for i = getn(unitsToFix), 1, -1 do
+				FixBuggingUnits(unitsToFix[i])
 			end
-		end	
-
-		if fixUnits then 
-			if getn(unitsToFix) > 0 then
-				--print("unitsToFix is more than 0")
-				for i = getn(unitsToFix), 1, -1 do
-					FixBuggingUnits(unitsToFix[i])
-					--tremove(unitsToFix, i)
-					--ExecuteAction("NAMED_WHITE_FLASH", unitsToFix[i], 2)
-				end
-			else
-				-- some units arent fixing with this 
-				FixBuggingUnits(self)
-			end
-			 
+		else
+			-- some units arent fixing with this
+			FixBuggingUnits(self)
 		end
+	elseif isBugging and not fixUnits then
+		-- Clear status 4/48 since its not being fixed but unit was detected as bugging
+		-- This prevents status from lingering until next reverse move
+		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)
+		end
+		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)
+		end
+		unitReversing.hasBugged = false
 	end
 
 	--if checksDone >= unitReversing.selectedUnits.selectedCount then
