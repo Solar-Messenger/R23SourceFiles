@@ -72,7 +72,7 @@ dummyReference = {}
 unitsReversing = {}
 TIMES_TO_TRIGGER = 2
 NO_COLLISION_DURATION = 4
-UNITS_BUGGING_MULT = 0.2
+UNITS_BUGGING_MULT = 0.5
 checksDone = 0
 unitsToFix = {}
 
@@ -1007,13 +1007,13 @@ function CheckForObjReverseBugging(self, frameDiff)
 	-- checksDone is more than ceil(unitReversing.selectedUnits.selectedCount*0.5)
 	checksDone = checksDone + 1
 	-- if number of units bugging is less than the count * 0.5
-	if checksDone >= ceil(unitReversing.selectedUnits.selectedCount*0.5) then 
+	if checksDone >= ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT) then 
 		if getn(unitsToFix) < ceil(unitReversing.selectedUnits.selectedCount*0.25) then 
 			fixUnits = true
-			WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " total count: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*0.5)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
+			WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " total count: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
 			--print("fixing units")
 		else
-			WriteToFile("tooManyBugging.txt",  "checksDone: " .. tostring(checksDone) .. " total count: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*0.5)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
+			WriteToFile("tooManyBugging.txt",  "checksDone: " .. tostring(checksDone) .. " total count: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
 		end
 	end
 
@@ -1030,7 +1030,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 
 		if fixUnits then 
 			if getn(unitsToFix) > 0 then
-				print("unitsToFix is more than 0")
+				--print("unitsToFix is more than 0")
 				for i = getn(unitsToFix), 1, -1 do
 					FixBuggingUnits(unitsToFix[i])
 					--tremove(unitsToFix, i)
@@ -1038,6 +1038,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 				end
 			else
 				ExecuteAction("NAMED_FLASH", self, 2)
+				-- some units arent fixing with this 
 				FixBuggingUnits(self)
 			end
 			 
@@ -1433,9 +1434,9 @@ end
 
 -- clears the table 
 function ReverseUnitOnDeath(self)
-	local _,unitReversing = GetUnitReversingData(self)
-	if unitReversing ~= nil then
-		unitReversing = nil
+	local a,unitReversing = GetUnitReversingData(self)
+	if unitsReversing[a] ~= nil then
+		unitsReversing[a] = nil
 	end
 end
 
