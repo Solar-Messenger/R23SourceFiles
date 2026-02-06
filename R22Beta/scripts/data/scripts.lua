@@ -873,6 +873,7 @@ function GetUnitReversingData(self)
 			fastTurnWas0Frames = false,
 			isAttacking = false,
 			hasBeenFixed = false,
+			hasBeenCounted = false,
 			closestUnit = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
@@ -1013,9 +1014,9 @@ function CheckForObjReverseBugging(self, frameDiff)
 	-- checksDone is more than ceil(unitReversing.selectedUnits.selectedCount*0.5)
 	-- increment depending if fastTurnWas0Frames was true or not
 
-	checksDone = checksDone + 1
-	if unitReversing.timesTriggeredFast + unitReversing.timesTriggeredNormal == TIMES_TO_TRIGGER then
-		checksDone = checksDone - 1
+	if not unitReversing.hasBeenCounted then
+		checksDone = checksDone + 1
+		unitReversing.hasBeenCounted = true
 	end
 	--WriteToFile("checksDoneInt.txt",  tostring(checksDone) .. "\n")
 
@@ -1032,7 +1033,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 
 	local fixUnits = false
 	-- Now check threshold after unitsToFix has been updated
-	if checksDone > ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT) then
+	if checksDone >= ceil((unitReversing.selectedUnits.selectedCount)*0.8) then
 		-- if number of units bugging is less than the count * 0.25
 		local bugThreshold = 0.25
 		-- if more than 20 units are selected, make the detection more forgiving
@@ -1256,6 +1257,7 @@ function BackingUp(self)
     
     unitReversing.firstFrame = curFrame
 	unitReversing.isReverseMoving = true
+	unitReversing.isMovingFlag = true
 
     if ObjectTestModelCondition(self, "USER_72") == false then
         unitReversing.selectedUnits = teamTable
@@ -1451,6 +1453,7 @@ function BackingUpEnd(self)
 		unitReversing.timeOffset = 0
 		unitReversing.fastTurnWas0Frames = false
 		unitReversing.isAttacking = false
+		unitReversing.hasBeenCounted = false
 	end
 
 	--if checksDone == unitReversing.selectedUnits.selectedCount-1 then
