@@ -874,6 +874,7 @@ function GetUnitReversingData(self)
 			isAttacking = false,
 			hasBeenFixed = false,
 			hasBeenCounted = false,
+			isPerformingThirdTurn = false,
 			closestUnit = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
@@ -891,10 +892,13 @@ end
 -- Sets the initial frame when a unit fast turns while backing up, triggered by +BACKING_UP +TURN_LEFT_HIGH_SPEED
 function BackingUpFast(self)
 	local _,unitReversing = GetUnitReversingData(self)
-	local curFrame = GetFrame()
-	if unitReversing.firstFrame == 0 and not unitReversing.isReverseMoving then
-		--unitReversing.firstFrame = curFrame
-		--unitReversing.isReverseMoving = true
+	--local curFrame = GetFrame()
+
+	-- set status for third time it turns
+	if unitReversing.timesTriggeredFast == 2 then	
+		--CheckForObjReverseBugging(self, frameDiff)
+		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+		unitReversing.isPerformingThirdTurn = true
 	end
 end
 
@@ -950,12 +954,16 @@ function BackingUpFastTurnEnd(self)
 	local frameDiff = GetFrame() - unitReversing.firstFrame
 
 	-- first index is 0 so this is really second exec
-	if unitReversing.timesTriggeredFast == 1 then
+	--if unitReversing.timesTriggeredFast == 1 then
 		--WriteToFile("backingupfastend.txt",  "object went this long with 1 trigger: " .. tostring(frameDiff) .. "\n")
-	end
+	--end
 
 	if unitReversing.timesTriggeredFast == 1 then	
 		CheckForObjReverseBugging(self, frameDiff)
+	end
+	
+	if unitReversing.timesTriggeredFast == 2 then	
+		unitReversing.isPerformingThirdTurn = false
 	end
 
     if unitReversing ~= nil and unitReversing.timesTriggeredFast < timesToTrigger then
@@ -987,36 +995,36 @@ function BackingUpTurnEnd(self)
 end
 
 function CheckForObjReverseBugging(self, frameDiff)
-	local a,unitReversing = GetUnitReversingData(self)
+	local a, unitReversing = GetUnitReversingData(self)
 	local bugDuration = bugDurationTable[getObjectName(self)]
 	local selectedUnitList = unitReversing.selectedUnits.units
-	local isBugging = false
+	local selectedCount = unitReversing.selectedUnits.selectedCount
 	local playerTeam = tostring(ObjectTeamName(self))
 	local checksDone = getglobal(playerTeam .. "_checksDone") or 0
 	local unitsToFix = getglobal(playerTeam .. "_unitsToFix") or {}
 
 	-- edge case for when units are attacking.
 	local lowerLimit = 3
-	local upperLimit = unitReversing.isAttacking and 5 or 0
+	local upperLimit = unitReversing.isAttacking and 5 or 2
 
+	local isBugging = false
 	if unitReversing.fastTurnWas0Frames then
 		-- if two fast turns yields framediff of 0, it can bee assumed the number of frames in this -TURN_LEFT or -TURN_RIGHT is 7 (for buggies)
 		if frameDiff == bugDuration then
 			isBugging = true
 		end
 		-- there are some units that arent 7 that bug still , maybe put a WriteToFile  here
-		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+		-- ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 	elseif frameDiff == 0 then
 		-- some bugging units probably have frame diff of 7 at second trigger if first trigger is 0
 		unitReversing.fastTurnWas0Frames = true
 		-- 7 is bug duration so range is 7 - lowerLimit and 7 + upperLimit
-	elseif frameDiff >= bugDuration-lowerLimit and frameDiff <= bugDuration+upperLimit then
+	elseif frameDiff >= bugDuration - lowerLimit and frameDiff <= bugDuration + upperLimit then
 		isBugging = true
 	end
-	
+
 	-- checksDone is more than ceil(unitReversing.selectedUnits.selectedCount*0.5)
 	-- increment depending if fastTurnWas0Frames was true or not
-
 	if not unitReversing.hasBeenCounted then
 		checksDone = checksDone + 1
 		unitReversing.hasBeenCounted = true
@@ -1024,59 +1032,52 @@ function CheckForObjReverseBugging(self, frameDiff)
 	--WriteToFile("checksDoneInt.txt",  tostring(checksDone) .. "\n")
 
 	-- First determine if this unit is bugging and add it to the list
-	if isBugging then
-		if not unitReversing.hasBugged then
-			unitReversing.hasBugged = true
-			--if checksDone <= ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT) then
-				-- cache the units if they are to be fixed in this table
-				tinsert(unitsToFix, a)
-			--end
+	if isBugging and not unitReversing.hasBugged then
+		unitReversing.hasBugged = true
+		-- cache the units if they are to be fixed in this table
+		tinsert(unitsToFix, a)
+	end
+
+	-- Now check threshold after unitsToFix has been updated
+	local fixUnits = false
+	if checksDone >= ceil(selectedCount * 0.8) then
+		-- if number of units bugging is less than the count * 0.25
+		-- if more than 50 units are selected, make the detection more forgiving
+		local bugThreshold = selectedCount > 50 and 0.10 or 0.25
+		local maxBugging = ceil(selectedCount * bugThreshold)
+		if getn(unitsToFix) <= maxBugging then
+			-- proceed to fix the units
+			fixUnits = true
+			--WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(maxBugging) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
+		else
+			--WriteToFile("tooManyBugging.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(maxBugging) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
 		end
 	end
 
-	local fixUnits = false
-	-- Now check threshold after unitsToFix has been updated
-	if checksDone >= ceil((unitReversing.selectedUnits.selectedCount)*0.8) then
-		-- if number of units bugging is less than the count * 0.25
-		local bugThreshold = 0.25
-		-- if more than 20 units are selected, make the detection more forgiving
-		if unitReversing.selectedUnits.selectedCount > 50 then
-			bugThreshold = 0.10
+	-- check if most units arent still performing a third turn
+	local unitsTurningCount = 0
+	for id, unitRef in selectedUnitList do
+		if unitsReversing[unitRef].isPerformingThirdTurn then
+			unitsTurningCount = unitsTurningCount + 1
 		end
-		if getn(unitsToFix) <= ceil(unitReversing.selectedUnits.selectedCount*bugThreshold) then
-			-- proceed to fix the units
-			fixUnits = true
-			--WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*bugThreshold)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
-		else
-			--WriteToFile("tooManyBugging.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*bugThreshold)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
-		end
-	end	
+	end
 
-	--local fixUnits = false
-	--if getn(unitsToFix) < ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT) then	
-	--	WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " total count: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
-	--	if not getn(unitsToFix) > ceil(unitReversing.selectedUnits.selectedCount*UNITS_BUGGING_MULT)
-	--		fixUnits = true
-	--	end
-	--end
-
+	if unitsTurningCount > ceil(selectedCount * 0.2) then
+		fixUnits = false
+	end
 	-- Apply fixes if threshold was met
 	if isBugging and fixUnits then
 		if getn(unitsToFix) > 0 then
 			for i = getn(unitsToFix), 1, -1 do
-				--print(ObjectDescription(unitsReversing[unitsToFix[i]].selfRealReference))
-				--if not unitsReversing[unitsToFix[i]].hasBeenFixed then
-					-- dont repeatedly fix a unit that has been fixed already.
-					FixBuggingUnits(unitsReversing[unitsToFix[i]].selfRealReference)
-					--unitsReversing[unitsToFix[i]].hasBeenFixed = true
-				--end
-			end	
+				-- dont repeatedly fix a unit that has been fixed already.
+				FixBuggingUnits(unitsReversing[unitsToFix[i]].selfRealReference)
+			end
 		else
 			ExecuteAction("NAMED_FLASH", self, 2)
 			-- some units arent fixing with this
 			FixBuggingUnits(self)
 		end
-	elseif isBugging and not fixUnits then
+	elseif isBugging then
 		-- Clear status 4/48 since its not being fixed but unit was detected as bugging
 		-- This prevents status from lingering until next reverse move
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
@@ -1087,23 +1088,10 @@ function CheckForObjReverseBugging(self, frameDiff)
 		end
 		unitReversing.hasBugged = false
 	end
+
 	setglobal(playerTeam .. "_checksDone", checksDone)
 	setglobal(playerTeam .. "_unitsToFix", unitsToFix)
 end
-
---if not unitReversing.hasChecked then
-	--WriteToFile("objects created.txt",  "object created" .. "\n")
-	-- WORKAROUND FOR DELAYING A FUNCTION CALL
---	local playerTeam = tostring(ObjectTeamName(self))
---	tinsert(tempReference, a)
---	local shortName = strsub(playerTeam, 5)
---	local fullTeamName = tostring(shortName .. "/" .. playerTeam)
---	ExecuteAction("CREATE_OBJECT","ReverseDummy",fullTeamName,"0.00,0.00,0.00",0)
-
---	for id, unitRef in selectedUnitList do
---		unitsReversing[unitRef].hasChecked = true
---	end
---end
 		
 function ReverseDummyDestroyed(self)
 	local a = getObjectId(self)
@@ -1461,6 +1449,7 @@ function BackingUpEnd(self)
 		unitReversing.fastTurnWas0Frames = false
 		unitReversing.isAttacking = false
 		unitReversing.hasBeenCounted = false
+		unitReversing.isPerformingThirdTurn = false
 	end
 
 	--if checksDone == unitReversing.selectedUnits.selectedCount-1 then
