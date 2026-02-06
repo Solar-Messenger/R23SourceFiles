@@ -995,20 +995,23 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local checksDone = getglobal(playerTeam .. "_checksDone") or 0
 	local unitsToFix = getglobal(playerTeam .. "_unitsToFix") or {}
 
-	if unitReversing.fastTurnWas0Frames then 
+	-- edge case for when units are attacking.
+	local lowerLimit = 3
+	local upperLimit = unitReversing.isAttacking and 5 or 0
+
+	if unitReversing.fastTurnWas0Frames then
 		-- if two fast turns yields framediff of 0, it can bee assumed the number of frames in this -TURN_LEFT or -TURN_RIGHT is 7 (for buggies)
 		if frameDiff == bugDuration then
 			isBugging = true
 		end
 		-- there are some units that arent 7 that bug still , maybe put a WriteToFile  here
 		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-
-		-- 7 is bug duration so range is 7 - 3 and 7 + 2
-	elseif frameDiff >= bugDuration-3 and frameDiff <= bugDuration then
-		isBugging = true
 	elseif frameDiff == 0 then
-		-- some bugging units probably have frame diff of 7 at second trigger if first trigger is 0 
+		-- some bugging units probably have frame diff of 7 at second trigger if first trigger is 0
 		unitReversing.fastTurnWas0Frames = true
+		-- 7 is bug duration so range is 7 - lowerLimit and 7 + upperLimit
+	elseif frameDiff >= bugDuration-lowerLimit and frameDiff <= bugDuration+upperLimit then
+		isBugging = true
 	end
 	
 	-- checksDone is more than ceil(unitReversing.selectedUnits.selectedCount*0.5)
@@ -1043,9 +1046,9 @@ function CheckForObjReverseBugging(self, frameDiff)
 		if getn(unitsToFix) <= ceil(unitReversing.selectedUnits.selectedCount*bugThreshold) then
 			-- proceed to fix the units
 			fixUnits = true
-			WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*bugThreshold)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
+			--WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*bugThreshold)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
 		else
-			WriteToFile("tooManyBugging.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*bugThreshold)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
+			--WriteToFile("tooManyBugging.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(ceil(unitReversing.selectedUnits.selectedCount*bugThreshold)) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
 		end
 	end	
 
@@ -1250,7 +1253,7 @@ function BackingUp(self)
         unitReversing.timesTriggeredFast = 0
         unitReversing.timesTriggeredNormal = 0
         unitReversing.hasBeenCounted = false
-        unitReversing.isAttacking = false
+        --unitReversing.isAttacking = false
     end
 
     local playerTeam = tostring(ObjectTeamName(self))
