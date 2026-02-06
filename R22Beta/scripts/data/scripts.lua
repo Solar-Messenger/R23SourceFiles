@@ -1244,9 +1244,13 @@ function BackingUp(self)
         -- ### NEW COMMAND DETECTED ###
         -- Reset the flags here to ensure we don't carry over bugs from previous moves
         unitReversing.hasAlreadyReversed = false
-        unitReversing.hasBugged = false        
-        unitReversing.closestUnit = nil        
-        unitReversing.fastTurnWas0Frames = false 
+        unitReversing.hasBugged = false
+        unitReversing.closestUnit = nil
+        unitReversing.fastTurnWas0Frames = false
+        unitReversing.timesTriggeredFast = 0
+        unitReversing.timesTriggeredNormal = 0
+        unitReversing.hasBeenCounted = false
+        unitReversing.isAttacking = false
     end
 
     local playerTeam = tostring(ObjectTeamName(self))
