@@ -1252,6 +1252,7 @@ function BackingUp(self)
     -- Lua 4.0 does not support 'getglobal' dynamically in all versions efficiently, 
     -- but assuming your wrapper works:
     local teamTable = ShallowCopyTable(getglobal(playerTeam))
+    teamTable.units = ShallowCopyTable(teamTable.units)
     
     unitReversing.firstFrame = curFrame
 	unitReversing.isReverseMoving = true
