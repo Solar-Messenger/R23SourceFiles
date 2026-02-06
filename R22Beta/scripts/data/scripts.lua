@@ -1014,7 +1014,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 			isBugging = true
 		end
 		-- there are some units that arent 7 that bug still , maybe put a WriteToFile  here
-		-- ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 	elseif frameDiff == 0 then
 		-- some bugging units probably have frame diff of 7 at second trigger if first trigger is 0
 		unitReversing.fastTurnWas0Frames = true
@@ -1417,7 +1417,8 @@ end
 
 -- clears the table 
 function ReverseUnitOnDeath(self)
-	--local a,unitReversing = GetUnitReversingData(self)
+	local a,unitReversing = GetUnitReversingData(self)
+	RemoveFromUnitSelection(self)
 	if unitsReversing[a] ~= nil then
 		unitsReversing[a] = nil
 	end
