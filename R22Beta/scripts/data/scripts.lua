@@ -80,9 +80,9 @@ bugDurationTable = {
 ["79609108"]=7, -- Black Hand Raider Buggy
 ["6354531D"]=7, -- Nod Raider Buggy
 -- SCORPION TANKS
-["1B44D6AE"]=8, -- Mok Scorpion Tank
-["A33F11AF"]=8, -- Black Hand Scorpion Tank
-["2F9131D"]=8, -- Nod Scorpion Tank
+["1B44D6AE"]=11, -- Mok Scorpion Tank
+["A33F11AF"]=11, -- Black Hand Scorpion Tank
+["2F9131D"]=11, -- Nod Scorpion Tank
 -- SEEKERS
 ["B8802763"]=11, -- Scrin Seeker
 ["DB2B7D2F"]=11, -- Reaper-17 Seeker
@@ -1010,7 +1010,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local isBugging = false
 	if unitReversing.fastTurnWas0Frames then
 		-- if two fast turns yields framediff of 0, it can bee assumed the number of frames in this -TURN_LEFT or -TURN_RIGHT is 7 (for buggies)
-		if frameDiff == bugDuration then
+		if frameDiff >= bugDuration - lowerLimit and frameDiff <= bugDuration + upperLimit then
 			isBugging = true
 		end
 		-- there are some units that arent 7 that bug still , maybe put a WriteToFile  here
@@ -1043,7 +1043,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	if checksDone >= ceil(selectedCount * 0.8) then
 		-- if number of units bugging is less than the count * 0.25
 		-- if more than 50 units are selected, make the detection more forgiving
-		local bugThreshold = selectedCount > 50 and 0.10 or 0.25
+		local bugThreshold = selectedCount > 30 and 0.10 or 0.25
 		local maxBugging = ceil(selectedCount * bugThreshold)
 		if getn(unitsToFix) <= maxBugging then
 			-- proceed to fix the units
