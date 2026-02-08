@@ -1057,7 +1057,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	if checksDone >= ceil(selectedCount * 0.8) then
 		-- if number of units bugging is less than the count * 0.25
 		-- if more than 50 units are selected, make the detection more forgiving
-		local bugThreshold = selectedCount > 30 and 0.10 or 0.25
+		local bugThreshold = selectedCount > 30 and 0.15 or 0.25
 		local maxBugging = ceil(selectedCount * bugThreshold)
 		if getn(unitsToFix) <= maxBugging then
 			-- proceed to fix the units

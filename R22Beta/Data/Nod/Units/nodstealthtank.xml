@@ -1120,7 +1120,7 @@
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_NODTechCenterTibCoreMissiles</TriggeredBy>
 			</AudioLoopUpgrade>
-
+			<!--
 			<AttributeModifierAuraUpdate
 				id="ModuleTag_Collisions"
 				RequiresAllTriggers="False"
@@ -1160,6 +1160,7 @@
 					<IncludeThing>BlackHandStealthTank</IncludeThing>
 				</ObjectFilter>
 			</AttributeModifierAuraUpdate>
+			-->
 		</Behaviors>
 		<AI>
 			<AIUpdate
