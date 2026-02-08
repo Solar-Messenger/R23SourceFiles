@@ -1080,7 +1080,9 @@ function CheckForObjReverseBugging(self, frameDiff)
 		fixUnits = false
 	end
 	-- Apply fixes if threshold was met
-	if isBugging and fixUnits then
+	-- fixUnits alone triggers the fix so that a non-bugging unit that pushes
+	-- checksDone over the threshold can still fix earlier-detected bugging units
+	if fixUnits then
 		if getn(unitsToFix) > 0 then
 			-- mark all bugging units with USER_72 before reassignment so
 			-- GetANonBuggingUnit wont return a unit that is about to be fixed
@@ -1094,14 +1096,14 @@ function CheckForObjReverseBugging(self, frameDiff)
 				ExecuteAction("NAMED_FLASH", unitsReversing[unitsToFix[i]].selfRealReference, 2)
 				FixBuggingUnit(unitsReversing[unitsToFix[i]].selfRealReference)
 			end
-		else
+		elseif isBugging then
 			ExecuteAction("NAMED_FLASH", self, 2)
-			-- some units arent fixing with this
 			FixBuggingUnit(self)
 		end
-	elseif isBugging then
-		-- Clear status 4/48 since its not being fixed but unit was detected as bugging
-		-- This prevents status from lingering until next reverse move
+	elseif isBugging and checksDone >= ceil(selectedCount * 0.8) then
+		-- Only clear bugging state when threshold was reached and we decided not to fix
+		-- (too many bugging = likely false positive). Before threshold is reached,
+		-- keep the state so the unit can still be fixed when slower types finish checking.
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)
 		end
