@@ -997,6 +997,10 @@ end
 function CheckForObjReverseBugging(self, frameDiff)
 	local a, unitReversing = GetUnitReversingData(self)
 	local bugDuration = bugDurationTable[getObjectName(self)]
+
+	-- check if unit is damaged 
+	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and bugDuration*1.5 or bugDuration
+
 	local selectedUnitList = unitReversing.selectedUnits.units
 	local selectedCount = unitReversing.selectedUnits.selectedCount
 	local playerTeam = tostring(ObjectTeamName(self))
