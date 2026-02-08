@@ -70,6 +70,7 @@ tempReference = {}
 dummyReference = {}
 
 unitsReversing = {}
+attackingUnits = {} -- tracks units with IS_ATTACKING status independently of reverse system
 TIMES_TO_TRIGGER = 2
 NO_COLLISION_DURATION = 4
 UNITS_BUGGING_MULT = 0.5
@@ -84,9 +85,13 @@ bugDurationTable = {
 ["A33F11AF"]=11, -- Black Hand Scorpion Tank
 ["2F9131D"]=11, -- Nod Scorpion Tank
 -- SEEKERS
-["B8802763"]=11, -- Scrin Seeker
-["DB2B7D2F"]=11, -- Reaper-17 Seeker
-["7296891C"]=11 -- Traveler-59 Seeker
+["B8802763"]=12, -- Scrin Seeker
+["DB2B7D2F"]=12, -- Reaper-17 Seeker
+["7296891C"]=12, -- Traveler-59 Seeker
+-- STEALTH TANKS
+["26538D"]=7, -- Nod Stealth Tank
+["1025B90B"]=7, -- Marked of Kane Stealth Tank
+["F38615BD"]=7 -- Black Hand Mantis
 }	
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
@@ -921,10 +926,9 @@ function UnitNoLongerMoving(self)
 	--WriteToFile("unitsMoving.txt",  tostring(floor(unitReversing.selectedUnits.selectedCount * 0.1)) .. "\n")
 	if unitsMoving <= (floor(unitReversing.selectedUnits.selectedCount * 0.1)) then
 		for id, unitRef in selectedUnitList do
-			-- if not attacking (state applied, and removed on backingupend)
-			if not unitsReversing[unitRef].isAttacking then
+			-- if not attacking and not actively reverse-moving, allow clearing
+			if not unitsReversing[unitRef].isAttacking and not unitsReversing[unitRef].isReverseMoving then
 				unitsReversing[unitRef].isMovingFlag = false
-				-- debug after ... (03/02/2026)
 			end
 		end
 	end
@@ -932,9 +936,15 @@ end
 
 function UnitIsAttacking(self)
 	local a = getObjectId(self)
-	if unitsReversing[a] == nil then return end
-	local _,unitReversing = GetUnitReversingData(self)
-	unitReversing.isAttacking = true
+	attackingUnits[a] = true
+	if unitsReversing[a] ~= nil then
+		unitsReversing[a].isAttacking = true
+	end
+end
+
+function UnitIsAttackingEnd(self)
+	local a = getObjectId(self)
+	attackingUnits[a] = nil
 end
 
 -- decrement the unitsMoving counter triggered by +MOVING (need a way to see if already moving)
@@ -1253,7 +1263,8 @@ function BackingUp(self)
         unitReversing.timesTriggeredFast = 0
         unitReversing.timesTriggeredNormal = 0
         unitReversing.hasBeenCounted = false
-        --unitReversing.isAttacking = false
+        -- +IS_ATTACKING may have already fired before we started tracking
+        unitReversing.isAttacking = attackingUnits[a] == true
     end
 
     local playerTeam = tostring(ObjectTeamName(self))
@@ -1431,6 +1442,7 @@ end
 function ReverseUnitOnDeath(self)
 	local a,unitReversing = GetUnitReversingData(self)
 	RemoveFromUnitSelection(self)
+	attackingUnits[a] = nil
 	if unitsReversing[a] ~= nil then
 		unitsReversing[a] = nil
 	end

@@ -1160,6 +1160,7 @@
 				RampageTime="0s"
 				BurningDeathTime="0s"
 				TimeToEjectPassengersOnRampage="0"
+				AILuaEventsList="NODStealthTankFunctions_R24"
 				ComboLocomotorSet="NORMAL"
 				ComboLocoAttackDistance="80"
 				IdleTargetTime="0s"

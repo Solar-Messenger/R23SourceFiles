@@ -913,6 +913,7 @@
 		<!-- no longer moving event -->
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttacking"	ScriptFunctionName="UnitIsAttacking" DebugSingleStep="false"/>
+		<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsAttackingEnd" DebugSingleStep="false"/>
 		<!-- <EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/> -->
 		<!-- on user 73 end
 		<EventHandler EventName="OnUser73End"	ScriptFunctionName="CheckObjDistanceAfterTimer" DebugSingleStep="false"/>   -->
@@ -1004,6 +1005,11 @@
 		<!-- <EventHandler EventName="OnUser9End"	ScriptFunctionName="delete" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser3"	ScriptFunctionName="OnHuskHide" DebugSingleStep="false"/>  -->
    	 </EventList>
+
+	 <!-- r24 reverse move units -->
+	 <EventList Name="NODStealthTankFunctions_R24" Inherit="BaseScriptFunctions">
+
+	</EventList>
 
 	<EventList Name="AlienHarvesterFunctions_R21b" Inherit="BaseScriptFunctions">	
 		<EventHandler EventName="OnHarvestingMoney3"	ScriptFunctionName="UpdateMoney3Frames" DebugSingleStep="false"/>

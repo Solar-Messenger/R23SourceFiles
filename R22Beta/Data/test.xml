@@ -19,13 +19,12 @@
 		<Include source="Nod/props/nodvertigodisruptionpod.xml" type="all"/>	
 		<Include source="SteelTalons/Units/STBehemoth.xml" type="all"/>	
 		<Include source="GlobalData/LogicCommandSet.xml" type="all"/>
-		<Include source="MarkedOfKane\Units\markedofkanestealthtank.xml" type="all"/>	
+		
 		<Include source="MarkedOfKane/Units/markedofkanemobileartillery.xml" type="all"/>	
 		<Include source="Nod/Units/nodmobileartillery.xml" type="all"/>	
 		<Include source="MarkedOfKane/Units/markedofkanebeamcannon.xml" type="all"/>	
 		<Include source="Nod/Units/nodbeamcannon.xml" type="all"/>	
-		<Include source="GlobalData/SpecialPowerTemplates.xml" type="all"/>	
-		<Include source="Nod\Units\nodstealthtank.xml" type="all"/>	 -->
+		<Include source="GlobalData/SpecialPowerTemplates.xml" type="all"/>		 -->
 
 		<!--		
 		<Include source="GlobalData/Locomotor.xml" type="all"/>	
@@ -127,5 +126,9 @@
 		<Include source="Reaper17\Units\Reaper17Mothership.xml" type="all"/>	
 		<Include source="traveler59\Units\Traveler59Mothership.xml" type="all"/>		
 		<Include source="Alien/Units/AlienMothership.xml" type="all"/>
+		<!-- stealth tanks -->
+		<Include source="MarkedOfKane\Units\markedofkanestealthtank.xml" type="all"/>
+		<Include source="Nod\Units\nodstealthtank.xml" type="all"/>	
+		<Include source="BlackHand\Units\BHMantis.xml" type="all"/>	
 	</Includes>
 </AssetDeclaration>
