@@ -1155,6 +1155,9 @@ function FixBuggingUnit(self)
 	else
 		 unitReversing.closestUnit = GetANonBuggingUnit(selectedUnitList, self)
 	end
+
+	--WriteToFile("closeunit.txt",  "closest unit:  " .. tostring(unitReversing.closestUnit) .. "\n")
+
 	ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitReversing.closestUnit)	
 	ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, 100)
 	-- reverse move to remove collisions
@@ -1164,7 +1167,7 @@ function FixBuggingUnit(self)
 
 	for id, unitRef in selectedUnitList do
 		-- this unit is bugging so lets go through all the closest units and see if it coincides with this one
-		--WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].closestUnit) .. "\n")
+		-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].closestUnit) .. "\n")
 		if unitsReversing[unitRef].closestUnit == unitReversing.selfReference then
 			-- get a unit that hasnt bugged that isnt itself
 			local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[unitRef].selectedUnits.units, unitsReversing[unitRef].selfRealReference)
@@ -1235,19 +1238,21 @@ function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 	end
 end
 
--- Creates a shallow copy of a table (snapshot)
-function ShallowCopyTable(original)
-	if type(original) ~= "table" then
-		return original
-	end
-	local copy = {}
-	for k, v in original do
-		copy[k] = v
-	end
-	return copy
+-- copies a snapshot and recursively snapshots nested tables within.
+function DeepCopyTable(original)
+    if type(original) ~= "table" then
+        return original
+    end
+
+    local copy = {}
+    for k, v in original do
+        copy[k] = DeepCopyTable(v)
+    end
+    
+    return copy
 end
 
--- Triggered by +SELECTED +BACKING_UP, triggered 
+-- Triggered by +BACKING_UP
 function BackingUp(self)
     local a, unitReversing = GetUnitReversingData(self)
     local curFrame = GetFrame()
@@ -1270,17 +1275,18 @@ function BackingUp(self)
     end
 
     local playerTeam = tostring(ObjectTeamName(self))
-    -- Lua 4.0 does not support 'getglobal' dynamically in all versions efficiently, 
-    -- but assuming your wrapper works:
-    local teamTable = ShallowCopyTable(getglobal(playerTeam))
-    teamTable.units = ShallowCopyTable(teamTable.units)
-    
+    local teamSnapshot = getglobal(playerTeam .. "_snapshot")
+    if teamSnapshot == nil then
+        teamSnapshot = DeepCopyTable(getglobal(playerTeam))
+        setglobal(playerTeam .. "_snapshot", teamSnapshot)
+    end
+
     unitReversing.firstFrame = curFrame
 	unitReversing.isReverseMoving = true
 	unitReversing.isMovingFlag = true
 
     if ObjectTestModelCondition(self, "USER_72") == false then
-        unitReversing.selectedUnits = teamTable
+        unitReversing.selectedUnits = teamSnapshot
         if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
             ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
         end
@@ -1398,7 +1404,7 @@ function BinarySearchDistance(obj1Ref, obj2Ref, minDist, maxDist, precision)
 	return result
 end
 
--- only updated on +BACKING_UP 
+-- Triggered by +SELECTED
 function AddToUnitSelection(self)
     local playerTeam = tostring(ObjectTeamName(self))
     local unitId = getObjectId(self)
@@ -1421,7 +1427,7 @@ function AddToUnitSelection(self)
         teamTable.selectedCount = currentCount + 1
     end
 end
-
+-- Triggered by -SELECTED
 function RemoveFromUnitSelection(self)
     local playerTeam = tostring(ObjectTeamName(self))
     local unitId = getObjectId(self)
@@ -1493,6 +1499,7 @@ function BackingUpEnd(self)
 		local playerTeam = tostring(ObjectTeamName(self))
 		setglobal(playerTeam .. "_unitsToFix", {})
 		setglobal(playerTeam .. "_checksDone", 0)
+		setglobal(playerTeam .. "_snapshot", nil)
 		-- reset has been fixed flag
 		unitReversing.hasBeenFixed = false
 		--print("clearing unitsToFix")
