@@ -880,6 +880,7 @@ function GetUnitReversingData(self)
 			hasBeenFixed = false,
 			hasBeenCounted = false,
 			isPerformingThirdTurn = false,
+			groupId = nil, 
 			closestUnit = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
