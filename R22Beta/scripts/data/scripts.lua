@@ -1167,7 +1167,7 @@ function FixBuggingUnit(self)
 
 	for id, unitRef in selectedUnitList do
 		-- this unit is bugging so lets go through all the closest units and see if it coincides with this one
-		-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].closestUnit) .. "\n")
+		-- 	WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].closestUnit) .. "\n")
 		if unitsReversing[unitRef].closestUnit == unitReversing.selfReference then
 			-- get a unit that hasnt bugged that isnt itself
 			local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[unitRef].selectedUnits.units, unitsReversing[unitRef].selfRealReference)
@@ -1275,18 +1275,29 @@ function BackingUp(self)
     end
 
     local playerTeam = tostring(ObjectTeamName(self))
-    local teamSnapshot = getglobal(playerTeam .. "_snapshot")
-    if teamSnapshot == nil then
-        teamSnapshot = DeepCopyTable(getglobal(playerTeam))
-        setglobal(playerTeam .. "_snapshot", teamSnapshot)
-    end
 
     unitReversing.firstFrame = curFrame
 	unitReversing.isReverseMoving = true
 	unitReversing.isMovingFlag = true
 
     if ObjectTestModelCondition(self, "USER_72") == false then
-        unitReversing.selectedUnits = teamSnapshot
+        local groupId = unitReversing.groupId
+        if groupId ~= nil then
+            -- unit was already tagged by another unit in the group
+            unitReversing.selectedUnits = getglobal("group_" .. groupId)
+        else
+            -- first unit in the group, create snapshot and tag all units
+            local teamSnapshot = DeepCopyTable(getglobal(playerTeam))
+            groupId = tostring(curFrame) .. "_" .. tostring(a)
+            setglobal("group_" .. groupId, teamSnapshot)
+            unitReversing.groupId = groupId
+            for id, unitRef in teamSnapshot.units do
+                if unitsReversing[unitRef] ~= nil then
+                    unitsReversing[unitRef].groupId = groupId
+                end
+            end
+            unitReversing.selectedUnits = teamSnapshot
+        end
         if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
             ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
         end
@@ -1499,10 +1510,23 @@ function BackingUpEnd(self)
 		local playerTeam = tostring(ObjectTeamName(self))
 		setglobal(playerTeam .. "_unitsToFix", {})
 		setglobal(playerTeam .. "_checksDone", 0)
-		setglobal(playerTeam .. "_snapshot", nil)
+		-- clear this unit's groupId and free the snapshot if no other unit still references it
+		local gId = unitReversing.groupId
+		unitReversing.groupId = nil
+		if gId ~= nil then
+			local anyRemaining = false
+			for id, unitRef in selectedUnitList do
+				if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].groupId == gId then
+					anyRemaining = true
+					break
+				end
+			end
+			if not anyRemaining then
+				setglobal("group_" .. gId, nil)
+			end
+		end
 		-- reset has been fixed flag
 		unitReversing.hasBeenFixed = false
-		--print("clearing unitsToFix")
 	end
 end
 
