@@ -878,52 +878,23 @@
     
     <EventList Name="BaseScriptFunctions">
 		<!-- If there are any events that need to apply to all units, put them here. jba -->
-			<!--
-		<EventHandler EventName="OnBackingUpRight"	ScriptFunctionName="BackingUpNormal" DebugSingleStep="false"/>
-		<EventHandler EventName="OnBackingUpLeft"	ScriptFunctionName="BackingUpNormal" DebugSingleStep="false"/>
-	
-		<EventHandler EventName="OnBackingUpRightEnd"	ScriptFunctionName="BackingUpNormalEnd" DebugSingleStep="false"/>
-		<EventHandler EventName="OnBackingUpLeftEnd"	ScriptFunctionName="BackingUpNormalEnd" DebugSingleStep="false"/>
-		-->
+		<!-- R24 reverse bug events (for vehicles that can reverse move)-->
 		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>
-		<EventHandler EventName="OnBackingUp"	ScriptFunctionName="BackingUp" DebugSingleStep="false"/>
-		
-		
+		<EventHandler EventName="OnBackingUp"	ScriptFunctionName="BackingUp" DebugSingleStep="false"/>		
 		<EventHandler EventName="OnBackingUpFastRight1"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpFastLeft1"	ScriptFunctionName="BackingUpFast" DebugSingleStep="false"/> 
-
 		<EventHandler EventName="OnBackingUpFastRightEnd"	ScriptFunctionName="BackingUpFastTurnEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpFastLeftEnd"	ScriptFunctionName="BackingUpFastTurnEnd" DebugSingleStep="false"/>
-
 		<EventHandler EventName="OnBackingUpRightEnd"	ScriptFunctionName="BackingUpTurnEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpLeftEnd"	ScriptFunctionName="BackingUpTurnEnd" DebugSingleStep="false"/>
-
-		<!-- no worky 
-		<EventHandler EventName="OnReverseState"	ScriptFunctionName="UnitNowGuarding" DebugSingleStep="false"/> -->
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="ReverseUnitOnDeath" DebugSingleStep="false"/>
-		<!-- <EventHandler EventName="OnCreated"	ScriptFunctionName="ReverseUnitCreated" DebugSingleStep="false"/> -->
-
-		<!-- selected events -->
 		<EventHandler EventName="OnSelected"	ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
 		<EventHandler EventName="OnSelectedEnd"	ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
-
-		<!-- on user 72 end-->
 		<EventHandler EventName="OnUser72End"	ScriptFunctionName="BuggedUnitTimeoutEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser72"	ScriptFunctionName="BuggedUnitTimeout" DebugSingleStep="false"/> 
-		<!-- no longer moving event -->
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttacking"	ScriptFunctionName="UnitIsAttacking" DebugSingleStep="false"/>
-		<!--<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsAttackingEnd" DebugSingleStep="false"/>
-		 <EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/> -->
-		<!-- on user 73 end
-		<EventHandler EventName="OnUser73End"	ScriptFunctionName="CheckObjDistanceAfterTimer" DebugSingleStep="false"/>   -->
     </EventList>
-	<!--
-	<EventList Name="ReverseMoveDummy_R23" Inherit="BaseScriptFunctions">
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="ReverseDummyDestroyed" DebugSingleStep="false"/> 
-		<EventHandler EventName="OnCreated"	ScriptFunctionName="ReverseDummyCreated" DebugSingleStep="false"/>
-	</EventList>
-	-->
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OffTiberiumGrowing" DebugSingleStep="false"/> 

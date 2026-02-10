@@ -74,7 +74,7 @@ unitsReversing = {}
 TURN_TRIGGER_COUNT = 2 -- number of turn triggers before checking if unit is bugging
 NO_COLLISION_DURATION = 4 -- seconds to disable collision on a bugged unit during fix
 MAX_BUGGING_RATIO = 0.5 -- max ratio of bugging units in a selection before all fixes are applied
-DAMAGED_BUG_DURATION_MULT = 1.5 -- bug duration multiplier when unit is REALLYDAMAGED
+-- DAMAGED_BUG_DURATION_MULT = 1.5 bug duration multiplier when unit is REALLYDAMAGED
 REVERSE_SPAM_FRAME_WINDOW = 2 -- frames within which a repeat reverse-move command is ignored
 BUG_CHECK_LOWER_LIMIT = 4 -- lower tolerance for frameDiff vs bugDuration
 BUG_CHECK_UPPER_LIMIT = 3 -- upper tolerance when NOT attacking
@@ -87,25 +87,70 @@ UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearin
 UNITS_TURNING_CANCEL_THRESHOLD = 0.2 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance)
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
-bugDurationTable = {
--- currently some bugs happen below these values, im trying to setup a timer to check it properly: lifetimeupdate 0.25 via ocl could be the solution.
--- BUGGIES
-["E3C841B0"]=7, -- Mok Raider Buggy
-["79609108"]=7, -- Black Hand Raider Buggy
-["6354531D"]=7, -- Nod Raider Buggy
--- SCORPION TANKS
-["1B44D6AE"]=11, -- Mok Scorpion Tank
-["A33F11AF"]=11, -- Black Hand Scorpion Tank
-["2F9131D"]=11, -- Nod Scorpion Tank
--- SEEKERS
-["B8802763"]=12, -- Scrin Seeker
-["DB2B7D2F"]=12, -- Reaper-17 Seeker
-["7296891C"]=12, -- Traveler-59 Seeker
--- STEALTH TANKS
-["26538D"]=7, -- Nod Stealth Tank
-["1025B90B"]=7, -- Marked of Kane Stealth Tank
-["F38615BD"]=7 -- Black Hand Mantis
-}	
+unitBugDataTable = { 
+	-- frameCount Stores the unit bug duration in frames 
+	-- damagedDurationMult stores the bug duration multiplier when unit is REALLYDAMAGED ej: frameCount * damagedDurationMult
+
+	-------------------------------- NOD UNITS --------------------------------
+
+	-- BUGGIES --
+	["E3C841B0"]= { -- Mok Raider Buggy
+		frameCount = 7,
+		damagedDurationMult = 1.0
+	},
+	["79609108"]= { -- Black Hand Raider Buggy
+		frameCount = 7,
+		damagedDurationMult = 1.0
+	},
+	["6354531D"]= { -- Nod Raider Buggy
+		frameCount = 7,
+		damagedDurationMult = 1.0
+	},
+	-- SCORPION TANKS --
+	["1B44D6AE"]= { -- Mok Scorpion Tank
+		frameCount = 11,
+		damagedDurationMult = 1.5
+	},
+	["A33F11AF"]= { -- Black Hand Scorpion Tank
+		frameCount = 11,
+		damagedDurationMult = 1.5
+	},
+	["2F9131D"]= { -- Nod Scorpion Tank
+		frameCount = 11,
+		damagedDurationMult = 1.5
+	},
+	-- STEALTH TANKS --
+	["26538D"]= { -- Nod Stealth Tank
+		frameCount = 7,
+		damagedDurationMult = 1.5
+	},
+	["1025B90B"]= { -- Marked of Kane Stealth Tank
+		frameCount = 7,
+		damagedDurationMult = 1.5
+	},
+	["F38615BD"]= { -- Black Hand Mantis
+		frameCount = 7,
+		damagedDurationMult = 1.5
+	},
+
+	-------------------------------- SCRIN UNITS --------------------------------
+
+	-- SEEKERS -- 
+	["B8802763"]= { -- Scrin Seeker
+		frameCount = 12,
+		damagedDurationMult = 1.0
+	},
+	["DB2B7D2F"]= { -- Reaper-17 Seeker
+		frameCount = 12,
+		damagedDurationMult = 1.0
+	},
+	["7296891C"]= { -- Traveler-59 Seeker
+		frameCount = 12,
+		damagedDurationMult = 1.0
+	}
+
+	-------------------------------- GDI UNITS --------------------------------
+}
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
 MAX_FRAMES_BEING_HARVESTED = 50 -- 15 frames is 1s (gdi/scrin harvest action time)
@@ -1014,10 +1059,11 @@ end
 
 function CheckForObjReverseBugging(self, frameDiff)
 	local a, unitReversing = GetUnitReversingData(self)
-	local bugDuration = bugDurationTable[getObjectName(self)]
+	local unitBugData = unitBugDataTable[getObjectName(self)]
+	local bugDuration = unitBugData.frameCount
 
-	-- check if unit is damaged 
-	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and bugDuration*DAMAGED_BUG_DURATION_MULT or bugDuration
+	-- check if unit is damaged
+	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and bugDuration*unitBugData.damagedDurationMult or bugDuration
 
 	local selectedUnitList = unitReversing.selectedUnits.units
 	local selectedCount = unitReversing.selectedUnits.selectedCount
@@ -1028,6 +1074,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	-- edge case for when units are attacking.
 	local lowerLimit = BUG_CHECK_LOWER_LIMIT
 	local upperLimit = unitReversing.isAttacking and BUG_CHECK_UPPER_LIMIT_ATTACKING or BUG_CHECK_UPPER_LIMIT
+	--WriteToFile("upperLimit.txt",  tostring(upperLimit) .. "\n")
 
 	local isBugging = false
 	if unitReversing.fastTurnWas0Frames then
@@ -1105,7 +1152,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 				FixBuggingUnit(unitsReversing[unitsToFix[i]].selfRealReference)
 			end
 		elseif isBugging then
-			ExecuteAction("NAMED_FLASH", self, 2)
+			--ExecuteAction("NAMED_FLASH", self, 2)
 			FixBuggingUnit(self)
 		end
 	elseif isBugging and checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
@@ -1115,9 +1162,9 @@ function CheckForObjReverseBugging(self, frameDiff)
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)
 		end
-		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)
-		end
+		--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
+		--	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)
+		--end
 		unitReversing.hasBugged = false
 	end
 
@@ -1169,9 +1216,9 @@ function FixBuggingUnit(self)
 	ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitReversing.closestUnit)	
 	ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, STOPPING_DISTANCE)
 	-- reverse move to remove collisions
-	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
-	end
+	--if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
+	--	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
+	--end
 
 	for id, unitRef in selectedUnitList do
 		-- this unit is bugging so lets go through all the closest units and see if it coincides with this one
@@ -1186,9 +1233,9 @@ function FixBuggingUnit(self)
 				-- move this unit to the previously assigned non bugging unit
 				if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
 					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[unitRef].closestUnit)
-					if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitsReversing[unitRef].selfReference, 48) then
-						ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[unitRef].selfReference, 48, 1)
-					end
+					--if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitsReversing[unitRef].selfReference, 48) then
+					--	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[unitRef].selfReference, 48, 1)
+					--end
 				end
 			end
 		end
@@ -1485,9 +1532,9 @@ function BackingUpEnd(self)
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
 		end
-		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)	
-		end
+		--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
+		--	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)	
+		--end
 	end
 
 	if unitReversing ~= nil then
@@ -1544,9 +1591,9 @@ function BuggedUnitTimeoutEnd(self)
 	if unitReversing ~= nil then
 		unitReversing.hasBugged = false
 		unitReversing.closestUnit = nil
-		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)	
-		end
+		--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
+		--	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)	
+		--end
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
 		end
