@@ -87,7 +87,7 @@ UNITS_TURNING_CANCEL_THRESHOLD = 0.2 -- ratio of units still turning that cancel
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
 unitBugDataTable = { 
-	-- frameCount Stores the unit bug duration in frames 
+	-- frameCount Stores the unit bug duration in frames, it is proportional to TurnTimeSeconds
 	-- damagedDurationMult stores the bug duration multiplier when unit is REALLYDAMAGED ej: frameCount * damagedDurationMult
 
 	-------------------------------- NOD UNITS --------------------------------
@@ -146,9 +146,31 @@ unitBugDataTable = {
 	["7296891C"]= { -- Traveler-59 Seeker
 		frameCount = 12,
 		damagedDurationMult = 1.0
-	}
+	},
 
 	-------------------------------- GDI UNITS --------------------------------
+
+	-- APCS --
+	["D01CFD88"]= { -- GDI APC
+		frameCount = 9,
+		damagedDurationMult = 1.0
+	},
+	["286DE7C4"]= { -- Steel Talons APC
+		frameCount = 9,
+		damagedDurationMult = 1.0
+	},
+	["64BCB106"]= { -- ZOCOM APCS
+		frameCount = 9,
+		damagedDurationMult = 1.0
+	},
+	["AF462A8F"]= { -- GDI VETERAN APC
+		frameCount = 9,
+		damagedDurationMult = 1.0
+	},
+	["BD7701CB"]= { -- ZOCOM VETERAN APC
+		frameCount = 9,
+		damagedDurationMult = 1.0
+	}
 }
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
@@ -1018,9 +1040,6 @@ function BackingUpFastTurnEnd(self)
     if unitReversing ~= nil and unitReversing.timesTriggeredFast < timesToTrigger then
 		unitReversing.timesTriggeredFast = unitReversing.timesTriggeredFast + 1
 		--CheckForObjReverseBugging(self, unitReversing)
-	else 
-		-- end the function if it has triggered more than two times
-		return
 	end
 end
 
@@ -1037,9 +1056,6 @@ function BackingUpTurnEnd(self)
 		if unitReversing.fastTurnWas0Frames then
 			CheckForObjReverseBugging(self, frameDiff)
 		end
-	else 
-		-- end the function if it has triggered more than two times
-		return
 	end
 end
 
