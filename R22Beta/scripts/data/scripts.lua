@@ -72,8 +72,7 @@ dummyReference = {}
 unitsReversing = {}
 
 TURN_TRIGGER_COUNT = 2 -- number of turn triggers before checking if unit is bugging
-NO_COLLISION_DURATION = 4 -- seconds to disable collision on a bugged unit during fix
-MAX_BUGGING_RATIO = 0.5 -- max ratio of bugging units in a selection before all fixes are applied
+NO_COLLISION_DURATION = 5 -- seconds to disable collision on a bugged unit during fix
 -- DAMAGED_BUG_DURATION_MULT = 1.5 bug duration multiplier when unit is REALLYDAMAGED
 REVERSE_SPAM_FRAME_WINDOW = 2 -- frames within which a repeat reverse-move command is ignored
 BUG_CHECK_LOWER_LIMIT = 4 -- lower tolerance for frameDiff vs bugDuration
@@ -927,19 +926,15 @@ function GetUnitReversingData(self)
 			selfReference = SetObjectReference(self, a),
 			selfRealReference = self,
 			selectedUnits = {},
-			distanceToClosestUnit = 0,
 			isMovingFlag = false,
-			timeOffset = 0,
-			lastCheck = 0,
 			lastReverseMoveFrame = 0,
 			hasAlreadyReversed = false,
 			fastTurnWas0Frames = false,
 			isAttacking = false,
-			hasBeenFixed = false,
 			hasBeenCounted = false,
 			isPerformingThirdTurn = false,
 			groupId = nil, 
-			closestUnit = nil -- can be an array from closest to farthest
+			unitAnchor = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
 	end
@@ -957,7 +952,6 @@ end
 function BackingUpFast(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	--local curFrame = GetFrame()
-
 	-- set status for third time it turns
 	if unitReversing.timesTriggeredFast == 2 then	
 		--CheckForObjReverseBugging(self, frameDiff)
@@ -998,14 +992,6 @@ function UnitIsAttacking(self)
 	if unitsReversing[a] ~= nil then
 		unitsReversing[a].isAttacking = true
 	end
-end
-
--- decrement the unitsMoving counter triggered by +MOVING (need a way to see if already moving)
-function UnitIsMoving(self)
-	local a = getObjectId(self)
-	if unitsReversing[a] == nil then return end
-	local _,unitReversing = GetUnitReversingData(self)
-	--unitReversing.isMovingFlag = true
 end
 
 -- Triggered by +BACKING_UP -TURN_LEFT_HIGH_SPEED and +BACKING_UP -TURN_RIGHT_HIGH_SPEED
@@ -1061,10 +1047,8 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local a, unitReversing = GetUnitReversingData(self)
 	local unitBugData = unitBugDataTable[getObjectName(self)]
 	local bugDuration = unitBugData.frameCount
-
-	-- check if unit is damaged
+	-- check if unit is really damaged
 	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and bugDuration*unitBugData.damagedDurationMult or bugDuration
-
 	local selectedUnitList = unitReversing.selectedUnits.units
 	local selectedCount = unitReversing.selectedUnits.selectedCount
 	local playerTeam = tostring(ObjectTeamName(self))
@@ -1076,19 +1060,17 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local upperLimit = unitReversing.isAttacking and BUG_CHECK_UPPER_LIMIT_ATTACKING or BUG_CHECK_UPPER_LIMIT
 	--WriteToFile("upperLimit.txt",  tostring(upperLimit) .. "\n")
 
+	local inBugRange = frameDiff >= bugDuration - lowerLimit and frameDiff <= bugDuration + upperLimit
 	local isBugging = false
 	if unitReversing.fastTurnWas0Frames then
-		-- if two fast turns yields framediff of 0, it can bee assumed the number of frames in this -TURN_LEFT or -TURN_RIGHT is 7 (for buggies)
-		if frameDiff >= bugDuration - lowerLimit and frameDiff <= bugDuration + upperLimit then
+		-- if two fast turns yields framediff of 0, it can be assumed the number of frames in this -TURN_LEFT or -TURN_RIGHT is 7 (for buggies)
+		if inBugRange then
 			isBugging = true
 		end
-		-- there are some units that arent 7 that bug still , maybe put a WriteToFile  here
 		-- ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 	elseif frameDiff == 0 then
-		-- some bugging units probably have frame diff of 7 at second trigger if first trigger is 0
 		unitReversing.fastTurnWas0Frames = true
-		-- 7 is bug duration so range is 7 - lowerLimit and 7 + upperLimit
-	elseif frameDiff >= bugDuration - lowerLimit and frameDiff <= bugDuration + upperLimit then
+	elseif inBugRange then
 		isBugging = true
 	end
 
@@ -1118,8 +1100,6 @@ function CheckForObjReverseBugging(self, frameDiff)
 			-- proceed to fix the units
 			fixUnits = true
 			--WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(maxBugging) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
-		else
-			--WriteToFile("tooManyBugging.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(maxBugging) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
 		end
 	end
 
@@ -1167,31 +1147,11 @@ function CheckForObjReverseBugging(self, frameDiff)
 		--end
 		unitReversing.hasBugged = false
 	end
-
 	setglobal(playerTeam .. "_checksDone", checksDone)
 	setglobal(playerTeam .. "_unitsToFix", unitsToFix)
 end
 		
-function ReverseDummyDestroyed(self)
-	local a = getObjectId(self)
-	local selectedUnits = unitsReversing[dummyReference[a]].selectedUnits.units
-	local selectedCount = unitsReversing[dummyReference[a]].selectedUnits.selectedCount
-
-	--FixBuggingUnit(self)
-	FixAllBuggingUnits(selectedUnits, selectedCount)
-	-- apply fixes here.
-	dummyReference[a] = nil
-end
-
-function ReverseDummyCreated(self)
-    local a = getObjectId(self)
-    -- Safety check for the first index
-    if tempReference[1] ~= nil then
-        dummyReference[a] = tempReference[1]
-        tremove(tempReference, 1)
-    end
-end
-
+-- Fixes a unit detected to be bugging and then checks if any selected unit has the bugged unit assigned as unitAnchor
 function FixBuggingUnit(self)
 	local a,unitReversing = GetUnitReversingData(self)
 	local selectedUnitList = unitReversing.selectedUnits.units
@@ -1202,79 +1162,45 @@ function FixBuggingUnit(self)
 	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)
 	end
-	-- check if closestUnit is destroyed or is nil
-	if unitReversing.closestUnit ~= nil then
-		if not EvaluateCondition("NAMED_NOT_DESTROYED",unitReversing.closestUnit) then 
-			unitReversing.closestUnit = GetANonBuggingUnit(selectedUnitList, self)
+	-- check if unitAnchor is destroyed or is nil
+	if unitReversing.unitAnchor ~= nil then
+		if not EvaluateCondition("NAMED_NOT_DESTROYED",unitReversing.unitAnchor) then 
+			unitReversing.unitAnchor = GetANonBuggingUnit(selectedUnitList, self)
 		end
 	else
-		 unitReversing.closestUnit = GetANonBuggingUnit(selectedUnitList, self)
+		 unitReversing.unitAnchor = GetANonBuggingUnit(selectedUnitList, self)
 	end
-
-	--WriteToFile("closeunit.txt",  "closest unit:  " .. tostring(unitReversing.closestUnit) .. "\n")
-
-	ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitReversing.closestUnit)	
+	--WriteToFile("closeunit.txt",  "closest unit:  " .. tostring(unitReversing.unitAnchor) .. "\n")
+	ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitReversing.unitAnchor)	
 	ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, STOPPING_DISTANCE)
 	-- reverse move to remove collisions
 	--if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
 	--	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
 	--end
-
 	for id, unitRef in selectedUnitList do
 		-- this unit is bugging so lets go through all the closest units and see if it coincides with this one
-		-- 	WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].closestUnit) .. "\n")
-		if unitsReversing[unitRef].closestUnit == unitReversing.selfReference then
+		-- 	WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].unitAnchor) .. "\n")
+		if unitsReversing[unitRef].unitAnchor == unitReversing.selfReference then
 			-- get a unit that hasnt bugged that isnt itself
 			local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[unitRef].selectedUnits.units, unitsReversing[unitRef].selfRealReference)
 			-- only proceed if we found a non-bugging unit
 			if nonBuggingUnit ~= nil then
 				-- assign the new closeestUnit to a unit not flagged as being bugged
-				unitsReversing[unitRef].closestUnit = nonBuggingUnit
+				unitsReversing[unitRef].unitAnchor = nonBuggingUnit
 				-- move this unit to the previously assigned non bugging unit
 				if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
-					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[unitRef].closestUnit)
+					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[unitRef].unitAnchor)
 					--if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitsReversing[unitRef].selfReference, 48) then
 					--	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[unitRef].selfReference, 48, 1)
 					--end
 				end
 			end
 		end
-		--WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].closestUnit) .. "\n")
+		--WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].unitAnchor) .. "\n")
 	end
 end
 
-function FixAllBuggingUnits(selectedUnitList, selectedCount)
-    local numberOfBuggedUnits = 0
-
-    -- count all bugged units
-    for id, unitRef in selectedUnitList do
-        if unitsReversing[unitRef].hasBugged then
-            numberOfBuggedUnits = numberOfBuggedUnits + 1
-        end
-    end
-
-    -- fix bugged units if within threshold, and clear flags
-    if numberOfBuggedUnits <= (floor(selectedCount * MAX_BUGGING_RATIO)) then
-        for id, unitRef in selectedUnitList do
-            if unitsReversing[unitRef].hasBugged then
-                local selfRealRef = unitsReversing[unitRef].selfRealReference
-                FixBuggingUnit(selfRealRef)
-                if ObjectTestModelCondition(selfRealRef, "USER_72") == false then
-                    ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", selfRealRef, "USER_72", NO_COLLISION_DURATION, 100)
-                end
-            end
-            -- Clear the bugged flag
-            unitsReversing[unitRef].hasBugged = false
-        end
-    else
-        -- Just clear flags if over threshold
-        for id, unitRef in selectedUnitList do
-            unitsReversing[unitRef].hasBugged = false
-        end
-    end
-end
-
--- if the closestUnit has bugged during the reverse move, seek out a unit that hasnt of that players selection.
+-- if the unitAnchor has bugged during the reverse move, seek out a unit that hasnt of that players selection.
 -- selectedUnitsOfPlayer is thee array of units whose value is ObjectId
 function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 	local candidates = {}
@@ -1320,7 +1246,7 @@ function BackingUp(self)
         -- Reset the flags here to ensure we don't carry over bugs from previous moves
         unitReversing.hasAlreadyReversed = false
         unitReversing.hasBugged = false
-        unitReversing.closestUnit = nil
+        unitReversing.unitAnchor = nil
         unitReversing.fastTurnWas0Frames = false
         unitReversing.timesTriggeredFast = 0
         unitReversing.timesTriggeredNormal = 0
@@ -1356,12 +1282,10 @@ function BackingUp(self)
             ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
         end
         AssignRandomAnchor(self)
-    else 
-        return
     end
 end
 
--- gets a random selected unit of this players selection and assigns it to unitReversing.closestUnit = closestUnit
+-- gets a random selected unit of this players selection and assigns it to unitReversing.unitAnchor = unitAnchor
 function AssignRandomAnchor(self)
     if self ~= nil then
         local a,unitReversing = GetUnitReversingData(self)
@@ -1370,7 +1294,7 @@ function AssignRandomAnchor(self)
 		-- Check if we have at least 2 units in the selection (self + at least one other)
 		if next(selectedUnitList) ~= nil and next(selectedUnitList, next(selectedUnitList)) ~= nil then	
 			-- gets a unit that isnt self randomly.
-			unitReversing.closestUnit = unitsReversing[getRandomKey(selectedUnitList, a)].selfReference
+			unitReversing.unitAnchor = unitsReversing[getRandomKey(selectedUnitList, a)].selfReference
 		end
     end
 end
@@ -1387,12 +1311,12 @@ function getRandomKey(t, unitId)
     end    
     local randomIndex = 0    
 	-- keep assigning a random unit until its not the same as self
+	local attempts = 0
 	repeat
-	randomIndex = random(1, count)
-	until keys[randomIndex] ~= unitId
-
+		randomIndex = random(1, count)
+		attempts = attempts + 1
+	until keys[randomIndex] ~= unitId or attempts >= count
 	-- WriteToFile("random units.txt",  "unit being assigned: " .. tostring(unitId) .. "   random unit assigned to it: "  .. tostring(keys[randomIndex]) .. "\n")
-
     return keys[randomIndex]
 end
 
@@ -1410,7 +1334,7 @@ function random(...) --overwritting lua native function for multiplayer compatib
 end 
 
 -- gets the closest unit thats also selected of this player
--- assigns it to unitReversing.closestUnit
+-- assigns it to unitReversing.unitAnchor
 function AssignClosestAnchor(self)
     if self ~= nil then
         local a,unitReversing = GetUnitReversingData(self)
@@ -1418,7 +1342,7 @@ function AssignClosestAnchor(self)
 
 		-- Check if we have at least 2 units in the selection (self + at least one other)
 		if next(selectedUnitList) ~= nil and next(selectedUnitList, next(selectedUnitList)) ~= nil then
-			local closestUnit = nil
+			local unitAnchor = nil
 			local closestDistance = 99999
 
 			-- Iterate through all selected units once to find the closest
@@ -1433,14 +1357,14 @@ function AssignClosestAnchor(self)
 						-- Track the closest unit found so far
 						if distance < closestDistance then
 							closestDistance = distance
-							closestUnit = unitsReversing[id].selfReference
+							unitAnchor = unitsReversing[id].selfReference
 						end
 					end
 				end
 			end
 			-- Assign the closest unit and its distance
-			if closestUnit ~= nil then
-				unitReversing.closestUnit = closestUnit
+			if unitAnchor ~= nil then
+				unitReversing.unitAnchor = unitAnchor
 				unitReversing.distanceToClosestUnit = closestDistance
 			end
 		end
@@ -1513,11 +1437,11 @@ end
 
 -- clears the table 
 function ReverseUnitOnDeath(self)
-	local a,unitReversing = GetUnitReversingData(self)
-	RemoveFromUnitSelection(self)
-	if unitsReversing[a] ~= nil then
-		unitsReversing[a] = nil
-	end
+    local a = getObjectId(self)
+    RemoveFromUnitSelection(self)
+    if unitsReversing[a] ~= nil then
+        unitsReversing[a] = nil
+    end
 end
 
 -- Triggered by -BACKING_UP, this triggers when multiple reverse move commands
@@ -1542,7 +1466,6 @@ function BackingUpEnd(self)
 		unitReversing.isReverseMoving = false
 		unitReversing.timesTriggeredFast = 0
 		unitReversing.timesTriggeredNormal = 0
-		unitReversing.timeOffset = 0
 		unitReversing.fastTurnWas0Frames = false
 		unitReversing.isAttacking = false
 		unitReversing.hasBeenCounted = false
@@ -1578,8 +1501,6 @@ function BackingUpEnd(self)
 				setglobal("group_" .. gId, nil)
 			end
 		end
-		-- reset has been fixed flag
-		unitReversing.hasBeenFixed = false
 	end
 end
 
@@ -1590,7 +1511,7 @@ function BuggedUnitTimeoutEnd(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	if unitReversing ~= nil then
 		unitReversing.hasBugged = false
-		unitReversing.closestUnit = nil
+		unitReversing.unitAnchor = nil
 		--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
 		--	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)	
 		--end

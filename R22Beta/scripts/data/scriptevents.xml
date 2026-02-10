@@ -873,7 +873,6 @@
 		<ScriptedEvent Name="OnBeamTargetInit" />	
 
 		<ScriptedEvent Name="TiberiumEvent" />		
-		<ScriptedEvent Name="SaveSnapshot" />	
     </Events>
     
     <EventList Name="BaseScriptFunctions">
@@ -1163,18 +1162,6 @@
 
 	<EventList Name="NODScorpionBuggyFunctions" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnCreated"	ScriptFunctionName="OnNODScorpionBuggyCreated" DebugSingleStep="false"/>
-			
-
-		<!--
-		<EventHandler EventName="OnReverse"	ScriptFunctionName="UnitReversing" DebugSingleStep="false"/>
-		<EventHandler EventName="OnReverseEnd"	ScriptFunctionName="UnitReversingEnd" DebugSingleStep="false"/>
-		<EventHandler EventName="OnForceMoving"	ScriptFunctionName="UnitForceMoving" DebugSingleStep="false"/>
-		<EventHandler EventName="OnForceMovingEnd"	ScriptFunctionName="UnitForceMovingEnd" DebugSingleStep="false"/>
-		<EventHandler EventName="OnSelected"	ScriptFunctionName="UnitSelected" DebugSingleStep="false"/>
-		<EventHandler EventName="OnReverse"	ScriptFunctionName="RemoveReverseMove" DebugSingleStep="false"/>
-		<EventHandler EventName="OnUser3End"	ScriptFunctionName="ReverseTimer" DebugSingleStep="false"/>  
-		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>	
-		-->
 	</EventList>
 
 	<EventList Name="NODVenomFunctions" Inherit="BaseScriptFunctions">
