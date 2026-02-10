@@ -4762,7 +4762,7 @@
 			</ModelConditionAudioLoopClientBehavior>
 		</ClientBehaviors>
 		<Geometry
-			IsSmall="true">
+			IsSmall="false">
 			<Shape 
 				Type="CYLINDER"
 				MajorRadius="21.0"
