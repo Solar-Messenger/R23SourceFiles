@@ -913,8 +913,8 @@
 		<!-- no longer moving event -->
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttacking"	ScriptFunctionName="UnitIsAttacking" DebugSingleStep="false"/>
-		<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsAttackingEnd" DebugSingleStep="false"/>
-		<!-- <EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/> -->
+		<!--<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsAttackingEnd" DebugSingleStep="false"/>
+		 <EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/> -->
 		<!-- on user 73 end
 		<EventHandler EventName="OnUser73End"	ScriptFunctionName="CheckObjDistanceAfterTimer" DebugSingleStep="false"/>   -->
     </EventList>

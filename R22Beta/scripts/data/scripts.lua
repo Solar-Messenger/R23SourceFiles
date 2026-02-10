@@ -70,7 +70,6 @@ tempReference = {}
 dummyReference = {}
 
 unitsReversing = {}
-attackingUnits = {} -- tracks units with IS_ATTACKING status independently of reverse system
 TIMES_TO_TRIGGER = 2
 NO_COLLISION_DURATION = 4
 UNITS_BUGGING_MULT = 0.5
@@ -937,15 +936,9 @@ end
 
 function UnitIsAttacking(self)
 	local a = getObjectId(self)
-	attackingUnits[a] = true
 	if unitsReversing[a] ~= nil then
 		unitsReversing[a].isAttacking = true
 	end
-end
-
-function UnitIsAttackingEnd(self)
-	local a = getObjectId(self)
-	attackingUnits[a] = nil
 end
 
 -- decrement the unitsMoving counter triggered by +MOVING (need a way to see if already moving)
@@ -1271,8 +1264,7 @@ function BackingUp(self)
         unitReversing.timesTriggeredFast = 0
         unitReversing.timesTriggeredNormal = 0
         unitReversing.hasBeenCounted = false
-        -- +IS_ATTACKING may have already fired before we started tracking
-        unitReversing.isAttacking = attackingUnits[a] == true
+		--WriteToFile("isAttacking.txt",  tostring(unitReversing.isAttacking) .. "\n")
     end
 
     local playerTeam = tostring(ObjectTeamName(self))
@@ -1462,7 +1454,6 @@ end
 function ReverseUnitOnDeath(self)
 	local a,unitReversing = GetUnitReversingData(self)
 	RemoveFromUnitSelection(self)
-	attackingUnits[a] = nil
 	if unitsReversing[a] ~= nil then
 		unitsReversing[a] = nil
 	end
