@@ -1,5 +1,4 @@
 Issues
-1. Selecting more than 25 units seems to trigger a lot of false positives.
-
-TODO: 
-Spawn an obj and after .1s check if most units are bugging, if they are it means they really aren't, just they were ordered to reverse move a long distance.
+1. UNIT_GUARD_OBJECT is potentially triggering multiple times on units that are already fixed.
+2. NEXT_MOVE_IS_REVERSE doesn't reliably apply.
+3. Buggy locomotor turn behaviour changes significantly when selected count is over 30.

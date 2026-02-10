@@ -70,9 +70,23 @@ tempReference = {}
 dummyReference = {}
 
 unitsReversing = {}
-TIMES_TO_TRIGGER = 2
-NO_COLLISION_DURATION = 4
-UNITS_BUGGING_MULT = 0.5
+
+TURN_TRIGGER_COUNT = 2 -- number of turn triggers before checking if unit is bugging
+NO_COLLISION_DURATION = 4 -- seconds to disable collision on a bugged unit during fix
+MAX_BUGGING_RATIO = 0.5 -- max ratio of bugging units in a selection before all fixes are applied
+DAMAGED_BUG_DURATION_MULT = 1.5 -- bug duration multiplier when unit is REALLYDAMAGED
+REVERSE_SPAM_FRAME_WINDOW = 2 -- frames within which a repeat reverse-move command is ignored
+BUG_CHECK_LOWER_LIMIT = 4 -- lower tolerance for frameDiff vs bugDuration
+BUG_CHECK_UPPER_LIMIT = 3 -- upper tolerance when NOT attacking
+BUG_CHECK_UPPER_LIMIT_ATTACKING = 5 -- upper tolerance when attacking
+CHECKS_DONE_THRESHOLD = 0.8 -- ratio of units that must finish checking before fix decision
+BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
+BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
+LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
+UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearing movement flag
+UNITS_TURNING_CANCEL_THRESHOLD = 0.2 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance)
+STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
+
 bugDurationTable = {
 -- currently some bugs happen below these values, im trying to setup a timer to check it properly: lifetimeupdate 0.25 via ocl could be the solution.
 -- BUGGIES
@@ -924,7 +938,7 @@ function UnitNoLongerMoving(self)
 	end
 
 	--WriteToFile("unitsMoving.txt",  tostring(floor(unitReversing.selectedUnits.selectedCount * 0.1)) .. "\n")
-	if unitsMoving <= (floor(unitReversing.selectedUnits.selectedCount * 0.1)) then
+	if unitsMoving <= (floor(unitReversing.selectedUnits.selectedCount * UNITS_STILL_MOVING_THRESHOLD)) then
 		for id, unitRef in selectedUnitList do
 			-- if not attacking and not actively reverse-moving, allow clearing
 			if not unitsReversing[unitRef].isAttacking and not unitsReversing[unitRef].isReverseMoving then
@@ -954,7 +968,7 @@ function BackingUpFastTurnEnd(self)
     local _,unitReversing = GetUnitReversingData(self)
 	-- prevents this from executing
 	if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
-	local timesToTrigger = TIMES_TO_TRIGGER
+	local timesToTrigger = TURN_TRIGGER_COUNT
 	local frameDiff = GetFrame() - unitReversing.firstFrame
 
 	-- first index is 0 so this is really second exec
@@ -983,7 +997,7 @@ end
 function BackingUpTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
 	if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
-	local timesToTrigger = TIMES_TO_TRIGGER
+	local timesToTrigger = TURN_TRIGGER_COUNT
 	local frameDiff = GetFrame() - unitReversing.firstFrame
 
     if unitReversing ~= nil and unitReversing.timesTriggeredNormal < timesToTrigger then
@@ -1003,7 +1017,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local bugDuration = bugDurationTable[getObjectName(self)]
 
 	-- check if unit is damaged 
-	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and bugDuration*1.5 or bugDuration
+	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and bugDuration*DAMAGED_BUG_DURATION_MULT or bugDuration
 
 	local selectedUnitList = unitReversing.selectedUnits.units
 	local selectedCount = unitReversing.selectedUnits.selectedCount
@@ -1012,8 +1026,8 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local unitsToFix = getglobal(playerTeam .. "_unitsToFix") or {}
 
 	-- edge case for when units are attacking.
-	local lowerLimit = 4
-	local upperLimit = unitReversing.isAttacking and 5 or 3
+	local lowerLimit = BUG_CHECK_LOWER_LIMIT
+	local upperLimit = unitReversing.isAttacking and BUG_CHECK_UPPER_LIMIT_ATTACKING or BUG_CHECK_UPPER_LIMIT
 
 	local isBugging = false
 	if unitReversing.fastTurnWas0Frames then
@@ -1048,10 +1062,10 @@ function CheckForObjReverseBugging(self, frameDiff)
 
 	-- Now check threshold after unitsToFix has been updated
 	local fixUnits = false
-	if checksDone >= ceil(selectedCount * 0.8) then
-		-- if number of units bugging is less than the count * 0.25
-		-- if more than 50 units are selected, make the detection more forgiving
-		local bugThreshold = selectedCount > 30 and 0.15 or 0.25
+	if checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
+		-- if number of units bugging is less than the count * BUG_THRESHOLD_SMALL_GROUP
+		-- if more than LARGE_GROUP_SIZE units are selected, make the detection more forgiving
+		local bugThreshold = selectedCount > LARGE_GROUP_SIZE and BUG_THRESHOLD_LARGE_GROUP or BUG_THRESHOLD_SMALL_GROUP
 		local maxBugging = ceil(selectedCount * bugThreshold)
 		if getn(unitsToFix) <= maxBugging then
 			-- proceed to fix the units
@@ -1070,7 +1084,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 		end
 	end
 
-	if unitsTurningCount > ceil(selectedCount * 0.2) then
+	if unitsTurningCount > ceil(selectedCount * UNITS_TURNING_CANCEL_THRESHOLD) then
 		fixUnits = false
 	end
 	-- Apply fixes if threshold was met
@@ -1094,7 +1108,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 			ExecuteAction("NAMED_FLASH", self, 2)
 			FixBuggingUnit(self)
 		end
-	elseif isBugging and checksDone >= ceil(selectedCount * 0.8) then
+	elseif isBugging and checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
 		-- Only clear bugging state when threshold was reached and we decided not to fix
 		-- (too many bugging = likely false positive). Before threshold is reached,
 		-- keep the state so the unit can still be fixed when slower types finish checking.
@@ -1153,7 +1167,7 @@ function FixBuggingUnit(self)
 	--WriteToFile("closeunit.txt",  "closest unit:  " .. tostring(unitReversing.closestUnit) .. "\n")
 
 	ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitReversing.closestUnit)	
-	ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, 100)
+	ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, STOPPING_DISTANCE)
 	-- reverse move to remove collisions
 	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
@@ -1185,15 +1199,15 @@ end
 function FixAllBuggingUnits(selectedUnitList, selectedCount)
     local numberOfBuggedUnits = 0
 
-    -- First pass: count all bugged units
+    -- count all bugged units
     for id, unitRef in selectedUnitList do
         if unitsReversing[unitRef].hasBugged then
             numberOfBuggedUnits = numberOfBuggedUnits + 1
         end
     end
 
-    -- Second pass: fix bugged units if within threshold, and clear flags
-    if numberOfBuggedUnits <= (floor(selectedCount * UNITS_BUGGING_MULT)) then
+    -- fix bugged units if within threshold, and clear flags
+    if numberOfBuggedUnits <= (floor(selectedCount * MAX_BUGGING_RATIO)) then
         for id, unitRef in selectedUnitList do
             if unitsReversing[unitRef].hasBugged then
                 local selfRealRef = unitsReversing[unitRef].selfRealReference
@@ -1252,7 +1266,7 @@ function BackingUp(self)
     local curFrame = GetFrame()
     
     -- Check if this is a spam/repeat command (within 2 frames) or a generic new command
-    if curFrame - unitReversing.lastReverseMoveFrame <= 2 then
+    if curFrame - unitReversing.lastReverseMoveFrame <= REVERSE_SPAM_FRAME_WINDOW then
         unitReversing.hasAlreadyReversed = true
         return 
     else 
