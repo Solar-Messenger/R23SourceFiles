@@ -1319,24 +1319,20 @@ function AssignRandomAnchor(self)
 end
 
 -- Gets the random key to assign to the unit for anchor purposes.
-function getRandomKey(t, unitId)
+function GetRandomKey(t, unitId)
     local keys = {}
     for k, v in t do
-        tinsert(keys, k)
+		-- insert every unitid into the table except the unit that called this function
+        if k ~= unitId then
+            tinsert(keys, k)
+        end
     end
     local count = getn(keys)
     if count == 0 then 
         return nil 
     end    
-    local randomIndex = 0    
-	-- keep assigning a random unit until its not the same as self
-	local attempts = 0
-	repeat
-		randomIndex = random(1, count)
-		attempts = attempts + 1
-	until keys[randomIndex] ~= unitId or attempts >= count
 	-- WriteToFile("random units.txt",  "unit being assigned: " .. tostring(unitId) .. "   random unit assigned to it: "  .. tostring(keys[randomIndex]) .. "\n")
-    return keys[randomIndex]
+    return keys[random(1, count)]
 end
 
 function random(...) --overwritting lua native function for multiplayer compatibility 
