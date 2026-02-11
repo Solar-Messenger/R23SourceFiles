@@ -965,7 +965,7 @@ end
 
 -- Set the reference of an object in order to assign object status successfully.
 function SetObjectReference(self, ref)
-	local ObjectStringRef = "object_" .. ref
+	local ObjectStringRef = "object_" .. ref .. tostring(GetFrame())
 	ExecuteAction("SET_UNIT_REFERENCE", ObjectStringRef, self)
 	return ObjectStringRef
 end
@@ -1361,66 +1361,6 @@ function random(...) --overwritting lua native function for multiplayer compatib
         return arg[randomNumber(1,getn(arg))] 
     end
 end 
-
--- gets the closest unit thats also selected of this player
--- assigns it to unitReversing.unitAnchor
-function AssignClosestAnchor(self)
-    if self ~= nil then
-        local a,unitReversing = GetUnitReversingData(self)
-        local selectedUnitList = unitReversing.selectedUnits.units
-
-		-- Check if we have at least 2 units in the selection (self + at least one other)
-		if next(selectedUnitList) ~= nil and next(selectedUnitList, next(selectedUnitList)) ~= nil then
-			local unitAnchor = nil
-			local closestDistance = 99999
-
-			-- Iterate through all selected units once to find the closest
-			for id, unitRef in selectedUnitList do
-				-- Ensure we don't check against self
-				if id ~= a then
-					-- Ensure the unit entry exists in unitsReversing
-					if unitsReversing[id] and unitsReversing[id].selfReference then
-						-- Binary search to find approximate distance to this unit
-						local distance = BinarySearchDistance(unitReversing.selfReference, unitsReversing[id].selfReference, 25, 5000, 50)
-
-						-- Track the closest unit found so far
-						if distance < closestDistance then
-							closestDistance = distance
-							unitAnchor = unitsReversing[id].selfReference
-						end
-					end
-				end
-			end
-			-- Assign the closest unit and its distance
-			if unitAnchor ~= nil then
-				unitReversing.unitAnchor = unitAnchor
-				unitReversing.distanceToClosestUnit = closestDistance
-			end
-		end
-    end
-end
-
--- Binary search to find approximate distance between two objects
--- Precision defines the granularity (e.g., 25 units)
-function BinarySearchDistance(obj1Ref, obj2Ref, minDist, maxDist, precision)
-	local low = minDist
-	local high = maxDist
-	local result = maxDist
-
-	-- Binary search for the distance threshold where the objects are within range
-	while low <= high do
-		local mid = (low + high) * 0.5
-		-- Check if objects are within 'mid' distance (using <= comparison, operator 1)
-		if EvaluateCondition("DISTANCE_BETWEEN_OBJ", obj1Ref, obj2Ref, 1, mid) then
-			result = mid
-			high = mid - precision  -- Try smaller distance
-		else
-			low = mid + precision  -- Try larger distance
-		end
-	end
-
-	return result
-end
 
 -- Triggered by +SELECTED
 function AddToUnitSelection(self)
