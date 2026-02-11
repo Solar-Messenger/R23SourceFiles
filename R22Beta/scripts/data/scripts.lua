@@ -66,9 +66,6 @@ bar4 = {} -- for tracking the bar four of the harvester.
 
 harvesterData = {}
 crystalData = {}
-tempReference = {}
-dummyReference = {}
-
 unitsReversing = {}
 
 TURN_TRIGGER_COUNT = 2 -- number of turn triggers before checking if unit is bugging
@@ -159,7 +156,7 @@ unitBugDataTable = {
 		frameCount = 9,
 		damagedDurationMult = 1.0
 	},
-	["64BCB106"]= { -- ZOCOM APCS
+	["64BCB106"]= { -- ZOCOM APC
 		frameCount = 9,
 		damagedDurationMult = 1.0
 	},
@@ -816,15 +813,15 @@ function OnHuskCapture(self, slaughterer)
 	
 		local unitType = tostring(ObjectTemplateName(slaughterer))
 		
-		-- gdi marv 30354418                  GDI CCA0AB62
-		-- zocom marv 37F0A5F5                ZOCOM 8E3D36F8
-		-- steel talons marv 565BE825		  STEEL TALONS 38EA5BC0
-		-- nod redeemer D8BE0529              NOD ED46C05A
-		-- black hand redeeemer CD5A5360      BLACK HAND 5D10A932
-		-- mok redeemer 711A18DF              MARKED OF KANE FB53CCFD
-		-- scrin hexapod 1D137C85             SCRIN 5B7BAA66
-		-- reaper hexapod 146C2890            REAPER17 30883A9F
-		-- t59 hexapod A4FD281B               TRAVELER59 92CC2C04
+		-- GDI MARV 30354418                  GDI CCA0AB62
+		-- ZOCOM MARV 37F0A5F5                ZOCOM 8E3D36F8
+		-- STEEL TALONS MARV 565BE825		  STEEL TALONS 38EA5BC0
+		-- NOD REDEEMER D8BE0529              NOD ED46C05A
+		-- BLACK HAND REDEEEMER CD5A5360      BLACK HAND 5D10A932
+		-- MOK REDEEMER 711A18DF              MARKED OF KANE FB53CCFD
+		-- SCRIN HEXAPOD 1D137C85             SCRIN 5B7BAA66
+		-- REAPER HEXAPOD 146C2890            REAPER17 30883A9F
+		-- T59 HEXAPOD A4FD281B               TRAVELER59 92CC2C04
 		
 		local isEpicUnit = false
 		
@@ -1078,7 +1075,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and bugDuration*unitBugData.damagedDurationMult or bugDuration
 	local selectedUnitList = unitReversing.selectedUnits.units
 	local selectedCount = GetUnitsAliveCount(selectedUnitList)
-	--WriteToFile("selectedCount.txt",  tostring(selectedCount) .. "\n")
+	-- WriteToFile("selectedCount.txt",  tostring(selectedCount) .. "\n")
 	local playerTeam = tostring(ObjectTeamName(self))
 	local checksDone = getglobal(playerTeam .. "_checksDone") or 0
 	local unitsToFix = getglobal(playerTeam .. "_unitsToFix") or {}
@@ -1086,7 +1083,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	-- edge case for when units are attacking.
 	local lowerLimit = BUG_CHECK_LOWER_LIMIT
 	local upperLimit = unitReversing.isAttacking and BUG_CHECK_UPPER_LIMIT_ATTACKING or BUG_CHECK_UPPER_LIMIT
-	--WriteToFile("upperLimit.txt",  tostring(upperLimit) .. "\n")
+	-- WriteToFile("upperLimit.txt",  tostring(upperLimit) .. "\n")
 
 	local inBugRange = frameDiff >= bugDuration - lowerLimit and frameDiff <= bugDuration + upperLimit
 	local isBugging = false
@@ -1108,8 +1105,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 		checksDone = checksDone + 1
 		unitReversing.hasBeenCounted = true
 	end
-	--WriteToFile("checksDoneInt.txt",  tostring(checksDone) .. "\n")
-
+	-- WriteToFile("checksDoneInt.txt",  tostring(checksDone) .. "\n")
 	-- First determine if this unit is bugging and add it to the list
 	if isBugging and not unitReversing.hasBugged then
 		unitReversing.hasBugged = true
@@ -1171,9 +1167,6 @@ function CheckForObjReverseBugging(self, frameDiff)
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)
 		end
-		--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
-		--	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)
-		--end
 		unitReversing.hasBugged = false
 	end
 	setglobal(playerTeam .. "_checksDone", checksDone)
@@ -1202,12 +1195,9 @@ function FixBuggingUnit(self)
 	--WriteToFile("closeunit.txt",  "closest unit:  " .. tostring(unitReversing.unitAnchor) .. "\n")
 	ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitReversing.unitAnchor)	
 	ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, STOPPING_DISTANCE)
-	-- reverse move to remove collisions
-	--if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
-	--	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 1)	
-	--end
+
 	for id, unitRef in selectedUnitList do
-		-- this unit is bugging so lets go through all the closest units and see if it coincides with this one
+		--  this unit is bugging so lets go through all the closest units and see if it coincides with this one
 		-- 	WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].unitAnchor) .. "\n")
 		if unitsReversing[unitRef].unitAnchor == unitReversing.selfReference then
 			-- get a unit that hasnt bugged that isnt itself
@@ -1219,13 +1209,10 @@ function FixBuggingUnit(self)
 				-- move this unit to the previously assigned non bugging unit
 				if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
 					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[unitRef].unitAnchor)
-					--if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitsReversing[unitRef].selfReference, 48) then
-					--	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[unitRef].selfReference, 48, 1)
-					--end
 				end
 			end
 		end
-		--WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].unitAnchor) .. "\n")
+		-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].unitAnchor) .. "\n")
 	end
 end
 
@@ -1314,7 +1301,7 @@ function BackingUp(self)
     end
 end
 
--- gets a random selected unit of this players selection and assigns it to unitReversing.unitAnchor = unitAnchor
+-- Gets a random selected unit of this players selection and assigns it to unitReversing.unitAnchor = unitAnchor
 function AssignRandomAnchor(self)
     if self ~= nil then
         local a,unitReversing = GetUnitReversingData(self)
@@ -1396,7 +1383,7 @@ function RemoveFromUnitSelection(self)
     end
 end
 
--- clears the table 
+-- Clears the unitsReversing table of this unit
 function ReverseUnitOnDeath(self)
     local a = getObjectId(self)
     RemoveFromUnitSelection(self)
@@ -1417,9 +1404,6 @@ function BackingUpEnd(self)
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
 		end
-		--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
-		--	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)	
-		--end
 	end
 
 	if unitReversing ~= nil then
@@ -1473,9 +1457,6 @@ function BuggedUnitTimeoutEnd(self)
 	if unitReversing ~= nil then
 		unitReversing.hasBugged = false
 		unitReversing.unitAnchor = nil
-		--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 48) then
-		--	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 48, 0)	
-		--end
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
 		end
