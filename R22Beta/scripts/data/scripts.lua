@@ -993,13 +993,13 @@ function UnitNoLongerMoving(self)
 	local unitsMoving = 0
 	local selectedUnitList = unitReversing.selectedUnits.units
 	for id, unitRef in selectedUnitList do
-		if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") then
+		if unitsReversing[unitRef] ~= nil and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") then
 			unitsMoving = unitsMoving + 1
 		end
 	end
 
 	--WriteToFile("unitsMoving.txt",  tostring(floor(unitReversing.selectedUnits.selectedCount * 0.1)) .. "\n")
-	if unitsMoving <= (floor(unitReversing.selectedUnits.selectedCount * UNITS_STILL_MOVING_THRESHOLD)) then
+	if unitsMoving <= (floor(GetUnitsAliveCount(selectedUnitList) * UNITS_STILL_MOVING_THRESHOLD)) then
 		for id, unitRef in selectedUnitList do
 			-- if not attacking and not actively reverse-moving, allow clearing
 			if not unitsReversing[unitRef].isAttacking and not unitsReversing[unitRef].isReverseMoving then
@@ -1059,6 +1059,17 @@ function BackingUpTurnEnd(self)
 	end
 end
 
+-- receives as parameter the snapshot table and returns the number of units that are alive and not nil from it 
+function GetUnitsAliveCount(selectedUnitList)
+	local aliveCount = 0
+	for id, unitRef in selectedUnitList do
+		if unitsReversing[unitRef] ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) then
+			aliveCount = aliveCount + 1
+		end
+	end
+	return aliveCount
+end
+
 function CheckForObjReverseBugging(self, frameDiff)
 	local a, unitReversing = GetUnitReversingData(self)
 	local unitBugData = unitBugDataTable[getObjectName(self)]
@@ -1066,7 +1077,8 @@ function CheckForObjReverseBugging(self, frameDiff)
 	-- check if unit is really damaged
 	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and bugDuration*unitBugData.damagedDurationMult or bugDuration
 	local selectedUnitList = unitReversing.selectedUnits.units
-	local selectedCount = unitReversing.selectedUnits.selectedCount
+	local selectedCount = GetUnitsAliveCount(selectedUnitList)
+	--WriteToFile("selectedCount.txt",  tostring(selectedCount) .. "\n")
 	local playerTeam = tostring(ObjectTeamName(self))
 	local checksDone = getglobal(playerTeam .. "_checksDone") or 0
 	local unitsToFix = getglobal(playerTeam .. "_unitsToFix") or {}
@@ -1107,6 +1119,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 
 	-- Now check threshold after unitsToFix has been updated
 	local fixUnits = false
+
 	if checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
 		-- if number of units bugging is less than the count * BUG_THRESHOLD_SMALL_GROUP
 		-- if more than LARGE_GROUP_SIZE units are selected, make the detection more forgiving
@@ -1422,14 +1435,10 @@ function AddToUnitSelection(self)
 
     if teamTable.units == nil then
         teamTable.units = {}
-        teamTable.selectedCount = 0
     end
 	
     if teamTable.units[unitId] == nil then
         teamTable.units[unitId] = unitId 
-        
-        local currentCount = teamTable.selectedCount or 0
-        teamTable.selectedCount = currentCount + 1
     end
 end
 -- Triggered by -SELECTED
@@ -1443,10 +1452,6 @@ function RemoveFromUnitSelection(self)
         if teamTable.units[unitId] ~= nil then
             -- Set to nil to remove
             teamTable.units[unitId] = nil             
-            local currentCount = teamTable.selectedCount or 0
-            if currentCount > 0 then
-                teamTable.selectedCount = currentCount - 1
-            end             
         end
     end
 end
