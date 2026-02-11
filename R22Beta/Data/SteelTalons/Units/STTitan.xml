@@ -4762,10 +4762,10 @@
 			</ModelConditionAudioLoopClientBehavior>
 		</ClientBehaviors>
 		<Geometry
-			IsSmall="false">
+			IsSmall="true">
 			<Shape 
 				Type="CYLINDER"
-				MajorRadius="21.0"
+				MajorRadius="20.0"
 				Height = "40.0" 
 				ContactPointGeneration="INFANTRY">
 				<Offset
