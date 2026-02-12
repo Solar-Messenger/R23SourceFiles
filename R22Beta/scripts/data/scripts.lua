@@ -80,7 +80,7 @@ BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_G
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearing movement flag
-UNITS_TURNING_CANCEL_THRESHOLD = 0.1 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance)
+UNITS_TURNING_CANCEL_THRESHOLD = 0.05 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance)
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
 unitBugDataTable = { 
@@ -1313,7 +1313,7 @@ function AssignRandomAnchor(self)
 		-- Check if we have at least 2 units in the selection (self + at least one other)
 		if next(selectedUnitList) ~= nil and next(selectedUnitList, next(selectedUnitList)) ~= nil then	
 			-- gets a unit that isnt self randomly.
-			unitReversing.unitAnchor = unitsReversing[getRandomKey(selectedUnitList, a)].selfReference
+			unitReversing.unitAnchor = unitsReversing[GetRandomKey(selectedUnitList, a)].selfReference
 		end
     end
 end
@@ -1481,7 +1481,7 @@ function BuggedUnitTimeout(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
 	unitReversing.hasBugged = true
-	-- apply a minor speed boost to the affected unit via upgrade, community appears to be against this idea so ill comment it out for now
+	-- apply a minor 1s speed boost to the affected unit via upgrade, community appears to be against this idea so ill comment it out for now
 	-- ObjectCreateAndFireTempWeapon(self, "BuggedUnitSpeedBoost")
 end
 
