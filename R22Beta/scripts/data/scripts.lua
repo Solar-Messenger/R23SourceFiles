@@ -944,7 +944,7 @@ function GetUnitReversingData(self)
 			hasBugged = false,
 			selfReference = SetObjectReference(self, a),
 			selfRealReference = self,
-			selectedUnits = {},
+			selectedUnits = nil,
 			isMovingFlag = false,
 			lastReverseMoveFrame = 0,
 			hasAlreadyReversed = false,
@@ -952,7 +952,6 @@ function GetUnitReversingData(self)
 			isAttacking = false,
 			hasBeenCounted = false,
 			isPerformingThirdTurn = false,
-			groupId = nil, 
 			unitAnchor = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
@@ -988,7 +987,7 @@ function UnitNoLongerMoving(self)
 	-- update list
 	unitReversing.isMovingFlag = true
 	local unitsMoving = 0
-	local selectedUnitList = unitReversing.selectedUnits.units
+	local selectedUnitList = getglobal(unitReversing.selectedUnits).units
 	for id, unitRef in selectedUnitList do
 		if unitsReversing[unitRef] ~= nil and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") then
 			unitsMoving = unitsMoving + 1
@@ -996,7 +995,7 @@ function UnitNoLongerMoving(self)
 	end
 
 	--WriteToFile("unitsMoving.txt",  tostring(floor(unitReversing.selectedUnits.selectedCount * 0.1)) .. "\n")
-	if unitsMoving <= (floor(getglobal(unitReversing.groupId).unitCount * UNITS_STILL_MOVING_THRESHOLD)) then
+	if unitsMoving <= (floor(getglobal(unitReversing.selectedUnits).unitCount * UNITS_STILL_MOVING_THRESHOLD)) then
 		for id, unitRef in selectedUnitList do
 			-- if not attacking and not actively reverse-moving, allow clearing
 			if not unitsReversing[unitRef].isAttacking and not unitsReversing[unitRef].isReverseMoving then
@@ -1073,9 +1072,10 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local bugDuration = unitBugData.frameCount
 	-- check if unit is really damaged
 	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and bugDuration*unitBugData.damagedDurationMult or bugDuration
-	local selectedUnitList = unitReversing.selectedUnits.units
+	local selectedUnits =  getglobal(unitReversing.selectedUnits)
+	local selectedUnitList = selectedUnits.units
 	--local selectedCount = GetUnitsAliveCount(selectedUnitList)
-	local selectedCount = getglobal(unitReversing.groupId).unitCount
+	local selectedCount = selectedUnits.unitCount
 	-- WriteToFile("selectedCount.txt",  tostring(selectedCount) .. "\n")
 	local playerTeam = tostring(ObjectTeamName(self))
 	local checksDone = getglobal(playerTeam .. "_checksDone") or 0
@@ -1177,7 +1177,7 @@ end
 -- Fixes a unit detected to be bugging and then checks if any selected unit has the bugged unit assigned as unitAnchor
 function FixBuggingUnit(self)
 	local a,unitReversing = GetUnitReversingData(self)
-	local selectedUnitList = unitReversing.selectedUnits.units
+	local selectedUnitList = getglobal(unitReversing.selectedUnits).units
 	if ObjectTestModelCondition(self, "USER_72") == false then
 		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", NO_COLLISION_DURATION, 100)
 	end
@@ -1202,7 +1202,7 @@ function FixBuggingUnit(self)
 		-- 	WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].unitAnchor) .. "\n")
 		if unitsReversing[unitRef].unitAnchor == unitReversing.selfReference then
 			-- get a unit that hasnt bugged that isnt itself
-			local nonBuggingUnit = GetANonBuggingUnit(unitsReversing[unitRef].selectedUnits.units, unitsReversing[unitRef].selfRealReference)
+			local nonBuggingUnit = GetANonBuggingUnit(getglobal(unitsReversing[unitRef].selectedUnits).units, unitsReversing[unitRef].selfRealReference)
 			-- only proceed if we found a non-bugging unit
 			if nonBuggingUnit ~= nil then
 				-- assign the new closeestUnit to a unit not flagged as being bugged
@@ -1278,24 +1278,24 @@ function BackingUp(self)
 	unitReversing.isMovingFlag = true
 
     if ObjectTestModelCondition(self, "USER_72") == false then
-        local groupId = unitReversing.groupId
+        local selectedUnits = unitReversing.selectedUnits
 		-- unit was already tagged in the else block for loop.
-        if groupId ~= nil then
-            unitReversing.selectedUnits = getglobal(groupId)
-        else
+        if selectedUnits == nil then
             -- first unit in the group, create snapshot and tag all units, this will also copy the unitsCount over to teamSnapshot.
             local teamSnapshot = DeepCopyTable(getglobal(playerTeam))
-            groupId = "group_" .. tostring(curFrame) .. "_" .. tostring(a)
-            setglobal(groupId, teamSnapshot)
-            unitReversing.groupId = groupId
-			-- assign every unit this groupId
+			-- the table contains a unique id that all units share when selected during this reverse move
+            selectedUnits = "group_" .. tostring(curFrame) .. "_" .. tostring(a)
+			-- store a global variable with the id generated for this group containing all selected units (obtained by DeepCopyTable)
+            setglobal(selectedUnits, teamSnapshot)
+            unitReversing.selectedUnits = selectedUnits
+			-- assign every unit the same selectedUnits group
             for id, unitRef in teamSnapshot.units do
                 if unitsReversing[unitRef] ~= nil then
-                    unitsReversing[unitRef].groupId = groupId
+                    unitsReversing[unitRef].selectedUnits = selectedUnits
                 end
             end
 			-- assign the snapshot to selectedUnits
-            unitReversing.selectedUnits = teamSnapshot
+            -- unitReversing.selectedUnits = teamSnapshot
         end
         if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
             ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
@@ -1309,7 +1309,7 @@ function AssignRandomAnchor(self)
     if self ~= nil then
         local a,unitReversing = GetUnitReversingData(self)
 		-- list of ids
-        local selectedUnitList = unitReversing.selectedUnits.units
+        local selectedUnitList = getglobal(unitReversing.selectedUnits).units
 		-- Check if we have at least 2 units in the selection (self + at least one other)
 		if next(selectedUnitList) ~= nil and next(selectedUnitList, next(selectedUnitList)) ~= nil then	
 			-- gets a unit that isnt self randomly.
@@ -1392,8 +1392,8 @@ function ReverseUnitOnDeath(self)
     if unitsReversing[a] ~= nil then
 
 		-- remove from the group its part of
-		if unitReversing.groupId ~= nil then
-			local group = getglobal(unitReversing.groupId)
+		if unitReversing.selectedUnits ~= nil then
+			local group = getglobal(unitReversing.selectedUnits)
 			-- remove this unit from the group snapshot
 			if group.units[a] ~= nil then
 				group.units[a] = nil
@@ -1404,13 +1404,13 @@ function ReverseUnitOnDeath(self)
 end
 
 -- Triggered by -BACKING_UP, this triggers when multiple reverse move commands.
--- Removes groupId of this unit and then checks if the global of that groupId is empty and if it is, removes it.
+-- Removes selectedUnits of this unit and then checks if the global of that selectedUnits group is empty and if it is, removes it.
 function BackingUpEnd(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)	
 	unitReversing.lastReverseMoveFrame = GetFrame()
-	local selectedUnitList = unitReversing.selectedUnits.units
+	local selectedUnitList = getglobal(unitReversing.selectedUnits).units
 	if unitReversing ~= nil and not unitReversing.hasBugged then
 		-- need to prevent this when guarding
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
@@ -1443,20 +1443,22 @@ function BackingUpEnd(self)
 		local playerTeam = tostring(ObjectTeamName(self))
 		setglobal(playerTeam .. "_unitsToFix", {})
 		setglobal(playerTeam .. "_checksDone", 0)
-		-- clear this unit's groupId and free the snapshot if no other unit still references it
-		local groupId = unitReversing.groupId
-		unitReversing.groupId = nil
-		if groupId ~= nil then
+		-- clear this unit's selectedUnits and free the snapshot if no other unit still references it
+		local selectedUnits = unitReversing.selectedUnits
+		unitReversing.selectedUnits = nil
+		if selectedUnits ~= nil then
 			local anyRemaining = false
+			-- go through each unit in the selected list and check if any unit still have the group id stored locally.
 			for id, unitRef in selectedUnitList do
-				if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].groupId == groupId then
+				-- if the group id is the same locally as it is globally theres still a unit assigned with this key
+				if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].selectedUnits == selectedUnits then
 					anyRemaining = true
 					break
 				end
 			end
 			-- delete the global of this group if there are no units left inside of it
 			if not anyRemaining then
-				setglobal(groupId, nil)
+				setglobal(selectedUnits, nil)
 			end
 		end
 	end
