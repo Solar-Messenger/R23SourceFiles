@@ -30,8 +30,8 @@
 		LateralAccelerationRollFactor="0.75"
 		HasSuspension="true"
 
-		ClampOrientationToPathTangent="true"
-		ReorientIfTurnTooSharp="false"
+		ClampOrientationToPathTangent="false"
+		ReorientIfTurnTooSharp="true"
 
 		MaximumWheelExtension="-2.3"
 		MaximumWheelCompression="1.4"
