@@ -81,7 +81,7 @@ BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_G
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearing movement flag
-UNITS_TURNING_CANCEL_THRESHOLD = 0.1 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
+UNITS_TURNING_CANCEL_THRESHOLD = 0.25 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
 unitBugDataTable = { 
