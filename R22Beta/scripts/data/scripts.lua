@@ -81,7 +81,7 @@ BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_G
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearing movement flag
-UNITS_TURNING_CANCEL_THRESHOLD = 0.25 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
+UNITS_TURNING_CANCEL_THRESHOLD = 0.1 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
 unitBugDataTable = { 
@@ -979,6 +979,16 @@ function BackingUpFast(self)
 	end
 end
 
+function GetNumberOfUnitsMoving(selectedUnitList)
+	local unitsMoving = 0
+	for id, unitRef in selectedUnitList do
+		if unitsReversing[unitRef] ~= nil and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") then
+			unitsMoving = unitsMoving + 1
+		end
+	end
+	return unitsMoving
+end
+
 function UnitNoLongerMoving(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
@@ -987,16 +997,10 @@ function UnitNoLongerMoving(self)
 	-- rather than increment/decrement make a table of each selected unit with true /false for moving
 	-- update list
 	unitReversing.isMovingFlag = true
-	local unitsMoving = 0
 	local selectedUnitList = getglobal(unitReversing.selectedUnits).units
-	for id, unitRef in selectedUnitList do
-		if unitsReversing[unitRef] ~= nil and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") then
-			unitsMoving = unitsMoving + 1
-		end
-	end
 
 	--WriteToFile("unitsMoving.txt",  tostring(floor(unitReversing.selectedUnits.selectedCount * 0.1)) .. "\n")
-	if unitsMoving <= (floor(getglobal(unitReversing.selectedUnits).unitCount * UNITS_STILL_MOVING_THRESHOLD)) then
+	if GetNumberOfUnitsMoving(selectedUnitList) <= (floor(getglobal(unitReversing.selectedUnits).unitCount * UNITS_STILL_MOVING_THRESHOLD)) then
 		for id, unitRef in selectedUnitList do
 			-- if not attacking and not actively reverse-moving, allow clearing
 			if not unitsReversing[unitRef].isAttacking and not unitsReversing[unitRef].isReverseMoving then
@@ -1026,7 +1030,7 @@ function BackingUpFastTurnEnd(self)
 		--WriteToFile("backingupfastend.txt",  "object went this long with 1 trigger: " .. tostring(frameDiff) .. "\n")
 	--end
 
-	if unitReversing.timesTriggeredFast <= 1 then
+	if unitReversing.timesTriggeredFast == 1 then
 		CheckForObjReverseBugging(self, frameDiff)
 	end
 	
@@ -1130,6 +1134,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	end
 
 	-- cause of some units not being fixed
+	--  and not (GetNumberOfUnitsMoving(selectedUnitList) >= ceil(selectedCount * UNITS_STILL_MOVING_THRESHOLD))
 	if unitsTurningCount > ceil(selectedCount * UNITS_TURNING_CANCEL_THRESHOLD) then
 		fixUnits = false
 	end
