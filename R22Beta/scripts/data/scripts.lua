@@ -75,12 +75,13 @@ REVERSE_SPAM_FRAME_WINDOW = 2 -- frames within which a repeat reverse-move comma
 BUG_CHECK_LOWER_LIMIT = 4 -- lower tolerance for frameDiff vs bugDuration
 BUG_CHECK_UPPER_LIMIT = 3 -- upper tolerance when NOT attacking
 BUG_CHECK_UPPER_LIMIT_ATTACKING = 5 -- upper tolerance when attacking
+BUG_CHECK_LOWER_LIMIT_ATTACKING = 4 -- lower tolerance when attacking
 CHECKS_DONE_THRESHOLD = 0.8 -- ratio of units that must finish checking before fix decision
 BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearing movement flag
-UNITS_TURNING_CANCEL_THRESHOLD = 0.05 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance)
+UNITS_TURNING_CANCEL_THRESHOLD = 0.1 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
 unitBugDataTable = { 
@@ -1025,7 +1026,7 @@ function BackingUpFastTurnEnd(self)
 		--WriteToFile("backingupfastend.txt",  "object went this long with 1 trigger: " .. tostring(frameDiff) .. "\n")
 	--end
 
-	if unitReversing.timesTriggeredFast == 1 then	
+	if unitReversing.timesTriggeredFast <= 1 then
 		CheckForObjReverseBugging(self, frameDiff)
 	end
 	
@@ -1050,21 +1051,11 @@ function BackingUpTurnEnd(self)
 		unitReversing.timesTriggeredNormal = unitReversing.timesTriggeredNormal + 1
 		--CheckForObjReverseBugging(self, unitReversing)
 		if unitReversing.fastTurnWas0Frames then
+			--WriteToFile("backingupfastendthree.txt",  "object went this long with 3 triggers: " .. tostring(frameDiff) .. "\n")
 			CheckForObjReverseBugging(self, frameDiff)
 		end
 	end
 end
-
--- receives as parameter the snapshot table and returns the number of units that are alive and not nil from it 
---function GetUnitsAliveCount(selectedUnitList)
---	local aliveCount = 0
---	for id, unitRef in selectedUnitList do
---		if unitsReversing[unitRef] ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) then
---			aliveCount = aliveCount + 1
---		end
---	end
---	return aliveCount
---end
 
 function CheckForObjReverseBugging(self, frameDiff)
 	local a, unitReversing = GetUnitReversingData(self)
@@ -1082,7 +1073,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local unitsToFix = getglobal(playerTeam .. "_unitsToFix") or {}
 
 	-- edge case for when units are attacking.
-	local lowerLimit = BUG_CHECK_LOWER_LIMIT
+	local lowerLimit = unitReversing.isAttacking and BUG_CHECK_LOWER_LIMIT_ATTACKING or BUG_CHECK_LOWER_LIMIT
 	local upperLimit = unitReversing.isAttacking and BUG_CHECK_UPPER_LIMIT_ATTACKING or BUG_CHECK_UPPER_LIMIT
 	-- WriteToFile("upperLimit.txt",  tostring(upperLimit) .. "\n")
 
@@ -1111,6 +1102,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	if isBugging and not unitReversing.hasBugged then
 		unitReversing.hasBugged = true
 		-- cache the units if they are to be fixed in this table
+		ExecuteAction("NAMED_FLASH", self, 2)
 		tinsert(unitsToFix, a)
 	end
 
@@ -1125,7 +1117,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 		if getn(unitsToFix) <= maxBugging then
 			-- proceed to fix the units
 			fixUnits = true
-			--WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(maxBugging) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
+			--WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(maxBugging+1) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
 		end
 	end
 
@@ -1137,14 +1129,21 @@ function CheckForObjReverseBugging(self, frameDiff)
 		end
 	end
 
+	-- cause of some units not being fixed
 	if unitsTurningCount > ceil(selectedCount * UNITS_TURNING_CANCEL_THRESHOLD) then
 		fixUnits = false
 	end
+
 	-- Apply fixes if threshold was met
 	-- fixUnits alone triggers the fix so that a non-bugging unit that pushes
 	-- checksDone over the threshold can still fix earlier-detected bugging units
 	if fixUnits then
 		if getn(unitsToFix) > 0 then
+			--local stringUnits = ""
+			--for i = 1, getn(unitsToFix) do
+			--	stringUnits = stringUnits .. "Fixing unit: " .. tostring(unitsToFix[i]) .. "\n"
+			--end
+			--WriteToFile("fixUnits.txt", stringUnits .. "\n\n\n" .. "------------------------------------------------")
 			-- mark all bugging units with USER_72 before reassignment so
 			-- GetANonBuggingUnit wont return a unit that is about to be fixed
 			for i = 1, getn(unitsToFix) do
@@ -1218,7 +1217,7 @@ function FixBuggingUnit(self)
 end
 
 -- if the unitAnchor has bugged during the reverse move, seek out a unit that hasnt of that players selection.
--- selectedUnitsOfPlayer is thee array of units whose value is ObjectId
+-- selectedUnitsOfPlayer is the array of units whose value is ObjectId
 function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 	local candidates = {}
 	for id, unitRef in selectedUnitsOfPlayer do
