@@ -84,91 +84,76 @@ UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearin
 UNITS_TURNING_CANCEL_THRESHOLD = 0.1 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
-unitBugDataTable = { 
-	-- frameCount Stores the unit bug duration in frames, it is proportional to TurnTimeSeconds
-	-- damagedDurationMult stores the bug duration multiplier when unit is REALLYDAMAGED ej: frameCount * damagedDurationMult
+unitBugDataTable = {
+	-- frameCount: unit bug duration in frames (proportional to TurnTimeSeconds)
+	-- damagedDurationMult: bug duration multiplier when REALLYDAMAGED (frameCount * damagedDurationMult)
 
-	-------------------------------- NOD UNITS --------------------------------
+	-- NOD UNITS --
+	["E3C841B0"] = { frameCount = 7,  damagedDurationMult = 1.0 }, -- Mok Raider Buggy
+	["79609108"] = { frameCount = 7,  damagedDurationMult = 1.0 }, -- Black Hand Raider Buggy
+	["6354531D"] = { frameCount = 7,  damagedDurationMult = 1.0 }, -- Nod Raider Buggy
+	["1B44D6AE"] = { frameCount = 11, damagedDurationMult = 1.5 }, -- Mok Scorpion Tank
+	["A33F11AF"] = { frameCount = 11, damagedDurationMult = 1.5 }, -- Black Hand Scorpion Tank
+	["2F9131D"]  = { frameCount = 11, damagedDurationMult = 1.5 }, -- Nod Scorpion Tank
+	["26538D"]   = { frameCount = 7,  damagedDurationMult = 1.5 }, -- Nod Stealth Tank
+	["1025B90B"] = { frameCount = 7,  damagedDurationMult = 1.5 }, -- Marked of Kane Stealth Tank
+	["F38615BD"] = { frameCount = 7,  damagedDurationMult = 1.5 }, -- Black Hand Mantis
+	["FD8822B1"] = { frameCount = 14, damagedDurationMult = 1.5 }, -- Nod Flame Tank
+	["1E1AEEBE"] = { frameCount = 14, damagedDurationMult = 1.5 }, -- Black Hand Flame Tank
+	["4F9DF943"] = { frameCount = 14, damagedDurationMult = 1.5 }, -- Nod Beam Cannon
+	["3D143A57"] = { frameCount = 14, damagedDurationMult = 1.5 }, -- Marked of Kane Beam Cannon
+	["7F5C5CDA"] = { frameCount = 14, damagedDurationMult = 1.5 }, -- Black Hand Beam Cannon
+	["53024F73"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- Nod Reckoner
+	["3000821A"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- Marked of Kane Reckoner
+	["198BF501"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- Black Hand Reckoner
+	["12CEBD57"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- Nod Emissary
+	["BDC39D7D"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- Marked of Kane Emissary
+	["7D560AEC"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- Black Hand Emissary
 
-	-- BUGGIES --
-	["E3C841B0"]= { -- Mok Raider Buggy
-		frameCount = 7,
-		damagedDurationMult = 1.0
-	},
-	["79609108"]= { -- Black Hand Raider Buggy
-		frameCount = 7,
-		damagedDurationMult = 1.0
-	},
-	["6354531D"]= { -- Nod Raider Buggy
-		frameCount = 7,
-		damagedDurationMult = 1.0
-	},
-	-- SCORPION TANKS --
-	["1B44D6AE"]= { -- Mok Scorpion Tank
-		frameCount = 11,
-		damagedDurationMult = 1.5
-	},
-	["A33F11AF"]= { -- Black Hand Scorpion Tank
-		frameCount = 11,
-		damagedDurationMult = 1.5
-	},
-	["2F9131D"]= { -- Nod Scorpion Tank
-		frameCount = 11,
-		damagedDurationMult = 1.5
-	},
-	-- STEALTH TANKS --
-	["26538D"]= { -- Nod Stealth Tank
-		frameCount = 7,
-		damagedDurationMult = 1.5
-	},
-	["1025B90B"]= { -- Marked of Kane Stealth Tank
-		frameCount = 7,
-		damagedDurationMult = 1.5
-	},
-	["F38615BD"]= { -- Black Hand Mantis
-		frameCount = 7,
-		damagedDurationMult = 1.5
-	},
+	-- SCRIN UNITS --
+	["B8802763"] = { frameCount = 12, damagedDurationMult = 1.0 }, -- Scrin Seeker
+	["DB2B7D2F"] = { frameCount = 12, damagedDurationMult = 1.0 }, -- Reaper-17 Seeker
+	["7296891C"] = { frameCount = 12, damagedDurationMult = 1.0 }, -- Traveler-59 Seeker
+	["AF991372"] = { frameCount = 12, damagedDurationMult = 1.0 }, -- Scrin Devourer Tank
+	["416EFDFF"] = { frameCount = 12, damagedDurationMult = 1.0 }, -- Reaper-17 Devourer Tank
+	["77A0E8A9"] = { frameCount = 7,  damagedDurationMult = 1.0 }, -- Scrin Corruptor
+	["B187F87A"] = { frameCount = 7,  damagedDurationMult = 1.0 }, -- Reaper-17 Corruptor
+	["91B5B69D"] = { frameCount = 7,  damagedDurationMult = 1.0 }, -- Traveler-59 Corruptor
+	["1A54C1B"]  = { frameCount = 4,  damagedDurationMult = 1.0 }, -- Scrin Gunwalker
+	["B64581F8"] = { frameCount = 4,  damagedDurationMult = 1.0 }, -- Reaper-17 Shard Walker
+	["51430053"] = { frameCount = 4,  damagedDurationMult = 1.0 }, -- Traveler-59 Gunwalker
 
-	-------------------------------- SCRIN UNITS --------------------------------
-
-	-- SEEKERS -- 
-	["B8802763"]= { -- Scrin Seeker
-		frameCount = 12,
-		damagedDurationMult = 1.0
-	},
-	["DB2B7D2F"]= { -- Reaper-17 Seeker
-		frameCount = 12,
-		damagedDurationMult = 1.0
-	},
-	["7296891C"]= { -- Traveler-59 Seeker
-		frameCount = 12,
-		damagedDurationMult = 1.0
-	},
-
-	-------------------------------- GDI UNITS --------------------------------
-
-	-- APCS --
-	["D01CFD88"]= { -- GDI APC
-		frameCount = 9,
-		damagedDurationMult = 1.0
-	},
-	["286DE7C4"]= { -- Steel Talons APC
-		frameCount = 9,
-		damagedDurationMult = 1.0
-	},
-	["64BCB106"]= { -- ZOCOM APC
-		frameCount = 9,
-		damagedDurationMult = 1.0
-	},
-	["AF462A8F"]= { -- GDI VETERAN APC
-		frameCount = 9,
-		damagedDurationMult = 1.0
-	},
-	["BD7701CB"]= { -- ZOCOM VETERAN APC
-		frameCount = 9,
-		damagedDurationMult = 1.0
-	}
+	-- GDI UNITS --
+	["D01CFD88"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- GDI APC
+	["286DE7C4"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- Steel Talons APC
+	["64BCB106"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- ZOCOM APC
+	["AF462A8F"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- GDI VETERAN APC
+	["BD7701CB"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- ZOCOM VETERAN APC
+	["F714BBD3"] = { frameCount = 14,  damagedDurationMult = 1.5 }, -- ZOCOM Predator Tank
+	["E6EAD02C"] = { frameCount = 14,  damagedDurationMult = 1.5 }, -- GDI Predator Tank
+	["E602E1AF"] = { frameCount = 25,  damagedDurationMult = 1.0 }, -- ZOCOM Zone Shatterer
+	["2144BD64"] = { frameCount = 25,  damagedDurationMult = 1.0 }, -- GDI Shatterer
+	["12E1C8C8"] = { frameCount = 28,  damagedDurationMult = 1.5 }, -- ZOCOM Mammoth Tank
+	["BC0A0849"] = { frameCount = 28,  damagedDurationMult = 1.5 }, -- GDI Mammoth Tank
+	["C1B5AB13"] = { frameCount = 28,  damagedDurationMult = 1.5 }, -- Steel Talons Mammoth Tank
+	["5A6044BC"] = { frameCount = 7,  damagedDurationMult = 1.0 }, -- ZOCOM Slingshot
+	["B54034FF"] = { frameCount = 7,  damagedDurationMult = 1.0 }, -- GDI Slingshot
+	["4AFAC6E8"] = { frameCount = 7,  damagedDurationMult = 1.0 }, -- Steel Talons Slingshot
+	["330CEC90"] = { frameCount = 20,  damagedDurationMult = 1.0 }, -- ZOCOM MCV
+	["52935296"] = { frameCount = 20,  damagedDurationMult = 1.0 }, -- GDI MCV
+	["3E7EE781"] = { frameCount = 20,  damagedDurationMult = 1.0 }, -- Steel Talons MCV
+	["30354418"] = { frameCount = 35,  damagedDurationMult = 1.5 }, -- ZOCOM MARV
+	["37F0A5F5"] = { frameCount = 35,  damagedDurationMult = 1.5 }, -- GDI MARV
+	["565BE825"] = { frameCount = 35,  damagedDurationMult = 1.5 }, -- Steel Talons MARV
+	["FD890B01"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- ZOCOM Surveyor
+	["921C06CC"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- GDI Surveyor
+	["F3F183DD"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- Steel Talons Surveyor
+	["AD5F0217"] = { frameCount = 7,  damagedDurationMult = 1.0 }, -- ZOCOM Pitbull
+	["6FF52808"] = { frameCount = 7,  damagedDurationMult = 1.0 }, -- GDI Pitbull
+	["C6387E0"] = { frameCount = 7,  damagedDurationMult = 1.0 }, -- Steel Talons Pitbull
+	["6FCB2318"] = { frameCount = 12,  damagedDurationMult = 1.0 }, -- ZOCOM Rig
+	["B48BEDD2"] = { frameCount = 12,  damagedDurationMult = 1.0 }, -- GDI Rig
+	["82D6E5D8"] = { frameCount = 12,  damagedDurationMult = 1.0 } -- Steel Talons Rig
 }
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
