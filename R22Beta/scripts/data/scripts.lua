@@ -927,7 +927,7 @@ function GetUnitReversingData(self)
 			isReverseMoving = false, -- flag to stop the re-assignment of firstFrame
 			timesTriggeredFast = 0, 
 			timesTriggeredNormal = 0, 
-			hasBugged = false,
+			hasBeenFixed = false,
 			selfReference = SetObjectReference(self, a),
 			selfRealReference = self,
 			selectedUnits = nil,
@@ -1088,8 +1088,8 @@ function CheckForObjReverseBugging(self, frameDiff)
 	end
 	-- WriteToFile("checksDoneInt.txt",  tostring(checksDone) .. "\n")
 	-- First determine if this unit is bugging and add it to the list,  dont fix units that are being already fixed
-	if isBugging and not unitReversing.hasBugged then
-		-- unitReversing.hasBugged = true
+	if isBugging and not unitReversing.hasBeenFixed then
+		-- unitReversing.hasBeenFixed = true
 		-- cache the units if they are to be fixed in this table
 		ExecuteAction("NAMED_FLASH", self, 2)
 		tinsert(unitsToFix, a)
@@ -1157,7 +1157,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)
 		end
-		--unitReversing.hasBugged = false
+		--unitReversing.hasBeenFixed = false
 	end
 	setglobal(playerTeam .. "_checksDone", checksDone)
 	setglobal(playerTeam .. "_unitsToFix", unitsToFix)
@@ -1183,10 +1183,10 @@ function FixBuggingUnit(self)
 		 unitReversing.unitAnchor = GetANonBuggingUnit(selectedUnitList, self)
 	end
 	--WriteToFile("closeunit.txt",  "closest unit:  " .. tostring(unitReversing.unitAnchor) .. "\n")
-	if not unitReversing.hasBugged then
+	if not unitReversing.hasBeenFixed then
 		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitReversing.unitAnchor)	
 		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, STOPPING_DISTANCE)
-		unitReversing.hasBugged = true
+		unitReversing.hasBeenFixed = true
 	end
 
 	for id, unitRef in selectedUnitList do
@@ -1254,7 +1254,7 @@ function BackingUp(self)
     else 
         -- Reset the flags here to ensure we don't carry over bugs from previous moves
         unitReversing.hasAlreadyReversed = false
-        --unitReversing.hasBugged = false
+        --unitReversing.hasBeenFixed = false
         unitReversing.unitAnchor = nil
         unitReversing.fastTurnWas0Frames = false
         unitReversing.timesTriggeredFast = 0
@@ -1403,7 +1403,7 @@ function BackingUpEnd(self)
 	local _,unitReversing = GetUnitReversingData(self)	
 	unitReversing.lastReverseMoveFrame = GetFrame()
 	local selectedUnitList = getglobal(unitReversing.selectedUnits).units
-	if unitReversing ~= nil and not unitReversing.hasBugged then
+	if unitReversing ~= nil and not unitReversing.hasBeenFixed then
 		-- need to prevent this when guarding
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
@@ -1462,7 +1462,7 @@ function BuggedUnitTimeoutEnd(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
 	if unitReversing ~= nil then
-		unitReversing.hasBugged = false
+		unitReversing.hasBeenFixed = false
 		unitReversing.unitAnchor = nil
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
@@ -1474,7 +1474,7 @@ function BuggedUnitTimeout(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
-	-- unitReversing.hasBugged = true
+	-- unitReversing.hasBeenFixed = true
 	-- apply a minor 1s speed boost to the affected unit via upgrade, community appears to be against this idea so ill comment it out for now
 	-- ObjectCreateAndFireTempWeapon(self, "BuggedUnitSpeedBoost")
 end
