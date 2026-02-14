@@ -70,7 +70,6 @@ unitsReversing = {}
 
 TURN_TRIGGER_COUNT = 2 -- number of turn triggers before checking if unit is bugging
 NO_COLLISION_DURATION = 5 -- seconds to disable collision on a bugged unit during fix
--- DAMAGED_BUG_DURATION_MULT = 1.5 bug duration multiplier when unit is REALLYDAMAGED
 REVERSE_SPAM_FRAME_WINDOW = 2 -- frames within which a repeat reverse-move command is ignored
 BUG_CHECK_LOWER_LIMIT = 4 -- lower tolerance for frameDiff vs bugDuration
 BUG_CHECK_UPPER_LIMIT = 3 -- upper tolerance when NOT attacking
@@ -81,11 +80,11 @@ BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_G
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearing movement flag
-UNITS_TURNING_CANCEL_THRESHOLD = 0.25 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
+UNITS_TURNING_CANCEL_THRESHOLD = 0.5 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
 unitBugDataTable = {
-	-- frameCount: unit bug duration in frames (proportional to TurnTimeSeconds)
+	-- frameCount: unit bug duration in frames it is calculated as 7 * turn speed (in seconds)
 	-- damagedDurationMult: bug duration multiplier when REALLYDAMAGED (frameCount * damagedDurationMult)
 
 	-- NOD UNITS --
@@ -127,8 +126,8 @@ unitBugDataTable = {
 	["D01CFD88"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- GDI APC
 	["286DE7C4"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- Steel Talons APC
 	["64BCB106"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- ZOCOM APC
-	["AF462A8F"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- GDI VETERAN APC
-	["BD7701CB"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- ZOCOM VETERAN APC
+	["AF462A8F"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- GDI Veteran APC
+	["BD7701CB"] = { frameCount = 9,  damagedDurationMult = 1.0 }, -- ZOCOM Veteran APC
 	["F714BBD3"] = { frameCount = 14,  damagedDurationMult = 1.5 }, -- ZOCOM Predator Tank
 	["E6EAD02C"] = { frameCount = 14,  damagedDurationMult = 1.5 }, -- GDI Predator Tank
 	["E602E1AF"] = { frameCount = 25,  damagedDurationMult = 1.0 }, -- ZOCOM Zone Shatterer
@@ -1060,6 +1059,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local playerTeam = tostring(ObjectTeamName(self))
 	local checksDone = getglobal(playerTeam .. "_checksDone") or 0
 	local unitsToFix = getglobal(playerTeam .. "_unitsToFix") or {}
+	local fixCancelled = getglobal(playerTeam .. "_fixCancelled") or false
 
 	-- edge case for when units are attacking.
 	local lowerLimit = unitReversing.isAttacking and BUG_CHECK_LOWER_LIMIT_ATTACKING or BUG_CHECK_LOWER_LIMIT
@@ -1122,6 +1122,13 @@ function CheckForObjReverseBugging(self, frameDiff)
 	--  and not (GetNumberOfUnitsMoving(selectedUnitList) >= ceil(selectedCount * UNITS_STILL_MOVING_THRESHOLD))
 	if unitsTurningCount > ceil(selectedCount * UNITS_TURNING_CANCEL_THRESHOLD) then
 		fixUnits = false
+		fixCancelled = true
+		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+	end
+
+	-- If a previous unit's call already cancelled fixes due to turning, persist that decision
+	if fixCancelled then
+		fixUnits = false
 	end
 
 	-- Apply fixes if threshold was met
@@ -1161,6 +1168,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	end
 	setglobal(playerTeam .. "_checksDone", checksDone)
 	setglobal(playerTeam .. "_unitsToFix", unitsToFix)
+	setglobal(playerTeam .. "_fixCancelled", fixCancelled)
 end
 		
 -- Fixes a unit detected to be bugging and then checks if any selected unit has the bugged unit assigned as unitAnchor
@@ -1435,6 +1443,7 @@ function BackingUpEnd(self)
 		local playerTeam = tostring(ObjectTeamName(self))
 		setglobal(playerTeam .. "_unitsToFix", {})
 		setglobal(playerTeam .. "_checksDone", 0)
+		setglobal(playerTeam .. "_fixCancelled", false)
 		-- clear this unit's selectedUnits and free the snapshot if no other unit still references it
 		local selectedUnits = unitReversing.selectedUnits
 		unitReversing.selectedUnits = nil
@@ -1475,7 +1484,7 @@ function BuggedUnitTimeout(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
 	-- unitReversing.hasBeenFixed = true
-	-- apply a minor 1s speed boost to the affected unit via upgrade, community appears to be against this idea so ill comment it out for now
+	-- apply a minor 1s speed boost to the affected unit via upgrade, community appears to be against this idea so ill comment it out for now. Maybe +15% speed is an acceptable buff to offset the times the unit stops.
 	-- ObjectCreateAndFireTempWeapon(self, "BuggedUnitSpeedBoost")
 end
 
