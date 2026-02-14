@@ -80,7 +80,7 @@ BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_G
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearing movement flag
-UNITS_TURNING_CANCEL_THRESHOLD = 0.5 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
+UNITS_TURNING_CANCEL_THRESHOLD = 0.4 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
 unitBugDataTable = {
@@ -1272,36 +1272,32 @@ function BackingUp(self)
     end
 
     local playerTeam = tostring(ObjectTeamName(self))
-
     unitReversing.firstFrame = curFrame
 	unitReversing.isReverseMoving = true
 	unitReversing.isMovingFlag = true
-
-    if ObjectTestModelCondition(self, "USER_72") == false then
-        local selectedUnits = unitReversing.selectedUnits
-		-- unit was already tagged in the else block for loop.
-        if selectedUnits == nil then
-            -- first unit in the group, create snapshot and tag all units, this will also copy the unitsCount over to teamSnapshot.
-            local teamSnapshot = DeepCopyTable(getglobal(playerTeam))
-			-- the table contains a unique id that all units share when selected during this reverse move
-            selectedUnits = "group_" .. tostring(curFrame) .. "_" .. tostring(a)
-			-- store a global variable with the id generated for this group containing all selected units (obtained by DeepCopyTable)
-            setglobal(selectedUnits, teamSnapshot)
-            unitReversing.selectedUnits = selectedUnits
-			-- assign every unit the same selectedUnits group
-            for id, unitRef in teamSnapshot.units do
-                if unitsReversing[unitRef] ~= nil then
-                    unitsReversing[unitRef].selectedUnits = selectedUnits
-                end
-            end
-			-- assign the snapshot to selectedUnits
-            -- unitReversing.selectedUnits = teamSnapshot
-        end
-        if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
-            ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
-        end
-        AssignRandomAnchor(self)
-    end
+	local selectedUnits = unitReversing.selectedUnits
+	-- unit was already tagged in the else block for loop.
+	if selectedUnits == nil then
+		-- first unit in the group, create snapshot and tag all units, this will also copy the unitsCount over to teamSnapshot.
+		local teamSnapshot = DeepCopyTable(getglobal(playerTeam))
+		-- the table contains a unique id that all units share when selected during this reverse move
+		selectedUnits = "group_" .. tostring(curFrame) .. "_" .. tostring(a)
+		-- store a global variable with the id generated for this group containing all selected units (obtained by DeepCopyTable)
+		setglobal(selectedUnits, teamSnapshot)
+		unitReversing.selectedUnits = selectedUnits
+		-- assign every unit the same selectedUnits group
+		for id, unitRef in teamSnapshot.units do
+			if unitsReversing[unitRef] ~= nil then
+				unitsReversing[unitRef].selectedUnits = selectedUnits
+			end
+		end
+		-- assign the snapshot to selectedUnits
+		-- unitReversing.selectedUnits = teamSnapshot
+	end
+	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
+	end
+	AssignRandomAnchor(self)
 end
 
 -- Gets a random selected unit of this players selection and assigns it to unitReversing.unitAnchor = unitAnchor
