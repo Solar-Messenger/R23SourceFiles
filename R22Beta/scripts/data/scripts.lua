@@ -81,7 +81,7 @@ BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_G
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearing movement flag
-UNITS_TURNING_CANCEL_THRESHOLD = 0.1 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
+UNITS_TURNING_CANCEL_THRESHOLD = 0.25 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
 unitBugDataTable = {
@@ -1087,9 +1087,9 @@ function CheckForObjReverseBugging(self, frameDiff)
 		unitReversing.hasBeenCounted = true
 	end
 	-- WriteToFile("checksDoneInt.txt",  tostring(checksDone) .. "\n")
-	-- First determine if this unit is bugging and add it to the list
+	-- First determine if this unit is bugging and add it to the list,  dont fix units that are being already fixed
 	if isBugging and not unitReversing.hasBugged then
-		unitReversing.hasBugged = true
+		-- unitReversing.hasBugged = true
 		-- cache the units if they are to be fixed in this table
 		ExecuteAction("NAMED_FLASH", self, 2)
 		tinsert(unitsToFix, a)
@@ -1157,7 +1157,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)
 		end
-		unitReversing.hasBugged = false
+		--unitReversing.hasBugged = false
 	end
 	setglobal(playerTeam .. "_checksDone", checksDone)
 	setglobal(playerTeam .. "_unitsToFix", unitsToFix)
@@ -1183,8 +1183,11 @@ function FixBuggingUnit(self)
 		 unitReversing.unitAnchor = GetANonBuggingUnit(selectedUnitList, self)
 	end
 	--WriteToFile("closeunit.txt",  "closest unit:  " .. tostring(unitReversing.unitAnchor) .. "\n")
-	ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitReversing.unitAnchor)	
-	ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, STOPPING_DISTANCE)
+	if not unitReversing.hasBugged then
+		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitReversing.unitAnchor)	
+		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, STOPPING_DISTANCE)
+		unitReversing.hasBugged = true
+	end
 
 	for id, unitRef in selectedUnitList do
 		--  this unit is bugging so lets go through all the closest units and see if it coincides with this one
@@ -1251,7 +1254,7 @@ function BackingUp(self)
     else 
         -- Reset the flags here to ensure we don't carry over bugs from previous moves
         unitReversing.hasAlreadyReversed = false
-        unitReversing.hasBugged = false
+        --unitReversing.hasBugged = false
         unitReversing.unitAnchor = nil
         unitReversing.fastTurnWas0Frames = false
         unitReversing.timesTriggeredFast = 0
@@ -1471,7 +1474,7 @@ function BuggedUnitTimeout(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
-	unitReversing.hasBugged = true
+	-- unitReversing.hasBugged = true
 	-- apply a minor 1s speed boost to the affected unit via upgrade, community appears to be against this idea so ill comment it out for now
 	-- ObjectCreateAndFireTempWeapon(self, "BuggedUnitSpeedBoost")
 end
