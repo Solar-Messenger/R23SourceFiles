@@ -19,6 +19,14 @@
 		ObjectStatusToSet="UNATTACKABLE NO_COLLISIONS">
 	</AttributeModifier> -->
 
+	<!-- grant a speed boost to units that are being corrected from a reverse move bug -->
+	<AttributeModifier
+		id="Modifier_ReverseMoveSpeedBuff"
+		Category="NONE"
+		Duration="1.5s">
+		<Modifier Type="SPEED" Value="115%" />
+	</AttributeModifier>
+
 	<!-- to ensure traveler 59 do not get faster infantry with the base infantry speed buff --> 
 
 	<AttributeModifier
