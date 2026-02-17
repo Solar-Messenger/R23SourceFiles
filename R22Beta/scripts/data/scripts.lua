@@ -75,7 +75,7 @@ BUG_CHECK_LOWER_LIMIT = 4 -- lower tolerance for frameDiff vs bugDuration
 BUG_CHECK_UPPER_LIMIT = 3 -- upper tolerance when NOT attacking
 BUG_CHECK_UPPER_LIMIT_ATTACKING = 4 -- upper tolerance when attacking
 BUG_CHECK_LOWER_LIMIT_ATTACKING = 5 -- lower tolerance when attacking
-CHECKS_DONE_THRESHOLD = 0.8 -- ratio of units that must finish checking before fix decision
+CHECKS_DONE_THRESHOLD = 0.5 -- ratio of units that must finish checking before fix decision
 BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
@@ -1013,8 +1013,9 @@ function BackingUpFastTurnEnd(self)
 	
 	if unitReversing.timesTriggeredFast == 2 then
 		--WriteToFile("backingupfastend2.txt",  "object went this long with 2 trigger: " .. tostring(frameDiff) .. "\n")
-		unitReversing.thirdTurnFrameCount = frameDiff
-		unitReversing.hasPerformedThirdTurn = true
+		local group = getglobal(unitReversing.groupId)
+		group.thirdTurnFrameCount = group.thirdTurnFrameCount + frameDiff
+		group.unitsThatPerformedThirdTurn = group.unitsThatPerformedThirdTurn + 1
 	end
 
     if unitReversing ~= nil and unitReversing.timesTriggeredFast < timesToTrigger then
@@ -1083,7 +1084,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	if isBugging and not unitReversing.hasBeenFixed then
 		-- unitReversing.hasBeenFixed = true
 		-- cache the units if they are to be fixed in this table
-		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+		ExecuteAction("NAMED_FLASH", self, 2)
 		tinsert(unitsToFix, a)
 	end
 
@@ -1103,24 +1104,27 @@ function CheckForObjReverseBugging(self, frameDiff)
 				--WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(maxBugging+1) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "selected count is: " .. tostring(selectedCount) .. "\n")
 			end
 			-- check if most units arent still performing a third turn
-			local unitsTurningCount = 0
-			local thirdTurnCountTotal = 0
-			local thirdTurnUnitCount = 0
-			for id, unitRef in selectedUnitList do
-				if unitsReversing[unitRef].hasPerformedThirdTurn then
-					local thirdFrameCount = unitsReversing[unitRef].thirdTurnFrameCount
-					if thirdFrameCount > bugDuration + 6 then
-						-- incase the game makes the third frame count something absurd, cap it at bugDuration+6. This will prevent the average
+			-- local unitsTurningCount = 0
+			-- local thirdTurnCountTotal = 0
+			-- local thirdTurnUnitCount = 0
+			-- for id, unitRef in selectedUnitList do
+			--	if unitsReversing[unitRef].hasPerformedThirdTurn then
+			--		local thirdFrameCount = unitsReversing[unitRef].thirdTurnFrameCount
+			--		if thirdFrameCount > bugDuration + 6 then
+			--			-- incase the game makes the third frame count something absurd, cap it at bugDuration+6. This will prevent the average
 						-- from being skewed.
-						thirdTurnCountTotal = thirdTurnCountTotal+bugDuration+6
-					else
-						thirdTurnCountTotal = thirdTurnCountTotal + thirdFrameCount
-					end
-					thirdTurnUnitCount = thirdTurnUnitCount + 1
+			--			thirdTurnCountTotal = thirdTurnCountTotal+bugDuration+6
+			--		else
+			--			thirdTurnCountTotal = thirdTurnCountTotal + thirdFrameCount
+			--		end
+			--		thirdTurnUnitCount = thirdTurnUnitCount + 1
 					--WriteToFile("currentthirdturns.txt",  tostring(unitsReversing[unitRef].thirdTurnFrameCount) .. "\n")
-				end
-			end	
+			--	end
+			--end	
+			local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn
+			local thirdTurnCountTotal = group.thirdTurnFrameCount
 			--WriteToFile("debug.txt",  "total: " .. tostring(thirdTurnCountTotal) .. " unit count: " .. tostring(thirdTurnUnitCount) .. "\n")
+
 			if thirdTurnUnitCount > 0 then
 				local avgThirdTurnCount = ceil(thirdTurnCountTotal / thirdTurnUnitCount)
 				--WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
@@ -1130,7 +1134,12 @@ function CheckForObjReverseBugging(self, frameDiff)
 					ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 				end
 			end
+
+			if thirdTurnUnitCount < 2 then
+				fixUnits = false
+			end
 		end
+		
 
 		-- Apply fixes if threshold was met
 		-- fixUnits alone triggers the fix so that a non-bugging unit that pushes
@@ -1300,6 +1309,8 @@ function AssignGroupId(unitReversing, a, curFrame, self)
 		teamSnapshot.unitsToFix = {}
 		teamSnapshot.checksDone = 0
 		teamSnapshot.fixCancelled = false
+		teamSnapshot.thirdTurnFrameCount = 0
+		teamSnapshot.unitsThatPerformedThirdTurn = 0
 		setglobal(groupId, teamSnapshot)
 		-- assign every unit the same groupId
 		for id, unitRef in teamSnapshot.units do
@@ -1458,6 +1469,8 @@ function BackingUpEnd(self)
 		group.unitsToFix = {}
 		group.checksDone = 0
 		group.fixCancelled = false
+		group.thirdTurnFrameCount = nil
+		group.unitsThatPerformedThirdTurn = nil
 		-- clear groupId for all units in this group including the current one.
 		for id, unitRef in selectedUnitList do
 			-- if the id is the same as the id in current index clear it 
@@ -1466,7 +1479,7 @@ function BackingUpEnd(self)
 				unitsReversing[unitRef].groupIdAssigned = false		
 				unitsReversing[unitRef].hasBeenFixed = false	
 				unitsReversing[unitRef].hasPerformedThirdTurn = false	
-				unitsReversing[unitRef].thirdTurnFrameCount = 0	
+				--unitsReversing[unitRef].thirdTurnFrameCount = 0	
 				if ObjectHasUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") then 
 					ObjectRemoveUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") 
 				end		
