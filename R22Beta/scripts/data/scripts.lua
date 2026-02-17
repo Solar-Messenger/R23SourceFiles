@@ -73,14 +73,14 @@ NO_COLLISION_DURATION = 5 -- seconds to disable collision on a bugged unit durin
 REVERSE_SPAM_FRAME_WINDOW = 2 -- frames within which a repeat reverse-move command is ignored
 BUG_CHECK_LOWER_LIMIT = 4 -- lower tolerance for frameDiff vs bugDuration
 BUG_CHECK_UPPER_LIMIT = 3 -- upper tolerance when NOT attacking
-BUG_CHECK_UPPER_LIMIT_ATTACKING = 5 -- upper tolerance when attacking
-BUG_CHECK_LOWER_LIMIT_ATTACKING = 4 -- lower tolerance when attacking
+BUG_CHECK_UPPER_LIMIT_ATTACKING = 4 -- upper tolerance when attacking
+BUG_CHECK_LOWER_LIMIT_ATTACKING = 5 -- lower tolerance when attacking
 CHECKS_DONE_THRESHOLD = 0.8 -- ratio of units that must finish checking before fix decision
 BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearing movement flag
-UNITS_TURNING_CANCEL_THRESHOLD = 0.5 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
+UNITS_TURNING_CANCEL_THRESHOLD = 0.75 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
 unitBugDataTable = {
@@ -936,8 +936,9 @@ function GetUnitReversingData(self)
 			fastTurnWas0Frames = false,
 			isAttacking = false,
 			hasBeenCounted = false,
-			isPerformingThirdTurn = false,
+			hasPerformedThirdTurn = false,
 			groupIdAssigned = false, 
+			thirdTurnFrameCount = 0,
 			unitAnchor = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
@@ -956,12 +957,6 @@ end
 function BackingUpFast(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	--local curFrame = GetFrame()
-	-- set status for third time it turns
-	if unitReversing.timesTriggeredFast == 2 then	
-		--CheckForObjReverseBugging(self, frameDiff)
-		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-		unitReversing.isPerformingThirdTurn = true
-	end
 end
 
 function GetNumberOfUnitsMoving(selectedUnitList)
@@ -1008,19 +1003,18 @@ function BackingUpFastTurnEnd(self)
 	-- prevents this from executing
 	if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
 	local timesToTrigger = TURN_TRIGGER_COUNT
-	local frameDiff = GetFrame() - unitReversing.firstFrame
-
-	-- first index is 0 so this is really second exec
-	--if unitReversing.timesTriggeredFast == 1 then
-		--WriteToFile("backingupfastend.txt",  "object went this long with 1 trigger: " .. tostring(frameDiff) .. "\n")
-	--end
+	local curFrame = GetFrame()
+	local frameDiff = curFrame - unitReversing.firstFrame
 
 	if unitReversing.timesTriggeredFast == 1 then
+		--WriteToFile("backingupfastend.txt",  "object went this long with 1 trigger: " .. tostring(frameDiff) .. "\n")
 		CheckForObjReverseBugging(self, frameDiff)
 	end
 	
-	if unitReversing.timesTriggeredFast == 2 then	
-		unitReversing.isPerformingThirdTurn = false
+	if unitReversing.timesTriggeredFast == 2 then
+		--WriteToFile("backingupfastend2.txt",  "object went this long with 2 trigger: " .. tostring(frameDiff) .. "\n")
+		unitReversing.thirdTurnFrameCount = frameDiff
+		unitReversing.hasPerformedThirdTurn = true
 	end
 
     if unitReversing ~= nil and unitReversing.timesTriggeredFast < timesToTrigger then
@@ -1057,7 +1051,6 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local selectedCount = group.unitCount
 	local checksDone = group.checksDone
 	local unitsToFix = group.unitsToFix
-	local fixCancelled = group.fixCancelled
 	--WriteToFile("groupId.txt",  tostring(groupId) .. "\n")
 
 	-- edge case for when units are attacking.
@@ -1090,83 +1083,93 @@ function CheckForObjReverseBugging(self, frameDiff)
 	if isBugging and not unitReversing.hasBeenFixed then
 		-- unitReversing.hasBeenFixed = true
 		-- cache the units if they are to be fixed in this table
-		ExecuteAction("NAMED_FLASH", self, 2)
+		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 		tinsert(unitsToFix, a)
 	end
 
 	-- Now check threshold after unitsToFix has been updated
 	local fixUnits = false
 
-	if checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
-		-- if number of units bugging is less than the count * BUG_THRESHOLD_SMALL_GROUP
-		-- if more than LARGE_GROUP_SIZE units are selected, make the detection more forgiving
-		local bugThreshold = selectedCount > LARGE_GROUP_SIZE and BUG_THRESHOLD_LARGE_GROUP or BUG_THRESHOLD_SMALL_GROUP
-		local maxBugging = ceil(selectedCount * bugThreshold)
-		if getn(unitsToFix) <= maxBugging then
-			-- proceed to fix the units
-			fixUnits = true
-			--WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(maxBugging+1) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "\n")
-		end
-	end
-
-	-- check if most units arent still performing a third turn
-	local unitsTurningCount = 0
-	for id, unitRef in selectedUnitList do
-		if unitsReversing[unitRef].isPerformingThirdTurn then
-			unitsTurningCount = unitsTurningCount + 1
-		end
-	end
-
-	-- cause of some units not being fixed
-	--  and not (GetNumberOfUnitsMoving(selectedUnitList) >= ceil(selectedCount * UNITS_STILL_MOVING_THRESHOLD))
-	if unitsTurningCount > ceil(selectedCount * UNITS_TURNING_CANCEL_THRESHOLD) then
-		fixUnits = false
-		fixCancelled = true
-		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-	end
-
-	-- If a previous unit's call already cancelled fixes due to turning, persist that decision
-	if fixCancelled then
-		fixUnits = false
-	end
-
-	-- Apply fixes if threshold was met
-	-- fixUnits alone triggers the fix so that a non-bugging unit that pushes
-	-- checksDone over the threshold can still fix earlier-detected bugging units
-	if fixUnits then
-		if getn(unitsToFix) > 0 then
-			--local stringUnits = ""
-			--for i = 1, getn(unitsToFix) do
-			--	stringUnits = stringUnits .. "Fixing unit: " .. tostring(unitsToFix[i]) .. "\n"
-			--end
-			--WriteToFile("fixUnits.txt", stringUnits .. "\n\n\n" .. "------------------------------------------------")
-			-- mark all bugging units with USER_72 before reassignment so
-			-- GetANonBuggingUnit wont return a unit that is about to be fixed
-			for i = 1, getn(unitsToFix) do
-				local buggingRef = unitsReversing[unitsToFix[i]].selfRealReference
-				if ObjectTestModelCondition(buggingRef, "USER_72") == false then
-					ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", buggingRef, "USER_72", NO_COLLISION_DURATION, 100)
+	-- dont fix when doing a 180 degree turn
+	if not group.fixCancelled then
+		if checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
+			-- if number of units bugging is less than the count * BUG_THRESHOLD_SMALL_GROUP
+			-- if more than LARGE_GROUP_SIZE units are selected, make the detection more forgiving
+			local bugThreshold = selectedCount > LARGE_GROUP_SIZE and BUG_THRESHOLD_LARGE_GROUP or BUG_THRESHOLD_SMALL_GROUP
+			local maxBugging = ceil(selectedCount * bugThreshold)
+			if getn(unitsToFix) <= maxBugging then
+				-- proceed to fix the units
+				fixUnits = true
+				--WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(maxBugging+1) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "selected count is: " .. tostring(selectedCount) .. "\n")
+			end
+			-- check if most units arent still performing a third turn
+			local unitsTurningCount = 0
+			local thirdTurnCountTotal = 0
+			local thirdTurnUnitCount = 0
+			for id, unitRef in selectedUnitList do
+				if unitsReversing[unitRef].hasPerformedThirdTurn then
+					local thirdFrameCount = unitsReversing[unitRef].thirdTurnFrameCount
+					if thirdFrameCount > bugDuration + 6 then
+						-- incase the game makes the third frame count something absurd, cap it at bugDuration+6. This will prevent the average
+						-- from being skewed.
+						thirdTurnCountTotal = thirdTurnCountTotal+bugDuration+6
+					else
+						thirdTurnCountTotal = thirdTurnCountTotal + thirdFrameCount
+					end
+					thirdTurnUnitCount = thirdTurnUnitCount + 1
+					--WriteToFile("currentthirdturns.txt",  tostring(unitsReversing[unitRef].thirdTurnFrameCount) .. "\n")
+				end
+			end	
+			--WriteToFile("debug.txt",  "total: " .. tostring(thirdTurnCountTotal) .. " unit count: " .. tostring(thirdTurnUnitCount) .. "\n")
+			if thirdTurnUnitCount > 0 then
+				local avgThirdTurnCount = ceil(thirdTurnCountTotal / thirdTurnUnitCount)
+				--WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
+				if avgThirdTurnCount > bugDuration-3 then
+					group.fixCancelled = true
+					fixUnits = false
+					ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 				end
 			end
-			for i = getn(unitsToFix), 1, -1 do
-				ExecuteAction("NAMED_FLASH", unitsReversing[unitsToFix[i]].selfRealReference, 2)
-				FixBuggingUnit(unitsReversing[unitsToFix[i]].selfRealReference)
+		end
+
+		-- Apply fixes if threshold was met
+		-- fixUnits alone triggers the fix so that a non-bugging unit that pushes
+		-- checksDone over the threshold can still fix earlier-detected bugging units
+		if fixUnits then
+			if getn(unitsToFix) > 0 then
+				--local stringUnits = ""
+				--for i = 1, getn(unitsToFix) do
+				--	stringUnits = stringUnits .. "Fixing unit: " .. tostring(unitsToFix[i]) .. "\n"
+				--end
+				--WriteToFile("fixUnits.txt", stringUnits .. "\n\n\n" .. "------------------------------------------------")
+				
+				-- mark all bugging units with USER_72 before reassignment so
+				-- GetANonBuggingUnit wont return a unit that is about to be fixed
+				for i = 1, getn(unitsToFix) do
+					local buggingRef = unitsReversing[unitsToFix[i]].selfRealReference
+					if ObjectTestModelCondition(buggingRef, "USER_72") == false then
+						ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", buggingRef, "USER_72", NO_COLLISION_DURATION, 100)
+					end
+				end
+				for i = getn(unitsToFix), 1, -1 do
+					ExecuteAction("NAMED_FLASH", unitsReversing[unitsToFix[i]].selfRealReference, 2)
+					FixBuggingUnit(unitsReversing[unitsToFix[i]].selfRealReference)
+				end
+			elseif isBugging then
+				--ExecuteAction("NAMED_FLASH", self, 2)
+				FixBuggingUnit(self)
 			end
-		elseif isBugging then
-			--ExecuteAction("NAMED_FLASH", self, 2)
-			FixBuggingUnit(self)
+		elseif isBugging and checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
+			-- Only clear bugging state when threshold was reached and we decided not to fix
+			-- (too many bugging = likely false positive). Before threshold is reached,
+			-- keep the state so the unit can still be fixed when slower types finish checking.
+			if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
+				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)
+			end
+			--unitReversing.hasBeenFixed = false
 		end
-	elseif isBugging and checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
-		-- Only clear bugging state when threshold was reached and we decided not to fix
-		-- (too many bugging = likely false positive). Before threshold is reached,
-		-- keep the state so the unit can still be fixed when slower types finish checking.
-		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)
-		end
-		--unitReversing.hasBeenFixed = false
 	end
 	group.checksDone = checksDone
-	group.fixCancelled = fixCancelled
 end
 		
 -- Fixes a unit detected to be bugging and then checks if any selected unit has the bugged unit assigned as unitAnchor
@@ -1407,6 +1410,7 @@ function ReverseUnitOnDeath(self)
 			-- remove this unit from the group snapshot
 			if group.units[a] ~= nil then
 				group.units[a] = nil
+				group.unitCount = group.unitCount - 1
 			end
 		end
         unitsReversing[a] = nil
@@ -1437,7 +1441,6 @@ function BackingUpEnd(self)
 		unitReversing.fastTurnWas0Frames = false
 		unitReversing.isAttacking = false
 		unitReversing.hasBeenCounted = false
-		unitReversing.isPerformingThirdTurn = false
 	end
 
 	--if checksDone == unitReversing.groupId.selectedCount-1 then
@@ -1458,10 +1461,12 @@ function BackingUpEnd(self)
 		-- clear groupId for all units in this group including the current one.
 		for id, unitRef in selectedUnitList do
 			-- if the id is the same as the id in current index clear it 
-			if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].groupId == groupId  then
+			if unitsReversing[unitRef] ~= nil then
 				unitsReversing[unitRef].groupId = nil
 				unitsReversing[unitRef].groupIdAssigned = false		
-				unitsReversing[unitRef].hasBeenFixed = false		
+				unitsReversing[unitRef].hasBeenFixed = false	
+				unitsReversing[unitRef].hasPerformedThirdTurn = false	
+				unitsReversing[unitRef].thirdTurnFrameCount = 0	
 				if ObjectHasUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") then 
 					ObjectRemoveUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") 
 				end		
