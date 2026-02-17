@@ -80,7 +80,7 @@ BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_G
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearing movement flag
-UNITS_TURNING_CANCEL_THRESHOLD = 0.75 -- ratio of units still turning that cancels the fix (used to address false positives when backing up a short distance) setting this too low stops the fix.
+AVERAGE_TURN_COUNT_OFFSET = 4 -- offset subtracted from bugDuration when comparing avg turn count.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
 unitBugDataTable = {
@@ -1128,14 +1128,14 @@ function CheckForObjReverseBugging(self, frameDiff)
 			if thirdTurnUnitCount > 0 then
 				local avgThirdTurnCount = ceil(thirdTurnCountTotal / thirdTurnUnitCount)
 				--WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
-				if avgThirdTurnCount > bugDuration-3 then
+				if avgThirdTurnCount > bugDuration-AVERAGE_TURN_COUNT_OFFSET then
 					group.fixCancelled = true
 					fixUnits = false
 					ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 				end
 			end
 
-			if thirdTurnUnitCount < 2 then
+			if thirdTurnUnitCount < 5 then
 				fixUnits = false
 			end
 		end
