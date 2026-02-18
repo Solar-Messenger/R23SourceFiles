@@ -958,6 +958,7 @@ function BackingUpFast(self)
 end
 
 function GetNumberOfUnitsMoving(selectedUnitList)
+	if selectedUnitList == nil then return 0 end
 	local unitsMoving = 0
 	for id, unitRef in selectedUnitList do
 		if unitsReversing[unitRef] ~= nil and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") then
@@ -974,6 +975,7 @@ function UnitNoLongerMoving(self)
 	-- check if most units selected are not moving
 	if not unitReversing.hasBeenFixed and unitReversing.groupId ~= nil then
 		local group = getglobal(unitReversing.groupId)
+		if group == nil or group.units == nil or group.unitCount == nil then return end
 		if GetNumberOfUnitsMoving(group.units) <= floor(group.unitCount * UNITS_STILL_MOVING_THRESHOLD) then
 			for id, unitRef in group.units do
 				if unitsReversing[unitRef] ~= nil and not unitsReversing[unitRef].isAttacking and not unitsReversing[unitRef].isReverseMoving then
@@ -1008,8 +1010,10 @@ function BackingUpFastTurnEnd(self)
 	if unitReversing.timesTriggeredFast == 2 then
 		--WriteToFile("backingupfastend2.txt",  "object went this long with 2 trigger: " .. tostring(frameDiff) .. "\n")
 		local group = getglobal(unitReversing.groupId)
-		group.thirdTurnFrameCount = group.thirdTurnFrameCount + frameDiff
-		group.unitsThatPerformedThirdTurn = group.unitsThatPerformedThirdTurn + 1
+		if group ~= nil then
+			group.thirdTurnFrameCount = (group.thirdTurnFrameCount or 0) + frameDiff
+			group.unitsThatPerformedThirdTurn = (group.unitsThatPerformedThirdTurn or 0) + 1
+		end
 	end
 
     if unitReversing ~= nil and unitReversing.timesTriggeredFast < timesToTrigger then
@@ -1037,13 +1041,23 @@ end
 
 function CheckForObjReverseBugging(self, frameDiff)
 	local a, unitReversing = GetUnitReversingData(self)
+	if unitReversing.groupId == nil then return end
 	local unitBugData = unitBugDataTable[getObjectName(self)]
+	if unitBugData == nil then return end
 	local bugDuration = unitBugData.frameCount
 	-- check if unit is really damaged
 	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and bugDuration*unitBugData.damagedDurationMult or bugDuration
 	local group = getglobal(unitReversing.groupId)
+	if group == nil or group.units == nil or group.unitCount == nil then return end
+	group.checksDone = group.checksDone or 0
+	group.unitsToFix = group.unitsToFix or {}
+	group.fixCancelled = group.fixCancelled or false
+	group.thirdTurnFrameCount = group.thirdTurnFrameCount or 0
+	group.unitsThatPerformedThirdTurn = group.unitsThatPerformedThirdTurn or 0
+	group.unitsNotMovingBeforeBackingUp = group.unitsNotMovingBeforeBackingUp or 0
 	local selectedUnitList = group.units
 	local selectedCount = group.unitCount
+	if selectedCount <= 0 then return end
 	local checksDone = group.checksDone
 	local unitsToFix = group.unitsToFix
 	--WriteToFile("groupId.txt",  tostring(groupId) .. "\n")
@@ -1122,15 +1136,23 @@ function CheckForObjReverseBugging(self, frameDiff)
 				-- mark all bugging units with USER_72 before reassignment so
 				-- GetANonBuggingUnit wont return a unit that is about to be fixed
 				for i = 1, getn(unitsToFix) do
-					local buggingRef = unitsReversing[unitsToFix[i]].selfRealReference
-					if ObjectTestModelCondition(buggingRef, "USER_72") == false then
-						ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", buggingRef, "USER_72", NO_COLLISION_DURATION, 100)
+					local buggingUnit = unitsReversing[unitsToFix[i]]
+					if buggingUnit ~= nil then
+						local buggingRef = buggingUnit.selfRealReference
+						if ObjectTestModelCondition(buggingRef, "USER_72") == false then
+							ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", buggingRef, "USER_72", NO_COLLISION_DURATION, 100)
+						end
 					end
 				end
 				for i = getn(unitsToFix), 1, -1 do
-					local buggingRef = unitsReversing[unitsToFix[i]].selfRealReference
-					ExecuteAction("NAMED_FLASH", buggingRef, 2)
-					FixBuggingUnit(buggingRef)
+					local buggingUnit = unitsReversing[unitsToFix[i]]
+					if buggingUnit ~= nil then
+						local buggingRef = buggingUnit.selfRealReference
+						ExecuteAction("NAMED_FLASH", buggingRef, 2)
+						FixBuggingUnit(buggingRef)
+					else
+						tremove(unitsToFix, i)
+					end
 				end
 			elseif isBugging then
 				--ExecuteAction("NAMED_FLASH", self, 2)
@@ -1152,7 +1174,9 @@ end
 -- Fixes a unit detected to be bugging and then checks if any selected unit has the bugged unit assigned as unitAnchor
 function FixBuggingUnit(self)
 	local a,unitReversing = GetUnitReversingData(self)
+	if unitReversing.groupId == nil then return end
 	local group = getglobal(unitReversing.groupId)
+	if group == nil or group.units == nil then return end
 	local selectedUnitList = group.units
 	if ObjectTestModelCondition(self, "USER_72") == false then
 		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", NO_COLLISION_DURATION, 100)
@@ -1170,7 +1194,7 @@ function FixBuggingUnit(self)
 		 unitReversing.unitAnchor = GetANonBuggingUnit(selectedUnitList, self)
 	end
 	--WriteToFile("closeunit.txt",  "closest unit:  " .. tostring(unitReversing.unitAnchor) .. "\n")
-	if not unitReversing.hasBeenFixed then
+	if not unitReversing.hasBeenFixed and unitReversing.unitAnchor ~= nil then
 		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitReversing.unitAnchor)	
 		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, STOPPING_DISTANCE)
 		unitReversing.hasBeenFixed = true
@@ -1199,6 +1223,7 @@ end
 -- if the unitAnchor has bugged during the reverse move, seek out a unit that hasnt of that players selection.
 -- selectedUnitsOfPlayer is the array of units whose value is ObjectId
 function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
+	if selectedUnitsOfPlayer == nil then return nil end
 	local candidates = {}
 	for id, unitRef in selectedUnitsOfPlayer do
 		if unitsReversing[unitRef] ~= nil then
@@ -1270,8 +1295,10 @@ function AssignGroupId(unitReversing, a, curFrame, self)
 	-- unit was already tagged in the else block for loop.
 	if groupId == nil then
 		local playerTeam = tostring(ObjectTeamName(self))
+		local teamTable = getglobal(playerTeam)
+		if teamTable == nil or teamTable.units == nil then return end
 		-- first unit in the group, create snapshot and tag all units currently selected, this will also copy the unitsCount over to teamSnapshot.
-		local teamSnapshot = DeepCopyTable(getglobal(playerTeam))
+		local teamSnapshot = DeepCopyTable(teamTable)
 		-- the table contains a unique id that all units share when selected during this reverse move
 		groupId = "group_" .. tostring(curFrame) .. "_" .. tostring(a)
 		-- store a global variable with the id generated for this group containing all selected units (obtained by DeepCopyTable)
@@ -1294,7 +1321,10 @@ function AssignGroupId(unitReversing, a, curFrame, self)
 				end
 			end
 		end
-		getglobal(groupId).unitsNotMovingBeforeBackingUp = unitsNotMovingBeforeBackingUp
+		local assignedGroup = getglobal(groupId)
+		if assignedGroup ~= nil then
+			assignedGroup.unitsNotMovingBeforeBackingUp = unitsNotMovingBeforeBackingUp
+		end
 		-- WriteToFile("groupId.txt",  "------------------------------------" .. "\n")
 		-- assign the snapshot to groupId
 		-- unitReversing.groupId = teamSnapshot
@@ -1305,12 +1335,18 @@ end
 function AssignRandomAnchor(self)
     if self ~= nil then
         local a,unitReversing = GetUnitReversingData(self)
+		if unitReversing.groupId == nil then return end
+		local group = getglobal(unitReversing.groupId)
+		if group == nil or group.units == nil then return end
 		-- list of ids
-        local selectedUnitList = getglobal(unitReversing.groupId).units
+        local selectedUnitList = group.units
 		-- Check if we have at least 2 units in the selection (self + at least one other)
 		if next(selectedUnitList) ~= nil and next(selectedUnitList, next(selectedUnitList)) ~= nil then	
 			-- gets a unit that isnt self randomly.
-			unitReversing.unitAnchor = unitsReversing[GetRandomKey(selectedUnitList, a)].selfReference
+			local randomUnitId = GetRandomKey(selectedUnitList, a)
+			if randomUnitId ~= nil and unitsReversing[randomUnitId] ~= nil then
+				unitReversing.unitAnchor = unitsReversing[randomUnitId].selfReference
+			end
 		end
     end
 end
@@ -1373,7 +1409,7 @@ function RemoveFromUnitSelection(self)
     local unitId = getObjectId(self)
 	local teamTable = getglobal(playerTeam)
     
-    if unitId ~= nil and teamTable ~= nil then
+    if unitId ~= nil and teamTable ~= nil and teamTable.units ~= nil then
         -- distinct check using the Key
         if teamTable.units[unitId] ~= nil then
             -- Set to nil to remove
@@ -1393,9 +1429,9 @@ function ReverseUnitOnDeath(self)
 		if unitReversing.groupId ~= nil then
 			local group = getglobal(unitReversing.groupId)
 			-- remove this unit from the group snapshot
-			if group.units[a] ~= nil then
+			if group ~= nil and group.units ~= nil and group.units[a] ~= nil then
 				group.units[a] = nil
-				group.unitCount = group.unitCount - 1
+				group.unitCount = (group.unitCount or 1) - 1
 			end
 		end
         unitsReversing[a] = nil
@@ -1410,7 +1446,10 @@ function BackingUpEnd(self)
 	local _,unitReversing = GetUnitReversingData(self)	
 	unitReversing.lastReverseMoveFrame = GetFrame()
 	local group =  getglobal(unitReversing.groupId)
-	local selectedUnitList = group.units
+	local selectedUnitList = {}
+	if group ~= nil and group.units ~= nil then
+		selectedUnitList = group.units
+	end
 	if unitReversing ~= nil and not unitReversing.hasBeenFixed then
 		-- need to prevent this when guarding
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
@@ -1426,7 +1465,10 @@ function BackingUpEnd(self)
 	unitReversing.isAttacking = false
 	unitReversing.hasBeenCounted = false
 
-	local unitsAreStillMoving = GetNumberOfUnitsMoving(selectedUnitList) <= (floor(getglobal(unitReversing.groupId).unitCount * UNITS_STILL_MOVING_THRESHOLD))
+	local unitsAreStillMoving = false
+	if group ~= nil and group.unitCount ~= nil then
+		unitsAreStillMoving = GetNumberOfUnitsMoving(selectedUnitList) <= floor(group.unitCount * UNITS_STILL_MOVING_THRESHOLD)
+	end
 	for id, unitRef in selectedUnitList do
 		if unitsAreStillMoving then
 			--WriteToFile("unitsMoving.txt",  tostring(GetNumberOfUnitsMoving(selectedUnitList)) .. "\n")
@@ -1446,7 +1488,7 @@ function BackingUpEnd(self)
 		end
 	end
 	
-	if clearList then
+	if clearList and group ~= nil then
 		local groupId  = unitReversing.groupId
 		group.unitsToFix = {}
 		group.checksDone = 0
