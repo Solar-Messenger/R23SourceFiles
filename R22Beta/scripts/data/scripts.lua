@@ -73,8 +73,8 @@ NO_COLLISION_DURATION = 5 -- seconds to disable collision on a bugged unit durin
 REVERSE_SPAM_FRAME_WINDOW = 2 -- frames within which a repeat reverse-move command is ignored
 BUG_CHECK_LOWER_LIMIT = 4 -- lower tolerance for frameDiff vs bugDuration
 BUG_CHECK_UPPER_LIMIT = 3 -- upper tolerance when NOT attacking
-BUG_CHECK_UPPER_LIMIT_ATTACKING = 4 -- upper tolerance when attacking
-BUG_CHECK_LOWER_LIMIT_ATTACKING = 5 -- lower tolerance when attacking
+BUG_CHECK_UPPER_LIMIT_ATTACKING = 3 -- upper tolerance when attacking
+BUG_CHECK_LOWER_LIMIT_ATTACKING = 4 -- lower tolerance when attacking
 CHECKS_DONE_THRESHOLD = 0.8 -- ratio of units that must finish checking before fix decision
 BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
@@ -936,7 +936,7 @@ function GetUnitReversingData(self)
 			fastTurnWas0Frames = false,
 			isAttacking = false,
 			hasBeenCounted = false,
-			groupIdAssigned = false, 
+			groupIdAssigned = false,
 			unitAnchor = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
@@ -974,17 +974,8 @@ function UnitNoLongerMoving(self)
 	-- check if most units selected are not moving 
 	-- rather than increment/decrement make a table of each selected unit with true /false for moving
 	-- update list
-	unitReversing.isMovingFlag = true
-	local selectedUnitList = getglobal(unitReversing.groupId).units
-
-	--WriteToFile("unitsMoving.txt",  tostring(floor(unitReversing.groupId.selectedCount * 0.1)) .. "\n")
-	if GetNumberOfUnitsMoving(selectedUnitList) <= (floor(getglobal(unitReversing.groupId).unitCount * UNITS_STILL_MOVING_THRESHOLD)) then
-		for id, unitRef in selectedUnitList do
-			-- if not attacking and not actively reverse-moving, allow clearing
-			if not unitsReversing[unitRef].isAttacking and not unitsReversing[unitRef].isReverseMoving then
-				unitsReversing[unitRef].isMovingFlag = false
-			end
-		end
+	if not unitReversing.hasBeenFixed then
+		unitReversing.isMovingFlag = false
 	end
 end
 
@@ -1051,7 +1042,6 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local checksDone = group.checksDone
 	local unitsToFix = group.unitsToFix
 	--WriteToFile("groupId.txt",  tostring(groupId) .. "\n")
-
 	-- edge case for when units are attacking.
 	local lowerLimit = unitReversing.isAttacking and BUG_CHECK_LOWER_LIMIT_ATTACKING or BUG_CHECK_LOWER_LIMIT
 	local upperLimit = unitReversing.isAttacking and BUG_CHECK_UPPER_LIMIT_ATTACKING or BUG_CHECK_UPPER_LIMIT
@@ -1070,7 +1060,6 @@ function CheckForObjReverseBugging(self, frameDiff)
 	elseif inBugRange then
 		isBugging = true
 	end
-
 	-- checksDone is more than ceil(unitReversing.groupId.selectedCount*0.5)
 	-- increment depending if fastTurnWas0Frames was true or not
 	if not unitReversing.hasBeenCounted then
@@ -1085,10 +1074,8 @@ function CheckForObjReverseBugging(self, frameDiff)
 		ExecuteAction("NAMED_FLASH", self, 2)
 		tinsert(unitsToFix, a)
 	end
-
 	-- Now check threshold after unitsToFix has been updated
 	local fixUnits = false
-
 	-- dont fix when doing a 180 degree turn
 	if not group.fixCancelled then
 		if checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
@@ -1099,36 +1086,24 @@ function CheckForObjReverseBugging(self, frameDiff)
 			if getn(unitsToFix) <= maxBugging then
 				-- proceed to fix the units
 				fixUnits = true
-				--WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(maxBugging+1) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "selected count is: " .. tostring(selectedCount) .. "\n")
 			end
-				local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn 
-				local thirdTurnCountTotal = group.thirdTurnFrameCount 
-				--WriteToFile("debug.txt",  "total: " .. tostring(thirdTurnCountTotal) .. " unit count: " .. tostring(thirdTurnUnitCount) .. "\n")
-
-				if thirdTurnUnitCount > 0 then
-					local avgThirdTurnCount = ceil(thirdTurnCountTotal / thirdTurnUnitCount)
-					--WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
-					if avgThirdTurnCount >= bugDuration-AVERAGE_TURN_COUNT_OFFSET then
-						group.fixCancelled = true
-						fixUnits = false
-						ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-					end
+			local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn
+			local thirdTurnCountTotal = group.thirdTurnFrameCount
+			-- if the units have got that not moving flag , dont do this 
+			if thirdTurnUnitCount > 0 then
+				local avgThirdTurnCount = ceil(thirdTurnCountTotal / thirdTurnUnitCount)
+				--WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
+				if avgThirdTurnCount >= bugDuration-AVERAGE_TURN_COUNT_OFFSET then
+					group.fixCancelled = true
+					fixUnits = false
+					ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 				end
-
-				--if (thirdTurnUnitCount <= 5 and not thirdTurnUnitCount == 0) and thirdTurnCountTotal < 70 then
-				--	fixUnits = false
-				--end
-
-				--WriteToFile("unitsNotMovingBeforeBackingUp.txt",  tostring(group.unitsNotMovingBeforeBackingUp) .. " selected count: " .. tostring(ceil(selectedCount*0.25)) .. "\n")
-				-- if unitsNotMovingBeforeBackingUp (which increments by one for each unit that isnt moving) is less than the selectedCount*0.35, then do extended checks
-				if (group.unitsNotMovingBeforeBackingUp < ceil(selectedCount*0.40)) then
-					if thirdTurnUnitCount < ceil(selectedCount*0.35) and not (group.unitsNotMovingBeforeBackingUp >= ceil(selectedCount*0.25)) then
-						fixUnits = false
-					end
-				end
-			--end
-		end	
-
+			end
+			--WriteToFile("data.txt", "thirdTurnUnitCount: " .. tostring(thirdTurnUnitCount) .. " group.unitsNotMovingBeforeBackingUp: " .. tostring(group.unitsNotMovingBeforeBackingUp) .. "\n")
+			if thirdTurnUnitCount < ceil(selectedCount*0.25) and not (group.unitsNotMovingBeforeBackingUp >= ceil(selectedCount*0.25)) then
+				fixUnits = false
+			end
+		end		
 		-- Apply fixes if threshold was met
 		-- fixUnits alone triggers the fix so that a non-bugging unit that pushes
 		-- checksDone over the threshold can still fix earlier-detected bugging units
@@ -1138,7 +1113,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 				--for i = 1, getn(unitsToFix) do
 				--	stringUnits = stringUnits .. "Fixing unit: " .. tostring(unitsToFix[i]) .. "\n"
 				--end
-				--WriteToFile("fixUnits.txt", stringUnits .. "\n\n\n" .. "------------------------------------------------")		
+				--WriteToFile("fixUnits.txt", stringUnits .. "\n\n\n" .. "------------------------------------------------")
 				-- mark all bugging units with USER_72 before reassignment so
 				-- GetANonBuggingUnit wont return a unit that is about to be fixed
 				for i = 1, getn(unitsToFix) do
@@ -1148,8 +1123,9 @@ function CheckForObjReverseBugging(self, frameDiff)
 					end
 				end
 				for i = getn(unitsToFix), 1, -1 do
-					ExecuteAction("NAMED_FLASH", unitsReversing[unitsToFix[i]].selfRealReference, 2)
-					FixBuggingUnit(unitsReversing[unitsToFix[i]].selfRealReference)
+					local buggingRef = unitsReversing[unitsToFix[i]].selfRealReference
+					ExecuteAction("NAMED_FLASH", buggingRef, 2)
+					FixBuggingUnit(buggingRef)
 				end
 			elseif isBugging then
 				--ExecuteAction("NAMED_FLASH", self, 2)
@@ -1408,7 +1384,6 @@ function ReverseUnitOnDeath(self)
 	local a,unitReversing = GetUnitReversingData(self)	
     RemoveFromUnitSelection(self)
     if unitsReversing[a] ~= nil then
-
 		-- remove from the group its part of
 		if unitReversing.groupId ~= nil then
 			local group = getglobal(unitReversing.groupId)
@@ -1435,6 +1410,16 @@ function BackingUpEnd(self)
 		-- need to prevent this when guarding
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
+		end
+	end
+
+	local unitsAreStillMoving = GetNumberOfUnitsMoving(selectedUnitList) <= (floor(getglobal(unitReversing.groupId).unitCount * UNITS_STILL_MOVING_THRESHOLD))
+	for id, unitRef in selectedUnitList do
+		if unitsAreStillMoving then
+			--WriteToFile("unitsMoving.txt",  tostring(GetNumberOfUnitsMoving(selectedUnitList)) .. "\n")
+			if not unitsReversing[unitRef].isAttacking and not unitsReversing[unitRef].isReverseMoving then
+				unitsReversing[unitRef].isMovingFlag = false
+			end
 		end
 	end
 
@@ -1475,7 +1460,6 @@ function BackingUpEnd(self)
 				end		
 			end
 		end
-
 		--WriteToFile("cleared list.txt", tostring(unitReversing.groupId) .. " " ..  tostring(unitReversing.groupIdAssigned) .. "\n")
 		-- free the global snapshot since all units have been cleared
 		if groupId  ~= nil then
