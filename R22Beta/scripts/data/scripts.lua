@@ -75,12 +75,12 @@ BUG_CHECK_LOWER_LIMIT = 4 -- lower tolerance for frameDiff vs bugDuration
 BUG_CHECK_UPPER_LIMIT = 3 -- upper tolerance when NOT attacking
 BUG_CHECK_UPPER_LIMIT_ATTACKING = 4 -- upper tolerance when attacking
 BUG_CHECK_LOWER_LIMIT_ATTACKING = 5 -- lower tolerance when attacking
-CHECKS_DONE_THRESHOLD = 0.5 -- ratio of units that must finish checking before fix decision
+CHECKS_DONE_THRESHOLD = 0.8 -- ratio of units that must finish checking before fix decision
 BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearing movement flag
-AVERAGE_TURN_COUNT_OFFSET = 3 -- offset subtracted from bugDuration when comparing avg turn count.
+AVERAGE_TURN_COUNT_OFFSET = 2 -- offset subtracted from bugDuration when comparing avg turn count.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
 unitBugDataTable = {
@@ -1101,22 +1101,28 @@ function CheckForObjReverseBugging(self, frameDiff)
 				fixUnits = true
 				--WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(maxBugging+1) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "selected count is: " .. tostring(selectedCount) .. "\n")
 			end
-			local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn
-			local thirdTurnCountTotal = group.thirdTurnFrameCount
-			--WriteToFile("debug.txt",  "total: " .. tostring(thirdTurnCountTotal) .. " unit count: " .. tostring(thirdTurnUnitCount) .. "\n")
+			if (group.unitsNotMovingBeforeBackingUp < ceil(selectedCount*0.50)) then
+				local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn
+				local thirdTurnCountTotal = group.thirdTurnFrameCount
+				--WriteToFile("debug.txt",  "total: " .. tostring(thirdTurnCountTotal) .. " unit count: " .. tostring(thirdTurnUnitCount) .. "\n")
 
-			if thirdTurnUnitCount > 0 then
-				local avgThirdTurnCount = ceil(thirdTurnCountTotal / thirdTurnUnitCount)
-				--WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
-				if avgThirdTurnCount > bugDuration-AVERAGE_TURN_COUNT_OFFSET then
-					group.fixCancelled = true
-					fixUnits = false
-					ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+				if thirdTurnUnitCount > 0 then
+					local avgThirdTurnCount = ceil(thirdTurnCountTotal / thirdTurnUnitCount)
+					--WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
+					if avgThirdTurnCount >= bugDuration-AVERAGE_TURN_COUNT_OFFSET then
+						group.fixCancelled = true
+						fixUnits = false
+						ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+					end
 				end
-			end
 
-			if thirdTurnUnitCount < ceil(selectedCount*0.25) then
-				fixUnits = false
+				--if (thirdTurnUnitCount <= 5 and not thirdTurnUnitCount == 0) and thirdTurnCountTotal < 70 then
+				--	fixUnits = false
+				--end
+				--WriteToFile("unitsNotMovingBeforeBackingUp.txt",  tostring(group.unitsNotMovingBeforeBackingUp) .. " selected count: " .. tostring(ceil(selectedCount*0.25)) .. "\n")
+				if thirdTurnUnitCount < ceil(selectedCount*0.35) and not (group.unitsNotMovingBeforeBackingUp >= ceil(selectedCount*0.25)) then
+					fixUnits = false
+				end
 			end
 		end	
 
@@ -1290,15 +1296,21 @@ function AssignGroupId(unitReversing, a, curFrame, self)
 		teamSnapshot.fixCancelled = false
 		teamSnapshot.thirdTurnFrameCount = 0
 		teamSnapshot.unitsThatPerformedThirdTurn = 0
+		teamSnapshot.unitsNotMovingBeforeBackingUp = 0
 		setglobal(groupId, teamSnapshot)
 		-- assign every unit the same groupId
+		local unitsNotMovingBeforeBackingUp = 0
 		for id, unitRef in teamSnapshot.units do
 			 -- WriteToFile("groupId.txt",  tostring(groupId) .. "\n")
 			if unitsReversing[unitRef] ~= nil then
 				unitsReversing[unitRef].groupId = groupId
 				unitsReversing[unitRef].groupIdAssigned = true
+				if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") == false then
+					unitsNotMovingBeforeBackingUp = unitsNotMovingBeforeBackingUp + 1
+				end
 			end
 		end
+		getglobal(groupId).unitsNotMovingBeforeBackingUp = unitsNotMovingBeforeBackingUp
 		-- WriteToFile("groupId.txt",  "------------------------------------" .. "\n")
 		-- assign the snapshot to groupId
 		-- unitReversing.groupId = teamSnapshot
@@ -1462,10 +1474,9 @@ function BackingUpEnd(self)
 		end
 
 		--WriteToFile("cleared list.txt", tostring(unitReversing.groupId) .. " " ..  tostring(unitReversing.groupIdAssigned) .. "\n")
-
 		-- free the global snapshot since all units have been cleared
 		if groupId  ~= nil then
-			print("clearing global")
+			--print("clearing global")
 			setglobal(groupId, nil)
 		end
 	end
