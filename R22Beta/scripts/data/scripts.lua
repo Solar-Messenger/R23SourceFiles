@@ -1101,9 +1101,8 @@ function CheckForObjReverseBugging(self, frameDiff)
 				fixUnits = true
 				--WriteToFile("checksDone.txt",  "checksDone: " .. tostring(checksDone) .. " max amount of units that can bug: " .. tostring(maxBugging+1) .. " unitsToFix: " .. tostring(getn(unitsToFix)) .. "selected count is: " .. tostring(selectedCount) .. "\n")
 			end
-			if (group.unitsNotMovingBeforeBackingUp < ceil(selectedCount*0.50)) then
-				local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn
-				local thirdTurnCountTotal = group.thirdTurnFrameCount
+				local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn 
+				local thirdTurnCountTotal = group.thirdTurnFrameCount 
 				--WriteToFile("debug.txt",  "total: " .. tostring(thirdTurnCountTotal) .. " unit count: " .. tostring(thirdTurnUnitCount) .. "\n")
 
 				if thirdTurnUnitCount > 0 then
@@ -1119,11 +1118,15 @@ function CheckForObjReverseBugging(self, frameDiff)
 				--if (thirdTurnUnitCount <= 5 and not thirdTurnUnitCount == 0) and thirdTurnCountTotal < 70 then
 				--	fixUnits = false
 				--end
+
 				--WriteToFile("unitsNotMovingBeforeBackingUp.txt",  tostring(group.unitsNotMovingBeforeBackingUp) .. " selected count: " .. tostring(ceil(selectedCount*0.25)) .. "\n")
-				if thirdTurnUnitCount < ceil(selectedCount*0.35) and not (group.unitsNotMovingBeforeBackingUp >= ceil(selectedCount*0.25)) then
-					fixUnits = false
+				-- if unitsNotMovingBeforeBackingUp (which increments by one for each unit that isnt moving) is less than the selectedCount*0.35, then do extended checks
+				if (group.unitsNotMovingBeforeBackingUp < ceil(selectedCount*0.40)) then
+					if thirdTurnUnitCount < ceil(selectedCount*0.35) and not (group.unitsNotMovingBeforeBackingUp >= ceil(selectedCount*0.25)) then
+						fixUnits = false
+					end
 				end
-			end
+			--end
 		end	
 
 		-- Apply fixes if threshold was met
