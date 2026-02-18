@@ -79,7 +79,7 @@ CHECKS_DONE_THRESHOLD = 0.8 -- ratio of units that must finish checking before f
 BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
-UNITS_STILL_MOVING_THRESHOLD = 0.05 -- ratio of units still moving before clearing movement flag
+UNITS_STILL_MOVING_THRESHOLD = 0.15 -- ratio of units still moving before clearing movement flag
 AVERAGE_TURN_COUNT_OFFSET = 1 -- offset subtracted from bugDuration when comparing avg turn count.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
@@ -971,11 +971,16 @@ function UnitNoLongerMoving(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
-	-- check if most units selected are not moving 
-	-- rather than increment/decrement make a table of each selected unit with true /false for moving
-	-- update list
-	if not unitReversing.hasBeenFixed then
-		unitReversing.isMovingFlag = false
+	-- check if most units selected are not moving
+	if not unitReversing.hasBeenFixed and unitReversing.groupId ~= nil then
+		local group = getglobal(unitReversing.groupId)
+		if GetNumberOfUnitsMoving(group.units) <= floor(group.unitCount * UNITS_STILL_MOVING_THRESHOLD) then
+			for id, unitRef in group.units do
+				if unitsReversing[unitRef] ~= nil and not unitsReversing[unitRef].isAttacking and not unitsReversing[unitRef].isReverseMoving then
+					unitsReversing[unitRef].isMovingFlag = false
+				end
+			end
+		end
 	end
 end
 
@@ -1413,6 +1418,14 @@ function BackingUpEnd(self)
 		end
 	end
 
+	unitReversing.firstFrame = 0 
+	unitReversing.isReverseMoving = false
+	unitReversing.timesTriggeredFast = 0
+	unitReversing.timesTriggeredNormal = 0
+	unitReversing.fastTurnWas0Frames = false
+	unitReversing.isAttacking = false
+	unitReversing.hasBeenCounted = false
+
 	local unitsAreStillMoving = GetNumberOfUnitsMoving(selectedUnitList) <= (floor(getglobal(unitReversing.groupId).unitCount * UNITS_STILL_MOVING_THRESHOLD))
 	for id, unitRef in selectedUnitList do
 		if unitsAreStillMoving then
@@ -1422,14 +1435,6 @@ function BackingUpEnd(self)
 			end
 		end
 	end
-
-	unitReversing.firstFrame = 0 
-	unitReversing.isReverseMoving = false
-	unitReversing.timesTriggeredFast = 0
-	unitReversing.timesTriggeredNormal = 0
-	unitReversing.fastTurnWas0Frames = false
-	unitReversing.isAttacking = false
-	unitReversing.hasBeenCounted = false
 
 	--if checksDone == unitReversing.groupId.selectedCount-1 then
 	local clearList = true
@@ -1467,6 +1472,8 @@ function BackingUpEnd(self)
 			setglobal(groupId, nil)
 		end
 	end
+	unitReversing.groupId = nil
+	unitReversing.groupIdAssigned = false
 end
 
 -- units cant clear this status normally unless i can get the object or model state for when UNIT_GUARD is triggered.
