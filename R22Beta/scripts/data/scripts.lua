@@ -69,18 +69,18 @@ crystalData = {}
 unitsReversing = {}
 
 TURN_TRIGGER_COUNT = 2 -- number of turn triggers before checking if unit is bugging
-NO_COLLISION_DURATION = 5 -- seconds to disable collision on a bugged unit during fix
+NO_COLLISION_DURATION = 4 -- seconds to disable collision on a bugged unit during fix
 REVERSE_SPAM_FRAME_WINDOW = 2 -- frames within which a repeat reverse-move command is ignored
-BUG_CHECK_LOWER_LIMIT = 4 -- lower tolerance for frameDiff vs bugDuration
-BUG_CHECK_UPPER_LIMIT = 3 -- upper tolerance when NOT attacking
-BUG_CHECK_UPPER_LIMIT_ATTACKING = 3 -- upper tolerance when attacking
-BUG_CHECK_LOWER_LIMIT_ATTACKING = 4 -- lower tolerance when attacking
+BUG_CHECK_LOWER_LIMIT = 5 -- lower tolerance for frameDiff vs bugDuration
+BUG_CHECK_UPPER_LIMIT = 4 -- upper tolerance when NOT attacking
+BUG_CHECK_UPPER_LIMIT_ATTACKING = 4 -- upper tolerance when attacking
+BUG_CHECK_LOWER_LIMIT_ATTACKING = 5 -- lower tolerance when attacking
 CHECKS_DONE_THRESHOLD = 0.8 -- ratio of units that must finish checking before fix decision
 BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
 BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
-UNITS_STILL_MOVING_THRESHOLD = 0.1 -- ratio of units still moving before clearing movement flag
-AVERAGE_TURN_COUNT_OFFSET = 2 -- offset subtracted from bugDuration when comparing avg turn count.
+UNITS_STILL_MOVING_THRESHOLD = 0.05 -- ratio of units still moving before clearing movement flag
+AVERAGE_TURN_COUNT_OFFSET = 1 -- offset subtracted from bugDuration when comparing avg turn count.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
 unitBugDataTable = {
@@ -1090,9 +1090,9 @@ function CheckForObjReverseBugging(self, frameDiff)
 			local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn
 			local thirdTurnCountTotal = group.thirdTurnFrameCount
 			-- if the units have got that not moving flag , dont do this 
-			if thirdTurnUnitCount > 0 then
+			if thirdTurnUnitCount > 1 then
 				local avgThirdTurnCount = ceil(thirdTurnCountTotal / thirdTurnUnitCount)
-				--WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
+				WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
 				if avgThirdTurnCount >= bugDuration-AVERAGE_TURN_COUNT_OFFSET then
 					group.fixCancelled = true
 					fixUnits = false
@@ -1174,7 +1174,7 @@ function FixBuggingUnit(self)
 	for id, unitRef in selectedUnitList do
 		--  this unit is bugging so lets go through all the closest units and see if it coincides with this one
 		-- 	WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].unitAnchor) .. "\n")
-		if unitsReversing[unitRef].unitAnchor == unitReversing.selfReference then
+		if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].unitAnchor == unitReversing.selfReference then
 			-- get a unit that hasnt bugged that isnt itself
 			local nonBuggingUnit = GetANonBuggingUnit(group.units, unitsReversing[unitRef].selfRealReference)
 			-- only proceed if we found a non-bugging unit
@@ -1236,7 +1236,7 @@ function BackingUp(self)
     else 
         -- Reset the flags here to ensure we don't carry over bugs from previous moves
         unitReversing.hasAlreadyReversed = false
-        --unitReversing.hasBeenFixed = false
+        unitReversing.hasBeenFixed = false
         unitReversing.unitAnchor = nil
         unitReversing.fastTurnWas0Frames = false
         unitReversing.timesTriggeredFast = 0
@@ -1417,7 +1417,7 @@ function BackingUpEnd(self)
 	for id, unitRef in selectedUnitList do
 		if unitsAreStillMoving then
 			--WriteToFile("unitsMoving.txt",  tostring(GetNumberOfUnitsMoving(selectedUnitList)) .. "\n")
-			if not unitsReversing[unitRef].isAttacking and not unitsReversing[unitRef].isReverseMoving then
+			if unitsReversing[unitRef] ~= nil and not unitsReversing[unitRef].isAttacking and not unitsReversing[unitRef].isReverseMoving then
 				unitsReversing[unitRef].isMovingFlag = false
 			end
 		end
@@ -1467,8 +1467,6 @@ function BackingUpEnd(self)
 			setglobal(groupId, nil)
 		end
 	end
-	unitReversing.groupId = nil
-	unitReversing.groupIdAssigned = false
 end
 
 -- units cant clear this status normally unless i can get the object or model state for when UNIT_GUARD is triggered.
@@ -1493,7 +1491,7 @@ function BuggedUnitTimeout(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
-	-- unitReversing.hasBeenFixed = true
+	unitReversing.hasBeenFixed = true
 	-- apply a minor 1s speed boost to the affected unit via upgrade, community appears to be against this idea so ill comment it out for now. Maybe +15% speed is an acceptable buff to offset the times the unit stops.
 	-- this is cleared in BackingUpEnd when clearList is true
 	-- ObjectCreateAndFireTempWeapon(self, "BuggedUnitSpeedBoost")
