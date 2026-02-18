@@ -142,9 +142,9 @@ unitBugDataTable = {
 	["565BE825"] = { frameCount = 35,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3 }, -- Steel Talons MARV
 	["FD890B01"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3 }, -- ZOCOM Surveyor
 	["921C06CC"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3 }, -- GDI Surveyor
-	["F3F183DD"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3 }, -- Steel Talons Surveyor
-	["AD5F0217"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2 }, -- ZOCOM Pitbull
-	["6FF52808"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2 }, -- GDI Pitbull
+	["F3F183DD"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3 }, -- Steel Talons Surveyor
+	["AD5F0217"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2 }, -- ZOCOM Pitbull
+	["6FF52808"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2 }, -- GDI Pitbull
 	["C6387E0"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2 }, -- Steel Talons Pitbull
 	["6FCB2318"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3 }, -- ZOCOM Rig
 	["B48BEDD2"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3 }, -- GDI Rig
