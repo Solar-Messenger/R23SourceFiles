@@ -71,9 +71,9 @@ unitsReversing = {}
 TURN_TRIGGER_COUNT = 2 -- number of turn triggers before checking if unit is bugging
 NO_COLLISION_DURATION = 4 -- seconds to disable collision on a bugged unit during fix
 REVERSE_SPAM_FRAME_WINDOW = 2 -- frames within which a repeat reverse-move command is ignored
-CHECKS_DONE_THRESHOLD = 0.8 -- ratio of units that must finish checking before fix decision
-BUG_THRESHOLD_LARGE_GROUP = 0.15 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
-BUG_THRESHOLD_SMALL_GROUP = 0.25 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
+CHECKS_DONE_THRESHOLD = 0.75 -- ratio of units that must finish checking before fix decision
+BUG_THRESHOLD_LARGE_GROUP = 0.50 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
+BUG_THRESHOLD_SMALL_GROUP = 0.66 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.15 -- ratio of units still moving before clearing movement flag
 AVERAGE_TURN_COUNT_OFFSET = 1 -- offset subtracted from bugDuration when comparing avg turn count.
@@ -85,9 +85,9 @@ unitBugDataTable = {
 	-- thirdTurnThreshold: proportion of selectedCount used for thirdTurnUnitCount and unitsNotMovingBeforeBackingUp checks
 
 	-- NOD UNITS --
-	["E3C841B0"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Mok Raider Buggy
-	["79609108"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Raider Buggy
-	["6354531D"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Nod Raider Buggy
+	["E3C841B0"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- Mok Raider Buggy
+	["79609108"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- Black Hand Raider Buggy
+	["6354531D"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- Nod Raider Buggy
 	["1B44D6AE"] = { frameCount = 11, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Mok Scorpion Tank
 	["A33F11AF"] = { frameCount = 11, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Scorpion Tank
 	["2F9131D"]  = { frameCount = 11, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Nod Scorpion Tank
@@ -105,11 +105,14 @@ unitBugDataTable = {
 	["12CEBD57"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Nod Emissary
 	["BDC39D7D"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Marked of Kane Emissary
 	["7D560AEC"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Emissary
+	["3A3D109A"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Nod Harvester
+	["C3785BFE"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Marked of Kane Harvester
+	["21661DFB"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Harvester
 
 	-- SCRIN UNITS --
-	["B8802763"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Scrin Seeker
-	["DB2B7D2F"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Reaper-17 Seeker
-	["7296891C"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Traveler-59 Seeker
+	["B8802763"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnThreshold = 0.35 }, -- Scrin Seeker
+	["DB2B7D2F"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnThreshold = 0.35 }, -- Reaper-17 Seeker
+	["7296891C"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnThreshold = 0.35 }, -- Traveler-59 Seeker
 	["AF991372"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Scrin Devourer Tank
 	["416EFDFF"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Reaper-17 Devourer Tank
 	["77A0E8A9"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Scrin Corruptor
@@ -147,9 +150,15 @@ unitBugDataTable = {
 	["AD5F0217"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- ZOCOM Pitbull
 	["6FF52808"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- GDI Pitbull
 	["C6387E0"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- Steel Talons Pitbull
+	["AABD1C1F"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- ZOCOM Veteran Pitbull
+	["D9E0C318"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- GDI Veteran Pitbull
+	["90BA3D4D"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- Steel Talons Veteran Pitbull
 	["6FCB2318"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- ZOCOM Rig
 	["B48BEDD2"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- GDI Rig
-	["82D6E5D8"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 } -- Steel Talons Rig
+	["82D6E5D8"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Steel Talons Rig
+	["D258354"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- GDI Harvester
+	["F52AEEDF"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Steel Talons Heavy Harvester
+	["C23B3A15"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 } -- ZOCOM Harvester
 }
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
@@ -994,7 +1003,7 @@ end
 function BackingUpFastTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
 	-- prevents this from executing
-	if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
+	--if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
 	local timesToTrigger = TURN_TRIGGER_COUNT
 	local curFrame = GetFrame()
 	local frameDiff = curFrame - unitReversing.firstFrame
@@ -1017,12 +1026,12 @@ function BackingUpFastTurnEnd(self)
 		unitReversing.timesTriggeredFast = unitReversing.timesTriggeredFast + 1
 		--CheckForObjReverseBugging(self, unitReversing)
 	end
-end
+end	
 
 -- Triggered by +BACKING_UP -TURN_LEFT and +BACKING_UP -TURN_RIGHT
 function BackingUpTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
-	if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
+	--if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
 	local timesToTrigger = TURN_TRIGGER_COUNT
 	local frameDiff = GetFrame() - unitReversing.firstFrame
 
@@ -1082,7 +1091,6 @@ function CheckForObjReverseBugging(self, frameDiff)
 		checksDone = checksDone + 1
 		unitReversing.hasBeenCounted = true
 	end
-	-- WriteToFile("checksDoneInt.txt",  tostring(checksDone) .. "\n")
 	-- First determine if this unit is bugging and add it to the list,  dont fix units that are being already fixed
 	if isBugging and not unitReversing.hasBeenFixed then
 		-- unitReversing.hasBeenFixed = true
@@ -1090,34 +1098,44 @@ function CheckForObjReverseBugging(self, frameDiff)
 		ExecuteAction("NAMED_FLASH", self, 2)
 		tinsert(unitsToFix, a)
 	end
+	-- WriteToFile("checksDoneInt.txt",  tostring(checksDone) .. " num of units bugging: " .. tostring(getn(unitsToFix)) "\n")
 	-- Now check threshold after unitsToFix has been updated
 	local fixUnits = false
+
+	local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn
+	--WriteToFile("data.txt", "this unit has three turn count: " .. tostring(thirdTurnUnitCount) .. "\n")
 	-- dont fix when doing a 180 degree turn
 	if not group.fixCancelled then
 		if checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
 			-- if number of units bugging is less than the count * BUG_THRESHOLD_SMALL_GROUP
 			-- if more than LARGE_GROUP_SIZE units are selected, make the detection more forgiving
 			local bugThreshold = selectedCount > LARGE_GROUP_SIZE and BUG_THRESHOLD_LARGE_GROUP or BUG_THRESHOLD_SMALL_GROUP
-			local maxBugging = ceil(selectedCount * bugThreshold)
+			local maxBugging = ceil(selectedCount*bugThreshold)
 			if getn(unitsToFix) <= maxBugging then
 				-- proceed to fix the units
 				fixUnits = true
+				-- print("fixing units")
+			else
+				group.fixCancelled = true
 			end
-			local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn
+			--local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn
 			local thirdTurnCountTotal = group.thirdTurnFrameCount
 			-- if the units have got that not moving flag , dont do this 
 			if thirdTurnUnitCount > 1 then
 				local avgThirdTurnCount = ceil(thirdTurnCountTotal / thirdTurnUnitCount)
-				WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
+				--WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
 				if avgThirdTurnCount >= bugDuration-unitBugData.avgTurnCountOffset then
 					group.fixCancelled = true
 					fixUnits = false
 					ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 				end
 			end
-			WriteToFile("data.txt", "thirdTurnUnitCount: " .. tostring(thirdTurnUnitCount) .. " group.unitsNotMovingBeforeBackingUp: " .. tostring(group.unitsNotMovingBeforeBackingUp) .. "\n")
-			if thirdTurnUnitCount < ceil(selectedCount*unitBugData.thirdTurnThreshold) and not (group.unitsNotMovingBeforeBackingUp >= ceil(selectedCount*unitBugData.thirdTurnThreshold)) then
+
+			-- WriteToFile("data.txt", "thirdTurnUnitCount: " .. tostring(thirdTurnUnitCount) .. "is less than " .. tostring(ceil(selectedCount*0.25)) .. " group.unitsNotMovingBeforeBackingUp: " .. tostring(group.unitsNotMovingBeforeBackingUp) .. "is more than: " .. tostring(ceil(selectedCount*0.25)) .. "\n")
+			-- if units have turned three times and havent stopped before backing up 
+			if thirdTurnUnitCount < ceil(selectedCount*0.35) and not (group.unitsNotMovingBeforeBackingUp >= ceil(selectedCount*0.50)) then
 				fixUnits = false
+				--group.fixCancelled = true
 			end
 		end		
 		-- Apply fixes if threshold was met
@@ -1226,7 +1244,7 @@ function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 		if unitsReversing[unitRef] ~= nil then
 			if unitsReversing[unitRef].selfRealReference ~= unit then
 				-- check to see if unit is bugging and isnt destroyed
-				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") == false then
+				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and not unitsReversing[unitRef].hasBeenFixed and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") == false then
 					tinsert(candidates, unitsReversing[unitRef].selfReference)
 				end
 			end
@@ -1455,8 +1473,11 @@ function BackingUpEnd(self)
 	if unitReversing ~= nil and not unitReversing.hasBeenFixed then
 		-- need to prevent this when guarding
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)
 		end
+	end
+	if ObjectTestModelCondition(self, "USER_72") then
+		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 0, 100)
 	end
 
 	unitReversing.firstFrame = 0 
@@ -1512,7 +1533,7 @@ function BackingUpEnd(self)
 		--WriteToFile("cleared list.txt", tostring(unitReversing.groupId) .. " " ..  tostring(unitReversing.groupIdAssigned) .. "\n")
 		-- free the global snapshot since all units have been cleared
 		if groupId  ~= nil then
-			print("clearing global")
+			--print("clearing global")
 			setglobal(groupId, nil)
 		end
 	end
