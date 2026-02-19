@@ -1003,7 +1003,7 @@ end
 function BackingUpFastTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
 	-- prevents this from executing
-	--if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
+	if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
 	local timesToTrigger = TURN_TRIGGER_COUNT
 	local curFrame = GetFrame()
 	local frameDiff = curFrame - unitReversing.firstFrame
@@ -1031,7 +1031,7 @@ end
 -- Triggered by +BACKING_UP -TURN_LEFT and +BACKING_UP -TURN_RIGHT
 function BackingUpTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
-	--if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
+	if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
 	local timesToTrigger = TURN_TRIGGER_COUNT
 	local frameDiff = GetFrame() - unitReversing.firstFrame
 
