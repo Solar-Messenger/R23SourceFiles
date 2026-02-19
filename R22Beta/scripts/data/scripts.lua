@@ -1404,7 +1404,7 @@ end
 function RemoveFromUnitSelection(self)
     local playerTeam = tostring(ObjectTeamName(self))
     local unitId = getObjectId(self)
-	local teamTable = getglobal(playerTeam)
+	local teamTable = getglobal(playerTeam) or nil
     
     if unitId ~= nil and teamTable ~= nil and teamTable.units ~= nil then
         -- distinct check using the Key
@@ -1429,6 +1429,11 @@ function ReverseUnitOnDeath(self)
 			if group ~= nil and group.units ~= nil and group.units[a] ~= nil then
 				group.units[a] = nil
 				group.unitCount = (group.unitCount or 1) - 1
+				-- check if theres no units left in the group and if so , clear the global.
+				if group.unitCount <= 0 or next(group.units) == nil then
+					setglobal(unitReversing.groupId, nil)
+					--print("clearing global on death")
+				end
 			end
 		end
         unitsReversing[a] = nil
@@ -1507,7 +1512,7 @@ function BackingUpEnd(self)
 		--WriteToFile("cleared list.txt", tostring(unitReversing.groupId) .. " " ..  tostring(unitReversing.groupIdAssigned) .. "\n")
 		-- free the global snapshot since all units have been cleared
 		if groupId  ~= nil then
-			--print("clearing global")
+			print("clearing global")
 			setglobal(groupId, nil)
 		end
 	end
