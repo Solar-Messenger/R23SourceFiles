@@ -85,80 +85,80 @@ unitBugDataTable = {
 	-- thirdTurnThreshold: proportion of selectedCount used for thirdTurnUnitCount and unitsNotMovingBeforeBackingUp checks
 
 	-- NOD UNITS --
-	["E3C841B0"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- Mok Raider Buggy
-	["79609108"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- Black Hand Raider Buggy
-	["6354531D"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- Nod Raider Buggy
-	["1B44D6AE"] = { frameCount = 11, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Mok Scorpion Tank
-	["A33F11AF"] = { frameCount = 11, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Scorpion Tank
-	["2F9131D"]  = { frameCount = 11, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Nod Scorpion Tank
-	["26538D"]   = { frameCount = 7,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Nod Stealth Tank
-	["1025B90B"] = { frameCount = 7,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Marked of Kane Stealth Tank
-	["F38615BD"] = { frameCount = 7,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Mantis
-	["FD8822B1"] = { frameCount = 14, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Nod Flame Tank
-	["1E1AEEBE"] = { frameCount = 14, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Flame Tank
-	["4F9DF943"] = { frameCount = 14, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Nod Beam Cannon
-	["3D143A57"] = { frameCount = 14, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Marked of Kane Beam Cannon
-	["7F5C5CDA"] = { frameCount = 14, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Beam Cannon
-	["53024F73"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Nod Reckoner
-	["3000821A"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Marked of Kane Reckoner
-	["198BF501"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Reckoner
-	["12CEBD57"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Nod Emissary
-	["BDC39D7D"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Marked of Kane Emissary
-	["7D560AEC"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Emissary
-	["3A3D109A"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Nod Harvester
-	["C3785BFE"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Marked of Kane Harvester
-	["21661DFB"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Harvester
+	["E3C841B0"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2}, -- Mok Raider Buggy
+	["79609108"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2}, -- Black Hand Raider Buggy
+	["6354531D"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2}, -- Nod Raider Buggy
+	["1B44D6AE"] = { frameCount = 11, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Mok Scorpion Tank
+	["A33F11AF"] = { frameCount = 11, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Black Hand Scorpion Tank
+	["2F9131D"]  = { frameCount = 11, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Nod Scorpion Tank
+	["26538D"]   = { frameCount = 7,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Nod Stealth Tank
+	["1025B90B"] = { frameCount = 7,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Marked of Kane Stealth Tank
+	["F38615BD"] = { frameCount = 7,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Black Hand Mantis
+	["FD8822B1"] = { frameCount = 14, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Nod Flame Tank
+	["1E1AEEBE"] = { frameCount = 14, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Black Hand Flame Tank
+	["4F9DF943"] = { frameCount = 14, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Nod Beam Cannon
+	["3D143A57"] = { frameCount = 14, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Marked of Kane Beam Cannon
+	["7F5C5CDA"] = { frameCount = 14, damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Black Hand Beam Cannon
+	["53024F73"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Nod Reckoner
+	["3000821A"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Marked of Kane Reckoner
+	["198BF501"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Black Hand Reckoner
+	["12CEBD57"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Nod Emissary
+	["BDC39D7D"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Marked of Kane Emissary
+	["7D560AEC"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Black Hand Emissary
+	["3A3D109A"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Nod Harvester
+	["C3785BFE"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Marked of Kane Harvester
+	["21661DFB"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Black Hand Harvester
 
 	-- SCRIN UNITS --
-	["B8802763"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnThreshold = 0.35 }, -- Scrin Seeker
-	["DB2B7D2F"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnThreshold = 0.35 }, -- Reaper-17 Seeker
-	["7296891C"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnThreshold = 0.35 }, -- Traveler-59 Seeker
-	["AF991372"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Scrin Devourer Tank
-	["416EFDFF"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Reaper-17 Devourer Tank
-	["77A0E8A9"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Scrin Corruptor
-	["B187F87A"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Reaper-17 Corruptor
-	["91B5B69D"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Traveler-59 Corruptor
-	["1A54C1B"]  = { frameCount = 4,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Scrin Gunwalker
-	["B64581F8"] = { frameCount = 4,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Reaper-17 Shard Walker
-	["51430053"] = { frameCount = 4,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Traveler-59 Gunwalker
+	["B8802763"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6}, -- Scrin Seeker
+	["DB2B7D2F"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6}, -- Reaper-17 Seeker
+	["7296891C"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6}, -- Traveler-59 Seeker
+	["AF991372"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Scrin Devourer Tank
+	["416EFDFF"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Reaper-17 Devourer Tank
+	["77A0E8A9"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Scrin Corruptor
+	["B187F87A"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Reaper-17 Corruptor
+	["91B5B69D"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Traveler-59 Corruptor
+	["1A54C1B"]  = { frameCount = 4,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Scrin Gunwalker
+	["B64581F8"] = { frameCount = 4,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Reaper-17 Shard Walker
+	["51430053"] = { frameCount = 4,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Traveler-59 Gunwalker
 
 	-- GDI UNITS --
-	["D01CFD88"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- GDI APC
-	["286DE7C4"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Steel Talons APC
-	["64BCB106"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- ZOCOM APC
-	["AF462A8F"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- GDI Veteran APC
-	["BD7701CB"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- ZOCOM Veteran APC
-	["F714BBD3"] = { frameCount = 14,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- ZOCOM Predator Tank
-	["E6EAD02C"] = { frameCount = 14,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- GDI Predator Tank
-	["E602E1AF"] = { frameCount = 25,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- ZOCOM Zone Shatterer
-	["2144BD64"] = { frameCount = 25,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- GDI Shatterer
-	["12E1C8C8"] = { frameCount = 28,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- ZOCOM Mammoth Tank
-	["BC0A0849"] = { frameCount = 28,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- GDI Mammoth Tank
-	["C1B5AB13"] = { frameCount = 28,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Steel Talons Mammoth Tank
-	["5A6044BC"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- ZOCOM Slingshot
-	["B54034FF"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- GDI Slingshot
-	["4AFAC6E8"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Steel Talons Slingshot
-	["330CEC90"] = { frameCount = 20,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- ZOCOM MCV
-	["52935296"] = { frameCount = 20,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- GDI MCV
-	["3E7EE781"] = { frameCount = 20,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Steel Talons MCV
-	["30354418"] = { frameCount = 35,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- ZOCOM MARV
-	["37F0A5F5"] = { frameCount = 35,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- GDI MARV
-	["565BE825"] = { frameCount = 35,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Steel Talons MARV
-	["FD890B01"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- ZOCOM Surveyor
-	["921C06CC"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- GDI Surveyor
-	["F3F183DD"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Steel Talons Surveyor
-	["AD5F0217"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- ZOCOM Pitbull
-	["6FF52808"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- GDI Pitbull
-	["C6387E0"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- Steel Talons Pitbull
-	["AABD1C1F"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- ZOCOM Veteran Pitbull
-	["D9E0C318"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- GDI Veteran Pitbull
-	["90BA3D4D"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnThreshold = 0.15 }, -- Steel Talons Veteran Pitbull
-	["6FCB2318"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- ZOCOM Rig
-	["B48BEDD2"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- GDI Rig
-	["82D6E5D8"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Steel Talons Rig
-	["D258354"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- GDI Harvester
-	["F52AEEDF"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Steel Talons Heavy Harvester
-	["C23B3A15"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 } -- ZOCOM Harvester
+	["D01CFD88"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- GDI APC
+	["286DE7C4"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Steel Talons APC
+	["64BCB106"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- ZOCOM APC
+	["AF462A8F"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- GDI Veteran APC
+	["BD7701CB"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- ZOCOM Veteran APC
+	["F714BBD3"] = { frameCount = 14,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- ZOCOM Predator Tank
+	["E6EAD02C"] = { frameCount = 14,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- GDI Predator Tank
+	["E602E1AF"] = { frameCount = 25,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- ZOCOM Zone Shatterer
+	["2144BD64"] = { frameCount = 25,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- GDI Shatterer
+	["12E1C8C8"] = { frameCount = 28,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- ZOCOM Mammoth Tank
+	["BC0A0849"] = { frameCount = 28,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- GDI Mammoth Tank
+	["C1B5AB13"] = { frameCount = 28,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Steel Talons Mammoth Tank
+	["5A6044BC"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- ZOCOM Slingshot
+	["B54034FF"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- GDI Slingshot
+	["4AFAC6E8"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Steel Talons Slingshot
+	["330CEC90"] = { frameCount = 20,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- ZOCOM MCV
+	["52935296"] = { frameCount = 20,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- GDI MCV
+	["3E7EE781"] = { frameCount = 20,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Steel Talons MCV
+	["30354418"] = { frameCount = 35,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- ZOCOM MARV
+	["37F0A5F5"] = { frameCount = 35,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- GDI MARV
+	["565BE825"] = { frameCount = 35,  damagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Steel Talons MARV
+	["FD890B01"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- ZOCOM Surveyor
+	["921C06CC"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = -2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- GDI Surveyor
+	["F3F183DD"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Steel Talons Surveyor
+	["AD5F0217"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2}, -- ZOCOM Pitbull
+	["6FF52808"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2}, -- GDI Pitbull
+	["C6387E0"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2}, -- Steel Talons Pitbull
+	["AABD1C1F"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2}, -- ZOCOM Veteran Pitbull
+	["D9E0C318"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2}, -- GDI Veteran Pitbull
+	["90BA3D4D"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2}, -- Steel Talons Veteran Pitbull
+	["6FCB2318"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- ZOCOM Rig
+	["B48BEDD2"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- GDI Rig
+	["82D6E5D8"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Steel Talons Rig
+	["D258354"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- GDI Harvester
+	["F52AEEDF"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,}, -- Steel Talons Heavy Harvester
+	["C23B3A15"] = { frameCount = 12,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3,} -- ZOCOM Harvester
 }
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
@@ -1097,7 +1097,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 		isBugging = true
 	end
 
-	if isBugging then ExecuteAction("NAMED_FLASH_WHITE", self, 2) end
+	--if isBugging then ExecuteAction("NAMED_FLASH_WHITE", self, 2) end
 
 	-- checksDone is more than ceil(unitReversing.groupId.selectedCount*0.5)
 	if not unitReversing.hasBeenCounted then
@@ -1111,10 +1111,20 @@ function CheckForObjReverseBugging(self, frameDiff)
 		--ExecuteAction("NAMED_FLASH", self, 2)
 		tinsert(unitsToFix, a)
 	end
+
+	-- Check if any unit hasnt attempted to move yet and move it if so.
+	--if checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
+	--	for id, unitRef in selectedUnitList do 
+	--		if not unitsReversing[unitRef].isReverseMoving and not unitsReversing[unitRef].hasBeenFixed then
+	--			tinsert(unitsToFix, getObjectId(unitsReversing[unitRef].selfRealReference))
+	--			print("unit inserted")
+	--		end
+	--	end
+	--end
+
 	-- WriteToFile("checksDoneInt.txt",  tostring(checksDone) .. " num of units bugging: " .. tostring(getn(unitsToFix)) "\n")
 	-- Now check threshold after unitsToFix has been updated
 	local fixUnits = false
-
 	local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn
 	--WriteToFile("data.txt", "this unit has three turn count: " .. tostring(thirdTurnUnitCount) .. "\n")
 	-- dont fix when doing a 180 degree turn
@@ -1144,11 +1154,13 @@ function CheckForObjReverseBugging(self, frameDiff)
 				end
 			end
 
-			-- WriteToFile("data.txt", "thirdTurnUnitCount: " .. tostring(thirdTurnUnitCount) .. "is less than " .. tostring(ceil(selectedCount*0.25)) .. " group.unitsNotMovingBeforeBackingUp: " .. tostring(group.unitsNotMovingBeforeBackingUp) .. "is more than: " .. tostring(ceil(selectedCount*0.25)) .. "\n")
+			-- FOR ADDING NEW UNITS 
+			 --WriteToFile("data.txt", "thirdTurnUnitCount: " .. tostring(thirdTurnUnitCount) .. "is less than " .. tostring(ceil(selectedCount*0.25)) .. " group.unitsNotMovingBeforeBackingUp: " .. tostring(group.unitsNotMovingBeforeBackingUp) .. "is more than: " .. tostring(ceil(selectedCount*0.25)) .. "\n")
 			-- if units have turned three times and havent stopped before backing up 
-			if thirdTurnUnitCount < ceil(selectedCount*0.35) and not (group.unitsNotMovingBeforeBackingUp >= ceil(selectedCount*0.50)) then
+			if thirdTurnUnitCount < ceil(selectedCount*0.35) and not (group.unitsNotMovingBeforeBackingUp >= ceil(selectedCount*0.40)) then
 				fixUnits = false
 				--group.fixCancelled = true
+				ExecuteAction("NAMED_FLASH", self, 2)
 			end
 		end		
 		-- Apply fixes if threshold was met
@@ -1197,7 +1209,7 @@ function FixBuggingUnit(self)
 	local group = getglobal(unitReversing.groupId)
 	if group == nil or group.units == nil then return end
 	local selectedUnitList = group.units
-	if unitReversing.isReverseMoving then 
+	--if unitReversing.isReverseMoving then 
 		if ObjectTestModelCondition(self, "USER_72") == false then
 			ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", NO_COLLISION_DURATION, 100)
 		end
@@ -1209,7 +1221,7 @@ function FixBuggingUnit(self)
 		if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") == 0 then
 			ObjectGrantUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 		end
-	end
+	--end
 	-- check if unitAnchor is destroyed or is nil
 	if unitReversing.unitAnchor ~= nil then
 		if not EvaluateCondition("NAMED_NOT_DESTROYED",unitReversing.unitAnchor) then 
