@@ -110,9 +110,9 @@ unitBugDataTable = {
 	["21661DFB"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Harvester
 
 	-- SCRIN UNITS --
-	["B8802763"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 6, thirdTurnThreshold = 0.35 }, -- Scrin Seeker
-	["DB2B7D2F"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 6, thirdTurnThreshold = 0.35 }, -- Reaper-17 Seeker
-	["7296891C"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 6, thirdTurnThreshold = 0.35 }, -- Traveler-59 Seeker
+	["B8802763"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnThreshold = 0.35 }, -- Scrin Seeker
+	["DB2B7D2F"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnThreshold = 0.35 }, -- Reaper-17 Seeker
+	["7296891C"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnThreshold = 0.35 }, -- Traveler-59 Seeker
 	["AF991372"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Scrin Devourer Tank
 	["416EFDFF"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Reaper-17 Devourer Tank
 	["77A0E8A9"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Scrin Corruptor
@@ -616,7 +616,7 @@ function TiberiumEvent(self, other)
 				if strfind(ObjectDescription(self), "BA9F66AB") ~= nil or strfind(ObjectDescription(self), "TiberiumCrystalBlue") ~= nil then
 					data.isHarvestingBlue = true
 					-- show the blue tib fx
-					if ObjectHasUpgrade(other, "Upgrade_UpgradeBlueTib") == 0 then 
+					if not ObjectHasUpgrade(other, "Upgrade_UpgradeBlueTib") then 
 						ObjectGrantUpgrade(other, "Upgrade_UpgradeBlueTib") 
 					end		
 				else
@@ -1012,8 +1012,8 @@ end
 -- Triggered by +BACKING_UP -TURN_LEFT_HIGH_SPEED and +BACKING_UP -TURN_RIGHT_HIGH_SPEED
 function BackingUpFastTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
-	-- prevents this from executing
-	if not unitReversing.isMovingFlag then return end
+	-- prevents this from executing when the unit is not moving and not attacking
+	if not unitReversing.isMovingFlag and not unitReversing.isAttacking then return end
 	local timesToTrigger = TURN_TRIGGER_COUNT
 	local curFrame = GetFrame()
 	local frameDiff = curFrame - unitReversing.firstFrame
@@ -1041,7 +1041,7 @@ end
 -- Triggered by +BACKING_UP -TURN_LEFT and +BACKING_UP -TURN_RIGHT
 function BackingUpTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
-	if unitReversing.isMovingFlag then return end
+	if not unitReversing.isMovingFlag and not unitReversing.isAttacking then return end
 	local timesToTrigger = TURN_TRIGGER_COUNT
 	local frameDiff = GetFrame() - unitReversing.firstFrame
 
@@ -1090,12 +1090,15 @@ function CheckForObjReverseBugging(self, frameDiff)
 		if inBugRange then
 			isBugging = true
 		end
-		-- ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+		 --ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 	elseif frameDiff == 0 then
 		unitReversing.fastTurnWas0Frames = true
 	elseif inBugRange then
 		isBugging = true
 	end
+
+	if isBugging then ExecuteAction("NAMED_FLASH_WHITE", self, 2) end
+
 	-- checksDone is more than ceil(unitReversing.groupId.selectedCount*0.5)
 	if not unitReversing.hasBeenCounted then
 		checksDone = checksDone + 1
@@ -1105,7 +1108,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	if isBugging and not unitReversing.hasBeenFixed then
 		-- unitReversing.hasBeenFixed = true
 		-- cache the units if they are to be fixed in this table
-		ExecuteAction("NAMED_FLASH", self, 2)
+		--ExecuteAction("NAMED_FLASH", self, 2)
 		tinsert(unitsToFix, a)
 	end
 	-- WriteToFile("checksDoneInt.txt",  tostring(checksDone) .. " num of units bugging: " .. tostring(getn(unitsToFix)) "\n")
@@ -1160,20 +1163,11 @@ function CheckForObjReverseBugging(self, frameDiff)
 				--WriteToFile("fixUnits.txt", stringUnits .. "\n\n\n" .. "------------------------------------------------")
 				-- mark all bugging units with USER_72 before reassignment so
 				-- GetANonBuggingUnit wont return a unit that is about to be fixed
-				for i = 1, getn(unitsToFix) do
-					local buggingUnit = unitsReversing[unitsToFix[i]]
-					if buggingUnit ~= nil then
-						local buggingRef = buggingUnit.selfRealReference
-						if ObjectTestModelCondition(buggingRef, "USER_72") == false then
-							ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", buggingRef, "USER_72", NO_COLLISION_DURATION, 100)
-						end
-					end
-				end
 				for i = getn(unitsToFix), 1, -1 do
 					local buggingUnit = unitsReversing[unitsToFix[i]]
 					if buggingUnit ~= nil then
 						local buggingRef = buggingUnit.selfRealReference
-						ExecuteAction("NAMED_FLASH", buggingRef, 2)
+						--ExecuteAction("NAMED_FLASH", buggingRef, 2)
 						FixBuggingUnit(buggingRef)
 					else
 						tremove(unitsToFix, i)
@@ -1203,8 +1197,12 @@ function FixBuggingUnit(self)
 	local group = getglobal(unitReversing.groupId)
 	if group == nil or group.units == nil then return end
 	local selectedUnitList = group.units
-	if ObjectTestModelCondition(self, "USER_72") == false then
-		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", NO_COLLISION_DURATION, 100)
+	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") == 0 then 
+		if ObjectTestModelCondition(self, "USER_72") == false then
+			ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", NO_COLLISION_DURATION, 100)
+		end
+		-- apply upgrade 
+		ObjectGrantUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 	end
 	-- temporarily remove collisions to facilitate the reverse move, assign this on backing up
 	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
@@ -1236,7 +1234,7 @@ function FixBuggingUnit(self)
 				-- assign the new closeestUnit to a unit not flagged as being bugged
 				unitsReversing[unitRef].unitAnchor = nonBuggingUnit
 				-- move this unit to the previously assigned non bugging unit
-				if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") then
+				if ObjectHasUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") == 1 then 
 					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[unitRef].unitAnchor)
 				end
 			end
@@ -1254,7 +1252,7 @@ function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 		if unitsReversing[unitRef] ~= nil then
 			if unitsReversing[unitRef].selfRealReference ~= unit then
 				-- check to see if unit is bugging and isnt destroyed
-				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and not unitsReversing[unitRef].hasBeenFixed and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_72") == false then
+				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and not unitsReversing[unitRef].hasBeenFixed and ObjectHasUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") == 0 then
 					tinsert(candidates, unitsReversing[unitRef].selfReference)
 				end
 			end
@@ -1283,11 +1281,16 @@ end
 function BackingUp(self)
     local a, unitReversing = GetUnitReversingData(self)
     local curFrame = GetFrame()
+	--if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") == 1 then 
+	--	ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
+	--end	
+	if ObjectTestModelCondition(self, "USER_72") then
+		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 0, 0)
+	end
 
 	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
 	end
-    
     -- Check if this is a spam/repeat command (within 2 frames) or a generic new command
     if curFrame - unitReversing.lastReverseMoveFrame <= REVERSE_SPAM_FRAME_WINDOW then
         unitReversing.hasAlreadyReversed = true
@@ -1302,7 +1305,6 @@ function BackingUp(self)
         unitReversing.hasBeenCounted = false
 		--WriteToFile("isAttacking.txt",  tostring(unitReversing.isAttacking) .. "\n")
     end
-
     unitReversing.firstFrame = curFrame
 	unitReversing.isReverseMoving = true
 	unitReversing.isMovingFlag = true
@@ -1502,9 +1504,6 @@ function BackingUpEnd(self)
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)
 		end
 	end
-	if ObjectTestModelCondition(self, "USER_72") then
-		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 0, 0)
-	end
 
 	unitReversing.firstFrame = 0 
 	unitReversing.isReverseMoving = false
@@ -1551,7 +1550,7 @@ function BackingUpEnd(self)
 				unitsReversing[unitRef].groupId = nil
 				unitsReversing[unitRef].groupIdAssigned = false		
 				unitsReversing[unitRef].hasBeenFixed = false		
-				if ObjectHasUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") then 
+				if ObjectHasUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") == 1 then 
 					ObjectRemoveUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") 
 				end		
 			end
@@ -1580,21 +1579,8 @@ function BuggedUnitTimeoutEnd(self)
 		end
 	end
 
-	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") then 
+	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") == 1 then 
 		ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
-	end		
-end
-
-function BuggedUnitTimeout(self)
-	local a = getObjectId(self)
-	if unitsReversing[a] == nil then return end
-	local _,unitReversing = GetUnitReversingData(self)
-	-- unitReversing.hasBeenFixed = true
-	-- apply a minor 1s speed boost to the affected unit via upgrade, community appears to be against this idea so ill comment it out for now. Maybe +15% speed is an acceptable buff to offset the times the unit stops.
-	-- this is cleared in BackingUpEnd when clearList is true
-	-- ObjectCreateAndFireTempWeapon(self, "BuggedUnitSpeedBoost")
-	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") == 0 then 
-		ObjectGrantUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 	end		
 end
 
