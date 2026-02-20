@@ -1197,16 +1197,18 @@ function FixBuggingUnit(self)
 	local group = getglobal(unitReversing.groupId)
 	if group == nil or group.units == nil then return end
 	local selectedUnitList = group.units
-	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") == 0 then 
+	if unitReversing.isReverseMoving then 
 		if ObjectTestModelCondition(self, "USER_72") == false then
 			ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", NO_COLLISION_DURATION, 100)
 		end
+		-- temporarily remove collisions to facilitate the reverse move, assign this on backing up
+		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)
+		end
 		-- apply upgrade 
-		ObjectGrantUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
-	end
-	-- temporarily remove collisions to facilitate the reverse move, assign this on backing up
-	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)
+		if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") == 0 then
+			ObjectGrantUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
+		end
 	end
 	-- check if unitAnchor is destroyed or is nil
 	if unitReversing.unitAnchor ~= nil then
@@ -1478,6 +1480,7 @@ function SuddenStopAfterBackingUp(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	if unitReversing.hasBeenFixed then return end
 	if unitReversing.groupId == nil then return end
+	unitReversing.isReverseMoving = false
 	local group = getglobal(unitReversing.groupId)
 	if group == nil or group.units == nil or group.unitCount == nil then return end
 	-- if most units are still moving but this one suddenly stopped, it bugged
@@ -1550,7 +1553,7 @@ function BackingUpEnd(self)
 				unitsReversing[unitRef].groupId = nil
 				unitsReversing[unitRef].groupIdAssigned = false		
 				unitsReversing[unitRef].hasBeenFixed = false		
-				if ObjectHasUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") == 1 then 
+				if ObjectHasUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") then 
 					ObjectRemoveUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") 
 				end		
 			end
@@ -1579,7 +1582,7 @@ function BuggedUnitTimeoutEnd(self)
 		end
 	end
 
-	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") == 1 then 
+	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") then 
 		ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 	end		
 end
