@@ -1484,7 +1484,7 @@ function SuddenStopAfterBackingUp(self)
 	local group = getglobal(unitReversing.groupId)
 	if group == nil or group.units == nil or group.unitCount == nil then return end
 	-- if most units are still moving but this one suddenly stopped, it bugged
-	if GetNumberOfUnitsMoving(group.units) >= floor(group.unitCount * 0.8) then
+	if GetNumberOfUnitsMoving(group.units) >= floor(group.unitCount * 0.70) then
 		FixBuggingUnit(self)
 	end
 end
