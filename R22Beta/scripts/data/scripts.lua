@@ -75,7 +75,7 @@ CHECKS_DONE_THRESHOLD = 0.75 -- ratio of units that must finish checking before 
 BUG_THRESHOLD_LARGE_GROUP = 0.50 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
 BUG_THRESHOLD_SMALL_GROUP = 0.66 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
-UNITS_STILL_MOVING_THRESHOLD = 0.15 -- ratio of units still moving before clearing movement flag
+UNITS_STILL_MOVING_THRESHOLD = 0.10 -- ratio of units still moving before clearing movement flag
 AVERAGE_TURN_COUNT_OFFSET = 1 -- offset subtracted from bugDuration when comparing avg turn count.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
@@ -110,9 +110,9 @@ unitBugDataTable = {
 	["21661DFB"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Harvester
 
 	-- SCRIN UNITS --
-	["B8802763"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnThreshold = 0.35 }, -- Scrin Seeker
-	["DB2B7D2F"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnThreshold = 0.35 }, -- Reaper-17 Seeker
-	["7296891C"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnThreshold = 0.35 }, -- Traveler-59 Seeker
+	["B8802763"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 5, thirdTurnThreshold = 0.35 }, -- Scrin Seeker
+	["DB2B7D2F"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 5, thirdTurnThreshold = 0.35 }, -- Reaper-17 Seeker
+	["7296891C"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 5, thirdTurnThreshold = 0.35 }, -- Traveler-59 Seeker
 	["AF991372"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Scrin Devourer Tank
 	["416EFDFF"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Reaper-17 Devourer Tank
 	["77A0E8A9"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Scrin Corruptor
@@ -939,10 +939,10 @@ function GetUnitReversingData(self)
 			isMovingFlag = false,
 			lastReverseMoveFrame = 0,
 			hasAlreadyReversed = false,
-			fastTurnWas0Frames = false,
 			isAttacking = false,
 			hasBeenCounted = false,
 			groupIdAssigned = false,
+			fastTurnWas0Frames = false,
 			unitAnchor = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
@@ -993,9 +993,19 @@ function UnitNoLongerMoving(self)
 end
 
 function UnitIsAttacking(self)
-	local a = getObjectId(self)
-	if unitsReversing[a] ~= nil then
-		unitsReversing[a].isAttacking = true
+	if ObjectTestModelCondition(self, "BACKING_UP") then
+		local _,unitReversing = GetUnitReversingData(self)
+		unitReversing.isAttacking = true
+	end
+end
+
+
+function UnitIsNotAttacking(self)
+	if ObjectTestModelCondition(self, "BACKING_UP") then
+		local _,unitReversing = GetUnitReversingData(self)
+		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
+		end
 	end
 end
 
@@ -1003,7 +1013,7 @@ end
 function BackingUpFastTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
 	-- prevents this from executing
-	if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
+	if not unitReversing.isMovingFlag then return end
 	local timesToTrigger = TURN_TRIGGER_COUNT
 	local curFrame = GetFrame()
 	local frameDiff = curFrame - unitReversing.firstFrame
@@ -1031,17 +1041,18 @@ end
 -- Triggered by +BACKING_UP -TURN_LEFT and +BACKING_UP -TURN_RIGHT
 function BackingUpTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
-	if unitReversing.hasAlreadyReversed or not unitReversing.isMovingFlag then return end
+	if unitReversing.isMovingFlag then return end
 	local timesToTrigger = TURN_TRIGGER_COUNT
 	local frameDiff = GetFrame() - unitReversing.firstFrame
 
-    if unitReversing ~= nil and unitReversing.timesTriggeredNormal < timesToTrigger then
+   if unitReversing ~= nil and unitReversing.timesTriggeredNormal < timesToTrigger then
 		unitReversing.timesTriggeredNormal = unitReversing.timesTriggeredNormal + 1
 		--CheckForObjReverseBugging(self, unitReversing)
 		if unitReversing.fastTurnWas0Frames then
 			--WriteToFile("backingupfastendthree.txt",  "object went this long with 3 triggers: " .. tostring(frameDiff) .. "\n")
 			CheckForObjReverseBugging(self, frameDiff)
 		end
+		--CheckForObjReverseBugging(self, frameDiff)
 	end
 end
 
@@ -1086,7 +1097,6 @@ function CheckForObjReverseBugging(self, frameDiff)
 		isBugging = true
 	end
 	-- checksDone is more than ceil(unitReversing.groupId.selectedCount*0.5)
-	-- increment depending if fastTurnWas0Frames was true or not
 	if not unitReversing.hasBeenCounted then
 		checksDone = checksDone + 1
 		unitReversing.hasBeenCounted = true
@@ -1120,7 +1130,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 			end
 			--local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn
 			local thirdTurnCountTotal = group.thirdTurnFrameCount
-			-- if the units have got that not moving flag , dont do this 
+			-- if the average amount of third turns exceeds the threshold for this unit, cancel the fix for the entire group
 			if thirdTurnUnitCount > 1 then
 				local avgThirdTurnCount = ceil(thirdTurnCountTotal / thirdTurnUnitCount)
 				--WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
@@ -1273,6 +1283,10 @@ end
 function BackingUp(self)
     local a, unitReversing = GetUnitReversingData(self)
     local curFrame = GetFrame()
+
+	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
+	end
     
     -- Check if this is a spam/repeat command (within 2 frames) or a generic new command
     if curFrame - unitReversing.lastReverseMoveFrame <= REVERSE_SPAM_FRAME_WINDOW then
@@ -1283,7 +1297,6 @@ function BackingUp(self)
         unitReversing.hasAlreadyReversed = false
         unitReversing.hasBeenFixed = false
         unitReversing.unitAnchor = nil
-        unitReversing.fastTurnWas0Frames = false
         unitReversing.timesTriggeredFast = 0
         unitReversing.timesTriggeredNormal = 0
         unitReversing.hasBeenCounted = false
@@ -1297,10 +1310,7 @@ function BackingUp(self)
 	if not unitReversing.groupIdAssigned then
 		AssignGroupId(unitReversing, a, curFrame, self)
 	end
-	
-	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
-	end
+
 	AssignRandomAnchor(self)
 end
 
@@ -1458,6 +1468,22 @@ function ReverseUnitOnDeath(self)
     end
 end
 
+-- Triggered by -BACKING_UP -MOVING
+-- checks if the group still exists if most units are still moving, and if this one has stopped then call FixBuggingUnit to fix it
+function SuddenStopAfterBackingUp(self)
+	local a = getObjectId(self)
+	if unitsReversing[a] == nil then return end
+	local _,unitReversing = GetUnitReversingData(self)
+	if unitReversing.hasBeenFixed then return end
+	if unitReversing.groupId == nil then return end
+	local group = getglobal(unitReversing.groupId)
+	if group == nil or group.units == nil or group.unitCount == nil then return end
+	-- if most units are still moving but this one suddenly stopped, it bugged
+	if GetNumberOfUnitsMoving(group.units) >= floor(group.unitCount * 0.8) then
+		FixBuggingUnit(self)
+	end
+end
+
 -- Triggered by -BACKING_UP, this triggers when multiple reverse move commands.
 -- Removes groupId of this unit and then checks if the global of that group is empty and if it is, removes it.
 function BackingUpEnd(self)
@@ -1537,8 +1563,8 @@ function BackingUpEnd(self)
 			setglobal(groupId, nil)
 		end
 	end
-	unitReversing.groupId = nil
-	unitReversing.groupIdAssigned = false
+	--unitReversing.groupId = nil
+	--unitReversing.groupIdAssigned = false
 end
 
 -- units cant clear this status normally unless i can get the object or model state for when UNIT_GUARD is triggered.

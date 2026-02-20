@@ -119,6 +119,10 @@
 			<Conditions>+LOCOMOTOR_CHANGING_FIRINGARC</Conditions>
 		</ModelConditionEvent>
 
+		<ModelConditionEvent Name="OnBackingUpMovingEnd">
+			<Conditions>-BACKING_UP -MOVING</Conditions>
+		</ModelConditionEvent>
+
 		<!-- off events for reverse -->	
 
 		<ModelConditionEvent Name="OnBackingUpFastLeftEnd">
@@ -893,6 +897,8 @@
 		<EventHandler EventName="OnUser72"	ScriptFunctionName="BuggedUnitTimeout" DebugSingleStep="false"/> 
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttacking"	ScriptFunctionName="UnitIsAttacking" DebugSingleStep="false"/>
+		<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsNotAttacking" DebugSingleStep="false"/>
+		<EventHandler EventName="OnBackingUpMovingEnd"	ScriptFunctionName="SuddenStopAfterBackingUp" DebugSingleStep="false"/>
     </EventList>
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">
