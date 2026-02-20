@@ -616,7 +616,7 @@ function TiberiumEvent(self, other)
 				if strfind(ObjectDescription(self), "BA9F66AB") ~= nil or strfind(ObjectDescription(self), "TiberiumCrystalBlue") ~= nil then
 					data.isHarvestingBlue = true
 					-- show the blue tib fx
-					if not ObjectHasUpgrade(other, "Upgrade_UpgradeBlueTib") then 
+					if ObjectHasUpgrade(other, "Upgrade_UpgradeBlueTib") == 0 then 
 						ObjectGrantUpgrade(other, "Upgrade_UpgradeBlueTib") 
 					end		
 				else
@@ -798,7 +798,7 @@ end
 function OnHuskCapture(self, slaughterer)
 	if self ~= nil and slaughterer ~= nil then
 		-- upgrade the husk and apply status to it
-		if not ObjectHasUpgrade(slaughterer, "Upgrade_EngineerCapture") then
+		if ObjectHasUpgrade(slaughterer, "Upgrade_EngineerCapture") == 0 then
 			ObjectGrantUpgrade(slaughterer, "Upgrade_EngineerCapture")
 		end
 	
