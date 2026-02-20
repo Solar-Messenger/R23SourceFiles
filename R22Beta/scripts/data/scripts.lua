@@ -110,9 +110,9 @@ unitBugDataTable = {
 	["21661DFB"] = { frameCount = 9,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Black Hand Harvester
 
 	-- SCRIN UNITS --
-	["B8802763"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 5, thirdTurnThreshold = 0.35 }, -- Scrin Seeker
-	["DB2B7D2F"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 5, thirdTurnThreshold = 0.35 }, -- Reaper-17 Seeker
-	["7296891C"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 5, thirdTurnThreshold = 0.35 }, -- Traveler-59 Seeker
+	["B8802763"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 6, thirdTurnThreshold = 0.35 }, -- Scrin Seeker
+	["DB2B7D2F"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 6, thirdTurnThreshold = 0.35 }, -- Reaper-17 Seeker
+	["7296891C"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 6, thirdTurnThreshold = 0.35 }, -- Traveler-59 Seeker
 	["AF991372"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Scrin Devourer Tank
 	["416EFDFF"] = { frameCount = 12, damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Reaper-17 Devourer Tank
 	["77A0E8A9"] = { frameCount = 7,  damagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnThreshold = 0.25 }, -- Scrin Corruptor
@@ -1503,7 +1503,7 @@ function BackingUpEnd(self)
 		end
 	end
 	if ObjectTestModelCondition(self, "USER_72") then
-		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 0, 100)
+		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 0, 0)
 	end
 
 	unitReversing.firstFrame = 0 
