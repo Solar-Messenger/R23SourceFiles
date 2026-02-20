@@ -1283,9 +1283,9 @@ end
 function BackingUp(self)
     local a, unitReversing = GetUnitReversingData(self)
     local curFrame = GetFrame()
-	--if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") == 1 then 
-	--	ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
-	--end	
+	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") == 1 then 
+		ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
+	end	
 	if ObjectTestModelCondition(self, "USER_72") then
 		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 0, 0)
 	end
