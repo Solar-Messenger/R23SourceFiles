@@ -273,11 +273,15 @@ function OnMoney1(self)
 
 	if ObjectTestModelCondition(self, "DOCKING") == false then
 		if  harvesterData[a].isHarvestingBlue then 
-			ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueOne")
+			if ObjectHasUpgrade(self, "Upgrade_UpgradeBlueOne") == 0 then
+				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueOne")
+			end
 			harvbluetib[a] = harvbluetib[a] + 1
 			bar1[a] = 0
 		else
-			ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenOne")
+			if ObjectHasUpgrade(self, "Upgrade_UpgradeGreenOne") == 0 then
+				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenOne")
+			end
 			harvgreentib[a] = harvgreentib[a] + 1
 			bar1[a] = 1			
 		end
@@ -292,11 +296,15 @@ function OnMoney2(self)
 	local a = getObjectId(self)
 	if ObjectTestModelCondition(self, "DOCKING") == false then
 		if  harvesterData[a].isHarvestingBlue then 
-			ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueTwo")
+			if ObjectHasUpgrade(self, "Upgrade_UpgradeBlueTwo") == 0 then
+				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueTwo")
+			end
 			harvbluetib[a] = harvbluetib[a] + 1
 			bar2[a] = 0
 		else
-			ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenTwo")
+			if ObjectHasUpgrade(self, "Upgrade_UpgradeGreenTwo") == 0 then
+				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenTwo")
+			end
 			harvgreentib[a] = harvgreentib[a] + 1 
 			bar2[a] = 1
 		end
@@ -312,11 +320,15 @@ function OnMoney3(self)
 
 	if ObjectTestModelCondition(self, "DOCKING") == false then
 		if  harvesterData[a].isHarvestingBlue then 
-			ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueThree")
+			if ObjectHasUpgrade(self, "Upgrade_UpgradeBlueThree") == 0 then
+				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueThree")
+			end
 			harvbluetib[a] = harvbluetib[a] + 1
 			bar3[a] = 0
 		else
-			ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenThree")
+			if ObjectHasUpgrade(self, "Upgrade_UpgradeGreenThree") == 0 then
+				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenThree")
+			end
 			harvgreentib[a] = harvgreentib[a] + 1 
 			bar3[a] = 1
 		end
@@ -332,11 +344,15 @@ function OnMoney4(self)
 	local a = getObjectId(self)
 	if ObjectTestModelCondition(self, "DOCKING") == false then
 		if  harvesterData[a].isHarvestingBlue then 
-			ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueFour")
+			if ObjectHasUpgrade(self, "Upgrade_UpgradeBlueFour") == 0 then
+				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueFour")
+			end
 			harvbluetib[a] = harvbluetib[a] + 1
 			bar4[a] = 0
 		else
-			ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenFour")	
+			if ObjectHasUpgrade(self, "Upgrade_UpgradeGreenFour") == 0 then
+				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenFour")	
+			end
 			harvgreentib[a] = harvgreentib[a] + 1 
 			bar4[a] = 1
 		end
@@ -1249,7 +1265,7 @@ function FixBuggingUnit(self)
 				-- assign the new closeestUnit to a unit not flagged as being bugged
 				unitsReversing[unitRef].unitAnchor = nonBuggingUnit
 				-- move this unit to the previously assigned non bugging unit
-				if ObjectHasUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") == 1 then 
+				if ObjectHasUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") then 
 					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[unitRef].unitAnchor)
 				end
 			end
@@ -1313,7 +1329,7 @@ function BackingUp(self)
 	unitReversing.isReverseMoving = true
 	unitReversing.isMovingFlag = true
 	--WriteToFile("isAttacking.txt",  tostring(unitReversing.isAttacking) .. "\n")
-	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") == 1 then 
+	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") then 
 		ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 	end	
 	if ObjectTestModelCondition(self, "USER_72") then
