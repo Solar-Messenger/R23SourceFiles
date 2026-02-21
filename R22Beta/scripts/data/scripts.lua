@@ -974,6 +974,7 @@ function GetNumberOfUnitsMoving(selectedUnitList)
 	return unitsMoving
 end
 
+-- checks if most units are moving and if the number returned exceeds the threshold then assign the isMovingFlag to false
 function UnitNoLongerMoving(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
@@ -1013,7 +1014,7 @@ end
 function BackingUpFastTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
 	-- prevents this from executing when the unit is not moving and not attacking
-	if not unitReversing.isMovingFlag and not unitReversing.isAttacking then return end
+	if not unitReversing.isMovingFlag and not unitReversing.hasAlreadyReversed then return end
 	local timesToTrigger = TURN_TRIGGER_COUNT
 	local curFrame = GetFrame()
 	local frameDiff = curFrame - unitReversing.firstFrame
@@ -1041,7 +1042,7 @@ end
 -- Triggered by +BACKING_UP -TURN_LEFT and +BACKING_UP -TURN_RIGHT
 function BackingUpTurnEnd(self) 
     local _,unitReversing = GetUnitReversingData(self)
-	if not unitReversing.isMovingFlag and not unitReversing.isAttacking then return end
+	if not unitReversing.isMovingFlag and not unitReversing.hasAlreadyReversed then return end
 	local timesToTrigger = TURN_TRIGGER_COUNT
 	local frameDiff = GetFrame() - unitReversing.firstFrame
 
@@ -1295,6 +1296,23 @@ end
 function BackingUp(self)
     local a, unitReversing = GetUnitReversingData(self)
     local curFrame = GetFrame()
+
+	 -- Check if this is a spam/repeat command (within 2 frames) or a generic new command
+    if curFrame - unitReversing.lastReverseMoveFrame <= REVERSE_SPAM_FRAME_WINDOW then
+        unitReversing.hasAlreadyReversed = true
+        return 
+	end 
+	-- Reset the flags here to ensure we don't carry over bugs from previous moves
+	unitReversing.hasAlreadyReversed = false
+	unitReversing.hasBeenFixed = false
+	unitReversing.unitAnchor = nil
+	unitReversing.timesTriggeredFast = 0
+	unitReversing.timesTriggeredNormal = 0
+	unitReversing.hasBeenCounted = false
+	unitReversing.firstFrame = curFrame
+	unitReversing.isReverseMoving = true
+	unitReversing.isMovingFlag = true
+	--WriteToFile("isAttacking.txt",  tostring(unitReversing.isAttacking) .. "\n")
 	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") == 1 then 
 		ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 	end	
@@ -1305,23 +1323,6 @@ function BackingUp(self)
 	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
 	end
-    -- Check if this is a spam/repeat command (within 2 frames) or a generic new command
-    if curFrame - unitReversing.lastReverseMoveFrame <= REVERSE_SPAM_FRAME_WINDOW then
-        unitReversing.hasAlreadyReversed = true
-        return 
-    else 
-        -- Reset the flags here to ensure we don't carry over bugs from previous moves
-        unitReversing.hasAlreadyReversed = false
-        unitReversing.hasBeenFixed = false
-        unitReversing.unitAnchor = nil
-        unitReversing.timesTriggeredFast = 0
-        unitReversing.timesTriggeredNormal = 0
-        unitReversing.hasBeenCounted = false
-		--WriteToFile("isAttacking.txt",  tostring(unitReversing.isAttacking) .. "\n")
-    end
-    unitReversing.firstFrame = curFrame
-	unitReversing.isReverseMoving = true
-	unitReversing.isMovingFlag = true
 
 	if not unitReversing.groupIdAssigned then
 		AssignGroupId(unitReversing, a, curFrame, self)
@@ -1490,9 +1491,9 @@ function SuddenStopAfterBackingUp(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
-	if unitReversing.hasBeenFixed then return end
+	if unitReversing.hasBeenFixed or not unitReversing.isMovingFlag then return end
 	if unitReversing.groupId == nil then return end
-	unitReversing.isReverseMoving = false
+	--unitReversing.isReverseMoving = false
 	local group = getglobal(unitReversing.groupId)
 	if group == nil or group.units == nil or group.unitCount == nil then return end
 	-- if most units are still moving but this one suddenly stopped, it bugged
