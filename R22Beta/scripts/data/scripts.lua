@@ -1265,7 +1265,8 @@ function FixBuggingUnit(self)
 				-- assign the new closeestUnit to a unit not flagged as being bugged
 				unitsReversing[unitRef].unitAnchor = nonBuggingUnit
 				-- move this unit to the previously assigned non bugging unit
-				if ObjectHasUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") then 
+				if unitsReversing[unitRef].hasBeenFixed then
+					--print("assigning to different unit")
 					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[unitRef].unitAnchor)
 				end
 			end
@@ -1330,6 +1331,7 @@ function BackingUp(self)
 	unitReversing.isMovingFlag = true
 	--WriteToFile("isAttacking.txt",  tostring(unitReversing.isAttacking) .. "\n")
 	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") then 
+		--print("removing upgrade")
 		ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 	end	
 	if ObjectTestModelCondition(self, "USER_72") then
