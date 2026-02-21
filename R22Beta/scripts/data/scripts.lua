@@ -1113,10 +1113,12 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local enableExtendedCheck = unitReversing.isAttacking and (group.unitsNotMovingBeforeBackingUp >= ceil(selectedCount*0.50))
 	-- when units attack they always stop moving before a reverse move is issued
 	--if (unitReversing.isAttacking and enableExtendedCheck) then print("attacking") end
-	local lowerLimit = enableExtendedCheck and unitBugData.bugCheckLowerLimit+1 or unitBugData.bugCheckLowerLimit
-	local upperLimit = enableExtendedCheck and unitBugData.bugCheckUpperLimit+1 or unitBugData.bugCheckUpperLimit
-	--local lowerLimit = unitBugData.bugCheckLowerLimit
-	--local upperLimit = unitBugData.bugCheckUpperLimit
+	--local lowerLimit = enableExtendedCheck and unitBugData.bugCheckLowerLimit+1 or unitBugData.bugCheckLowerLimit
+	--local upperLimit = enableExtendedCheck and unitBugData.bugCheckUpperLimit+1 or unitBugData.bugCheckUpperLimit
+
+
+	local lowerLimit = unitBugData.bugCheckLowerLimit
+	local upperLimit = unitBugData.bugCheckUpperLimit
 	-- WriteToFile("upperLimit.txt",  tostring(upperLimit) .. "\n")
 
 	local inBugRange = frameDiff >= bugDuration - lowerLimit and frameDiff <= bugDuration + upperLimit
