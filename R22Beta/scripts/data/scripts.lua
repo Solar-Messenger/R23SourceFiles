@@ -75,7 +75,7 @@ CHECKS_DONE_THRESHOLD = 0.80 -- ratio of units that must finish checking before 
 BUG_THRESHOLD_LARGE_GROUP = 0.35 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
 BUG_THRESHOLD_SMALL_GROUP = 0.45 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
-UNITS_STILL_MOVING_THRESHOLD = 0.50 -- ratio of units still moving before clearing movement flag
+UNITS_STILL_MOVING_THRESHOLD = 0.75 -- ratio of units still moving before clearing movement flag
 AVERAGE_TURN_COUNT_OFFSET = 1 -- offset subtracted from bugDuration when comparing avg turn count.
 STOPPING_DISTANCE = 100 -- stopping distance value for bugged units during fix
 
@@ -960,12 +960,14 @@ function GetUnitReversingData(self)
 			selfRealReference = self,
 			groupId = nil,
 			isMovingFlag = true,
+			lastMoveWasReverse = false,
 			lastReverseMoveFrame = 0,
 			hasAlreadyReversed = false,
 			isAttacking = false,
 			hasBeenCounted = false,
 			groupIdAssigned = false,
 			fastTurnWas0Frames = false,
+			hasCameToAStop = false,
 			unitAnchor = nil -- can be an array from closest to farthest
 		}
 		return a, unitsReversing[a]
@@ -1002,26 +1004,47 @@ function UnitNoLongerMoving(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
-	-- check if most units selected are not moving
-	if not unitReversing.hasBeenFixed and unitReversing.groupId ~= nil then
-		local group = getglobal(unitReversing.groupId)
-		if group == nil or group.units == nil or group.unitCount == nil then return end
-		-- if a few units are moving now but originally before backing up most units were not moving then set moving flag to true
-		local numberOfUnitsMoving = GetNumberOfUnitsMoving(group.units)
-		if numberOfUnitsMoving <= floor(group.unitCount * UNITS_STILL_MOVING_THRESHOLD)
-			and ((group.unitsNotMovingBeforeBackingUp or 0) >= group.unitCount * 0.50) and unitReversing.isAttacking then
-			unitReversing.isMovingFlag = true
-			unitReversing.isAttacking = false
-			ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-		elseif numberOfUnitsMoving <= floor(group.unitCount * UNITS_STILL_MOVING_THRESHOLD) then
-			if not unitReversing.isAttacking and unitReversing.isReverseMoving then
-				unitReversing.isMovingFlag = false
+	--if unitReversing.lastMoveWasReverse then
+		-- check if most units selected are not moving
+		if not unitReversing.hasBeenFixed and unitReversing.groupId ~= nil then
+			local group = getglobal(unitReversing.groupId)
+			if group == nil or group.units == nil or group.unitCount == nil then return end
+			-- if a few units are moving now but originally before backing up most units were not moving then set moving flag to true
+			local numberOfUnitsMoving = GetNumberOfUnitsMoving(group.units)
+			if numberOfUnitsMoving <= floor(group.unitCount * UNITS_STILL_MOVING_THRESHOLD)
+				and ((group.unitsNotMovingBeforeBackingUp or 0) >= group.unitCount * 0.50) and unitReversing.isAttacking then
+				unitReversing.isMovingFlag = true
+			elseif numberOfUnitsMoving <= floor(group.unitCount * 0.50) then
+				--if not unitReversing.isAttacking then
+					unitReversing.isMovingFlag = false
+					unitReversing.isAttacking = false
+				--end
 				--if unitsReversing[unitRef] ~= nil and not unitsReversing[unitRef].isAttacking and not unitsReversing[unitRef].isReverseMoving then
 				--	unitsReversing[unitRef].isMovingFlag = false
 				--end
 			end
+		else
+			-- The player issued a stop (group no longer exists) -- 
+			local playerTeam = tostring(ObjectTeamName(self))
+			local teamTable = getglobal(playerTeam) or nil
+			if teamTable ~= nil then
+				local numberOfUnitsMoving = GetNumberOfUnitsMoving(teamTable.units)
+				WriteToFile("numberOfUnitsMoving.txt",  "units not moving: " .. tostring(numberOfUnitsMoving) .. "\n")
+				if numberOfUnitsMoving <= floor(teamTable.unitCount*0.20) then
+					-- assign isMovingFlag as false only if the last move was a reverse move
+					for _, unitRef in teamTable.units do
+						if unitsReversing[unitRef] ~= nil and not unitsReversing[unitRef].isAttacking then
+							unitsReversing[unitRef].isMovingFlag = false
+							unitsReversing[unitRef].lastMoveWasReverse = false
+							unitsReversing[unitRef].hasCameToAStop = true
+							ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+						end
+					end
+					--print("resetting flags")
+				end
+			end
 		end
-	end
+	--end
 end
 
 function UnitIsAttacking(self)
@@ -1356,12 +1379,19 @@ end
 function BackingUp(self)
     local a, unitReversing = GetUnitReversingData(self)
     local curFrame = GetFrame()
-
+	
 	 -- Check if this is a spam/repeat command (within 2 frames) or a generic new command
     if curFrame - unitReversing.lastReverseMoveFrame <= REVERSE_SPAM_FRAME_WINDOW then
         unitReversing.hasAlreadyReversed = true
         return 
 	end 
+
+	if unitReversing.hasCameToAStop then
+		 unitReversing.hasCameToAStop = false
+		 return
+	else
+		unitReversing.isMovingFlag = true
+	end
 
 	-- Reset the flags here to ensure we don't carry over bugs from previous moves
 	unitReversing.hasAlreadyReversed = false
@@ -1372,6 +1402,7 @@ function BackingUp(self)
 	unitReversing.hasBeenCounted = false
 	unitReversing.firstFrame = curFrame
 	unitReversing.isReverseMoving = true
+	unitReversing.lastMoveWasReverse = true
 
 	--WriteToFile("isAttacking.txt",  tostring(unitReversing.isAttacking) .. "\n")
 	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") then 

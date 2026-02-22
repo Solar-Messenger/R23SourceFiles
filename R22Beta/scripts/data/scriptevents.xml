@@ -897,7 +897,7 @@
 		<!--<EventHandler EventName="OnUser72"	ScriptFunctionName="BuggedUnitTimeout" DebugSingleStep="false"/> -->
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttacking"	ScriptFunctionName="UnitIsAttacking" DebugSingleStep="false"/>
-		<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsNotAttacking" DebugSingleStep="false"/>
+		<!--<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsNotAttacking" DebugSingleStep="false"/>-->
 		<EventHandler EventName="OnBackingUpMovingEnd"	ScriptFunctionName="SuddenStopAfterBackingUp" DebugSingleStep="false"/>
     </EventList>
 	
