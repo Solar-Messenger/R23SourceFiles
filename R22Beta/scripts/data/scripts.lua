@@ -1000,16 +1000,19 @@ function GetNumberOfUnitsMoving(selectedUnitList)
 end
 
 function UnitIsMoving(self)
+	if self == nil then return end
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
 	if ObjectTestModelCondition(self, "BACKING_UP") == false then
 		unitReversing.isMovingFlag = true
+		unitReversing.hasCameToAStop = false
 	end
 end
 
 -- checks if most units are moving and if the number returned exceeds the threshold then assign the isMovingFlag to false
 function UnitNoLongerMoving(self)
+	if self == nil then return end
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
@@ -1026,6 +1029,7 @@ function UnitNoLongerMoving(self)
 				for _, unitRef in group.units do
 					if unitsReversing[unitRef] ~= nil then
 						unitsReversing[unitRef].isMovingFlag = true
+						unitsReversing[unitRef].hasCameToAStop = false
 					end
 				end
 			elseif numberOfUnitsMoving <= floor(group.unitCount * 0.10) then
@@ -1050,7 +1054,7 @@ function UnitNoLongerMoving(self)
 				if numberOfUnitsMoving == 0 then
 					-- assign isMovingFlag as false only if the last move was a reverse move
 					for _, unitRef in teamTable.units do
-						if unitsReversing[unitRef] ~= nil and not unitsReversing[unitRef].isAttacking and unitsReversing[unitRef].lastMoveWasReverse then
+						if unitsReversing[unitRef] ~= nil and not unitsReversing[unitRef].isAttacking then
 							unitsReversing[unitRef].isMovingFlag = false
 							unitsReversing[unitRef].lastMoveWasReverse = false
 							unitsReversing[unitRef].hasCameToAStop = true
@@ -1399,6 +1403,8 @@ function BackingUp(self)
 	if unitReversing == nil then return end
     local curFrame = GetFrame()
 
+	unitReversing.lastMoveWasReverse = true
+
 	 -- Check if this is a spam/repeat command (within 2 frames) or a generic new command
     if curFrame - unitReversing.lastReverseMoveFrame <= REVERSE_SPAM_FRAME_WINDOW then
         unitReversing.hasAlreadyReversed = true
@@ -1444,6 +1450,7 @@ function BackingUp(self)
 end
 
 function AssignGroupId(unitReversing, a, curFrame, self)
+	if unitReversing == nil then return end
 	-- print("assigning group again")
 	local groupId = unitReversing.groupId
 	-- unit was already tagged in the else block for loop.
@@ -1490,7 +1497,7 @@ end
 function AssignRandomAnchor(self)
     if self ~= nil then
         local a,unitReversing = GetUnitReversingData(self)
-		if unitReversing.groupId == nil then return end
+		if unitReversing == nil or unitReversing.groupId == nil then return end
 		local group = getglobal(unitReversing.groupId)
 		if group == nil or group.units == nil then return end
 		-- list of ids
@@ -1508,6 +1515,7 @@ end
 
 -- Gets the random key to assign to the unit for anchor purposes.
 function GetRandomKey(t, unitId)
+    if t == nil then return nil end
     local keys = {}
     for k, v in t do
 		-- insert every unitid into the table except the unit that called this function
@@ -1577,10 +1585,9 @@ end
 
 -- Clears the unitsReversing table of this unit
 function ReverseUnitOnDeath(self)
-	local a = getObjectId(self)
+	local a,unitReversing = GetUnitReversingData(self)	
     RemoveFromUnitSelection(self)
-    if a ~= nil and unitsReversing[a] ~= nil then
-		local unitReversing = unitsReversing[a]
+    if unitsReversing[a] ~= nil then
 		-- remove from the group its part of
 		if unitReversing.groupId ~= nil then
 			local group = getglobal(unitReversing.groupId)
