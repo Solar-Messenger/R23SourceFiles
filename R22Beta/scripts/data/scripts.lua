@@ -1024,7 +1024,9 @@ function UnitNoLongerMoving(self)
 				and ((group.unitsNotMovingBeforeBackingUp or 0) >= group.unitCount * 0.50) and unitReversing.isAttacking then
 				--unitReversing.isMovingFlag = true
 				for _, unitRef in group.units do
-					unitsReversing[unitRef].isMovingFlag = true
+					if unitsReversing[unitRef] ~= nil then
+						unitsReversing[unitRef].isMovingFlag = true
+					end
 				end
 			elseif numberOfUnitsMoving <= floor(group.unitCount * 0.10) then
 				if not unitReversing.isAttacking then
@@ -1135,7 +1137,7 @@ end
 
 function CheckForObjReverseBugging(self, frameDiff)
 	local a, unitReversing = GetUnitReversingData(self)
-	if unitReversing.groupId == nil then return end
+	if unitReversing == nil or unitReversing.groupId == nil then return end
 	local unitBugData = unitBugDataTable[getObjectName(self)]
 	if unitBugData == nil then return end
 	local bugDuration = unitBugData.frameCount
@@ -1304,7 +1306,7 @@ end
 -- Fixes a unit detected to be bugging and then checks if any selected unit has the bugged unit assigned as unitAnchor
 function FixBuggingUnit(self)
 	local a,unitReversing = GetUnitReversingData(self)
-	if unitReversing.groupId == nil then return end
+	if unitReversing == nil or unitReversing.groupId == nil then return end
 	local group = getglobal(unitReversing.groupId)
 	if group == nil or group.units == nil then return end
 	local selectedUnitList = group.units
@@ -1394,8 +1396,9 @@ end
 -- Triggered by +BACKING_UP
 function BackingUp(self)
     local a, unitReversing = GetUnitReversingData(self)
+	if unitReversing == nil then return end
     local curFrame = GetFrame()
-	
+
 	 -- Check if this is a spam/repeat command (within 2 frames) or a generic new command
     if curFrame - unitReversing.lastReverseMoveFrame <= REVERSE_SPAM_FRAME_WINDOW then
         unitReversing.hasAlreadyReversed = true
@@ -1574,9 +1577,10 @@ end
 
 -- Clears the unitsReversing table of this unit
 function ReverseUnitOnDeath(self)
-	local a,unitReversing = GetUnitReversingData(self)	
+	local a = getObjectId(self)
     RemoveFromUnitSelection(self)
-    if unitsReversing[a] ~= nil then
+    if a ~= nil and unitsReversing[a] ~= nil then
+		local unitReversing = unitsReversing[a]
 		-- remove from the group its part of
 		if unitReversing.groupId ~= nil then
 			local group = getglobal(unitReversing.groupId)
