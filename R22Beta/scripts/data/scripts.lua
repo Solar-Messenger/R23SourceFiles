@@ -1004,10 +1004,36 @@ function UnitIsMoving(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
-	if ObjectTestModelCondition(self, "BACKING_UP") == false then
-		unitReversing.isMovingFlag = true
-		unitReversing.hasCameToAStop = false
+	if ObjectTestModelCondition(self, "BACKING_UP") == false and not unitReversing.hasCameToAStop then
+		--unitReversing.isMovingFlag = true
+		local playerTeam = tostring(ObjectTeamName(self))
+		local teamTable = getglobal(playerTeam) or nil
+		if teamTable ~= nil and teamTable.unitCount ~= nil and teamTable.unitCount > 0 then
+			local numberOfUnitsMoving = GetNumberOfUnitsMoving(teamTable.units)
+			--WriteToFile("numberOfUnitsMoving.txt",  "units not moving: " .. tostring(numberOfUnitsMoving) .. "teamTable units size: " .. getTableSize(teamTable.units) .. "\n")
+			if numberOfUnitsMoving >= ceil(teamTable.unitCount * 0.50) then
+				-- assign isMovingFlag as false only if the last move was a reverse move
+				for _, unitRef in teamTable.units do
+					if unitsReversing[unitRef] ~= nil and not unitsReversing[unitRef].isAttacking then
+						unitsReversing[unitRef].isMovingFlag = true
+						unitsReversing[unitRef].hasCameToAStop = false
+						--ExecuteAction("NAMED_FLASH", self, 2)
+					end
+				end
+			end
+		end
 	end
+end
+
+function getTableSize(t)
+	if t == nil then return end
+	local size = 0
+	for k, v in t do
+		if k ~= nil then 
+			size = size + 1 
+		end
+	end
+	return tostring(size)
 end
 
 -- checks if most units are moving and if the number returned exceeds the threshold then assign the isMovingFlag to false
@@ -1016,52 +1042,67 @@ function UnitNoLongerMoving(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
+	--if unitReversing.hasCameToAStop then return end
 	if unitReversing.lastMoveWasReverse then
 		-- check if most units selected are not moving
 		if not unitReversing.hasBeenFixed and unitReversing.groupId ~= nil then
 			local group = getglobal(unitReversing.groupId)
-			if group == nil or group.units == nil or group.unitCount == nil then return end
-			-- if a few units are moving now but originally before backing up most units were not moving then set moving flag to true
-			local numberOfUnitsMoving = GetNumberOfUnitsMoving(group.units)
-			if numberOfUnitsMoving <= floor(group.unitCount * UNITS_STILL_MOVING_THRESHOLD)
-				and ((group.unitsNotMovingBeforeBackingUp or 0) >= group.unitCount * 0.50) and unitReversing.isAttacking then
-				--unitReversing.isMovingFlag = true
-				for _, unitRef in group.units do
-					if unitsReversing[unitRef] ~= nil then
-						unitsReversing[unitRef].isMovingFlag = true
-						unitsReversing[unitRef].hasCameToAStop = false
+			if group ~= nil and group.units ~= nil and group.unitCount ~= nil then
+				-- if a few units are moving now but originally before backing up most units were not moving then set moving flag to true
+				local numberOfUnitsMoving = GetNumberOfUnitsMoving(group.units)
+				if numberOfUnitsMoving <= floor(group.unitCount * UNITS_STILL_MOVING_THRESHOLD)
+					and ((group.unitsNotMovingBeforeBackingUp or 0) >= group.unitCount * 0.50) and unitReversing.isAttacking then
+					--unitReversing.isMovingFlag = true
+					for _, unitRef in group.units do
+						if unitsReversing[unitRef] ~= nil then
+							unitsReversing[unitRef].isMovingFlag = true
+							unitsReversing[unitRef].hasCameToAStop = false
+						end
+					end
+				elseif numberOfUnitsMoving <= floor(group.unitCount * 0.15) then
+					if not unitReversing.isAttacking then
+						--unitReversing.isMovingFlag = false
+						--unitReversing.isAttacking = false
+						--WriteToFile("numberOfUnitsMoving.txt",  "units not moving: " .. tostring(numberOfUnitsMoving) .. "\n")
+						--unitReversing.hasCameToAStop = true
+						for _, unitRef in group.units do
+							if unitsReversing[unitRef] ~= nil then
+								unitsReversing[unitRef].isMovingFlag = false
+								unitsReversing[unitRef].hasCameToAStop = true
+								unitsReversing[unitRef].lastMoveWasReverse = false
+								--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+							end
+						end
+						--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 					end
 				end
-			elseif numberOfUnitsMoving <= floor(group.unitCount * 0.10) then
-				if not unitReversing.isAttacking then
-					unitReversing.isMovingFlag = false
-					--unitReversing.isAttacking = false
-					unitReversing.hasCameToAStop = true
-					ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-				end
-				--if unitsReversing[unitRef] ~= nil and not unitsReversing[unitRef].isAttacking and not unitsReversing[unitRef].isReverseMoving then
-				--	unitsReversing[unitRef].isMovingFlag = false
-				--end
 			end
 		end
 		if not unitReversing.hasBeenFixed then
-			-- The player issued a stop (group no longer exists) -- 
+			-- The player issued a stop (group no longer exists) --
 			local playerTeam = tostring(ObjectTeamName(self))
 			local teamTable = getglobal(playerTeam) or nil
-			if teamTable ~= nil then
+			if teamTable ~= nil and teamTable.unitCount ~= nil and teamTable.unitCount > 0 then
 				local numberOfUnitsMoving = GetNumberOfUnitsMoving(teamTable.units)
-				--WriteToFile("numberOfUnitsMoving.txt",  "units not moving: " .. tostring(numberOfUnitsMoving) .. "\n")
-				if numberOfUnitsMoving == 0 then
+				--WriteToFile("numberOfUnitsMoving.txt",  "units not moving: " .. tostring(numberOfUnitsMoving) .. "teamTable units size: " .. getTableSize(teamTable.units) .. "\n")
+				if numberOfUnitsMoving <= floor(teamTable.unitCount * 0.15) then
 					-- assign isMovingFlag as false only if the last move was a reverse move
 					for _, unitRef in teamTable.units do
 						if unitsReversing[unitRef] ~= nil and not unitsReversing[unitRef].isAttacking then
 							unitsReversing[unitRef].isMovingFlag = false
 							unitsReversing[unitRef].lastMoveWasReverse = false
 							unitsReversing[unitRef].hasCameToAStop = true
-							ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+							--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 						end
 					end
-					--print("resetting flags")
+				end
+			else
+				-- team table is empty (player has deselected it), so clear flags for this unit directly
+				if not unitReversing.isAttacking then
+					unitReversing.isMovingFlag = false
+					unitReversing.lastMoveWasReverse = false
+					unitReversing.hasCameToAStop = true
+					--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 				end
 			end
 		end
@@ -1255,7 +1296,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 					group.fixCancelledByType = group.fixCancelledByType or {}
 					group.fixCancelledByType[objName] = true
 					fixUnits = false
-					ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+					ExecuteAction("NAMED_FLASH", self, 2)
 				end
 			end
 
@@ -1427,7 +1468,6 @@ function BackingUp(self)
 	unitReversing.hasBeenCounted = false
 	unitReversing.firstFrame = curFrame
 	unitReversing.isReverseMoving = true
-	unitReversing.lastMoveWasReverse = true
 
 	--WriteToFile("isAttacking.txt",  tostring(unitReversing.isAttacking) .. "\n")
 	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") then 
