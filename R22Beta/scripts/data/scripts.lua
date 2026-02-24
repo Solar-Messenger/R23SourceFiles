@@ -1040,14 +1040,14 @@ function UnitNoLongerMoving(self)
 				for _, unitRef in group.units do
 					if unitsReversing[unitRef] ~= nil then
 						if numberOfUnitsMoving <= floor(group.unitCount * UNITS_STILL_MOVING_THRESHOLD)
-						and ((group.unitsNotMovingBeforeBackingUp or 0) >= group.unitCount * 0.35) and unitReversing.isAttacking then
+						and ((group.unitsNotMovingBeforeBackingUp or 0) >= group.unitCount * 0.35) and unitsReversing[unitRef].isAttacking then
 							unitsReversing[unitRef].isMovingFlag = true
 							unitsReversing[unitRef].hasCameToAStop = false
 						elseif numberOfUnitsMoving <= floor(group.unitCount * 0.15) and not unitsReversing[unitRef].isAttacking then
 							unitsReversing[unitRef].isMovingFlag = false
 							unitsReversing[unitRef].hasCameToAStop = true
-							unitsReversing[unitRef].lastMoveWasReverse = false
-							ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+							--unitsReversing[unitRef].lastMoveWasReverse = false
+							--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 						end					
 					end
 				end
@@ -1064,9 +1064,9 @@ function UnitNoLongerMoving(self)
 					for _, unitRef in teamTable.units do
 						if unitsReversing[unitRef] ~= nil and not unitsReversing[unitRef].isAttacking then
 							unitsReversing[unitRef].isMovingFlag = false
-							unitsReversing[unitRef].lastMoveWasReverse = false
+							--unitsReversing[unitRef].lastMoveWasReverse = false
 							unitsReversing[unitRef].hasCameToAStop = true
-							ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+							--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 						end
 					end
 				end
@@ -1074,7 +1074,7 @@ function UnitNoLongerMoving(self)
 				-- team table is empty (player has deselected it), so clear flags for this unit directly
 				if not unitReversing.isAttacking then
 					unitReversing.isMovingFlag = false
-					unitReversing.lastMoveWasReverse = false
+					--unitReversing.lastMoveWasReverse = false
 					unitReversing.hasCameToAStop = true
 					--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 				end
@@ -1177,15 +1177,15 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local checksDone = group.checksDone
 	local unitsToFix = group.unitsToFix
 	--WriteToFile("groupId.txt",  tostring(groupId) .. "\n")
-	-- edge case for when units are attacking to permit an extended range check.
-	local enableExtendedCheck = unitReversing.isAttacking and (group.unitsNotMovingBeforeBackingUp >= ceil(selectedCount*0.50))
+	-- edge case for when units are attacking to permit an extended range check (disabled for now)
+	--local enableExtendedCheck = unitReversing.isAttacking and (group.unitsNotMovingBeforeBackingUp >= ceil(selectedCount*0.50))
 	unitReversing.isAttacking = false
 	-- when units attack they always stop moving before a reverse move is issued
 	--if (unitReversing.isAttacking and enableExtendedCheck) then print("attacking") end
-	local lowerLimit = enableExtendedCheck and unitBugData.bugCheckLowerLimit+1 or unitBugData.bugCheckLowerLimit+1
-	local upperLimit = enableExtendedCheck and unitBugData.bugCheckUpperLimit+1 or unitBugData.bugCheckUpperLimit+1
-	--local lowerLimit = unitBugData.bugCheckLowerLimit
-	--local upperLimit = unitBugData.bugCheckUpperLimit
+	--local lowerLimit = enableExtendedCheck and unitBugData.bugCheckLowerLimit+1 or unitBugData.bugCheckLowerLimit+1
+	--local upperLimit = enableExtendedCheck and unitBugData.bugCheckUpperLimit+1 or unitBugData.bugCheckUpperLimit+1
+	local lowerLimit = unitBugData.bugCheckLowerLimit
+	local upperLimit = unitBugData.bugCheckUpperLimit
 	-- WriteToFile("upperLimit.txt",  tostring(upperLimit) .. "\n")
 
 	local inBugRange = frameDiff >= bugDuration - lowerLimit and frameDiff <= bugDuration + upperLimit
@@ -1262,12 +1262,13 @@ function CheckForObjReverseBugging(self, frameDiff)
 			if thirdTurnUnitCountForType > 1 then
 				local avgThirdTurnCount = ceil(thirdTurnFrameCountForType / thirdTurnUnitCountForType)
 				--WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
-				local avgTurnCountOffset  = enableExtendedCheck and unitBugData.avgTurnCountOffset-1 or unitBugData.avgTurnCountOffset
-				if avgThirdTurnCount >= bugDuration-avgTurnCountOffset then
+				-- (disabled for now)
+				--local avgTurnCountOffset  = enableExtendedCheck and unitBugData.avgTurnCountOffset-1 or unitBugData.avgTurnCountOffset-1
+				if avgThirdTurnCount >= bugDuration-unitBugData.avgTurnCountOffset-1 then
 					group.fixCancelledByType = group.fixCancelledByType or {}
 					group.fixCancelledByType[objName] = true
 					fixUnits = false
-					ExecuteAction("NAMED_FLASH", self, 2)
+					--ExecuteAction("NAMED_FLASH", self, 2)
 				end
 			end
 
@@ -1623,14 +1624,30 @@ function SuddenStopAfterBackingUp(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
-	if unitReversing.hasBeenFixed or not unitReversing.isMovingFlag or unitReversing.hasAlreadyReversed then return end
+	if unitReversing.hasBeenFixed or not unitReversing.isMovingFlag or not unitReversing.lastMoveWasReverse then return end
+	unitReversing.lastMoveWasReverse = false
 	if unitReversing.groupId == nil then return end
 	--unitReversing.isReverseMoving = false
 	local group = getglobal(unitReversing.groupId)
 	if group == nil or group.units == nil or group.unitCount == nil then return end
+	local curFrame = GetFrame()
+	-- the duration of the reverse move since this unit came to an abrupt stop
 	-- if most units are still moving but this one suddenly stopped, it bugged
-	if GetNumberOfUnitsMoving(group.units) >= floor(group.unitCount * 0.80) then
+
+	local frameDiff = curFrame - unitReversing.firstFrame
+	--WriteToFile("SuddenStopAfterBackingUp.txt",  "this reverse move lasted: " .. tostring(frameDiff) .. " frames" .. "\n")
+
+	-- look up this units bug duration and scale the threshold proportionally
+	-- 15 frames works for Seeker (frameCount=12), ratio: 15/12 = 1.25
+	local unitBugData = unitBugDataTable[getObjectName(self)]
+	if unitBugData == nil then return end
+	local bugDuration = unitBugData.frameCount
+	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and bugDuration * unitBugData.reallyDamagedDurationMult or bugDuration
+	local maxFrameDiff = floor(bugDuration * 1.25)
+
+	if GetNumberOfUnitsMoving(group.units) >= floor(group.unitCount * 0.80) and frameDiff <= maxFrameDiff then
 		FixBuggingUnit(self)
+		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 	end
 end
 
@@ -1640,12 +1657,13 @@ function BackingUpEnd(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)	
-	unitReversing.lastReverseMoveFrame = GetFrame()
+	unitReversing.lastReverseMoveFrame =  GetFrame()
 	local group = unitReversing.groupId ~= nil and getglobal(unitReversing.groupId) or nil
 	local selectedUnitList = {}
 	if group ~= nil and group.units ~= nil then
 		selectedUnitList = group.units
 	end
+
 	if unitReversing ~= nil and not unitReversing.hasBeenFixed then
 		-- need to prevent this when guarding
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
@@ -1653,7 +1671,7 @@ function BackingUpEnd(self)
 		end
 	end
 
-	unitReversing.firstFrame = 0 
+	--unitReversing.firstFrame = 0 
 	unitReversing.isReverseMoving = false
 	unitReversing.timesTriggeredFast = 0
 	unitReversing.timesTriggeredNormal = 0
