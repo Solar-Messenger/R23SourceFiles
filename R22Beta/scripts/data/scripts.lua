@@ -1053,7 +1053,7 @@ function UnitNoLongerMoving(self)
 				end
 			end
 		-- The player issued a stop (group no longer exists) --
-		elseif not unitReversing.hasBeenFixed and group == nil then
+		elseif not unitReversing.hasBeenFixed and unitReversing.groupId == nil then
 			local playerTeam = tostring(ObjectTeamName(self))
 			local teamTable = getglobal(playerTeam) or nil
 			if teamTable ~= nil and teamTable.unitCount ~= nil and teamTable.unitCount > 0 then
