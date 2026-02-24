@@ -1213,7 +1213,17 @@ function CheckForObjReverseBugging(self, frameDiff)
 		-- unitReversing.hasBeenFixed = true
 		-- cache the units if they are to be fixed in this table
 		--ExecuteAction("NAMED_FLASH", self, 2)
-		tinsert(unitsToFix, a)
+		-- verify the unit doesnt already exist in the table to prevent duplicate entries
+		local alreadyExists = false
+		for _, v in unitsToFix do
+			if v == a then
+				alreadyExists = true
+				break
+			end
+		end
+		if not alreadyExists then
+			tinsert(unitsToFix, a)
+		end
 	end
 
 	-- Check if any unit hasnt attempted to move yet and move it if so.
@@ -1300,7 +1310,9 @@ function CheckForObjReverseBugging(self, frameDiff)
 						--ExecuteAction("NAMED_FLASH", buggingRef, 2)
 						FixBuggingUnit(buggingRef)
 					else
-						tremove(unitsToFix, i)
+						if unitsToFix[i] ~= nil then
+							tremove(unitsToFix, i)
+						end
 					end
 				end
 			elseif isBugging then
