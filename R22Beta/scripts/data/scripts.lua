@@ -92,12 +92,12 @@ unitBugDataTable = {
 
 	-- NOD UNITS --
 	-- The purpose avgTurnCountOffset is to determine if a group of units is doing a 180 degree turn or if only a few did (reverse bugging)
-	["E3C841B0"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Mok Raider Buggy
-	["79609108"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Black Hand Raider Buggy
-	["6354531D"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Nod Raider Buggy
-	["1B44D6AE"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 5, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Mok Scorpion Tank
-	["A33F11AF"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 5, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Black Hand Scorpion Tank
-	["2F9131D"]  = { frameCount = 11, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 5, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Nod Scorpion Tank
+	["E3C841B0"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Mok Raider Buggy
+	["79609108"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Black Hand Raider Buggy
+	["6354531D"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Nod Raider Buggy
+	["1B44D6AE"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 2, bugCheckLowerLimit = 5, bugCheckUpperLimit = 5, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Mok Scorpion Tank
+	["A33F11AF"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 2, bugCheckLowerLimit = 5, bugCheckUpperLimit = 5, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Black Hand Scorpion Tank
+	["2F9131D"]  = { frameCount = 11, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 2, bugCheckLowerLimit = 5, bugCheckUpperLimit = 5, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Nod Scorpion Tank
 	["26538D"]   = { frameCount = 7,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Nod Stealth Tank
 	["1025B90B"] = { frameCount = 7,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Marked of Kane Stealth Tank
 	["F38615BD"] = { frameCount = 7,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 3, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.50 }, -- Black Hand Mantis
@@ -1182,8 +1182,8 @@ function CheckForObjReverseBugging(self, frameDiff)
 	unitReversing.isAttacking = false
 	-- when units attack they always stop moving before a reverse move is issued
 	--if (unitReversing.isAttacking and enableExtendedCheck) then print("attacking") end
-	--local lowerLimit = enableExtendedCheck and unitBugData.bugCheckLowerLimit+1 or unitBugData.bugCheckLowerLimit+1
-	--local upperLimit = enableExtendedCheck and unitBugData.bugCheckUpperLimit+1 or unitBugData.bugCheckUpperLimit+1
+	--local lowerLimit = enableExtendedCheck and unitBugData.bugCheckLowerLimit+1 or unitBugData.bugCheckLowerLimit
+	--local upperLimit = enableExtendedCheck and unitBugData.bugCheckUpperLimit+1 or unitBugData.bugCheckUpperLimit
 	local lowerLimit = unitBugData.bugCheckLowerLimit
 	local upperLimit = unitBugData.bugCheckUpperLimit
 	-- WriteToFile("upperLimit.txt",  tostring(upperLimit) .. "\n")
@@ -1651,6 +1651,7 @@ function SuddenStopAfterBackingUp(self)
 
 	-- look up this units bug duration and scale the threshold proportionally
 	-- 15 frames works for Seeker (frameCount=12), ratio: 15/12 = 1.25
+	-- This is necessary to prevent tagging units that never backed up but got the model state somehow.
 	local unitBugData = unitBugDataTable[getObjectName(self)]
 	if unitBugData == nil then return end
 	local bugDuration = unitBugData.frameCount
@@ -1658,9 +1659,36 @@ function SuddenStopAfterBackingUp(self)
 	local maxFrameDiff = floor(bugDuration * 1.25)
 
 	if GetNumberOfUnitsMoving(group.units) >= floor(group.unitCount * 0.80) and frameDiff <= maxFrameDiff then
-		FixBuggingUnit(self)
-		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+		local fixUnit = true
+		local playerTeam = tostring(ObjectTeamName(self))
+		local teamTable = getglobal(playerTeam) or nil
+		if teamTable ~= nil and teamTable.unitCount ~= nil and teamTable.unitCount > 0 and teamTable.units ~= nil then
+			-- only fix the unit if the current selection is the same as the snapshot selection count. Also when teamTable.unitCount is 0 it means there are no units selected.
+			if GetCurrentSelectionCountOfGroup(teamTable, group) < ceil(group.unitCount * 0.50) then
+				fixUnit = false
+			end
+		end
+
+		if fixUnit then
+			--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+			FixBuggingUnit(self)
+		end
 	end
+end
+
+-- gets the current selection count of units that are within a group of units
+-- @param teamTable: the current selection of a player
+-- @param group: the unit group to be compared against
+-- @return the number of units that are currently selected that are within the unit group
+function GetCurrentSelectionCountOfGroup(teamTable, group)
+	local count = 0
+	for unitRef,_ in group.units do
+		if teamTable.units[unitRef] ~= nil then
+			count = count + 1
+		end
+	end
+	--WriteToFile("GetCurrentSelectionCountOfGroup.txt",  "# of units that are selected and also belong to the group: " .. tostring(count) .. "\n")
+	return count
 end
 
 -- Triggered by -BACKING_UP, this triggers when multiple reverse move commands.
