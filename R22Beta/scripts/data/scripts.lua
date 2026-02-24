@@ -839,7 +839,7 @@ function OnHuskCapture(self, slaughterer)
 		
 		local isEpicUnit = false
 		
-		for key, epicUnit in epicUnits do 
+		for _, epicUnit in epicUnits do 
 		   if strfind(unitType, epicUnit) then
 			 isEpicUnit = true
 			 break
@@ -991,7 +991,7 @@ end
 function GetNumberOfUnitsMoving(selectedUnitList)
 	if selectedUnitList == nil then return 0 end
 	local unitsMoving = 0
-	for id, unitRef in selectedUnitList do
+	for _, unitRef in selectedUnitList do
 		if unitsReversing[unitRef] ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") then
 			unitsMoving = unitsMoving + 1
 		end
@@ -999,12 +999,11 @@ function GetNumberOfUnitsMoving(selectedUnitList)
 	return unitsMoving
 end
 
-
-
+-- returns the size of a a key/value pair table
 function getTableSize(t)
 	if t == nil then return end
 	local size = 0
-	for k, v in t do
+	for k, _ in t do
 		if k ~= nil then 
 			size = size + 1 
 		end
@@ -1106,7 +1105,7 @@ end
 function BackingUpFastTurnEnd(self)
     local _,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil then return end
-	-- prevents this from executing when the unit is not moving and not attacking
+	-- prevents this from executing when the unit is not moving or has already reverse moved 
 	if not unitReversing.isMovingFlag or unitReversing.hasAlreadyReversed then return end
 	local timesToTrigger = TURN_TRIGGER_COUNT
 	local curFrame = GetFrame()
@@ -1178,24 +1177,21 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local checksDone = group.checksDone
 	local unitsToFix = group.unitsToFix
 	--WriteToFile("groupId.txt",  tostring(groupId) .. "\n")
-	-- edge case for when units are attacking.
-
+	-- edge case for when units are attacking to permit an extended range check.
 	local enableExtendedCheck = unitReversing.isAttacking and (group.unitsNotMovingBeforeBackingUp >= ceil(selectedCount*0.50))
 	unitReversing.isAttacking = false
 	-- when units attack they always stop moving before a reverse move is issued
 	--if (unitReversing.isAttacking and enableExtendedCheck) then print("attacking") end
-	--local lowerLimit = enableExtendedCheck and unitBugData.bugCheckLowerLimit+1 or unitBugData.bugCheckLowerLimit
-	--local upperLimit = enableExtendedCheck and unitBugData.bugCheckUpperLimit+1 or unitBugData.bugCheckUpperLimit
-
-
-	local lowerLimit = unitBugData.bugCheckLowerLimit
-	local upperLimit = unitBugData.bugCheckUpperLimit
+	local lowerLimit = enableExtendedCheck and unitBugData.bugCheckLowerLimit+1 or unitBugData.bugCheckLowerLimit+1
+	local upperLimit = enableExtendedCheck and unitBugData.bugCheckUpperLimit+1 or unitBugData.bugCheckUpperLimit+1
+	--local lowerLimit = unitBugData.bugCheckLowerLimit
+	--local upperLimit = unitBugData.bugCheckUpperLimit
 	-- WriteToFile("upperLimit.txt",  tostring(upperLimit) .. "\n")
 
 	local inBugRange = frameDiff >= bugDuration - lowerLimit and frameDiff <= bugDuration + upperLimit
 	local isBugging = false
 	if unitReversing.fastTurnWas0Frames then
-		-- if two fast turns yields framediff of 0, it can be assumed the number of frames in this -TURN_LEFT or -TURN_RIGHT is 7 (for buggies)
+		-- if two fast turns yields framediff of 0, it can be assumed the number of frames in -TURN_LEFT or -TURN_RIGHT is 7 (for buggies)
 		if inBugRange then
 			isBugging = true
 		end
@@ -1207,13 +1203,12 @@ function CheckForObjReverseBugging(self, frameDiff)
 	end
 
 	--if isBugging then ExecuteAction("NAMED_FLASH_WHITE", self, 2) end
-
 	-- checksDone is more than ceil(unitReversing.groupId.selectedCount*0.5)
 	if not unitReversing.hasBeenCounted then
 		checksDone = checksDone + 1
 		unitReversing.hasBeenCounted = true
 	end
-	-- First determine if this unit is bugging and add it to the list,  dont fix units that are being already fixed
+	-- First determine if this unit is bugging and add it to the list, dont fix units that are being already fixed
 	if isBugging and not unitReversing.hasBeenFixed then
 		-- unitReversing.hasBeenFixed = true
 		-- cache the units if they are to be fixed in this table
@@ -1246,7 +1241,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 		end
 	end
 	--WriteToFile("data.txt", "this unit has three turn count: " .. tostring(thirdTurnUnitCount) .. "\n")
-	-- dont fix when doing a 180 degree turn
+	-- this prevents fixing a group of units that are doing a 180 degree turn.
 	local fixCancelledForType = group.fixCancelledByType and group.fixCancelledByType[objName]
 	if not group.fixCancelled and not fixCancelledForType then
 		if checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
@@ -1259,9 +1254,10 @@ function CheckForObjReverseBugging(self, frameDiff)
 				fixUnits = true
 				-- print("fixing units")
 			else
+				-- if the total number of bugging units of all types exceeds the threshold, cancel the fix on the entire group.
 				group.fixCancelled = true
 			end
-			--local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn
+			-- local thirdTurnUnitCount = group.unitsThatPerformedThirdTurn
 			-- if the average amount of third turns exceeds the threshold for this unit type, cancel the fix for the entire group
 			if thirdTurnUnitCountForType > 1 then
 				local avgThirdTurnCount = ceil(thirdTurnFrameCountForType / thirdTurnUnitCountForType)
@@ -1358,7 +1354,7 @@ function FixBuggingUnit(self)
 		unitReversing.hasBeenFixed = true
 	end
 
-	for id, unitRef in selectedUnitList do
+	for _, unitRef in selectedUnitList do
 		--  this unit is bugging so lets go through all the closest units and see if it coincides with this one
 		-- 	WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].unitAnchor) .. "\n")
 		if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].unitAnchor == unitReversing.selfReference then
@@ -1384,7 +1380,7 @@ end
 function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 	if selectedUnitsOfPlayer == nil then return nil end
 	local candidates = {}
-	for id, unitRef in selectedUnitsOfPlayer do
+	for _, unitRef in selectedUnitsOfPlayer do
 		if unitsReversing[unitRef] ~= nil then
 			if unitsReversing[unitRef].selfRealReference ~= unit then
 				-- check to see if unit is bugging and isnt destroyed
@@ -1488,7 +1484,7 @@ function AssignGroupId(unitReversing, a, curFrame, self)
 		setglobal(groupId, teamSnapshot)
 		-- assign every unit the same groupId
 		local unitsNotMovingBeforeBackingUp = 0
-		for id, unitRef in teamSnapshot.units do
+		for _, unitRef in teamSnapshot.units do
 			 -- WriteToFile("groupId.txt",  tostring(groupId) .. "\n")
 			if unitsReversing[unitRef] ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) then
 				unitsReversing[unitRef].groupId = groupId
@@ -1598,7 +1594,7 @@ function RemoveFromUnitSelection(self)
     end
 end
 
--- Clears the unitsReversing table of this unit
+-- Clears the unitsReversing table of this unit. If it belongs in a group, remove it. 
 function ReverseUnitOnDeath(self)
 	local a,unitReversing = GetUnitReversingData(self)	
     RemoveFromUnitSelection(self)
@@ -1666,7 +1662,7 @@ function BackingUpEnd(self)
 
 	--if checksDone == unitReversing.groupId.selectedCount-1 then
 	local clearList = true
-	for id, unitRef in selectedUnitList do
+	for _, unitRef in selectedUnitList do
 		if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].isReverseMoving then
 			-- if a unit is reverse moving, dont clear the list
 			clearList = false
@@ -1683,7 +1679,7 @@ function BackingUpEnd(self)
 		group.thirdTurnFrameCountByType = nil
 		group.thirdTurnUnitCountByType = nil
 		-- clear groupId for all units in this group including the current one.
-		for id, unitRef in selectedUnitList do
+		for _, unitRef in selectedUnitList do
 			-- if the id is the same as the id in current index clear it
 			if unitsReversing[unitRef] ~= nil then
 				unitsReversing[unitRef].groupId = nil
@@ -1705,7 +1701,7 @@ function BackingUpEnd(self)
 	--unitReversing.groupIdAssigned = false
 end
 
--- units cant clear this status normally unless i can get the object or model state for when UNIT_GUARD is triggered.
+-- USER_72 has ended, remove NO_COLLISIONS and speed buff if this unit has it.
 function BuggedUnitTimeoutEnd(self)
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
