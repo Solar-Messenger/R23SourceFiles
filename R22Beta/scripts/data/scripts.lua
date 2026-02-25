@@ -1033,17 +1033,17 @@ function UnitNoLongerMoving(self)
 		-- check if most units selected are not moving
 		if not unitReversing.hasBeenFixed and unitReversing.groupId ~= nil then
 			local group = getglobal(unitReversing.groupId)
-			if group ~= nil and group.units ~= nil and group.unitCount ~= nil then
+			if group ~= nil and group.reverseUnits ~= nil and group.reverseUnitCount ~= nil then
 				-- if a few units are moving now but originally before backing up most units were not moving then set moving flag to true
-				local numberOfUnitsMoving = GetNumberOfUnitsMoving(group.units)
+				local numberOfUnitsMoving = GetNumberOfUnitsMoving(group.reverseUnits)
 				--unitReversing.isMovingFlag = true
-				for _, unitRef in group.units do
+				for _, unitRef in group.reverseUnits do
 					if unitsReversing[unitRef] ~= nil then
-						if numberOfUnitsMoving <= floor(group.unitCount * UNITS_STILL_MOVING_THRESHOLD)
-						and ((group.unitsNotMovingBeforeBackingUp or 0) >= group.unitCount * 0.35) and unitsReversing[unitRef].isAttacking then
+						if numberOfUnitsMoving <= floor(group.reverseUnitCount * UNITS_STILL_MOVING_THRESHOLD)
+						and ((group.unitsNotMovingBeforeBackingUp or 0) >= group.reverseUnitCount * 0.35) and unitsReversing[unitRef].isAttacking then
 							unitsReversing[unitRef].isMovingFlag = true
 							unitsReversing[unitRef].hasCameToAStop = false
-						elseif numberOfUnitsMoving <= floor(group.unitCount * 0.15) and not unitsReversing[unitRef].isAttacking then
+						elseif numberOfUnitsMoving <= floor(group.reverseUnitCount * 0.15) and not unitsReversing[unitRef].isAttacking then
 							unitsReversing[unitRef].isMovingFlag = false
 							unitsReversing[unitRef].hasCameToAStop = true
 							--unitsReversing[unitRef].lastMoveWasReverse = false
@@ -1056,12 +1056,12 @@ function UnitNoLongerMoving(self)
 		elseif not unitReversing.hasBeenFixed and unitReversing.groupId == nil then
 			local playerTeam = tostring(ObjectTeamName(self))
 			local teamTable = getglobal(playerTeam) or nil
-			if teamTable ~= nil and teamTable.unitCount ~= nil and teamTable.unitCount > 0 then
-				local numberOfUnitsMoving = GetNumberOfUnitsMoving(teamTable.units)
-				--WriteToFile("numberOfUnitsMoving.txt",  "units not moving: " .. tostring(numberOfUnitsMoving) .. "teamTable units size: " .. getTableSize(teamTable.units) .. "\n")
-				if numberOfUnitsMoving <= floor(teamTable.unitCount * 0.15) then
+			if teamTable ~= nil and teamTable.reverseUnits ~= nil and teamTable.reverseUnitCount ~= nil and teamTable.reverseUnitCount > 0 then
+				local numberOfUnitsMoving = GetNumberOfUnitsMoving(teamTable.reverseUnits)
+				--WriteToFile("numberOfUnitsMoving.txt",  "units not moving: " .. tostring(numberOfUnitsMoving) .. "teamTable units size: " .. getTableSize(teamTable.reverseUnits) .. "\n")
+				if numberOfUnitsMoving <= floor(teamTable.reverseUnitCount * 0.15) then
 					-- assign isMovingFlag as false only if the last move was a reverse move
-					for _, unitRef in teamTable.units do
+					for _, unitRef in teamTable.reverseUnits do
 						if unitsReversing[unitRef] ~= nil and not unitsReversing[unitRef].isAttacking then
 							unitsReversing[unitRef].isMovingFlag = false
 							--unitsReversing[unitRef].lastMoveWasReverse = false
@@ -1163,7 +1163,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	-- check if unit is really damaged
 	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and bugDuration*unitBugData.reallyDamagedDurationMult or bugDuration
 	local group = getglobal(unitReversing.groupId)
-	if group == nil or group.units == nil or group.unitCount == nil then return end
+	if group == nil or group.reverseUnits == nil or group.reverseUnitCount == nil then return end
 	group.checksDone = group.checksDone or 0
 	group.unitsToFix = group.unitsToFix or {}
 	group.fixCancelled = group.fixCancelled or false
@@ -1171,8 +1171,8 @@ function CheckForObjReverseBugging(self, frameDiff)
 	group.thirdTurnFrameCountByType = group.thirdTurnFrameCountByType or {}
 	group.thirdTurnUnitCountByType = group.thirdTurnUnitCountByType or {}
 	group.unitsNotMovingBeforeBackingUp = group.unitsNotMovingBeforeBackingUp or 0
-	local selectedUnitList = group.units
-	local selectedCount = group.unitCount
+	local selectedUnitList = group.reverseUnits
+	local selectedCount = group.reverseUnitCount
 	if selectedCount <= 0 then return end
 	local checksDone = group.checksDone
 	local unitsToFix = group.unitsToFix
@@ -1502,7 +1502,8 @@ function AssignGroupId(unitReversing, a, curFrame, self)
 			if unitsReversing[unitRef] ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) then
 				unitsReversing[unitRef].groupId = groupId
 				unitsReversing[unitRef].groupIdAssigned = true
-				if ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") == false then
+				if teamSnapshot.reverseUnits ~= nil and teamSnapshot.reverseUnits[unitRef] ~= nil
+				and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") == false then
 					unitsNotMovingBeforeBackingUp = unitsNotMovingBeforeBackingUp + 1
 				end
 			end
@@ -1570,6 +1571,7 @@ end
 
 -- Triggered by +SELECTED
 function AddToUnitSelection(self)
+	if self == nil then return end
 	-- initialized here to prevent first instance of BACKING_UP having a cascading effect.
 	local _, unitReversing = GetUnitReversingData(self)
     local playerTeam = tostring(ObjectTeamName(self))
@@ -1584,14 +1586,24 @@ function AddToUnitSelection(self)
     if teamTable.units == nil then
         teamTable.units = {}
     end
-	
+
+    if teamTable.reverseUnits == nil then
+        teamTable.reverseUnits = {}
+    end
+
     if teamTable.units[unitId] == nil then
         teamTable.units[unitId] = unitId
         teamTable.unitCount = (teamTable.unitCount or 0) + 1
+		-- if this units hash exists in the unitBugDataTable, it can reverse move therefore we count it
+		if unitBugDataTable[getObjectName(self)] ~= nil then
+			teamTable.reverseUnits[unitId] = unitId
+			teamTable.reverseUnitCount = (teamTable.reverseUnitCount or 0) + 1
+		end
     end
 end
 -- Triggered by -SELECTED
 function RemoveFromUnitSelection(self)
+	if self == nil then return end
     local playerTeam = tostring(ObjectTeamName(self))
     local unitId = getObjectId(self)
 	local teamTable = getglobal(playerTeam) or nil
@@ -1602,6 +1614,10 @@ function RemoveFromUnitSelection(self)
             -- Set to nil to remove
             teamTable.units[unitId] = nil
             teamTable.unitCount = (teamTable.unitCount or 1) - 1
+			if teamTable.reverseUnits ~= nil and teamTable.reverseUnits[unitId] ~= nil then
+				teamTable.reverseUnits[unitId] = nil
+				teamTable.reverseUnitCount = (teamTable.reverseUnitCount or 1) - 1
+			end
 			--print("unit deselected")
         end
     end
@@ -1609,6 +1625,7 @@ end
 
 -- Clears the unitsReversing table of this unit. If it belongs in a group, remove it. 
 function ReverseUnitOnDeath(self)
+	if self == nil then return end
 	local a,unitReversing = GetUnitReversingData(self)	
     RemoveFromUnitSelection(self)
     if unitsReversing[a] ~= nil then
@@ -1619,6 +1636,10 @@ function ReverseUnitOnDeath(self)
 			if group ~= nil and group.units ~= nil and group.units[a] ~= nil then
 				group.units[a] = nil
 				group.unitCount = (group.unitCount or 1) - 1
+				if group.reverseUnits ~= nil and group.reverseUnits[a] ~= nil then
+					group.reverseUnits[a] = nil
+					group.reverseUnitCount = (group.reverseUnitCount or 1) - 1
+				end
 				-- check if theres no units left in the group and if so , clear the global.
 				if group.unitCount <= 0 or next(group.units) == nil then
 					setglobal(unitReversing.groupId, nil)
@@ -1641,7 +1662,7 @@ function SuddenStopAfterBackingUp(self)
 	if unitReversing.groupId == nil then return end
 	--unitReversing.isReverseMoving = false
 	local group = getglobal(unitReversing.groupId)
-	if group == nil or group.units == nil or group.unitCount == nil then return end
+	if group == nil or group.reverseUnits == nil or group.reverseUnitCount == nil then return end
 	local curFrame = GetFrame()
 	-- the duration of the reverse move since this unit came to an abrupt stop
 	-- if most units are still moving but this one suddenly stopped, it bugged
@@ -1658,13 +1679,13 @@ function SuddenStopAfterBackingUp(self)
 	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and bugDuration * unitBugData.reallyDamagedDurationMult or bugDuration
 	local maxFrameDiff = floor(bugDuration * 1.25)
 
-	if GetNumberOfUnitsMoving(group.units) >= floor(group.unitCount * 0.80) and frameDiff <= maxFrameDiff then
+	if GetNumberOfUnitsMoving(group.reverseUnits) >= floor(group.reverseUnitCount * 0.80) and frameDiff <= maxFrameDiff then
 		local fixUnit = true
 		local playerTeam = tostring(ObjectTeamName(self))
 		local teamTable = getglobal(playerTeam) or nil
-		if teamTable ~= nil and teamTable.unitCount ~= nil and teamTable.unitCount > 0 and teamTable.units ~= nil then
+		if teamTable ~= nil and teamTable.reverseUnitCount ~= nil and teamTable.reverseUnitCount > 0 and teamTable.reverseUnits ~= nil then
 			-- only fix the unit if the current selection is the same as the snapshot selection count. Also when teamTable.unitCount is 0 it means there are no units selected.
-			if GetCurrentSelectionCountOfGroup(teamTable, group) < ceil(group.unitCount * 0.50) then
+			if GetCurrentSelectionCountOfGroup(teamTable, group) < ceil(group.reverseUnitCount * 0.50) then
 				fixUnit = false
 			end
 		end
@@ -1681,8 +1702,9 @@ end
 -- @param group: the unit group to be compared against
 -- @return the number of units that are currently selected that are within the unit group
 function GetCurrentSelectionCountOfGroup(teamTable, group)
+	if teamTable == nil or teamTable.units == nil or group == nil or group.reverseUnits == nil then return 0 end
 	local count = 0
-	for unitRef,_ in group.units do
+	for unitRef,_ in group.reverseUnits do
 		if teamTable.units[unitRef] ~= nil then
 			count = count + 1
 		end
@@ -1699,9 +1721,14 @@ function BackingUpEnd(self)
 	local _,unitReversing = GetUnitReversingData(self)	
 	unitReversing.lastReverseMoveFrame =  GetFrame()
 	local group = unitReversing.groupId ~= nil and getglobal(unitReversing.groupId) or nil
-	local selectedUnitList = {}
+	local reverseUnitList = {}
+	if group ~= nil and group.reverseUnits ~= nil then
+		reverseUnitList = group.reverseUnits
+	end
+	-- prevents stale group state on non-reverse units
+	local groupUnitList = {}
 	if group ~= nil and group.units ~= nil then
-		selectedUnitList = group.units
+		groupUnitList = group.units
 	end
 
 	if unitReversing ~= nil and not unitReversing.hasBeenFixed then
@@ -1720,7 +1747,7 @@ function BackingUpEnd(self)
 
 	--if checksDone == unitReversing.groupId.selectedCount-1 then
 	local clearList = true
-	for _, unitRef in selectedUnitList do
+	for _, unitRef in reverseUnitList do
 		if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].isReverseMoving then
 			-- if a unit is reverse moving, dont clear the list
 			clearList = false
@@ -1737,7 +1764,7 @@ function BackingUpEnd(self)
 		group.thirdTurnFrameCountByType = nil
 		group.thirdTurnUnitCountByType = nil
 		-- clear groupId for all units in this group including the current one.
-		for _, unitRef in selectedUnitList do
+		for _, unitRef in groupUnitList do
 			-- if the id is the same as the id in current index clear it
 			if unitsReversing[unitRef] ~= nil then
 				unitsReversing[unitRef].groupId = nil
@@ -1761,6 +1788,7 @@ end
 
 -- USER_72 has ended, remove NO_COLLISIONS and speed buff if this unit has it.
 function BuggedUnitTimeoutEnd(self)
+	if self == nil then return end
 	local a = getObjectId(self)
 	if unitsReversing[a] == nil then return end
 	local _,unitReversing = GetUnitReversingData(self)
