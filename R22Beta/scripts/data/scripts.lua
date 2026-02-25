@@ -280,13 +280,13 @@ function OnMoney1(self)
 
 	if ObjectTestModelCondition(self, "DOCKING") == false then
 		if  harvesterData[a].isHarvestingBlue then 
-			if ObjectHasUpgrade(self, "Upgrade_UpgradeBlueOne") == 0 then
+			if not ObjectTestModelCondition(self, "USER_16") then 
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueOne")
 			end
 			harvbluetib[a] = harvbluetib[a] + 1
 			bar1[a] = 0
 		else
-			if ObjectHasUpgrade(self, "Upgrade_UpgradeGreenOne") == 0 then
+			if not ObjectTestModelCondition(self, "USER_20") then 
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenOne")
 			end
 			harvgreentib[a] = harvgreentib[a] + 1
@@ -303,13 +303,13 @@ function OnMoney2(self)
 	local a = getObjectId(self)
 	if ObjectTestModelCondition(self, "DOCKING") == false then
 		if  harvesterData[a].isHarvestingBlue then 
-			if ObjectHasUpgrade(self, "Upgrade_UpgradeBlueTwo") == 0 then
+			if not ObjectTestModelCondition(self, "USER_17") then 
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueTwo")
 			end
 			harvbluetib[a] = harvbluetib[a] + 1
 			bar2[a] = 0
 		else
-			if ObjectHasUpgrade(self, "Upgrade_UpgradeGreenTwo") == 0 then
+			if not ObjectTestModelCondition(self, "USER_21") then 
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenTwo")
 			end
 			harvgreentib[a] = harvgreentib[a] + 1 
@@ -327,13 +327,13 @@ function OnMoney3(self)
 
 	if ObjectTestModelCondition(self, "DOCKING") == false then
 		if  harvesterData[a].isHarvestingBlue then 
-			if ObjectHasUpgrade(self, "Upgrade_UpgradeBlueThree") == 0 then
+			if not ObjectTestModelCondition(self, "USER_18") then 
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueThree")
 			end
 			harvbluetib[a] = harvbluetib[a] + 1
 			bar3[a] = 0
 		else
-			if ObjectHasUpgrade(self, "Upgrade_UpgradeGreenThree") == 0 then
+			if not ObjectTestModelCondition(self, "USER_22") then 
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenThree")
 			end
 			harvgreentib[a] = harvgreentib[a] + 1 
@@ -351,13 +351,13 @@ function OnMoney4(self)
 	local a = getObjectId(self)
 	if ObjectTestModelCondition(self, "DOCKING") == false then
 		if  harvesterData[a].isHarvestingBlue then 
-			if ObjectHasUpgrade(self, "Upgrade_UpgradeBlueFour") == 0 then
+			if not ObjectTestModelCondition(self, "USER_19") then 
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueFour")
 			end
 			harvbluetib[a] = harvbluetib[a] + 1
 			bar4[a] = 0
 		else
-			if ObjectHasUpgrade(self, "Upgrade_UpgradeGreenFour") == 0 then
+			if not ObjectTestModelCondition(self, "USER_23") then 
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenFour")	
 			end
 			harvgreentib[a] = harvgreentib[a] + 1 
@@ -382,8 +382,8 @@ end
 function OffMoney1(self) 
 	local a = getObjectId(self)		
 	if ObjectTestModelCondition(self, "DOCKING") then 
-		if ObjectHasUpgrade(self, "Upgrade_UpgradeBlueOne") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueOne") end 
-		if ObjectHasUpgrade(self, "Upgrade_UpgradeGreenOne") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenOne") end
+		if ObjectTestModelCondition(self, "USER_16") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueOne") end 
+		if ObjectTestModelCondition(self, "USER_20") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenOne") end
 		if bar1[a] == 0 then harvbluetib[a] = harvbluetib[a] - 1
 			elseif bar1[a] == 1 then harvgreentib[a] = harvgreentib[a] - 1
 		end
@@ -393,8 +393,8 @@ end
 function OffMoney2(self)
 	local a = getObjectId(self)
 	if ObjectTestModelCondition(self, "DOCKING") then 
-		if ObjectHasUpgrade(self, "Upgrade_UpgradeBlueTwo") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueTwo") end 
-		if ObjectHasUpgrade(self, "Upgrade_UpgradeGreenTwo") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenTwo") end	
+		if ObjectTestModelCondition(self, "USER_17") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueTwo") end 
+		if ObjectTestModelCondition(self, "USER_21") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenTwo") end	
 		if bar2[a] == 0 then harvbluetib[a] = harvbluetib[a] - 1
 			elseif bar2[a] == 1 then harvgreentib[a] = harvgreentib[a] - 1
 		end
@@ -407,8 +407,8 @@ function OffMoney3(self)
 	harvesterData[a].totalFramesHarvested75Full = 0
 	
 	if ObjectTestModelCondition(self, "DOCKING") then 
-		if ObjectHasUpgrade(self, "Upgrade_UpgradeBlueThree") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueThree") end
-		if ObjectHasUpgrade(self, "Upgrade_UpgradeGreenThree") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenThree") end		
+		if ObjectTestModelCondition(self, "USER_18") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueThree") end
+		if ObjectTestModelCondition(self, "USER_22") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenThree") end		
 		if bar3[a] == 0 then harvbluetib[a] = harvbluetib[a] - 1
 			elseif bar3[a] == 1 then harvgreentib[a] = harvgreentib[a] - 1
 		end
@@ -419,8 +419,8 @@ function OffMoney4(self)
 	local a = getObjectId(self)
 
 	if ObjectTestModelCondition(self, "DOCKING") then 
-		if ObjectHasUpgrade(self, "Upgrade_UpgradeBlueFour") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueFour") end
-		if ObjectHasUpgrade(self, "Upgrade_UpgradeGreenFour") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenFour") end	
+		if ObjectTestModelCondition(self, "USER_19") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueFour") end
+		if ObjectTestModelCondition(self, "USER_23") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenFour") end	
 		if bar4[a] == 0 then harvbluetib[a] = harvbluetib[a] - 1
 			elseif bar4[a] == 1 then harvgreentib[a] = harvgreentib[a] - 1
 		end
@@ -639,13 +639,15 @@ function TiberiumEvent(self, other)
 				if strfind(ObjectDescription(self), "BA9F66AB") ~= nil or strfind(ObjectDescription(self), "TiberiumCrystalBlue") ~= nil then
 					data.isHarvestingBlue = true
 					-- show the blue tib fx
-					if ObjectHasUpgrade(other, "Upgrade_UpgradeBlueTib") == 0 then 
+					if not ObjectTestModelCondition(other, "USER_26") then 
+						ExecuteAction("SHOW_MILITARY_CAPTION", "granting the blue tib upgrade", 2)	
 						ObjectGrantUpgrade(other, "Upgrade_UpgradeBlueTib") 
 					end		
 				else
 					data.isHarvestingBlue = false
-					-- hide the blue tib fx
-					if ObjectHasUpgrade(other, "Upgrade_UpgradeBlueTib") then 
+					-- hide the blue tib fx	
+					if ObjectTestModelCondition(other, "USER_26") then 
+						ExecuteAction("SHOW_MILITARY_CAPTION", "removing the blue tib upgrade", 2)	
 						ObjectRemoveUpgrade(other, "Upgrade_UpgradeBlueTib") 
 					end 
 				end
@@ -793,7 +795,9 @@ function DelayHuskHide(self)
 	-- ObjectPlaySound(self, "BuildingCaptured")	
 	ObjectPlaySound(self, "BuildingRepaired")	
 
-	if ObjectHasUpgrade(self, "Upgrade_EngineerCapture") then
+	local a = getObjectId(self)
+	-- checks if it has the status bit RIDER1 (41) assigned in the husk xml
+	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self, a), 41) then
 		ObjectRemoveUpgrade(self, "Upgrade_EngineerCapture")
 	end
 
@@ -821,7 +825,7 @@ end
 function OnHuskCapture(self, slaughterer)
 	if self ~= nil and slaughterer ~= nil then
 		-- upgrade the husk and apply status to it
-		if ObjectHasUpgrade(slaughterer, "Upgrade_EngineerCapture") == 0 then
+		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(slaughterer, getObjectId(slaughterer)), 41) then
 			ObjectGrantUpgrade(slaughterer, "Upgrade_EngineerCapture")
 		end
 	
@@ -1348,7 +1352,7 @@ function FixBuggingUnit(self)
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)
 		end
 		-- apply upgrade 
-		if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") == 0 then
+		if not ObjectTestModelCondition(self, "USER_63") then
 			ObjectGrantUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 		end
 	--end
@@ -1397,7 +1401,7 @@ function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 		if unitsReversing[unitRef] ~= nil then
 			if unitsReversing[unitRef].selfRealReference ~= unit then
 				-- check to see if unit is bugging and isnt destroyed
-				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and not unitsReversing[unitRef].hasBeenFixed and ObjectHasUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") == 0 then
+				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and not unitsReversing[unitRef].hasBeenFixed and not ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_63") then
 					tinsert(candidates, unitsReversing[unitRef].selfReference)
 				end
 			end
@@ -1454,7 +1458,7 @@ function BackingUp(self)
 	unitReversing.isReverseMoving = true
 
 	--WriteToFile("isAttacking.txt",  tostring(unitReversing.isAttacking) .. "\n")
-	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") then 
+	if ObjectTestModelCondition(self, "USER_63") then 
 		--print("removing upgrade")
 		ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 	end	
@@ -1770,7 +1774,7 @@ function BackingUpEnd(self)
 				unitsReversing[unitRef].groupId = nil
 				unitsReversing[unitRef].groupIdAssigned = false
 				unitsReversing[unitRef].hasBeenFixed = false
-				if EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) and ObjectHasUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff") then
+				if EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_63") then
 					ObjectRemoveUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff")
 				end
 			end
@@ -1800,7 +1804,7 @@ function BuggedUnitTimeoutEnd(self)
 		end
 	end
 
-	if ObjectHasUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") then 
+	if ObjectTestModelCondition(self, "USER_63") then 
 		ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 	end		
 end
