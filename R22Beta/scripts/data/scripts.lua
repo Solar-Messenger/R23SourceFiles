@@ -972,8 +972,8 @@ function GetUnitReversingData(self)
 			timesTriggeredFast = 0, 
 			timesTriggeredNormal = 0, 
 			hasBeenFixed = false,
-			selfReference = SetObjectReference(self),
-			stringReference = self,
+			stringReference = SetObjectReference(self),
+			selfReference = self,
 			groupId = nil,
 			isMovingFlag = true,
 			lastMoveWasReverse = false,
@@ -1008,7 +1008,7 @@ function GetNumberOfUnitsMoving(selectedUnitList)
 	if selectedUnitList == nil then return 0 end
 	local unitsMoving = 0
 	for _, unitRef in selectedUnitList do
-		if unitsReversing[unitRef] ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) and ObjectTestModelCondition(unitsReversing[unitRef].stringReference, "MOVING") then
+		if unitsReversing[unitRef] ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].stringReference) and ObjectTestModelCondition(unitsReversing[unitRef].selfReference, "MOVING") then
 			unitsMoving = unitsMoving + 1
 		end
 	end
@@ -1111,8 +1111,8 @@ function UnitIsNotAttacking(self)
 	--if ObjectTestModelCondition(self, "BACKING_UP") then
 		local _,unitReversing = GetUnitReversingData(self)
 		if unitReversing == nil then return end
-		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
+		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.stringReference, 4) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 4, 1)   
 		end
 	--end
 end
@@ -1246,7 +1246,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	--if checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
 	--	for id, unitRef in selectedUnitList do 
 	--		if not unitsReversing[unitRef].isReverseMoving and not unitsReversing[unitRef].hasBeenFixed then
-	--			tinsert(unitsToFix, getObjectId(unitsReversing[unitRef].stringReference))
+	--			tinsert(unitsToFix, getObjectId(unitsReversing[unitRef].selfReference))
 	--			print("unit inserted")
 	--		end
 	--	end
@@ -1322,7 +1322,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 				for i = getn(unitsToFix), 1, -1 do
 					local buggingUnit = unitsReversing[unitsToFix[i]]
 					if buggingUnit ~= nil then
-						local buggingRef = buggingUnit.stringReference
+						local buggingRef = buggingUnit.selfReference
 						--ExecuteAction("NAMED_FLASH", buggingRef, 2)
 						FixBuggingUnit(buggingRef)
 					else
@@ -1339,8 +1339,8 @@ function CheckForObjReverseBugging(self, frameDiff)
 			-- Only clear bugging state when threshold was reached and we decided not to fix
 			-- (too many bugging = likely false positive). Before threshold is reached,
 			-- keep the state so the unit can still be fixed when slower types finish checking.
-			if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
-				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)
+			if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.stringReference, 4) then
+				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 4, 0)
 			end
 			--unitReversing.hasBeenFixed = false
 		end
@@ -1360,11 +1360,11 @@ function FixBuggingUnit(self)
 			ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", NO_COLLISION_DURATION, 100)
 		end
 		-- temporarily remove collisions to facilitate the reverse move, assign this on backing up
-		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)
+		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.stringReference, 4) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 4, 1)
 		end
 		-- apply upgrade 
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.selfReference, "Upgrade_ReverseMoveSpeedBuff") then
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.stringReference, "Upgrade_ReverseMoveSpeedBuff") then
 			ObjectGrantUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 		end
 	--end
@@ -1378,17 +1378,17 @@ function FixBuggingUnit(self)
 	end
 	--WriteToFile("closeunit.txt",  "closest unit:  " .. tostring(unitReversing.unitAnchor) .. "\n")
 	if not unitReversing.hasBeenFixed and unitReversing.unitAnchor ~= nil then
-		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitReversing.unitAnchor)	
-		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.stringReference, STOPPING_DISTANCE)
+		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.stringReference, unitReversing.unitAnchor)	
+		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfReference, STOPPING_DISTANCE)
 		unitReversing.hasBeenFixed = true
 	end
 
 	for _, unitRef in selectedUnitList do
 		--  this unit is bugging so lets go through all the closest units and see if it coincides with this one
-		-- 	WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].unitAnchor) .. "\n")
-		if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].unitAnchor == unitReversing.selfReference then
+		-- 	WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].stringReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].unitAnchor) .. "\n")
+		if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].unitAnchor == unitReversing.stringReference then
 			-- get a unit that hasnt bugged that isnt itself
-			local nonBuggingUnit = GetANonBuggingUnit(group.units, unitsReversing[unitRef].stringReference)
+			local nonBuggingUnit = GetANonBuggingUnit(group.units, unitsReversing[unitRef].selfReference)
 			-- only proceed if we found a non-bugging unit
 			if nonBuggingUnit ~= nil then
 				-- assign the new closeestUnit to a unit not flagged as being bugged
@@ -1396,11 +1396,11 @@ function FixBuggingUnit(self)
 				-- move this unit to the previously assigned non bugging unit
 				if unitsReversing[unitRef].hasBeenFixed then
 					--print("assigning to different unit")
-					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].selfReference, unitsReversing[unitRef].unitAnchor)
+					ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].stringReference, unitsReversing[unitRef].unitAnchor)
 				end
 			end
 		end
-		-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].unitAnchor) .. "\n")
+		-- WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].stringReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].unitAnchor) .. "\n")
 	end
 end
 
@@ -1411,10 +1411,10 @@ function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 	local candidates = {}
 	for _, unitRef in selectedUnitsOfPlayer do
 		if unitsReversing[unitRef] ~= nil then
-			if unitsReversing[unitRef].stringReference ~= unit then
+			if unitsReversing[unitRef].selfReference ~= unit then
 				-- check to see if unit is bugging and isnt destroyed
-				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and not unitsReversing[unitRef].hasBeenFixed and not EvaluateCondition("UNIT_HAS_UPGRADE",unitReversings[unitRef].selfReference, "Upgrade_ReverseMoveSpeedBuff") then
-					tinsert(candidates, unitsReversing[unitRef].selfReference)
+				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].stringReference) and not unitsReversing[unitRef].hasBeenFixed and not EvaluateCondition("UNIT_HAS_UPGRADE",unitReversings[unitRef].stringReference, "Upgrade_ReverseMoveSpeedBuff") then
+					tinsert(candidates, unitsReversing[unitRef].stringReference)
 				end
 			end
 		end
@@ -1470,7 +1470,7 @@ function BackingUp(self)
 	unitReversing.isReverseMoving = true
 
 	--WriteToFile("isAttacking.txt",  tostring(unitReversing.isAttacking) .. "\n")
-	if EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.selfReference, "Upgrade_ReverseMoveSpeedBuff") then
+	if EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.stringReference, "Upgrade_ReverseMoveSpeedBuff") then
 		--print("removing upgrade")
 		ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 	end	
@@ -1478,8 +1478,8 @@ function BackingUp(self)
 		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 0, 0)
 	end
 
-	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)   
+	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.stringReference, 4) then
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 4, 1)   
 	end
 
 	if not unitReversing.groupIdAssigned then
@@ -1515,11 +1515,11 @@ function AssignGroupId(unitReversing, a, curFrame, self)
 		local unitsNotMovingBeforeBackingUp = 0
 		for _, unitRef in teamSnapshot.units do
 			 -- WriteToFile("groupId.txt",  tostring(groupId) .. "\n")
-			if unitsReversing[unitRef] ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) then
+			if unitsReversing[unitRef] ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].stringReference) then
 				unitsReversing[unitRef].groupId = groupId
 				unitsReversing[unitRef].groupIdAssigned = true
 				if teamSnapshot.reverseUnits ~= nil and teamSnapshot.reverseUnits[unitRef] ~= nil
-				and ObjectTestModelCondition(unitsReversing[unitRef].stringReference, "MOVING") == false then
+				and ObjectTestModelCondition(unitsReversing[unitRef].selfReference, "MOVING") == false then
 					unitsNotMovingBeforeBackingUp = unitsNotMovingBeforeBackingUp + 1
 				end
 			end
@@ -1548,7 +1548,7 @@ function AssignRandomAnchor(self)
 			-- gets a unit that isnt self randomly.
 			local randomUnitId = GetRandomKey(selectedUnitList, a)
 			if randomUnitId ~= nil and unitsReversing[randomUnitId] ~= nil then
-				unitReversing.unitAnchor = unitsReversing[randomUnitId].selfReference
+				unitReversing.unitAnchor = unitsReversing[randomUnitId].stringReference
 			end
 		end
     end
@@ -1749,8 +1749,8 @@ function BackingUpEnd(self)
 
 	if unitReversing ~= nil and not unitReversing.hasBeenFixed then
 		-- need to prevent this when guarding
-		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)
+		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.stringReference, 4) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 4, 0)
 		end
 	end
 
@@ -1786,8 +1786,8 @@ function BackingUpEnd(self)
 				unitsReversing[unitRef].groupId = nil
 				unitsReversing[unitRef].groupIdAssigned = false
 				unitsReversing[unitRef].hasBeenFixed = false
-				if EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) and EvaluateCondition("UNIT_HAS_UPGRADE",unitsReversing[unitRef].selfReference, "Upgrade_ReverseMoveSpeedBuff") then
-					ObjectRemoveUpgrade(unitsReversing[unitRef].stringReference, "Upgrade_ReverseMoveSpeedBuff")
+				if EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].stringReference) and EvaluateCondition("UNIT_HAS_UPGRADE",unitsReversing[unitRef].stringReference, "Upgrade_ReverseMoveSpeedBuff") then
+					ObjectRemoveUpgrade(unitsReversing[unitRef].selfReference, "Upgrade_ReverseMoveSpeedBuff")
 				end
 			end
 		end
@@ -1811,12 +1811,12 @@ function BuggedUnitTimeoutEnd(self)
 	if unitReversing ~= nil then
 		unitReversing.hasBeenFixed = false
 		unitReversing.unitAnchor = nil
-		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.selfReference, 4) then
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 0)	
+		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.stringReference, 4) then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 4, 0)	
 		end
 	end
 
-	if EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.selfReference, "Upgrade_ReverseMoveSpeedBuff") then
+	if EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.stringReference, "Upgrade_ReverseMoveSpeedBuff") then
 		ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 	end		
 end
