@@ -602,7 +602,6 @@ function GetHarvesterData(self)
 			isHarvestingBlue = false, -- is harvesting blue tiberium or not
 			isAlreadyHarvesting = false, -- the harvester is already harvesting
 			lastCrystalHarvested = nil, -- object reference to the last crystal harvested
-			harvesterObjectRef = SetObjectReference(self), -- set the object reference once instead of relying on GetRandomNumber()
 			harvbluetib = 0, -- for counting blue tiberium in harvester
 			harvgreentib = 0, -- for counting green tiberium in harvester
 			-- 1 is green tiberium 0 is for blue
@@ -654,14 +653,14 @@ function TiberiumEvent(self, other)
 					data.isHarvestingBlue = true
 					-- show the blue tib fx
 					if not ObjectTestModelCondition(other, "USER_26") then 
-						ExecuteAction("SHOW_MILITARY_CAPTION", "granting the blue tib upgrade", 2)	
+						--ExecuteAction("SHOW_MILITARY_CAPTION", "granting the blue tib upgrade", 2)	
 						ObjectGrantUpgrade(other, "Upgrade_UpgradeBlueTib") 
 					end		
 				else
 					data.isHarvestingBlue = false
 					-- hide the blue tib fx	
 					if ObjectTestModelCondition(other, "USER_26") then 
-						ExecuteAction("SHOW_MILITARY_CAPTION", "removing the blue tib upgrade", 2)	
+						--ExecuteAction("SHOW_MILITARY_CAPTION", "removing the blue tib upgrade", 2)	
 						ObjectRemoveUpgrade(other, "Upgrade_UpgradeBlueTib") 
 					end 
 				end
@@ -975,7 +974,7 @@ function GetUnitReversingData(self)
 			timesTriggeredNormal = 0, 
 			hasBeenFixed = false,
 			selfReference = SetObjectReference(self),
-			selfRealReference = self,
+			stringReference = self,
 			groupId = nil,
 			isMovingFlag = true,
 			lastMoveWasReverse = false,
@@ -1010,7 +1009,7 @@ function GetNumberOfUnitsMoving(selectedUnitList)
 	if selectedUnitList == nil then return 0 end
 	local unitsMoving = 0
 	for _, unitRef in selectedUnitList do
-		if unitsReversing[unitRef] ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") then
+		if unitsReversing[unitRef] ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) and ObjectTestModelCondition(unitsReversing[unitRef].stringReference, "MOVING") then
 			unitsMoving = unitsMoving + 1
 		end
 	end
@@ -1248,7 +1247,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	--if checksDone >= ceil(selectedCount * CHECKS_DONE_THRESHOLD) then
 	--	for id, unitRef in selectedUnitList do 
 	--		if not unitsReversing[unitRef].isReverseMoving and not unitsReversing[unitRef].hasBeenFixed then
-	--			tinsert(unitsToFix, getObjectId(unitsReversing[unitRef].selfRealReference))
+	--			tinsert(unitsToFix, getObjectId(unitsReversing[unitRef].stringReference))
 	--			print("unit inserted")
 	--		end
 	--	end
@@ -1324,7 +1323,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 				for i = getn(unitsToFix), 1, -1 do
 					local buggingUnit = unitsReversing[unitsToFix[i]]
 					if buggingUnit ~= nil then
-						local buggingRef = buggingUnit.selfRealReference
+						local buggingRef = buggingUnit.stringReference
 						--ExecuteAction("NAMED_FLASH", buggingRef, 2)
 						FixBuggingUnit(buggingRef)
 					else
@@ -1381,7 +1380,7 @@ function FixBuggingUnit(self)
 	--WriteToFile("closeunit.txt",  "closest unit:  " .. tostring(unitReversing.unitAnchor) .. "\n")
 	if not unitReversing.hasBeenFixed and unitReversing.unitAnchor ~= nil then
 		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.selfReference, unitReversing.unitAnchor)	
-		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.selfRealReference, STOPPING_DISTANCE)
+		ExecuteAction("NAMED_SET_STOPPING_DISTANCE", unitReversing.stringReference, STOPPING_DISTANCE)
 		unitReversing.hasBeenFixed = true
 	end
 
@@ -1390,7 +1389,7 @@ function FixBuggingUnit(self)
 		-- 	WriteToFile("closeunit.txt",  "object 1:  " .. tostring(unitsReversing[unitRef].selfReference)  .. "  " .. "object 2: " .. tostring(unitsReversing[unitRef].unitAnchor) .. "\n")
 		if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].unitAnchor == unitReversing.selfReference then
 			-- get a unit that hasnt bugged that isnt itself
-			local nonBuggingUnit = GetANonBuggingUnit(group.units, unitsReversing[unitRef].selfRealReference)
+			local nonBuggingUnit = GetANonBuggingUnit(group.units, unitsReversing[unitRef].stringReference)
 			-- only proceed if we found a non-bugging unit
 			if nonBuggingUnit ~= nil then
 				-- assign the new closeestUnit to a unit not flagged as being bugged
@@ -1413,9 +1412,9 @@ function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 	local candidates = {}
 	for _, unitRef in selectedUnitsOfPlayer do
 		if unitsReversing[unitRef] ~= nil then
-			if unitsReversing[unitRef].selfRealReference ~= unit then
+			if unitsReversing[unitRef].stringReference ~= unit then
 				-- check to see if unit is bugging and isnt destroyed
-				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and not unitsReversing[unitRef].hasBeenFixed and not ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_63") then
+				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and not unitsReversing[unitRef].hasBeenFixed and not ObjectTestModelCondition(unitsReversing[unitRef].stringReference, "USER_63") then
 					tinsert(candidates, unitsReversing[unitRef].selfReference)
 				end
 			end
@@ -1521,7 +1520,7 @@ function AssignGroupId(unitReversing, a, curFrame, self)
 				unitsReversing[unitRef].groupId = groupId
 				unitsReversing[unitRef].groupIdAssigned = true
 				if teamSnapshot.reverseUnits ~= nil and teamSnapshot.reverseUnits[unitRef] ~= nil
-				and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "MOVING") == false then
+				and ObjectTestModelCondition(unitsReversing[unitRef].stringReference, "MOVING") == false then
 					unitsNotMovingBeforeBackingUp = unitsNotMovingBeforeBackingUp + 1
 				end
 			end
@@ -1788,8 +1787,8 @@ function BackingUpEnd(self)
 				unitsReversing[unitRef].groupId = nil
 				unitsReversing[unitRef].groupIdAssigned = false
 				unitsReversing[unitRef].hasBeenFixed = false
-				if EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) and ObjectTestModelCondition(unitsReversing[unitRef].selfRealReference, "USER_63") then
-					ObjectRemoveUpgrade(unitsReversing[unitRef].selfRealReference, "Upgrade_ReverseMoveSpeedBuff")
+				if EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) and ObjectTestModelCondition(unitsReversing[unitRef].stringReference, "USER_63") then
+					ObjectRemoveUpgrade(unitsReversing[unitRef].stringReference, "Upgrade_ReverseMoveSpeedBuff")
 				end
 			end
 		end
