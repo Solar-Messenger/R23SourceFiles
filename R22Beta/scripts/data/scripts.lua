@@ -266,19 +266,18 @@ function OnMoney1(self)
 
 	if ObjectTestModelCondition(self, "DOCKING") == false then
 		if hData.isHarvestingBlue then
-			if not ObjectTestModelCondition(self, "USER_16") then
+			if not EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeBlueOne") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueOne")
 			end
 			hData.harvbluetib = hData.harvbluetib + 1
 			hData.bar1 = 0
 		else
-			if not ObjectTestModelCondition(self, "USER_20") then
+			if not EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeGreenOne") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenOne")
 			end
 			hData.harvgreentib = hData.harvgreentib + 1
 			hData.bar1 = 1
 		end
-
 		if hData.lastCrystalHarvested ~= nil then
 			HarvestedCrystalCheck(hData.lastCrystalHarvested, GetFrame())
 		end
@@ -290,19 +289,18 @@ function OnMoney2(self)
 
 	if ObjectTestModelCondition(self, "DOCKING") == false then
 		if hData.isHarvestingBlue then
-			if not ObjectTestModelCondition(self, "USER_17") then
+			if not EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeBlueTwo") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueTwo")
 			end
 			hData.harvbluetib = hData.harvbluetib + 1
 			hData.bar2 = 0
 		else
-			if not ObjectTestModelCondition(self, "USER_21") then
+			if not EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeGreenTwo") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenTwo")
 			end
 			hData.harvgreentib = hData.harvgreentib + 1
 			hData.bar2 = 1
 		end
-
 		if hData.lastCrystalHarvested ~= nil then
 			HarvestedCrystalCheck(hData.lastCrystalHarvested, GetFrame())
 		end
@@ -314,13 +312,13 @@ function OnMoney3(self)
 
 	if ObjectTestModelCondition(self, "DOCKING") == false then
 		if hData.isHarvestingBlue then
-			if not ObjectTestModelCondition(self, "USER_18") then
+			if not EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeBlueThree") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueThree")
 			end
 			hData.harvbluetib = hData.harvbluetib + 1
 			hData.bar3 = 0
 		else
-			if not ObjectTestModelCondition(self, "USER_22") then
+			if not EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeGreenThree") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenThree")
 			end
 			hData.harvgreentib = hData.harvgreentib + 1
@@ -338,13 +336,13 @@ function OnMoney4(self)
 	local a, hData = GetHarvesterData(self)
 	if ObjectTestModelCondition(self, "DOCKING") == false then
 		if hData.isHarvestingBlue then
-			if not ObjectTestModelCondition(self, "USER_19") then
+			if not EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeBlueFour") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueFour")
 			end
 			hData.harvbluetib = hData.harvbluetib + 1
 			hData.bar4 = 0
 		else
-			if not ObjectTestModelCondition(self, "USER_23") then
+			if not EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeGreenFour") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenFour")
 			end
 			hData.harvgreentib = hData.harvgreentib + 1
@@ -370,10 +368,10 @@ function OffMoney1(self)
 	local a, hData = GetHarvesterData(self)
 
 	if ObjectTestModelCondition(self, "DOCKING") then
-		if ObjectTestModelCondition(self, "USER_16") then
+		if EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeBlueOne") then
 			ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueOne")
 		end
-		if ObjectTestModelCondition(self, "USER_20") then
+		if EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeGreenOne") then
 			ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenOne")
 		end
 		if hData.bar1 == 0 then
@@ -388,10 +386,10 @@ function OffMoney2(self)
 	local a, hData = GetHarvesterData(self)
 
 	if ObjectTestModelCondition(self, "DOCKING") then
-		if ObjectTestModelCondition(self, "USER_17") then
+		if EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeBlueTwo") then
 			ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueTwo")
 		end
-		if ObjectTestModelCondition(self, "USER_21") then
+		if EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeGreenTwo") then
 			ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenTwo")
 		end
 		if hData.bar2 == 0 then
@@ -409,10 +407,10 @@ function OffMoney3(self)
 	hData.totalFramesHarvested75Full = 0
 
 	if ObjectTestModelCondition(self, "DOCKING") then
-		if ObjectTestModelCondition(self, "USER_18") then
+		if EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeBlueThree") then
 			ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueThree")
 		end
-		if ObjectTestModelCondition(self, "USER_22") then
+		if EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeGreenThree") then
 			ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenThree")
 		end
 		if hData.bar3 == 0 then
@@ -427,10 +425,10 @@ function OffMoney4(self)
 	local a, hData = GetHarvesterData(self)
 
 	if ObjectTestModelCondition(self, "DOCKING") then
-		if ObjectTestModelCondition(self, "USER_19") then
+		if EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeBlueFour") then
 			ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueFour")
 		end
-		if ObjectTestModelCondition(self, "USER_23") then
+		if EvaluateCondition("UNIT_HAS_UPGRADE",hData.harvesterObjectRef, "Upgrade_UpgradeGreenFour") then
 			ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenFour")
 		end
 		if hData.bar4 == 0 then
@@ -604,6 +602,7 @@ function GetHarvesterData(self)
 			lastCrystalHarvested = nil, -- object reference to the last crystal harvested
 			harvbluetib = 0, -- for counting blue tiberium in harvester
 			harvgreentib = 0, -- for counting green tiberium in harvester
+			harvesterObjectRef = SetObjectReference(self), -- set the object reference once instead of relying on GetRandomNumber()
 			-- 1 is green tiberium 0 is for blue
 			bar1 = nil, -- for tracking the bar one of the harvester
 			bar2 = nil, -- for tracking the bar two of the harvester
@@ -652,17 +651,17 @@ function TiberiumEvent(self, other)
 				if strfind(ObjectDescription(self), "BA9F66AB") ~= nil or strfind(ObjectDescription(self), "TiberiumCrystalBlue") ~= nil then
 					data.isHarvestingBlue = true
 					-- show the blue tib fx
-					if not ObjectTestModelCondition(other, "USER_26") then 
-						--ExecuteAction("SHOW_MILITARY_CAPTION", "granting the blue tib upgrade", 2)	
-						ObjectGrantUpgrade(other, "Upgrade_UpgradeBlueTib") 
-					end		
+					if not EvaluateCondition("UNIT_HAS_UPGRADE",data.harvesterObjectRef, "Upgrade_UpgradeBlueTib") then
+						--ExecuteAction("SHOW_MILITARY_CAPTION", "granting the blue tib upgrade", 2)
+						ObjectGrantUpgrade(other, "Upgrade_UpgradeBlueTib")
+					end
 				else
 					data.isHarvestingBlue = false
-					-- hide the blue tib fx	
-					if ObjectTestModelCondition(other, "USER_26") then 
-						--ExecuteAction("SHOW_MILITARY_CAPTION", "removing the blue tib upgrade", 2)	
-						ObjectRemoveUpgrade(other, "Upgrade_UpgradeBlueTib") 
-					end 
+					-- hide the blue tib fx
+					if EvaluateCondition("UNIT_HAS_UPGRADE",data.harvesterObjectRef, "Upgrade_UpgradeBlueTib") then
+						--ExecuteAction("SHOW_MILITARY_CAPTION", "removing the blue tib upgrade", 2)
+						ObjectRemoveUpgrade(other, "Upgrade_UpgradeBlueTib")
+					end
 				end
 				data.isAlreadyHarvesting = true
 				crystal.beingHarvestedBy = other
@@ -810,7 +809,7 @@ function DelayHuskHide(self)
 
 	local a = getObjectId(self)
 	-- checks if it has the status bit RIDER1 (41) assigned in the husk xml
-	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 41) then
+	if EvaluateCondition("UNIT_HAS_UPGRADE",SetObjectReference(self), "Upgrade_EngineerCapture") then
 		ObjectRemoveUpgrade(self, "Upgrade_EngineerCapture")
 	end
 
@@ -838,7 +837,7 @@ end
 function OnHuskCapture(self, slaughterer)
 	if self ~= nil and slaughterer ~= nil then
 		-- upgrade the husk and apply status to it
-		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(slaughterer), 41) then
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",SetObjectReference(slaughterer), "Upgrade_EngineerCapture") then
 			ObjectGrantUpgrade(slaughterer, "Upgrade_EngineerCapture")
 		end
 	
@@ -1365,7 +1364,7 @@ function FixBuggingUnit(self)
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.selfReference, 4, 1)
 		end
 		-- apply upgrade 
-		if not ObjectTestModelCondition(self, "USER_63") then
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.selfReference, "Upgrade_ReverseMoveSpeedBuff") then
 			ObjectGrantUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 		end
 	--end
@@ -1471,7 +1470,7 @@ function BackingUp(self)
 	unitReversing.isReverseMoving = true
 
 	--WriteToFile("isAttacking.txt",  tostring(unitReversing.isAttacking) .. "\n")
-	if ObjectTestModelCondition(self, "USER_63") then 
+	if EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.selfReference, "Upgrade_ReverseMoveSpeedBuff") then
 		--print("removing upgrade")
 		ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 	end	
@@ -1787,7 +1786,7 @@ function BackingUpEnd(self)
 				unitsReversing[unitRef].groupId = nil
 				unitsReversing[unitRef].groupIdAssigned = false
 				unitsReversing[unitRef].hasBeenFixed = false
-				if EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) and ObjectTestModelCondition(unitsReversing[unitRef].stringReference, "USER_63") then
+				if EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].selfReference) and EvaluateCondition("UNIT_HAS_UPGRADE",unitsReversing[unitRef].selfReference, "Upgrade_ReverseMoveSpeedBuff") then
 					ObjectRemoveUpgrade(unitsReversing[unitRef].stringReference, "Upgrade_ReverseMoveSpeedBuff")
 				end
 			end
@@ -1817,7 +1816,7 @@ function BuggedUnitTimeoutEnd(self)
 		end
 	end
 
-	if ObjectTestModelCondition(self, "USER_63") then 
+	if EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.selfReference, "Upgrade_ReverseMoveSpeedBuff") then
 		ObjectRemoveUpgrade(self, "Upgrade_ReverseMoveSpeedBuff") 
 	end		
 end
