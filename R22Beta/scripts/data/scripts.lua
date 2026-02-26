@@ -56,14 +56,6 @@ playerTable = {"Player_1","Player_2","Player_3","Player_4","Player_5","Player_6"
 "SkirmishBlackHand", "SkirmishCivilian", "SkirmishCommentator", "SkirmishGDI", "SkirmishMarkedOfKane",
 "SkirmishNeutral", "SkirmishNod", "SkirmishNull", "SkirmishObserver", "SkirmishReaper17","SkirmishSteelTalons", "SkirmishTraveler59", "SkirmishZOCOM", "PlyrCreeps", "PlyrCivilian"}
 
-harvbluetib = {} -- for counting blue tiberium in harvester
-harvgreentib = {} -- for counting green tiberium harvester
--- 1 is green tiberium 0 is for blue 
-bar1 = {} -- for tracking the bar one of the harvester.
-bar2 = {} -- for tracking the bar two of the harvester.
-bar3 = {} -- for tracking the bar three of the harvester.
-bar4 = {} -- for tracking the bar four of the harvester.
-
 harvesterData = {}
 crystalData = {}
 unitsReversing = {}
@@ -269,179 +261,193 @@ function OnSteelTalonsMammothCreated(self)
 	ObjectHideSubObjectPermanently( self, "MuzzleFlash_02", true )
 end
 
-function OnHarvesterCreated(self)
-	local a = getObjectId(self)
-	harvbluetib[a] = 0
-	harvgreentib[a] = 0
-end
-
 function OnMoney1(self)
-	local a = getObjectId(self)
+	local a, hData = GetHarvesterData(self)
 
 	if ObjectTestModelCondition(self, "DOCKING") == false then
-		if  harvesterData[a].isHarvestingBlue then 
-			if not ObjectTestModelCondition(self, "USER_16") then 
+		if hData.isHarvestingBlue then
+			if not ObjectTestModelCondition(self, "USER_16") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueOne")
 			end
-			harvbluetib[a] = harvbluetib[a] + 1
-			bar1[a] = 0
+			hData.harvbluetib = hData.harvbluetib + 1
+			hData.bar1 = 0
 		else
-			if not ObjectTestModelCondition(self, "USER_20") then 
+			if not ObjectTestModelCondition(self, "USER_20") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenOne")
 			end
-			harvgreentib[a] = harvgreentib[a] + 1
-			bar1[a] = 1			
+			hData.harvgreentib = hData.harvgreentib + 1
+			hData.bar1 = 1
 		end
-		
-		if harvesterData[a].lastCrystalHarvested ~= nil then 
-			HarvestedCrystalCheck(harvesterData[a].lastCrystalHarvested, GetFrame())
+
+		if hData.lastCrystalHarvested ~= nil then
+			HarvestedCrystalCheck(hData.lastCrystalHarvested, GetFrame())
 		end
 	end
 end
 
 function OnMoney2(self)
-	local a = getObjectId(self)
+	local a, hData = GetHarvesterData(self)
+
 	if ObjectTestModelCondition(self, "DOCKING") == false then
-		if  harvesterData[a].isHarvestingBlue then 
-			if not ObjectTestModelCondition(self, "USER_17") then 
+		if hData.isHarvestingBlue then
+			if not ObjectTestModelCondition(self, "USER_17") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueTwo")
 			end
-			harvbluetib[a] = harvbluetib[a] + 1
-			bar2[a] = 0
+			hData.harvbluetib = hData.harvbluetib + 1
+			hData.bar2 = 0
 		else
-			if not ObjectTestModelCondition(self, "USER_21") then 
+			if not ObjectTestModelCondition(self, "USER_21") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenTwo")
 			end
-			harvgreentib[a] = harvgreentib[a] + 1 
-			bar2[a] = 1
+			hData.harvgreentib = hData.harvgreentib + 1
+			hData.bar2 = 1
 		end
 
-		if harvesterData[a].lastCrystalHarvested ~= nil then 
-			HarvestedCrystalCheck(harvesterData[a].lastCrystalHarvested, GetFrame())
+		if hData.lastCrystalHarvested ~= nil then
+			HarvestedCrystalCheck(hData.lastCrystalHarvested, GetFrame())
 		end
 	end
 end
 
 function OnMoney3(self)
-	local a = getObjectId(self)
+	local a, hData = GetHarvesterData(self)
 
 	if ObjectTestModelCondition(self, "DOCKING") == false then
-		if  harvesterData[a].isHarvestingBlue then 
-			if not ObjectTestModelCondition(self, "USER_18") then 
+		if hData.isHarvestingBlue then
+			if not ObjectTestModelCondition(self, "USER_18") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueThree")
 			end
-			harvbluetib[a] = harvbluetib[a] + 1
-			bar3[a] = 0
+			hData.harvbluetib = hData.harvbluetib + 1
+			hData.bar3 = 0
 		else
-			if not ObjectTestModelCondition(self, "USER_22") then 
+			if not ObjectTestModelCondition(self, "USER_22") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenThree")
 			end
-			harvgreentib[a] = harvgreentib[a] + 1 
-			bar3[a] = 1
+			hData.harvgreentib = hData.harvgreentib + 1
+			hData.bar3 = 1
 		end
 		UpdateMoney3Frames(self)
 
-		if harvesterData[a].lastCrystalHarvested ~= nil then 
-			HarvestedCrystalCheck(harvesterData[a].lastCrystalHarvested, GetFrame())
+		if hData.lastCrystalHarvested ~= nil then
+			HarvestedCrystalCheck(hData.lastCrystalHarvested, GetFrame())
 		end
 	end
 end
 
 function OnMoney4(self)
-	local a = getObjectId(self)
+	local a, hData = GetHarvesterData(self)
 	if ObjectTestModelCondition(self, "DOCKING") == false then
-		if  harvesterData[a].isHarvestingBlue then 
-			if not ObjectTestModelCondition(self, "USER_19") then 
+		if hData.isHarvestingBlue then
+			if not ObjectTestModelCondition(self, "USER_19") then
 				ObjectGrantUpgrade(self, "Upgrade_UpgradeBlueFour")
 			end
-			harvbluetib[a] = harvbluetib[a] + 1
-			bar4[a] = 0
+			hData.harvbluetib = hData.harvbluetib + 1
+			hData.bar4 = 0
 		else
-			if not ObjectTestModelCondition(self, "USER_23") then 
-				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenFour")	
+			if not ObjectTestModelCondition(self, "USER_23") then
+				ObjectGrantUpgrade(self, "Upgrade_UpgradeGreenFour")
 			end
-			harvgreentib[a] = harvgreentib[a] + 1 
-			bar4[a] = 1
+			hData.harvgreentib = hData.harvgreentib + 1
+			hData.bar4 = 1
 		end
 	end
 end
 
 function OnMoneyScrin(self)
-	local a = getObjectId(self)
+	local _, hData = GetHarvesterData(self)
 	if ObjectTestModelCondition(self, "DOCKING") == false then
 		-- only do thiis when 75% full
-		if ObjectTestModelCondition(self, "MONEY_STORED_AMOUNT_3") then 
+		if ObjectTestModelCondition(self, "MONEY_STORED_AMOUNT_3") then
 			UpdateMoney3Frames(self)
 		end
-		if harvesterData[a].lastCrystalHarvested ~= nil then 
-			HarvestedCrystalCheck(harvesterData[a].lastCrystalHarvested, GetFrame())
+		if hData.lastCrystalHarvested ~= nil then
+			HarvestedCrystalCheck(hData.lastCrystalHarvested, GetFrame())
 		end
 	end
 end
 
-function OffMoney1(self) 
-	local a = getObjectId(self)		
-	if ObjectTestModelCondition(self, "DOCKING") then 
-		if ObjectTestModelCondition(self, "USER_16") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueOne") end 
-		if ObjectTestModelCondition(self, "USER_20") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenOne") end
-		if bar1[a] == 0 then harvbluetib[a] = harvbluetib[a] - 1
-			elseif bar1[a] == 1 then harvgreentib[a] = harvgreentib[a] - 1
+function OffMoney1(self)
+	local a, hData = GetHarvesterData(self)
+
+	if ObjectTestModelCondition(self, "DOCKING") then
+		if ObjectTestModelCondition(self, "USER_16") then
+			ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueOne")
+		end
+		if ObjectTestModelCondition(self, "USER_20") then
+			ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenOne")
+		end
+		if hData.bar1 == 0 then
+			hData.harvbluetib = hData.harvbluetib - 1
+		elseif hData.bar1 == 1 then
+			hData.harvgreentib = hData.harvgreentib - 1
 		end
 	end
 end
 
 function OffMoney2(self)
-	local a = getObjectId(self)
-	if ObjectTestModelCondition(self, "DOCKING") then 
-		if ObjectTestModelCondition(self, "USER_17") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueTwo") end 
-		if ObjectTestModelCondition(self, "USER_21") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenTwo") end	
-		if bar2[a] == 0 then harvbluetib[a] = harvbluetib[a] - 1
-			elseif bar2[a] == 1 then harvgreentib[a] = harvgreentib[a] - 1
+	local a, hData = GetHarvesterData(self)
+
+	if ObjectTestModelCondition(self, "DOCKING") then
+		if ObjectTestModelCondition(self, "USER_17") then
+			ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueTwo")
+		end
+		if ObjectTestModelCondition(self, "USER_21") then
+			ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenTwo")
+		end
+		if hData.bar2 == 0 then
+			hData.harvbluetib = hData.harvbluetib - 1
+		elseif hData.bar2 == 1 then
+			hData.harvgreentib = hData.harvgreentib - 1
 		end
 	end
 end
 
 function OffMoney3(self)
-	local a = getObjectId(self)
+	local a, hData = GetHarvesterData(self)
+
 	-- clear the amount of frames when docked and unloading tib
-	harvesterData[a].totalFramesHarvested75Full = 0
-	
-	if ObjectTestModelCondition(self, "DOCKING") then 
-		if ObjectTestModelCondition(self, "USER_18") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueThree") end
-		if ObjectTestModelCondition(self, "USER_22") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenThree") end		
-		if bar3[a] == 0 then harvbluetib[a] = harvbluetib[a] - 1
-			elseif bar3[a] == 1 then harvgreentib[a] = harvgreentib[a] - 1
+	hData.totalFramesHarvested75Full = 0
+
+	if ObjectTestModelCondition(self, "DOCKING") then
+		if ObjectTestModelCondition(self, "USER_18") then
+			ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueThree")
+		end
+		if ObjectTestModelCondition(self, "USER_22") then
+			ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenThree")
+		end
+		if hData.bar3 == 0 then
+			hData.harvbluetib = hData.harvbluetib - 1
+		elseif hData.bar3 == 1 then
+			hData.harvgreentib = hData.harvgreentib - 1
 		end
 	end
 end
 
 function OffMoney4(self)
-	local a = getObjectId(self)
+	local a, hData = GetHarvesterData(self)
 
-	if ObjectTestModelCondition(self, "DOCKING") then 
-		if ObjectTestModelCondition(self, "USER_19") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueFour") end
-		if ObjectTestModelCondition(self, "USER_23") then ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenFour") end	
-		if bar4[a] == 0 then harvbluetib[a] = harvbluetib[a] - 1
-			elseif bar4[a] == 1 then harvgreentib[a] = harvgreentib[a] - 1
+	if ObjectTestModelCondition(self, "DOCKING") then
+		if ObjectTestModelCondition(self, "USER_19") then
+			ObjectRemoveUpgrade(self, "Upgrade_UpgradeBlueFour")
+		end
+		if ObjectTestModelCondition(self, "USER_23") then
+			ObjectRemoveUpgrade(self, "Upgrade_UpgradeGreenFour")
+		end
+		if hData.bar4 == 0 then
+			hData.harvbluetib = hData.harvbluetib - 1
+		elseif hData.bar4 == 1 then
+			hData.harvgreentib = hData.harvgreentib - 1
 		end
 	end
 end
 
 function OnHarvesterDeath(self)
-	local a = getObjectId(self)
-	if harvbluetib[a] >= 2 then	
+	local a, hData = GetHarvesterData(self)
+	if hData.harvbluetib >= 2 then
 		ObjectCreateAndFireTempWeapon(self, "DeployBlueTiberium")
-	elseif harvbluetib[a] == 1 or harvgreentib[a] > 0 then
+	elseif hData.harvbluetib == 1 or hData.harvgreentib > 0 then
 		ObjectCreateAndFireTempWeapon(self, "DeployGreenTiberium")
 	end
-	
-	harvbluetib[a] = nil
-	harvgreentib[a] = nil
-	bar1[a] = nil
-	bar2[a] = nil
-	bar3[a] = nil 
-	bar4[a] = nil	
-	-- new for tib exploit fix
 	harvesterData[a] = nil
 end
 
@@ -592,10 +598,18 @@ function GetHarvesterData(self)
 		local a = getObjectId(self)
 		harvesterData[a] = harvesterData[a] or {
 			totalFramesHarvested75Full = 0, -- total number of frames harvested since becoming >= 75% full of tiberium
-			frameOnHarvest75 = 0, -- the frame since becoming >= 75% full of tiberium 
+			frameOnHarvest75 = 0, -- the frame since becoming >= 75% full of tiberium
 			isHarvestingBlue = false, -- is harvesting blue tiberium or not
-			isAlreadyHarvesting = false, -- the harvester is already harvesting 
-			lastCrystalHarvested = nil -- object reference to the last crystal harvested
+			isAlreadyHarvesting = false, -- the harvester is already harvesting
+			lastCrystalHarvested = nil, -- object reference to the last crystal harvested
+			harvesterObjectRef = SetObjectReference(self), -- set the object reference once instead of relying on GetRandomNumber()
+			harvbluetib = 0, -- for counting blue tiberium in harvester
+			harvgreentib = 0, -- for counting green tiberium in harvester
+			-- 1 is green tiberium 0 is for blue
+			bar1 = nil, -- for tracking the bar one of the harvester
+			bar2 = nil, -- for tracking the bar two of the harvester
+			bar3 = nil, -- for tracking the bar three of the harvester
+			bar4 = nil -- for tracking the bar four of the harvester
 		}
 		return a, harvesterData[a]
 	end
@@ -613,7 +627,7 @@ function GetCrystalData(self)
 			crystalHasBeenReset = false, -- the crystal has undergone a reset
 			dontKillCrystal = false, -- flag to prevent the crystal from being killed with NAMED_KILL
 			beingHarvestedBy = nil, -- harvester thats currently harvesting this crystal
-			crystalObjectRef = SetObjectReference(self, a) -- set the object reference once instead of relying on GetRandomNumber()
+			crystalObjectRef = SetObjectReference(self) -- set the object reference once instead of relying on GetRandomNumber()
 		}
 		return a, crystalData[a]
 	end
@@ -797,7 +811,7 @@ function DelayHuskHide(self)
 
 	local a = getObjectId(self)
 	-- checks if it has the status bit RIDER1 (41) assigned in the husk xml
-	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self, a), 41) then
+	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 41) then
 		ObjectRemoveUpgrade(self, "Upgrade_EngineerCapture")
 	end
 
@@ -825,7 +839,7 @@ end
 function OnHuskCapture(self, slaughterer)
 	if self ~= nil and slaughterer ~= nil then
 		-- upgrade the husk and apply status to it
-		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(slaughterer, getObjectId(slaughterer)), 41) then
+		if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(slaughterer), 41) then
 			ObjectGrantUpgrade(slaughterer, "Upgrade_EngineerCapture")
 		end
 	
@@ -960,7 +974,7 @@ function GetUnitReversingData(self)
 			timesTriggeredFast = 0, 
 			timesTriggeredNormal = 0, 
 			hasBeenFixed = false,
-			selfReference = SetObjectReference(self, a),
+			selfReference = SetObjectReference(self),
 			selfRealReference = self,
 			groupId = nil,
 			isMovingFlag = true,
@@ -980,8 +994,8 @@ function GetUnitReversingData(self)
 end
 
 -- Set the reference of an object in order to assign object status successfully.
-function SetObjectReference(self, ref)
-	local ObjectStringRef = "object_" .. ref .. tostring(GetFrame())
+function SetObjectReference(self)
+	local ObjectStringRef = "object_" .. getObjectId(self) .. tostring(GetFrame())
 	ExecuteAction("SET_UNIT_REFERENCE", ObjectStringRef, self)
 	return ObjectStringRef
 end
