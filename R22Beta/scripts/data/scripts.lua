@@ -1413,7 +1413,7 @@ function GetANonBuggingUnit(selectedUnitsOfPlayer, unit)
 		if unitsReversing[unitRef] ~= nil then
 			if unitsReversing[unitRef].stringReference ~= unit then
 				-- check to see if unit is bugging and isnt destroyed
-				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and not unitsReversing[unitRef].hasBeenFixed and not ObjectTestModelCondition(unitsReversing[unitRef].stringReference, "USER_63") then
+				if EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitRef].selfReference) and not unitsReversing[unitRef].hasBeenFixed and not EvaluateCondition("UNIT_HAS_UPGRADE",unitReversings[unitRef].selfReference, "Upgrade_ReverseMoveSpeedBuff") then
 					tinsert(candidates, unitsReversing[unitRef].selfReference)
 				end
 			end
@@ -1640,7 +1640,7 @@ function RemoveFromUnitSelection(self)
 end
 
 -- Clears the unitsReversing table of this unit. If it belongs in a group, remove it. 
-function ReverseUnitOnDeath(self)
+function GroupUnitOnDeath(self)
 	if self == nil then return end
 	local a,unitReversing = GetUnitReversingData(self)	
     RemoveFromUnitSelection(self)
