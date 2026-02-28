@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <SageLuaScriptSection xmlns="http://tempuri.org/ScriptEvents.xsd">
     <Events>
 		<!-- All internal events have a first parameter of self, which is the object receiving the event.  They may have additial parameters, depending
@@ -1227,7 +1227,7 @@
 		<EventHandler EventName="OnBackingUpMovingEnd"	ScriptFunctionName="SuddenStopAfterBackingUp" DebugSingleStep="false"/>
 	</EventList>
 
-	<EventList Name="GenericRagedFunctions_103_R24" Inherit="BaseScriptFunctions">
+	<EventList Name="GenericRagedFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnRaged_103" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnRaged1_103" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>
@@ -1542,6 +1542,499 @@
 		<EventHandler EventName="OnAttacking"	ScriptFunctionName="UnitIsAttacking" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsNotAttacking" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpMovingEnd"	ScriptFunctionName="SuddenStopAfterBackingUp" DebugSingleStep="false"/>
+	</EventList>
+
+	<!-- Non-reverse unit Lua event lists (R24) -->
+	<EventList Name="AlienBuzzers_SlavedFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="AlienBuzzersFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="AlienCustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="AlienDevastatorFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnAlienDevastatorCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="AlienEradicatorHexapodFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnAlienHexapodCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="AlienExplorerFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+
+	<EventList Name="AlienMastermindFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="AlienMCVFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="AlienMechapedeFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnAlienMechapedeCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="AlienMillipedeHeadFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="AlienMothershipEventsList_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnAlienMotherShipCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="AlienPACFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnAlienPACCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="BlackHandAttackBikeFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="BlackHandCommandoFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="BlackHandConfessorFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="BlackHandCustomWarmechFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnBlackHandCustomWarmechCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="BlackHandFanaticFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="BlackHandMCVFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="BlackHandMilitantRocketFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="CombatEngineerFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnCombatEngineerCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="EngineerFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnSlaughtered" ScriptFunctionName="OnHuskCapture" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnEngineerCreatedR23" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDICommandoFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDIFirehawkFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIFirehawkCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDIGrenadeSoldierFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIGrenadeSoldierCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDIHammerheadFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDIJuggernaughtFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIJuggernaughtCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDIMissileSoldierVeteranFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDIOrcaFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIOrcaCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnClipEmpty" ScriptFunctionName="OnGDIOrcaClipEmpty" DebugSingleStep="false"/>
+		<EventHandler EventName="OnClipFull" ScriptFunctionName="OnGDIOrcaClipFull" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDIRifleSoldierFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDIRifleSoldierVeteranFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDIV35Ox_SummonedFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIV35Ox_Created_103" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCarrying" ScriptFunctionName="OnGDIV35Ox_Carrying_103" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDIWolverineFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnWolverineCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDIZoneTrooperFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIZoneTrooperCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+
+	<EventList Name="MarkedOfKaneAttackBikeFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="MarkedOfKaneFanaticFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="MarkedOfKaneMCVFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="MarkedOfKaneMilitantRocketFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="MarkedOfKaneShadowFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="MarkedOfKaneTibTrooperFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="MarkedOfKaneVertigoFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="MutantMarauderFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="NODAttackBikeFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="NODAvatarFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnNODAvatarCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="NODCommandoFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="NODConfessorFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="NodCyborgFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnCyborgCreated_R21g" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="NODFanaticFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="NodImprovedCyborgFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnImprovedCyborgCreated_103" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="NODMCVFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="NODMetaUnitFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnNODMetaUnitCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="NODMilitantRocketFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="NODShadowFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="NODVenomFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnNODVenomCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnGrabDrop" ScriptFunctionName="OnNODVenomReflectorEnable_103" DebugSingleStep="false"/>
+		<EventHandler EventName="OnGrabDrop1" ScriptFunctionName="OnNODVenomReflectorDisable_103" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="NODVertigoFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="Reaper17CustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="Reaper17ExplorerFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="Reaper17MCVFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="ReaperTripodFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnReaperTripodCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="SteelTalonsHammerheadFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="SteelTalonsRifleSoldierFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="SteelTalonsTitanFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnTitanCreated_103" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="Traveler59BlinkMastermindFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="Traveler59CultistFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="Traveler59CustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="Traveler59ExplorerFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="Traveler59MCVFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="Traveler59PlanetaryAssaultCarrierFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="Traveler59RazorDroneFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="TripodFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="ZOCOMCommandoFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="ZOCOMHammerheadFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="ZOCOMMissileSoldierVeteranFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="ZOCOMOrcaFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnZOCOMOrcaCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="ZOCOMRifleSoldierFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="ZOCOMRifleSoldierVeteranFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelected" ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSelectedEnd" ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
 	</EventList>
 
 	
@@ -2919,5 +3412,5 @@
 		<EventHandler EventName="OnUser1End"	ScriptFunctionName="OnTowerImmunityEnd_renwars" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser2" ScriptFunctionName="OnCTFScore_renwars" DebugSingleStep="false"/>		
 	</EventList>		
-	
+
 </SageLuaScriptSection>

@@ -213,7 +213,6 @@
 		<!-- Edited squad files (R24 AILuaEventsList) -->
 		<Include source="Alien\Units\AlienStalkerSquad.xml" type="all"/>
 		<Include source="BlackHand\Units\BHBlackhandSquad.xml" type="all"/>
-		<Include source="BlackHand\Units\BHConfessorSquad.xml" type="all"/>
 		<Include source="BlackHand\Units\BlackHandConfessorSquad.xml" type="all"/>
 		<Include source="BlackHand\Units\BlackHandFanaticSquad.xml" type="all"/>
 		<Include source="CGF\AlienShockTrooperSquad.xml" type="all"/>

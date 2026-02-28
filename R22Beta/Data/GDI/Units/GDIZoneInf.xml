@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="us-ascii" ?>
+﻿<?xml version="1.0" encoding="us-ascii" ?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
 	<!-- ************************************************************************* GDI  *********************************************************************************** -->
@@ -1557,7 +1557,7 @@
 				AutoAcquireEnemiesWhenIdle="YES"
 				StopChaseDistance="500"
 				HoldGroundCloseRangeDistance="0"
-				AILuaEventsList="GDIZoneTrooperFunctions"
+				AILuaEventsList="GDIZoneTrooperFunctions_R24"
 				MinCowerTime="0s"
 				MaxCowerTime="0s"
 				RampageTime="0s"
@@ -4417,4 +4417,6 @@
 	</GameObject>
 	
 </AssetDeclaration>
+
+
 
