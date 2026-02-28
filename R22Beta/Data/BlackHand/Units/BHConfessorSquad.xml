@@ -1078,7 +1078,7 @@
 				AutoAcquireEnemiesWhenIdle="YES"
 				StopChaseDistance="500"
 				HoldGroundCloseRangeDistance="0"
-				AILuaEventsList="BHConfessorSquadFunctions_103"
+				AILuaEventsList="BHConfessorSquadFunctions_R24"
 				MinCowerTime="3s"
 				MaxCowerTime="5s"
 				RampageTime="0s"
@@ -1180,3 +1180,4 @@
 		<DisplayUpgrade>Upgrade_BlackHandBlackDisciplesUpgrade</DisplayUpgrade>
 	</GameObject>
 </AssetDeclaration>
+

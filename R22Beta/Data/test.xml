@@ -209,5 +209,52 @@
 		<Include source="New Objects\Reaper17Corrupter.xml" type="all"/>
 		<Include source="New Objects\Traveler59Corrupter.xml" type="all"/>
 		<Include source="New Objects\Traveler59SeekerTank.xml" type="all"/>
+	
+		<!-- Edited squad files (R24 AILuaEventsList) -->
+		<Include source="Alien\Units\AlienStalkerSquad.xml" type="all"/>
+		<Include source="BlackHand\Units\BHBlackhandSquad.xml" type="all"/>
+		<Include source="BlackHand\Units\BHConfessorSquad.xml" type="all"/>
+		<Include source="BlackHand\Units\BlackHandConfessorSquad.xml" type="all"/>
+		<Include source="BlackHand\Units\BlackHandFanaticSquad.xml" type="all"/>
+		<Include source="CGF\AlienShockTrooperSquad.xml" type="all"/>
+		<Include source="CGF\AlienShockTrooperSquad_Veteran.xml" type="all"/>
+		<Include source="CGF\GDIMissileSoldierSquad.xml" type="all"/>
+		<Include source="CGF\GDIRifleSoldierSquad.xml" type="all"/>
+		<Include source="CGF\MOKTibTrooperSquad.xml" type="all"/>
+		<Include source="CGF\NodBlackhandSquad.xml" type="all"/>
+		<Include source="CGF\RazorDroneSquads.xml" type="all"/>
+		<Include source="CGF\Reaper17ShockTrooperSquad.xml" type="all"/>
+		<Include source="CGF\SniperSquads.xml" type="all"/>
+		<Include source="CGF\STMissileSoldierSquads.xml" type="all"/>
+		<Include source="CGF\STRifleSoldierSquads.xml" type="all"/>
+		<Include source="CGF\T59CultistSquad.xml" type="all"/>
+		<Include source="CGF\Traveler59ShockTrooperSquad.xml" type="all"/>
+		<Include source="CGF\ZOCOMMissileSoldierSquad.xml" type="all"/>
+		<Include source="CGF\ZOCOMRifleSoldierSquad.xml" type="all"/>
+		<Include source="GDI\Units\GDIGrenadeSoldierSquad.xml" type="all"/>
+		<Include source="GDI\Units\GDIMissileSoldierVeteranSquad.xml" type="all"/>
+		<Include source="GDI\Units\GDIRifleSoldierVeteranSquad.xml" type="all"/>
+		<Include source="GDI\Units\GDIZoneInf.xml" type="all"/>
+		<Include source="MarkedOfKane\Units\MarkedOfKaneFanaticSquad.xml" type="all"/>
+		<Include source="MarkedOfKane\Units\MarkedOfKaneMilitantRocketSquad.xml" type="all"/>
+		<Include source="MarkedOfKane\Units\MOKAwakenedSquad.xml" type="all"/>
+		<Include source="MarkedOfKane\Units\MOKEnlightenedSquad.xml" type="all"/>
+		<Include source="MarkedOfKane\Units\MOKShadowSquad.xml" type="all"/>
+		<Include source="MarkedOfKane\Units\MOKShadowSquad_Veteran.xml" type="all"/>
+		<Include source="Neutral\Units\MutantMarauderSquad.xml" type="all"/>
+		<Include source="Nod\Units\NodCyborgSquad.xml" type="all"/>
+		<Include source="Nod\Units\NODFanaticSquad.xml" type="all"/>
+		<Include source="Nod\Units\NodMilitantRocketSquad.xml" type="all"/>
+		<Include source="Nod\Units\NODMilitantSquad.xml" type="all"/>
+		<Include source="Nod\Units\NODShadowSquad.xml" type="all"/>
+		<Include source="Nod\Units\NODShadowSquad_Veteran.xml" type="all"/>
+		<Include source="Reaper17\Units\R17StalkerSquad.xml" type="all"/>
+		<Include source="SteelTalons\Units\SteelTalonsGrenadeSoldierSquad.xml" type="all"/>
+		<Include source="traveler59\Units\T59StalkerSquad.xml" type="all"/>
+		<Include source="ZOCOM\Units\ZOCOMGrenadeSoldierSquad.xml" type="all"/>
+		<Include source="ZOCOM\Units\ZOCOMMissileSoldierVeteranSquad.xml" type="all"/>
+		<Include source="ZOCOM\Units\ZOCOMRifleSoldierVeteranSquad.xml" type="all"/>
+		<Include source="ZOCOM\Units\ZOCOMZoneInf.xml" type="all"/>
 	</Includes>
+
 </AssetDeclaration>

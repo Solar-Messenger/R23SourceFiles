@@ -1596,6 +1596,10 @@
 	<EventList Name="NodCyborgSquadFunctions_R21g" Inherit="GenericSquadFunctions_103">
 	    <EventHandler EventName="OnCreated"	ScriptFunctionName="OnCyborgSquadCreated_R21g" DebugSingleStep="false"/>
 	</EventList>  	
+
+	<EventList Name="NodCyborgSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
+	    <EventHandler EventName="OnCreated"	ScriptFunctionName="OnCyborgSquadCreated_R21g" DebugSingleStep="false"/>
+	</EventList>  	
 	
 	<EventList Name="GenericHarvesterFunctions_103" Inherit="BaseScriptFunctions">
         <EventHandler EventName="OnCreated"	ScriptFunctionName="OnHarvCreated_103" DebugSingleStep="false"/> 	
@@ -1680,6 +1684,10 @@
     </EventList>
 
 	<EventList Name="GDISniperSquadFunctions" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated"		ScriptFunctionName="OnGDISniperSquadCreated" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDISniperSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
 		<EventHandler EventName="OnCreated"		ScriptFunctionName="OnGDISniperSquadCreated" DebugSingleStep="false"/>
 	</EventList>
 	
@@ -1940,8 +1948,16 @@
 	<EventList Name="NodImprovedCyborgSquadFunctions_103" Inherit="GenericSquadFunctions_103">
 	    <EventHandler EventName="OnCreated"	ScriptFunctionName="OnImprovedCyborgSquadCreated_103" DebugSingleStep="false"/>
 	</EventList>     
- 
+
+	<EventList Name="NodImprovedCyborgSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
+	    <EventHandler EventName="OnCreated"	ScriptFunctionName="OnImprovedCyborgSquadCreated_103" DebugSingleStep="false"/>
+	</EventList>     
+	
 	<EventList Name="BHConfessorSquadFunctions_103" Inherit="GenericSquadFunctions_103">
+	    <EventHandler EventName="OnCreated"	ScriptFunctionName="OnConfessorSquadCreated_103" DebugSingleStep="false"/>
+	</EventList>  
+
+	<EventList Name="BHConfessorSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
 	    <EventHandler EventName="OnCreated"	ScriptFunctionName="OnConfessorSquadCreated_103" DebugSingleStep="false"/>
 	</EventList>  
 	<!-- ######################################################## -->
