@@ -24,7 +24,7 @@
       <RequiredObject>GDIPowerPlant</RequiredObject>
     </GameDependency>
     <ArmorSet Armor="GDIWatchTowerArmor" DamageFX="FactionStructureDamageFX" />
-    <SkirmishAIInformation BaseBuildingLocation="SPREAD" />
+    <SkirmishAIInformation BaseBuildingLocation="TIBERIUM" />
     <Draws>
       <!-- DRAW GUN -->
       <ScriptedModelDraw id="ModuleTag_Draw_Gun" OkToChangeModelColor="true" ExtraPublicBone="MuzzleFx01 MuzzleFx02 MuzzleFlash_01 MuzzleFlash_02">
