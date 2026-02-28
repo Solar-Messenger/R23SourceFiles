@@ -11,7 +11,7 @@
       <RequiredObject>Traveler59PowerProjector</RequiredObject>
     </GameDependency>
     <ArmorSet Armor="AlienBuzzerHiveArmor" DamageFX="FactionStructureDamageFX" />
-    <SkirmishAIInformation BaseBuildingLocation="SPREAD" />
+    <SkirmishAIInformation BaseBuildingLocation="TIBERIUM" />
     <Draws>
       <ScriptedModelDraw id="ModuleTag_Draw" OkToChangeModelColor="true">
         <ModelConditionState ParseCondStateType="PARSE_DEFAULT">
