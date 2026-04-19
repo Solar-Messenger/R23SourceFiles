@@ -70,7 +70,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="7s"
-		WorldMapArmoryUpgradesAllowed=""
+		WorldMapArmoryUpgradesAllowed="Upgrade_GDIArmoryRailgunTech"
 		CaptureTime="0s"
 		BuildCost="1100"
 		RefuntValue="0"
@@ -971,13 +971,17 @@
 						Upgrade=""
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
-						<!--
+						
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="GDIPredatorTankRailgun"
 						Upgrade=""
 						ObjectStatus="WEAPON_UPGRADED_01"
-						IsPlayerUpgradePermanent="False" /> -->
+						IsPlayerUpgradePermanent="False" /> 
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="GDIPredatorTankRailgun_Accelerated"
+						ObjectStatus="WEAPON_UPGRADED_01 RIDERLESS" />
 					<TurretSettings
 						TurretTurnRate="200"
 						TurretPitchRate="40"
@@ -1097,7 +1101,7 @@
 					OrientToObject="True"
 					ForceUseDoFXObj="False" />
 			</FXListBehavior>
-			<!--
+			
 			<SubObjectsUpgrade
 				id="0D4DFDE8"
 				RequiresAllTriggers="False"
@@ -1138,7 +1142,7 @@
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
 			</StatusBitsUpgrade>
-			-->
+			
 			<CreateAndEnterObjectSpecialPower
 				id="6D44A823"
 				SpecialPowerTemplate="SpecialPowerCallForTransportZOCOM"
@@ -1240,7 +1244,7 @@
 				<TriggeredBy>Upgrade_AllFactionUpgrade</TriggeredBy>
 			</ModelConditionUpgrade>
 
-			<!--
+			
 			<AudioLoopUpgrade
 				id="96024CFB"
 				RequiresAllTriggers="False"
@@ -1251,7 +1255,7 @@
 				SoundToPlay="AudioEvent:GDI_RailCannon_Upgrade"
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
-			</AudioLoopUpgrade> -->
+			</AudioLoopUpgrade> 
 		</Behaviors>
 		<AI>
 			<AIUpdate
