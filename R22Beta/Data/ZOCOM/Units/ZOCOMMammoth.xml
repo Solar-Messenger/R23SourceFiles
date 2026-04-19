@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="us-ascii"?>
+<?xml version="1.0" encoding="utf-8"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 	<GameObject
 		id="ZOCOMMammoth"
@@ -1370,6 +1370,16 @@
 						Upgrade=""
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="MammothTankRailCannon"
+						Upgrade=""
+						ObjectStatus="WEAPON_UPGRADED_01"
+						IsPlayerUpgradePermanent="False" />
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="MammothTankRailCannon_Accelerated"
+						ObjectStatus="WEAPON_UPGRADED_01 RIDERLESS" />
 					<TurretSettings
 						TurretTurnRate="135"
 						TurretPitchRate="20"
@@ -1536,7 +1546,7 @@
 				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
 			</AutoHealBehavior>
 
-			<!--
+			
 			<StatusBitsUpgrade
 				id="85B2DF85"
 				RequiresAllTriggers="False"
@@ -1548,6 +1558,7 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</StatusBitsUpgrade>
 			<StatusBitsUpgrade
 				id="8F5A755C"
@@ -1560,7 +1571,18 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</StatusBitsUpgrade>
+			
+			<!--
+			<AttributeModifierUpgrade
+				id="LocoUpgrade"
+				WaypointModeTerminal="False"
+				Permanent="False"
+				AttributeModifier="AttributeModifier_HighSpeedTurn" >
+				<TriggeredBy>Upgrade_HighSpeed1</TriggeredBy>
+			</AttributeModifierUpgrade>
+			-->
 
 			<SubObjectsUpgrade
 				id="BBDDAE76"
@@ -1577,17 +1599,8 @@
 				HideSubObjectsOnRemove="False"
 				UnHideSubObjectsOnRemove="False">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</SubObjectsUpgrade>
-
-
-			<AttributeModifierUpgrade
-				id="LocoUpgrade"
-				WaypointModeTerminal="False"
-				Permanent="False"
-				AttributeModifier="AttributeModifier_HighSpeedTurn" >
-				<TriggeredBy>Upgrade_HighSpeed1</TriggeredBy>
-			</AttributeModifierUpgrade>
-			-->
 
 			<StatusBitsUpgrade
 				id="D305500E"
@@ -1615,7 +1628,7 @@
 				<TriggeredBy>Upgrade_AllFactionUpgrade</TriggeredBy>
 			</ModelConditionUpgrade>
 
-			<!--
+			
 			<AudioLoopUpgrade
 				id="96024CFB"
 				RequiresAllTriggers="False"
@@ -1626,7 +1639,8 @@
 				SoundToPlay="AudioEvent:GDI_RailCannon_Upgrade"
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
-			</AudioLoopUpgrade> -->
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
+			</AudioLoopUpgrade> 
 
 		</Behaviors>
 		<AI>
