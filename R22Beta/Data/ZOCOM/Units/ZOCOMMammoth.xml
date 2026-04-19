@@ -70,7 +70,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="7s"
-		WorldMapArmoryUpgradesAllowed=""
+		WorldMapArmoryUpgradesAllowed="Upgrade_GDIArmoryRailgunTech Upgrade_STArmoryRailgunTech Upgrade_AdaptiveArmor"
 		CaptureTime="0s"
 		BuildCost="2500"
 		RefuntValue="0"
@@ -430,9 +430,7 @@
 						ExtraMesh="False" />
 				</ModelConditionState>
 
-				<!--
-				**********************************************************************************
-				ANIMATIONS ********************************************************* -->
+	<!-- **********************************************************************************  ANIMATIONS ********************************************************* -->
 
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -452,13 +450,158 @@
 						CurDrawableHideSubObject("TREADSLEFT")
 						CurDrawableHideSubObject("TREADSRIGHT")
 						CurDrawableHideSubObject("TREADSMOVE")
-						CurDrawableHideSubObject("UGRailAccelerator_01")
-						CurDrawableHideSubObject("UGRailAccelerator_02")
 					</Script>
 				</AnimationState>
 
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					AnimNickName=""
+					ConditionsYes="VEHICLE_CRUSH_CENTER USING_WEAPON_C BACKING_UP"
+					Name=""
+					StateName=""
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Animation
+						Flags=""
+						AnimationName="GUMAMM_CRSH1"
+						AnimationMode="ONCE_BACKWARDS"
+						AnimNickName=""
+						Distance="0"
+						AnimationBlendTime="5"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+				</AnimationState>
 
-				<!-- !!! REMOVED WEAPON_C ANIMATIONSTATES !!! ZOCOM DOESNT GET RAILS -->
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					AnimNickName=""
+					ConditionsYes="VEHICLE_CRUSH_CENTER USING_WEAPON_C"
+					Name=""
+					StateName=""
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Animation
+						Flags=""
+						AnimationName="GUMAMM_CRSH1"
+						AnimationMode="ONCE"
+						AnimNickName=""
+						Distance="0"
+						AnimationBlendTime="5"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+				</AnimationState>
+
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					AnimNickName=""
+					ConditionsYes="MOVING BACKING_UP USING_WEAPON_C"
+					Name=""
+					StateName=""
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Script>
+						CurDrawableHideSubObject("TREADSSTOP")
+						CurDrawableShowSubObject("TREADSBACK")
+						CurDrawableHideSubObject("TREADSLEFT")
+						CurDrawableHideSubObject("TREADSRIGHT")
+						CurDrawableHideSubObject("TREADSMOVE")
+					</Script>
+				</AnimationState>
+
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					AnimNickName=""
+					ConditionsYes="TURN_LEFT USING_WEAPON_C"
+					Name=""
+					StateName=""
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Script>
+						CurDrawableHideSubObject("TREADSSTOP")
+						CurDrawableHideSubObject("TREADSBACK")
+						CurDrawableShowSubObject("TREADSLEFT")
+						CurDrawableHideSubObject("TREADSRIGHT")
+						CurDrawableHideSubObject("TREADSMOVE")
+					</Script>
+
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					AnimNickName=""
+					ConditionsYes="TURN_RIGHT USING_WEAPON_C"
+					Name=""
+					StateName=""
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Script>
+						CurDrawableHideSubObject("TREADSSTOP")
+						CurDrawableHideSubObject("TREADSBACK")
+						CurDrawableHideSubObject("TREADSLEFT")
+						CurDrawableShowSubObject("TREADSRIGHT")
+						CurDrawableHideSubObject("TREADSMOVE")
+					</Script>
+
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					AnimNickName=""
+					ConditionsYes="MOVING USING_WEAPON_C"
+					Name=""
+					StateName=""
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Script>
+						CurDrawableHideSubObject("TREADSSTOP")
+						CurDrawableHideSubObject("TREADSBACK")
+						CurDrawableHideSubObject("TREADSLEFT")
+						CurDrawableHideSubObject("TREADSRIGHT")
+						CurDrawableShowSubObject("TREADSMOVE")
+					</Script>
+
+				</AnimationState>
+
+
+				<!-- REGULAR STATES -->
 
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -489,10 +632,6 @@
 						AnimationMustCompleteBlend="False"
 						UseWeaponTiming="False"
 						FadingIn="False" />
-					<Script>
-						CurDrawableHideSubObject("UGRailAccelerator_01")
-						CurDrawableHideSubObject("UGRailAccelerator_02")
-					</Script>
 				</AnimationState>
 
 				<AnimationState
@@ -524,10 +663,6 @@
 						AnimationMustCompleteBlend="False"
 						UseWeaponTiming="False"
 						FadingIn="False" />
-					<Script>
-						CurDrawableHideSubObject("UGRailAccelerator_01")
-						CurDrawableHideSubObject("UGRailAccelerator_02")
-					</Script>
 				</AnimationState>
 
 				<AnimationState
@@ -548,8 +683,6 @@
 						CurDrawableHideSubObject("TREADSLEFT")
 						CurDrawableHideSubObject("TREADSRIGHT")
 						CurDrawableHideSubObject("TREADSMOVE")
-						CurDrawableHideSubObject("UGRailAccelerator_01")
-						CurDrawableHideSubObject("UGRailAccelerator_02")
 					</Script>
 				</AnimationState>
 
@@ -571,8 +704,6 @@
 						CurDrawableShowSubObject("TREADSLEFT")
 						CurDrawableHideSubObject("TREADSRIGHT")
 						CurDrawableHideSubObject("TREADSMOVE")
-						CurDrawableHideSubObject("UGRailAccelerator_01")
-						CurDrawableHideSubObject("UGRailAccelerator_02")
 					</Script>
 				</AnimationState>
 				<AnimationState
@@ -593,10 +724,9 @@
 						CurDrawableHideSubObject("TREADSLEFT")
 						CurDrawableShowSubObject("TREADSRIGHT")
 						CurDrawableHideSubObject("TREADSMOVE")
-						CurDrawableHideSubObject("UGRailAccelerator_01")
-						CurDrawableHideSubObject("UGRailAccelerator_02")
 					</Script>
 				</AnimationState>
+
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
@@ -615,10 +745,30 @@
 						CurDrawableHideSubObject("TREADSLEFT")
 						CurDrawableHideSubObject("TREADSRIGHT")
 						CurDrawableShowSubObject("TREADSMOVE")
-						CurDrawableHideSubObject("UGRailAccelerator_01")
-						CurDrawableHideSubObject("UGRailAccelerator_02")
 					</Script>
 				</AnimationState>
+
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					AnimNickName=""
+					ConditionsYes="USING_WEAPON_C"
+					Name=""
+					StateName=""
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Script>
+						CurDrawableShowSubObject("TREADSSTOP")
+						CurDrawableHideSubObject("TREADSBACK")
+						CurDrawableHideSubObject("TREADSLEFT")
+						CurDrawableHideSubObject("TREADSRIGHT")
+						CurDrawableHideSubObject("TREADSMOVE")
+					</Script>
+				</AnimationState>
+
 				<LeftTread>TreadsL1</LeftTread>
 				<LeftTread>TreadsL2</LeftTread>
 				<RightTread>TreadsR1</RightTread>
@@ -705,7 +855,63 @@
 						ExtraMesh="False" />
 				</ModelConditionState>
 
-				<!-- REMOVED WEAPON_C ANIMATIONSTATE -->
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
+					ConditionsYes="USING_WEAPON_C"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:GUMAMM_FX"
+						ExtraMesh="False" />
+				<!--
+					<ParticleSysBone
+						BoneName="FXHULKFIRE"
+						FXParticleSystemTemplate="AvatarExplodeBlueSpark1"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="FXHULKFIRE"
+						FXParticleSystemTemplate="AvatarExplodeBlueSpark2"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="FXHULKFIRE"
+						FXParticleSystemTemplate="RailAccSteam_MammL"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="FXHULKFIRE"
+						FXParticleSystemTemplate="RailAccSteam_MammR"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+						-->
+				</ModelConditionState>
 
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -828,8 +1034,47 @@
 						OnlyIfOnLand="False" />
 				</AnimationState>
 			</ScriptedModelDraw>
+			<ScriptedModelDraw
+				id="ModuleTag_ShowRailguns">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Script>
+						CurDrawableHideSubObject("UGRailAccelerator_01")
+						CurDrawableHideSubObject("UGRailAccelerator_02")
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_8 USING_WEAPON_C">
+					<Script>
+						CurDrawableShowSubObject("UGRailAccelerator_01")
+						CurDrawableShowSubObject("UGRailAccelerator_02")
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USING_WEAPON_C">
+					<Script>
+						CurDrawableShowSubObject("UGRailAccelerator_01")
+						CurDrawableShowSubObject("UGRailAccelerator_02")
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_8">
+					<Script>
+						CurDrawableHideSubObject("UGRailAccelerator_01")
+						CurDrawableHideSubObject("UGRailAccelerator_02")
+					</Script>
+				</AnimationState>
+			</ScriptedModelDraw>
 
-			<!--
+
 			<LaserDraw
 				id="5FC0AD86"
 				Texture1_UTile="1"
@@ -864,7 +1109,6 @@
 					</Constants>
 				</FXShader>
 			</LaserDraw>
-			-->
 		</Draws>
 		<Behaviors>
 			<AttributeModifierPoolUpdate
@@ -1502,6 +1746,8 @@
 			<AudioEntry
 				Sound="AudioEvent:MammothIdleLoop"
 				AudioType="soundAmbient" />
+			<AudioEntry
+				Sound="AudioEvent:MammothTankTurretMoveLoop" AudioType="soundTurretMoveLoop" />
 		</AudioArraySound>
 		<EvaEvents
 			EvaEventDieOwner="UnitLost"

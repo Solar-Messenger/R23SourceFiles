@@ -70,7 +70,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="7s"
-		WorldMapArmoryUpgradesAllowed="Upgrade_GDIArmoryRailgunTech"
+		WorldMapArmoryUpgradesAllowed="Upgrade_GDIArmoryRailgunTech Upgrade_STArmoryRailgunTech Upgrade_AdaptiveArmor"
 		CaptureTime="0s"
 		BuildCost="2500"
 		RefuntValue="0"
@@ -1556,6 +1556,7 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</StatusBitsUpgrade>
 			<StatusBitsUpgrade
 				id="8F5A755C"
@@ -1568,6 +1569,7 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</StatusBitsUpgrade>
 
 			<!--
@@ -1596,6 +1598,7 @@
 				HideSubObjectsOnRemove="False"
 				UnHideSubObjectsOnRemove="False">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</SubObjectsUpgrade>
 			<StatusBitsUpgrade
 				id="D305500E"
@@ -1632,7 +1635,132 @@
 				SoundToPlay="AudioEvent:GDI_RailCannon_Upgrade"
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</AudioLoopUpgrade>
+			<SubObjectsUpgrade
+				id="01875BF9"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				ShowSubObjects="EMP"
+				FadeTimeInSeconds="0.5"
+				WaitBeforeFadeInSeconds="0"
+				RecolorHouse="False"
+				SkipFadeOnCreate="False"
+				HideSubObjectsOnRemove="False"
+				UnHideSubObjectsOnRemove="False">
+				<TriggeredBy>Upgrade_AdaptiveArmor</TriggeredBy>
+			</SubObjectsUpgrade>
+			<ModelConditionUpgrade
+				id="DA828097"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				AddConditionFlags="USER_6"
+				RemoveConditionFlags=""
+				AddTempConditionFlag="TOPPLED"
+				TempConditionTime="0s">
+				<TriggeredBy>Upgrade_AdaptiveArmor</TriggeredBy>
+			</ModelConditionUpgrade>
+			<UnpauseSpecialPowerUpgrade
+				id="EB4F63C3"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="True"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				SpecialPowerTemplate="SteelTalonsAdaptiveArmor"
+				ObeyRechageOnTrigger="False">
+				<TriggeredBy>Upgrade_AdaptiveArmor</TriggeredBy>
+			</UnpauseSpecialPowerUpgrade>
+			<SpecialPower
+				id="1CBF1D61"
+				SpecialPowerTemplate="SteelTalonsAdaptiveArmor"
+				AntiCategory=""
+				AntiFX=""
+				AttributeModifier="AttributeModifier_AdaptiveArmor"
+				AttributeModifierRange="1"
+				AttributeModifierFX=""
+				WeatherDuration="0"
+				InitiateFX=""
+				TriggerFX=""
+				SetModelCondition="TOPPLED"
+				SetModelConditionTime="0s"
+				GiveLevels="0"
+				ChangeWeather="NORMAL"
+				OnTriggerRechargeSpecialPower=""
+				BurnDecayModifier="0"
+				MaxDistanceFromCommandCenter="0"
+				UpdateModuleStartsAttack="False"
+				StartsPaused="False"
+				ReEnableAntiCategory="False"
+				AttributeModifierAffectsSelf="True"
+				AttributeModifierWeatherBased="False"
+				TargetEnemy="False"
+				TargetAllSides="False"
+				DisableDuringAnimDuration="False"
+				IdleWhenStartingPower="False"
+				AffectGood="False"
+				AffectEvil="False"
+				AffectAllies="True"
+				AvailableAtStart="True"
+				AdjustVictim="False"
+				UseDistanceFromCommandCenter="False"
+				ChildModuleHandlesFX="False">
+				<AttributeModifierAffects
+					Rule="UNPARSED"
+					Relationship=""
+					Alignment="NONE"
+					Include=""
+					Exclude=""
+					StatusBitFlags=""
+					RejectStatusBitFlags=""
+					AcceptModelCondition=""
+					RejectModelCondition="" />
+				<RequirementsFilterMP
+					Rule="UNPARSED"
+					Relationship=""
+					Alignment="NONE"
+					Include=""
+					Exclude=""
+					StatusBitFlags=""
+					RejectStatusBitFlags=""
+					AcceptModelCondition=""
+					RejectModelCondition="" />
+				<RequirementsFilterStrategic
+					Rule="UNPARSED"
+					Relationship=""
+					Alignment="NONE"
+					Include=""
+					Exclude=""
+					StatusBitFlags=""
+					RejectStatusBitFlags=""
+					AcceptModelCondition=""
+					RejectModelCondition="" />
+			</SpecialPower>
+
+			<AISpecialPowerUpdate
+					id="ModuleTag_STAdaptiveArmourAI"
+					CommandButtonName="Command_ActivateAdaptiveArmor"
+					SecondaryCommandButtonName=""
+					SpecialPowerAIType="SPECIAL_POWER_HEAL_AOE"
+					SpecialPowerRadius="-1"
+					ReinforceDistance="0"
+					SpellMakesAStructure=""
+					SpecificUnit=""
+					UnitKindOf=""
+					AllyUnitInclude=""
+					AllyUnitExclude=""
+					EnemyUnitInclude=""
+					EnemyUnitExclude=""
+					MinimumCutoff="0"
+					UpdateTime="1s"
+					MaxFrequency="0"
+					RandomizeTargetLocation="False"/>
 		</Behaviors>
 		<AI>
 			<AIUpdate
@@ -1701,6 +1829,13 @@
 					RequiredFlags="USING_WEAPON_C"
 					ExcludedFlags="" />
 			</ModelConditionAudioLoopClientBehavior>
+			<ModelConditionAudioLoopClientBehavior
+				id="ModelConditionAudioLoop_AdaptiveArmor">
+				<ModelConditionSound
+					Sound="AudioEvent:GDI_AdaptiveArmor_Upgrade"
+					RequiredFlags="USER_8"
+					ExcludedFlags="" />
+			</ModelConditionAudioLoopClientBehavior>
 		</ClientBehaviors>
 		<Geometry
 			IsSmall="False">
@@ -1751,6 +1886,8 @@
 			<AudioEntry
 				Sound="AudioEvent:MammothIdleLoop"
 				AudioType="soundAmbient" />
+			<AudioEntry
+				Sound="AudioEvent:MammothTankTurretMoveLoop" AudioType="soundTurretMoveLoop" />
 		</AudioArraySound>
 		<EvaEvents
 			EvaEventDieOwner="UnitLost"
