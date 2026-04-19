@@ -21,7 +21,7 @@
 		ReinvisibilityDelay="7s"
 		EditorName="AlienAnnihilatorTripod"
 		Description="Desc:AlienAnnihilatorTripod"
-		WorldMapArmoryUpgradesAllowed="Upgrade_AlienReactorForcefieldGenerator"
+		WorldMapArmoryUpgradesAllowed="Upgrade_AlienReactorForcefieldGenerator Upgrade_Reaper17ReactorForcefieldGenerator"
 		TypeDescription="Type:AlienAnnihilatorTripod">
 		<DisplayName>NAME:AlienAnnihilatorTripod</DisplayName>
 		<GameDependency>
@@ -1118,6 +1118,7 @@
 				id="ModuleTag_StatusBitUpgrade"
 				StatusToSet="SHIELDBODY_ENABLED">
 				<TriggeredBy>Upgrade_AlienReactorForcefieldGenerator</TriggeredBy>
+				<TriggeredBy>Upgrade_Reaper17ReactorForcefieldGenerator</TriggeredBy>
 			</StatusBitsUpgrade>
 			<ShieldBodyUpdate
 				id="ModuleTag_ShieldBodyUpdate" />
@@ -1138,6 +1139,7 @@
 				id="ForceFieldUpgradeSound" 
 				SoundToPlay="AudioEvent:ALI_ForceField_Begin">
         <TriggeredBy>Upgrade_AlienReactorForcefieldGenerator</TriggeredBy>
+		<TriggeredBy>Upgrade_Reaper17ReactorForcefieldGenerator</TriggeredBy>
       </AudioLoopUpgrade>
 		</Behaviors>
 		<AI>

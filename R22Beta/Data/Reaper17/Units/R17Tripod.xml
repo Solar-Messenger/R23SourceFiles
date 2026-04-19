@@ -66,7 +66,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="7s"
-		WorldMapArmoryUpgradesAllowed="Upgrade_Reaper17ConversionReserves Upgrade_Reaper17ReactorForcefieldGenerator"
+		WorldMapArmoryUpgradesAllowed="Upgrade_Reaper17ConversionReserves Upgrade_Reaper17ReactorForcefieldGenerator Upgrade_AlienReactorForcefieldGenerator"
 		CaptureTime="0s"
 		BuildCost="3000"
 		RefundValue="0"
@@ -2401,6 +2401,7 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_Reaper17ReactorForcefieldGenerator</TriggeredBy>
+				<TriggeredBy>Upgrade_AlienReactorForcefieldGenerator</TriggeredBy>
 			</StatusBitsUpgrade>
 	
 			<SubObjectsUpgrade
@@ -2476,6 +2477,7 @@
 				SoundToPlay="AudioEvent:ALI_ForceField_Begin"
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_Reaper17ReactorForcefieldGenerator</TriggeredBy>
+				<TriggeredBy>Upgrade_AlienReactorForcefieldGenerator</TriggeredBy>
 			</AudioLoopUpgrade>
 		</Behaviors>
 		<AI>
