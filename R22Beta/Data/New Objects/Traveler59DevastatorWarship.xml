@@ -7,7 +7,7 @@
         CommandSet="Traveler59DevastatorWarshipCommandSet"
         EditorName="Traveler59DevastatorWarship"
         Description="Desc:Traveler59DevastatorWarship"
-        WorldMapArmoryUpgradesAllowed="Upgrade_TravelerEngines"
+        WorldMapArmoryUpgradesAllowed="Upgrade_TravelerEngines Upgrade_AlienReactorForcefieldGenerator"
         TypeDescription="Type:Traveler59DevastatorWarship"
         SelectPortrait="Portrait_AlienDevastatorWarship"
         ButtonImage="Portrait_AlienDevastatorWarship"
@@ -569,6 +569,83 @@
                         ConditionsYes="FORMATION_PREVIEW">
             </AnimationState>
 			</ScriptedModelDraw>
+			<ScriptedModelDraw
+				id="E100F908"
+				InitialRecoilSpeed="2"
+				MaxRecoilDistance="3"
+				RecoilDamping="0.4"
+				RecoilSettleSpeed="0.065"
+				MinLODRequired="LOW"
+				ProjectileBoneFeedbackEnabledSlots=""
+				TrackMarks=""
+				DependencySharedModelFlags=""
+				HighDetailLODThreshold="0"
+				LowDetailLODThreshold="0"
+				WadingParticleSys=""
+				AlphaCameraFadeOuterRadius="0"
+				AlphaCameraFadeInnerRadius="0"
+				AlphaCameraAtInnerRadius="100%"
+				StaticSortLevelWhileFading="-1"
+				BirthFadeTime="0"
+				OkToChangeModelColor="True"
+				AnimationsRequirePower="True"
+				UseYAxisForTurretRotation="False"
+				TrackMarksOnlyWhenCorneringQuickly="False"
+				UseProducerTexture="False"
+				NoRotate="False"
+				UseFiringArcRotation="False"
+				Selectable="True"
+				RandomTextureFixedRandomIndex="False"
+				ParticlesAttachedToAnimatedBones="False"
+				ParticleBonesCheckDrawable="False"
+				ShadowForceDisable="False"
+				SwitchModelLODMode="False"
+				StaticModelLODMode="False"
+				ShowShadowWhileContained="False"
+				UseStandardModelNames="False"
+				UseDefaultAnimation="False"
+				BirthFadeAdditive="False"
+				ZWriteDisableOverride="False"
+				MultiPlayerOnly="False"
+				AffectedByStealth="True"
+				InvertStealthOpacity="False"
+				HighDetailOnly="False"
+				SetAnimsToLastFrameOnConstructionComplete="True">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT"
+					PortraitImage=""
+					ButtonImage=""
+					RetainSubObjects="False" />
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_19"
+					PortraitImage=""
+					ButtonImage=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:FXSHLDWARSHIP"
+						ExtraMesh="False" />
+					<ShadowInfo
+						Type="ADDITIVE_DECAL"
+						Texture="AUDronShipDecalIdle"
+						AdditionalTexture=""
+						SizeX="100"
+						SizeY="60"
+						OffsetX="0"
+						OffsetY="0"
+						OpacityStart="0"
+						OpacityFadeInTime="0s"
+						OpacityPeak="1"
+						OpacityFadeOutTime="0s"
+						OpacityEnd="0"
+						MaxHeight="300"
+						SunAngle="0"
+						OverrideLODVisibility="True"
+						UseHouseColor="True"
+						IsRotatingWithObject="True"
+						LocalPlayerOnly="False" />
+				</ModelConditionState>
+			</ScriptedModelDraw>
             <ScriptedModelDraw
                 id="ModuleTag_DrawTravelerEnginesFX"
                 AttachToBoneInAnotherModule="roottransform">
@@ -784,6 +861,20 @@
                     Index="onDeath"
                     FX="FX_ALI_DevastatorWarship_Die" />
             </FXListBehavior>
+			<StatusBitsUpgrade
+				id="15A65F15"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				StatusToSet="SHIELDBODY_ENABLED"
+				StatusToClear=""
+				ApplyToContained="False">
+				<TriggeredBy>Upgrade_AlienReactorForcefieldGenerator</TriggeredBy>
+			</StatusBitsUpgrade>
+			<ShieldBodyUpdate
+				id="477C6A8E" />
             <ShieldBodyUpdate
                 id="ModuleTag_ShieldBodyUpdate" />
             <ModelConditionUpgrade
@@ -796,6 +887,18 @@
                 StatusToSet="WEAPON_UPGRADED_03">
                 <TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
             </StatusBitsUpgrade>
+			<AudioLoopUpgrade
+				id="290C6CF3"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				SoundToPlay="AudioEvent:ALI_ForceField_Begin"
+				KillAfterMS="0"
+				KillOnDeath="False">
+				<TriggeredBy>Upgrade_AlienReactorForcefieldGenerator</TriggeredBy>
+			</AudioLoopUpgrade>
         </Behaviors>
        <AI>
 			<JetAIUpdate		
@@ -820,7 +923,7 @@
                 ShieldEnabledFX="FX_AlienShieldEnabled"
                 ShieldTakeDamageFX="FX_AlienShieldHit"
                 ShieldDepleteFX="FX_AlienShieldDeplete"
-                ShieldActiveModelCondition="USER_1" />
+                ShieldActiveModelCondition="USER_19" />
         </Body>
         <Geometry
             IsSmall="false">

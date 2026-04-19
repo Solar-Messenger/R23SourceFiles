@@ -66,7 +66,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="7s"
-		WorldMapArmoryUpgradesAllowed="Upgrade_AlienReactorForcefieldGenerator"
+		WorldMapArmoryUpgradesAllowed="Upgrade_AlienReactorForcefieldGenerator Upgrade_TravelerEngines"
 		CaptureTime="0s"
 		BuildCost="2400"
 		RefundValue="0"
@@ -1117,6 +1117,70 @@
 						LocalPlayerOnly="False" />
 				</ModelConditionState>
 			</ScriptedModelDraw>
+            <ScriptedModelDraw
+                id="ModuleTag_DrawTravelerEnginesFX"
+                AttachToBoneInAnotherModule="roottransform">
+                <ModelConditionState
+                    ParseCondStateType="PARSE_DEFAULT">
+                    <Model
+                        Name="W3DContainer:FXINVISBONE" />
+                </ModelConditionState>
+                <AnimationState
+                    ParseCondStateType="PARSE_DEFAULT" />
+                <AnimationState
+                    ParseCondStateType="PARSE_NORMAL"
+                    ConditionsYes="DECELERATE"></AnimationState>
+                <AnimationState
+                    ParseCondStateType="PARSE_NORMAL"
+                    ConditionsYes="ACCELERATE"></AnimationState>
+                <AnimationState
+                    ParseCondStateType="PARSE_NORMAL"
+                    ConditionsYes="USER_2 MOVING">
+                    <ParticleSysBone
+                        BoneName="INVISBONE01"
+                        FXParticleSystemTemplate="AlienTravEngDist_DevWarship"
+                        FollowBone="true" />
+                </AnimationState>
+            </ScriptedModelDraw>
+            <ScriptedModelDraw
+                id="ModuleTag_HideOrShowTravelerEnginesFX">
+                <ModelConditionState
+                    ParseCondStateType="PARSE_DEFAULT">
+                    <Model
+                        Name="" />
+                </ModelConditionState>
+                <AnimationState
+                    ParseCondStateType="PARSE_DEFAULT">
+                    <Script>
+                        CurDrawableHideSubObject("TravEng01")
+                        CurDrawableHideSubObject("TravEng02")                        
+                    </Script>
+                </AnimationState>
+                <AnimationState
+                    ParseCondStateType="PARSE_NORMAL"
+                    ConditionsYes="DECELERATE">
+                    <Script>
+                        CurDrawableHideSubObject("TravEng01")
+                        CurDrawableHideSubObject("TravEng02")                        
+                    </Script>
+                </AnimationState>
+                <AnimationState
+                    ParseCondStateType="PARSE_NORMAL"
+                    ConditionsYes="ACCELERATE">
+                    <Script>
+                        CurDrawableHideSubObject("TravEng01")
+                        CurDrawableHideSubObject("TravEng02")                        
+                    </Script>
+                </AnimationState>
+                <AnimationState
+                    ParseCondStateType="PARSE_NORMAL"
+                    ConditionsYes="USER_2 MOVING">
+                    <Script>
+                        CurDrawableShowSubObject("TravEng01")
+                        CurDrawableShowSubObject("TravEng02")                        
+                    </Script>
+                </AnimationState>
+            </ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
 			<AttributeModifierPoolUpdate
@@ -1275,6 +1339,27 @@
 			<TemporarilyDefectUpdate
 				id="3473AFD2"
 				DefectionFrameCount="300" />
+            <AttributeModifierUpgrade
+                id="Upgrade_TravelerEngines"
+                AttributeModifier="AttributeModifier_TravelerEnginesLargeShips">
+                <TriggeredBy>Upgrade_TravelerEngines</TriggeredBy>
+            </AttributeModifierUpgrade>
+            <ModelConditionUpgrade
+                id="ModuleTag_TravelerEnginesModel"
+                AddConditionFlags="USER_2">
+                <TriggeredBy>Upgrade_TravelerEngines</TriggeredBy>
+            </ModelConditionUpgrade>
+            <!--    <SubObjectsUpgrade
+                id="ModuleTag_ShowTravelerEngines"
+                ShowSubObjects="TravEng01 TravEng02">
+                <TriggeredBy>Upgrade_TravelerEngines</TriggeredBy>
+            </SubObjectsUpgrade>            
+        -->
+            <AudioLoopUpgrade
+                id="ALI_TravelerEngines_Upgrade"
+                SoundToPlay="AudioEvent:ALI_TravelerEngines_Upgrade">
+                <TriggeredBy>Upgrade_TravelerEngines</TriggeredBy>
+            </AudioLoopUpgrade>
 			<WeaponSetUpdate
 				id="720F4A50">
 				<WeaponSlotTurret
