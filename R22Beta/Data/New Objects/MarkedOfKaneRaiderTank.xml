@@ -20,7 +20,7 @@
         WeaponCategory="CANNON"
         VoicePriority="188"
         TypeDescription="Type:NODScorpionTank"
-        WorldMapArmoryUpgradesAllowed="Upgrade_NODDozerBlades"
+        WorldMapArmoryUpgradesAllowed="Upgrade_NODDozerBlades Upgrade_NODTechCenterLaserCapacitor"
         ShockwaveResistance="100"
         ReinvisibilityDelay="7s">
         <DisplayName>Name:NODScorpionTank</DisplayName>
@@ -589,6 +589,17 @@
                 ShowSubObjects="DOZERBLADE">
                 <TriggeredBy>Upgrade_NODDozerBlades</TriggeredBy>
             </SubObjectsUpgrade>
+            <SubObjectsUpgrade
+                id="ModuleTag_ShowRails"
+                ShowSubObjects="Turret2 Turret2_Gun Gun_Upgrade"
+                HideSubObjects="Gun">
+                <TriggeredBy>Upgrade_NODTechCenterLaserCapacitor</TriggeredBy>
+            </SubObjectsUpgrade>
+            <StatusBitsUpgrade
+                id="ModuleTag_UpgradeWeapon"
+                StatusToSet="WEAPON_UPGRADED_01">
+                <TriggeredBy>Upgrade_NODTechCenterLaserCapacitor</TriggeredBy>
+            </StatusBitsUpgrade>
             <CreateAndEnterObjectSpecialPower
                 id="ModuleTag_CallForTransport"
                 SpecialPowerTemplate="SpecialPowerCallForTransportNOD"
