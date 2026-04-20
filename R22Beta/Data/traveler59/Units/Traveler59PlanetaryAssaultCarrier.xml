@@ -66,7 +66,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="7s"
-		WorldMapArmoryUpgradesAllowed="Upgrade_TravelerEngines"
+		WorldMapArmoryUpgradesAllowed="Upgrade_TravelerEngines Upgrade_AlienReactorForcefieldGenerator"
 		CaptureTime="0s"
 		BuildCost="3000"
 		RefundValue="0"
@@ -1042,7 +1042,7 @@
 					RetainSubObjects="False" />
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_1"
+					ConditionsYes="USER_19"
 					PortraitImage=""
 					ButtonImage=""
 					RetainSubObjects="False">
@@ -1955,6 +1955,18 @@
 				UpdateTime="1s"
 				MaxFrequency="0"
 				RandomizeTargetLocation="False"	/>
+			<StatusBitsUpgrade
+				id="15A65F15"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				StatusToSet="SHIELDBODY_ENABLED"
+				StatusToClear=""
+				ApplyToContained="False">
+				<TriggeredBy>Upgrade_AlienReactorForcefieldGenerator</TriggeredBy>
+			</StatusBitsUpgrade>
 			<ShieldBodyUpdate
 				id="477C6A8E" />
 			<StealthDetectorUpdate
@@ -2126,7 +2138,7 @@
 				ShieldAmount="2500"
 				ShieldArmor="ForcefieldFilterDamageArmor"
 				ShieldRechargeIdleTime="120s"
-				ShieldActiveModelCondition="USER_1" />
+				ShieldActiveModelCondition="USER_19" />
 		</Body>
 		<Geometry
 			IsSmall="False">
