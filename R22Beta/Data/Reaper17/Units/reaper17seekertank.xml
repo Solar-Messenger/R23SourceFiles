@@ -66,7 +66,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="7s"
-		WorldMapArmoryUpgradesAllowed="Upgrade_Reaper17MinorForceFieldGenerator Upgrade_AlienShardLaunchers"
+		WorldMapArmoryUpgradesAllowed="Upgrade_Reaper17MinorForceFieldGenerator Upgrade_AlienShardLaunchers Upgrade_AlienMinorForcefieldGenerator"
 		CaptureTime="0s"
 		BuildCost="800"
 		RefundValue="0"
@@ -748,6 +748,7 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_Reaper17MinorForcefieldGenerator</TriggeredBy>
+				<TriggeredBy>Upgrade_AlienMinorForcefieldGenerator</TriggeredBy>
 			</StatusBitsUpgrade>
 			<!--
 			<AudioLoopUpgrade
@@ -772,6 +773,7 @@
 				SoundToPlay="AudioEvent:ALI_AttenudatedForcefield_Upgrade"
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_Reaper17MinorForcefieldGenerator</TriggeredBy>
+				<TriggeredBy>Upgrade_AlienMinorForcefieldGenerator</TriggeredBy>
 			</AudioLoopUpgrade>
 		</Behaviors>
 		<AI>
