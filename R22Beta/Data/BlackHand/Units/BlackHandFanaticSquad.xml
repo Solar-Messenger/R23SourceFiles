@@ -66,7 +66,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon="FanaticIcon"
 		ReinvisibilityDelay="4s"
-		WorldMapArmoryUpgradesAllowed=""
+		WorldMapArmoryUpgradesAllowed="Upgrade_TiberiumInfusion Upgrade_MoKTiberiumInfusion"
 		CaptureTime="0s"
 		BuildCost="600"
 		RefundValue="0"
@@ -381,6 +381,7 @@
 					Frames="0"
 					Trigger="0" />
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
+				<TriggeredBy>Upgrade_MoKTiberiumInfusion</TriggeredBy>
 			</AttributeModifierUpgrade>
 			<StatusBitsUpgrade
 				id="63DD108D"
@@ -393,6 +394,7 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
+				<TriggeredBy>Upgrade_MoKTiberiumInfusion</TriggeredBy>
 			</StatusBitsUpgrade>
 			<CreateAndEnterObjectSpecialPower
 				id="6D44A823"
