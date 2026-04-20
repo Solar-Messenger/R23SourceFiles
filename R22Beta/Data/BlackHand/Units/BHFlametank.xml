@@ -105,10 +105,6 @@
 			Speed="75"
 			Condition="NORMAL"
 			Locomotor="NODFlameTankLocomotor" />
-		<LocomotorSet
-			Speed="75"
-			Condition="NORMAL"
-			Locomotor="NODFlameTankLocomotor" />
 		<SkirmishAIInformation
 			BaseBuildingLocation="FRONT"
 			ConquerMetricsOverrideDamageType="UNDEFINED"
@@ -1557,7 +1553,7 @@
 				</OCL>
 				<Sound
 					Type="INITIAL"
-					List="Multisound:Multisound:NOD_Generic_VoiceDieMS" />
+					List="NOD_Generic_VoiceDieMS" />
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""

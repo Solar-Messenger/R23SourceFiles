@@ -70,9 +70,10 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="7s"
+		WorldMapArmoryUpgradesAllowed="Upgrade_BlackHandSecretShrinePurifyingFlame"
 		CaptureTime="0s"
 		BuildCost="1200"
-		RefuntValue="0"
+		RefundValue="0"
 		ThreatValue="0"
 		MaxSimultaneousOfType="0"
 		TransportSlotCount="1"
@@ -273,6 +274,70 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					Name=""
+					ConditionsYes="REALLYDAMAGED USER_6"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="True">
+					<Model
+						Name="W3DContainer:NUFLAMETANK"
+						ExtraMesh="False" />
+					<Texture
+						Original="NUFlameTank"
+						New="NUFlameTank_UGD" />
+					<Texture
+						Original="NUFlameTank_SPM"
+						New="NUFlameTank_UG_SPM" />
+					<Texture
+						Original="NUFlameTank_NRM"
+						New="NUFlameTank_UG_NRM" />
+					<ParticleSysBone
+						BoneName="FXTracksR"
+						FXParticleSystemTemplate="NODDamagedSmoke"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="FXTracksB"
+						FXParticleSystemTemplate="NODDamagedFire"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="FXTracksB"
+						FXParticleSystemTemplate="NODDamagedFireDistortion"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="FXTracksB"
+						FXParticleSystemTemplate="NODDamagedSmoke"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
 					ConditionsYes="REALLYDAMAGED USER_5"
 					Skeleton=""
 					ModelAnimationPrefix=""
@@ -320,6 +385,70 @@
 					<ParticleSysBone
 						BoneName="FXTracksB"
 						FXParticleSystemTemplate="NODDamagedSmoke"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
+					ConditionsYes="DYING USER_6"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:NUFLAMETANKR"
+						ExtraMesh="False" />
+					<Texture
+						Original="NUFlameTankD"
+						New="NUFlameTank_UGD" />
+					<Texture
+						Original="NUFlameTank_SPM"
+						New="NUFlameTank_UG_SPM" />
+					<Texture
+						Original="NUFlameTank_NRM"
+						New="NUFlameTank_UG_NRM" />
+					<ParticleSysBone
+						BoneName="FXHULKFIRE"
+						FXParticleSystemTemplate="GDIMammothHulkFire"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="FXHULKFIRE"
+						FXParticleSystemTemplate="GDIMammothHulkFireGlow"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="FXHULKFIRE"
+						FXParticleSystemTemplate="GDIMammothHulkFireDistortion"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="FXHULKFIRE"
+						FXParticleSystemTemplate="GDIMammothHulkSmoke"
 						FXTrigger=""
 						Persist=""
 						PersistID="0"
@@ -498,6 +627,30 @@
 						FollowBone="True"
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
+					ConditionsYes="USER_6"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:NUFLAMETANK"
+						ExtraMesh="False" />
+					<Texture
+						Original="NUFlameTank"
+						New="NUFlameTank_UG" />
+					<Texture
+						Original="NUFlameTank_SPM"
+						New="NUFlameTank_UG_SPM" />
+					<Texture
+						Original="NUFlameTank_NRM"
+						New="NUFlameTank_UG_NRM" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -757,6 +910,79 @@
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
+					ConditionsYes="USING_WEAPON_A USER_6"
+					Name=""
+					StateName=""
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="FlameTankPurifyingAdd"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="FlameTankPurifyingAdd02"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="FlameTankPurifyingFire"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="FlameTankPurifyingStart"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="FlameTankPurifyingDistort"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="FlameTankPurifyingGround"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					AnimNickName=""
 					ConditionsYes="USING_WEAPON_A"
 					Name=""
 					StateName=""
@@ -917,6 +1143,79 @@
 					ShareAnimation="False"
 					AllowRepeatInRandomPick="False"
 					SimilarRestart="False" />
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					AnimNickName=""
+					ConditionsYes="USING_WEAPON_A USER_6"
+					Name=""
+					StateName=""
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="FlameTankPurifyingAdd"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="FlameTankPurifyingDistort"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="FlameTankPurifyingAdd02"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="FlameTankPurifyingFire"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="FlameTankPurifyingStart"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="FlameTankPurifyingGround"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
@@ -1173,18 +1472,6 @@
 						Upgrade=""
 						ObjectStatus="WEAPON_UPGRADED_01"
 						IsPlayerUpgradePermanent="False" />
-					<Weapon
-						Ordering="PRIMARY_WEAPON"
-						Template="NODFlameTankFlamer_Raged"
-						Upgrade="Upgrade_Raged"
-						ObjectStatus=""
-						IsPlayerUpgradePermanent="False" />
-					<Weapon
-						Ordering="PRIMARY_WEAPON"
-						Template="NODBlackHandFlameTankUpgradedFlamer_Raged"
-						Upgrade="Upgrade_Raged"
-						ObjectStatus="WEAPON_UPGRADED_01"
-						IsPlayerUpgradePermanent="False" />
 					<TurretSettings
 						TurretTurnRate="90"
 						TurretPitchRate="40"
@@ -1368,6 +1655,44 @@
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_BlackHandSecretShrinePurifyingFlame</TriggeredBy>
 			</AudioLoopUpgrade>
+			<StatusBitsUpgrade
+				id="E6191BDE"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				StatusToSet="WEAPON_UPGRADED_01"
+				StatusToClear=""
+				ApplyToContained="False">
+				<TriggeredBy>Upgrade_BlackHandSecretShrinePurifyingFlame</TriggeredBy>
+			</StatusBitsUpgrade>
+			<!--<ModelConditionUpgrade
+				id="75B4C3A3"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				AddConditionFlags="USER_7"
+				RemoveConditionFlags=""
+				AddTempConditionFlag="TOPPLED"
+				TempConditionTime="0s">
+				<TriggeredBy>Upgrade_BlackHandFaction</TriggeredBy>
+			</ModelConditionUpgrade>-->
+			<ModelConditionUpgrade
+				id="59B5E0DE"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				AddConditionFlags="USER_6"
+				RemoveConditionFlags="USER_7"
+				AddTempConditionFlag="TOPPLED"
+				TempConditionTime="0s">
+				<TriggeredBy>Upgrade_BlackHandSecretShrinePurifyingFlame</TriggeredBy>
+			</ModelConditionUpgrade>
 		</Behaviors>
 		<AI>
 			<AIUpdate
