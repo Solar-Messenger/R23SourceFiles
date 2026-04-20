@@ -23,7 +23,7 @@
 		EditorName="MarkedOfKaneMilitantRocket"
 		Description="Desc:MarkedOfKaneMilitantRocket"
 		TypeDescription="Type:MarkedOfKaneMilitantRocket"
-		WorldMapArmoryUpgradesAllowed="Upgrade_MoKTiberiumInfusion">
+		WorldMapArmoryUpgradesAllowed="Upgrade_MoKTiberiumInfusion Upgrade_TiberiumInfusion">
 		<DisplayName>Name:NODMilitantRocket</DisplayName>
 		<DisplayUpgrade
 			id="Tag_DisplayUpgrade1">Upgrade_MoKTiberiumInfusion</DisplayUpgrade>

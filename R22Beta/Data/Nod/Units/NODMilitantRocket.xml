@@ -23,13 +23,13 @@
 		EditorName="NODMilitantRocket"
 		Description="Desc:NODMilitantRocket"
 		TypeDescription="Type:NODMilitantRocket"
-		WorldMapArmoryUpgradesAllowed="Upgrade_TiberiumInfusion Upgrade_NODConfessorUpgrade">
+		WorldMapArmoryUpgradesAllowed="Upgrade_TiberiumInfusion Upgrade_MoKTiberiumInfusion">
 		<DisplayName
 			xai:joinAction="Replace" xmlns:xai="uri:ea.com:eala:asset:instance">Name:NODMilitantRocket</DisplayName>
 		<DisplayUpgrade
 			id="Tag_DisplayUpgrade1">Upgrade_TiberiumInfusion</DisplayUpgrade>
-		<DisplayUpgrade
-			id="Tag_DisplayUpgrade2">Upgrade_NODConfessorUpgrade</DisplayUpgrade>
+		<!--<DisplayUpgrade
+			id="Tag_DisplayUpgrade2">Upgrade_NODConfessorUpgrade</DisplayUpgrade>-->
 		<ArmorSet
 			Armor="NODRocketMilitantArmor"
 			DamageFX="InfantryDamageFX" />
@@ -586,11 +586,13 @@
 				id="Upgrade_TiberiumInfusion"
 				AttributeModifier="AttributeModifier_TiberiumInfusion">
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
+				<TriggeredBy>Upgrade_MoKTiberiumInfusion</TriggeredBy>
 			</AttributeModifierUpgrade>
 			<StatusBitsUpgrade
 				id="ModuleTag_TiberiumInfusion2"
 				StatusToSet="HAS_TIBERIUM_UPGRADE">
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
+				<TriggeredBy>Upgrade_MoKTiberiumInfusion</TriggeredBy>
 			</StatusBitsUpgrade>
 			<FindCoverBehavior
 				id="ModuleTag_FCB"
@@ -603,6 +605,7 @@
 							ArmorSetFlag="PLAYER_UPGRADE"
 				>
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
+				<TriggeredBy>Upgrade_MoKTiberiumInfusion</TriggeredBy>
 			</ArmorUpgrade>
 			<LargeGroupAudioUpdate
 				id="LGAU">
@@ -620,11 +623,13 @@
 				id="TiberiumInfusionUpgradeSound"
 				SoundToPlay="AudioEvent:NOD_TiberiumUpgrade">
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
+				<TriggeredBy>Upgrade_MoKTiberiumInfusion</TriggeredBy>
 			</AudioLoopUpgrade>
 			<AudioLoopUpgrade
 				id="NODConfessorUpgradeSound"
 				SoundToPlay="AudioEvent:NOD_Confessor_Upgrade">
 				<TriggeredBy>Upgrade_NODConfessorUpgrade</TriggeredBy>
+				<TriggeredBy>Upgrade_MoKTiberiumInfusion</TriggeredBy>
 			</AudioLoopUpgrade>
 		</Behaviors>
 		<AI>
