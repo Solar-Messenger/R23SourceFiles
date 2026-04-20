@@ -21,6 +21,7 @@
 		ProductionQueueType="INFANTRY"
 		UnitCategory="INFANTRY"
 		WeaponCategory="GUN"
+		WorldMapArmoryUpgradesAllowed="Upgrade_AlienBlueShardWeapon Upgrade_Traveler59AdvancedArticulators"
 		EditorName="Reaper17StalkerSquad"
 		Description="Desc:Reaper17Stalker"
 		TypeDescription="Type:Reaper17Stalker"
@@ -65,10 +66,6 @@
 			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
-			<StatusBitsUpgrade
-				StatusToSet="WEAPON_UPGRADED_01">
-				<TriggeredBy>Upgrade_AlienBlueShardWeapon</TriggeredBy>
-			</StatusBitsUpgrade>		
 			<AttributeModifierPoolUpdate 
 				id="DefaultAttributeModifierPoolUpdate"/>
 
@@ -87,6 +84,15 @@
 				AttributeModifier="Modifier_MultifunctionUpgradeCenterArmor">
 				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterArmor</TriggeredBy>
 			</AttributeModifierUpgrade>
+			<AttributeModifierUpgrade
+				id="Upgrade_Traveler59AdvancedArticulators"
+				AttributeModifier="AttributeModifier_AdvancedArticulators2">
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy>
+			</AttributeModifierUpgrade>
+			<StatusBitsUpgrade
+				StatusToSet="WEAPON_UPGRADED_01">
+				<TriggeredBy>Upgrade_AlienBlueShardWeapon</TriggeredBy>
+			</StatusBitsUpgrade>
 			<StancesBehavior
 				id="ModuleTag_Stance"
 				StanceTemplate="Generic"
@@ -399,44 +405,7 @@
 				MinimumCutoff="0"
 				UpdateTime="1s"
 				MaxFrequency="0"
-				RandomizeTargetLocation="False" />		
-			<!-- AI use transports! -->
-			<AISpecialPowerUpdate
-				id="335B0612"
-				CommandButtonName="Command_EnterTransport"
-				SecondaryCommandButtonName=""
-				SpecialPowerAIType="SPECIAL_POWER_BUFF_ALLY"
-				SpecialPowerRadius="300"
-				ReinforceDistance="0"
-				SpellMakesAStructure=""
-				SpecificUnit=""
-				UnitKindOf="TRANSPORT"
-				AllyUnitInclude="TRANSPORT"
-				AllyUnitExclude="INFANTRY"
-				EnemyUnitInclude=""
-				EnemyUnitExclude=""
-				MinimumCutoff="0"
-				UpdateTime="1s"
-				MaxFrequency="0"
-				RandomizeTargetLocation="False" />
-			<AISpecialPowerUpdate
-				id="335B0613"
-				CommandButtonName="Command_EnterTransport"
-				SecondaryCommandButtonName=""
-				SpecialPowerAIType="SPECIAL_POWER_BUFF_ALLY"
-				SpecialPowerRadius="300"
-				ReinforceDistance="0"
-				SpellMakesAStructure=""
-				SpecificUnit=""
-				UnitKindOf="METAUNIT"
-				AllyUnitInclude="METAUNIT"
-				AllyUnitExclude="INFANTRY"
-				EnemyUnitInclude=""
-				EnemyUnitExclude=""
-				MinimumCutoff="0"
-				UpdateTime="1s"
-				MaxFrequency="0"
-				RandomizeTargetLocation="False" />		
+				RandomizeTargetLocation="False" />			
 				
 			<AimWeapon
 				id="06370EA6"

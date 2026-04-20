@@ -93,6 +93,26 @@
 				</AnimationState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED USER_2"
+					PortraitImage=""
+					ButtonImage=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:AUSTALKER_SKN"
+						ExtraMesh="False" />
+					<Texture
+						Original="AUStalker"
+						New="AUStalker_UPBT" />
+					<ParticleSysBone
+						BoneName="B_BODYEND"
+						FXParticleSystemTemplate="AlienDamageInfantryIchor"
+						PersistID="0"
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
 					<Model
 						Name="W3DContainer:AUStalker_SKN" />
@@ -101,6 +121,19 @@
 						FollowBone="true"
 						FXParticleSystemTemplate="AlienDamageInfantryIchor" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					PortraitImage=""
+					ConditionsYes="USER_2"
+					ButtonImage=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:AUSTALKER_SKN"
+						ExtraMesh="False" />
+					<Texture
+						Original="AUStalker"
+						New="AUStalker_UPBT" />
+				</ModelConditionState>				
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="WORLD_BUILDER">
@@ -571,7 +604,26 @@
 				id="ModuleTag_AlienTiberiumAgitation"
 				CommandButtonName="Command_FireTiberiumAgitation"
 				SpecialPowerAIType="SPECIAL_POWER_CAPTURE_BUILDING" /-->
-			<!--End Tiberium Agitation-->			
+			<!--End Tiberium Agitation-->		
+			<AudioLoopUpgrade id="BlueShardUpgrade" SoundToPlay="AudioEvent:ALI_Stalker_BlueShardUpgrade">
+				<TriggeredBy>Upgrade_AlienBlueShardWeapon</TriggeredBy>
+			</AudioLoopUpgrade>
+			<StatusBitsUpgrade
+				id="ModuleTag_Weapon_Upgrade_01"
+				StatusToSet="WEAPON_UPGRADED_01">
+				<TriggeredBy>Upgrade_AlienBlueShardWeapon</TriggeredBy>
+			</StatusBitsUpgrade>
+			<SubObjectsUpgrade
+				id="ModuleTag_ShowShardGun"
+				ShowSubObjects="AUStalker_C_B AUStalker_Gun"
+				HideSubObjects="AUStalker_C_G" >
+				<TriggeredBy>Upgrade_AlienBlueShardWeapon</TriggeredBy>
+			</SubObjectsUpgrade>	
+			<ModelConditionUpgrade
+				id="ModuleTag_BlueShardModel"
+				AddConditionFlags="USER_2">
+				<TriggeredBy>Upgrade_AlienBlueShardWeapon</TriggeredBy>
+			</ModelConditionUpgrade>	
 		</Behaviors>
 		<AI>
 			<AIUpdate

@@ -15,6 +15,7 @@
 		RadarPriority="UNIT"
 		BuildCompletion="APPEARS_AT_RALLY_POINT"
 		ProductionQueueType="INFANTRY"
+		WorldMapArmoryUpgradesAllowed="Upgrade_AlienBlueShardWeapon Upgrade_Traveler59AdvancedArticulators"	
 		VoicePriority="133"
 		EditorName="AlienStalker"
 		Description="Desc:AlienStalker"
@@ -91,6 +92,26 @@
 				</AnimationState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED USER_2"
+					PortraitImage=""
+					ButtonImage=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:AUSTALKER_SKN"
+						ExtraMesh="False" />
+					<Texture
+						Original="AUStalker"
+						New="AUStalker_UPBT" />
+					<ParticleSysBone
+						BoneName="B_BODYEND"
+						FXParticleSystemTemplate="AlienDamageInfantryIchor"
+						PersistID="0"
+						FollowBone="True"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
 					<Model
 						Name="W3DContainer:AUStalker_SKN" />
@@ -99,6 +120,19 @@
 						FollowBone="true"
 						FXParticleSystemTemplate="AlienDamageInfantryIchor" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					PortraitImage=""
+					ConditionsYes="USER_2"
+					ButtonImage=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:AUSTALKER_SKN"
+						ExtraMesh="False" />
+					<Texture
+						Original="AUStalker"
+						New="AUStalker_UPBT" />
+				</ModelConditionState>				
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="WORLD_BUILDER">
@@ -269,8 +303,44 @@
 						AnimationMode="ONCE"
 						AnimationBlendTime="5"/>
 				</AnimationState>
-
-					
+				</ScriptedModelDraw>	
+				<ScriptedModelDraw		
+				id="ModuleTag_DrawSpeedBoostFX_LT3"
+				AttachToBoneInAnotherModule="B_LEG_LT3">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:FXInvisBone" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT"/>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_3 MOVING">
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="AlienSpeedTrails"
+						FollowBone="true" />
+				</AnimationState>
+			</ScriptedModelDraw>
+			<ScriptedModelDraw		
+				id="ModuleTag_DrawSpeedBoostFX_RT3"
+				AttachToBoneInAnotherModule="B_LEG_RT3">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:FXInvisBone" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT"/>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_3 MOVING">
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="AlienSpeedTrails"
+						FollowBone="true" />
+				</AnimationState>
 				</ScriptedModelDraw>			
 		</Draws>
 		<Behaviors>
@@ -323,6 +393,19 @@
 				AttributeModifier="Modifier_MultifunctionUpgradeCenterArmor">
 				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterArmor</TriggeredBy>
 			</AttributeModifierUpgrade>
+			<AttributeModifierUpgrade
+				id="Upgrade_Traveler59AdvancedArticulators"
+				AttributeModifier="AttributeModifier_AdvancedArticulators2">
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy>
+			</AttributeModifierUpgrade>	
+			<ModelConditionUpgrade
+				id="ModuleTag_AdvancedArticulatorsFX"
+				AddConditionFlags="USER_3">
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy>
+			</ModelConditionUpgrade>
+			<AudioLoopUpgrade id="ALI_AdvancedArticulators_Upgrade" SoundToPlay="AudioEvent:ALI_AdvancedArticulators_Upgrade"> 
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy> 
+			</AudioLoopUpgrade> 
 			<LevelUpUpgrade
 				id="ModuleTag_LevelUpUpgrade_Veteran"
 				LevelCap="4"
@@ -516,7 +599,25 @@
 				CommandButtonName="Command_FireTiberiumAgitation"
 				SpecialPowerAIType="SPECIAL_POWER_CAPTURE_BUILDING" /-->
 			<!--End Tiberium Agitation-->			
-
+			<AudioLoopUpgrade id="BlueShardUpgrade" SoundToPlay="AudioEvent:ALI_Stalker_BlueShardUpgrade">
+				<TriggeredBy>Upgrade_AlienBlueShardWeapon</TriggeredBy>
+			</AudioLoopUpgrade>
+			<StatusBitsUpgrade
+				id="ModuleTag_Weapon_Upgrade_01"
+				StatusToSet="WEAPON_UPGRADED_01">
+				<TriggeredBy>Upgrade_AlienBlueShardWeapon</TriggeredBy>
+			</StatusBitsUpgrade>
+			<SubObjectsUpgrade
+				id="ModuleTag_ShowShardGun"
+				ShowSubObjects="AUStalker_C_B AUStalker_Gun"
+				HideSubObjects="AUStalker_C_G" >
+				<TriggeredBy>Upgrade_AlienBlueShardWeapon</TriggeredBy>
+			</SubObjectsUpgrade>	
+			<ModelConditionUpgrade
+				id="ModuleTag_BlueShardModel"
+				AddConditionFlags="USER_2">
+				<TriggeredBy>Upgrade_AlienBlueShardWeapon</TriggeredBy>
+			</ModelConditionUpgrade>
 		</Behaviors>
 		<AI>
 			<AIUpdate

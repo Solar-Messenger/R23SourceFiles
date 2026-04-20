@@ -17,7 +17,7 @@
 		ProductionQueueType="INFANTRY"
 		VoicePriority="133"
 		EditorName="Reaper17Stalker"
-		WorldMapArmoryUpgradesAllowed="Upgrade_AlienBlueShardWeapon"	
+		WorldMapArmoryUpgradesAllowed="Upgrade_AlienBlueShardWeapon Upgrade_Traveler59AdvancedArticulators"	
 		Description="Desc:Reaper17Stalker"
 		TypeDescription="Type:Reaper17Stalker">
 		<DisplayName>NAME:ALIENStalker</DisplayName>
@@ -295,7 +295,44 @@
 						AnimationMode="ONCE"
 						AnimationBlendTime="5"/>
 				</AnimationState>
-					
+				</ScriptedModelDraw>	
+				<ScriptedModelDraw		
+				id="ModuleTag_DrawSpeedBoostFX_LT3"
+				AttachToBoneInAnotherModule="B_LEG_LT3">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:FXInvisBone" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT"/>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_3 MOVING">
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="AlienSpeedTrails"
+						FollowBone="true" />
+				</AnimationState>
+			</ScriptedModelDraw>
+			<ScriptedModelDraw		
+				id="ModuleTag_DrawSpeedBoostFX_RT3"
+				AttachToBoneInAnotherModule="B_LEG_RT3">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:FXInvisBone" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT"/>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_3 MOVING">
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="AlienSpeedTrails"
+						FollowBone="true" />
+				</AnimationState>
 				</ScriptedModelDraw>			
 		</Draws>
 		<Behaviors>
@@ -348,6 +385,19 @@
 				AttributeModifier="Modifier_MultifunctionUpgradeCenterArmor">
 				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterArmor</TriggeredBy>
 			</AttributeModifierUpgrade>
+			<AttributeModifierUpgrade
+				id="Upgrade_Traveler59AdvancedArticulators"
+				AttributeModifier="AttributeModifier_AdvancedArticulators2">
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy>
+			</AttributeModifierUpgrade>	
+			<ModelConditionUpgrade
+				id="ModuleTag_AdvancedArticulatorsFX"
+				AddConditionFlags="USER_3">
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy>
+			</ModelConditionUpgrade>
+			<AudioLoopUpgrade id="ALI_AdvancedArticulators_Upgrade" SoundToPlay="AudioEvent:ALI_AdvancedArticulators_Upgrade"> 
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy> 
+			</AudioLoopUpgrade> 
 			<LevelUpUpgrade
 				id="ModuleTag_LevelUpUpgrade_Veteran"
 				LevelCap="4"
@@ -540,12 +590,7 @@
 				id="ModuleTag_AlienTiberiumAgitation"
 				CommandButtonName="Command_FireTiberiumAgitation"
 				SpecialPowerAIType="SPECIAL_POWER_CAPTURE_BUILDING" /-->
-			<!--End Tiberium Agitation-->		
-    		<!--AISpecialPowerUpdate
-				id="ModuleTag_AlienTiberiumAgitation"
-				CommandButtonName="Command_FireTiberiumAgitation"
-				SpecialPowerAIType="SPECIAL_POWER_CAPTURE_BUILDING" /-->
-			<!--End Tiberium Agitation-->	
+			<!--End Tiberium Agitation-->			
 			<AudioLoopUpgrade id="BlueShardUpgrade" SoundToPlay="AudioEvent:ALI_Stalker_BlueShardUpgrade">
 				<TriggeredBy>Upgrade_AlienBlueShardWeapon</TriggeredBy>
 			</AudioLoopUpgrade>

@@ -19,6 +19,7 @@
 		ProductionQueueType="INFANTRY"
 		UnitCategory="INFANTRY"
 		WeaponCategory="GUN"
+		WorldMapArmoryUpgradesAllowed="Upgrade_AlienBlueShardWeapon Upgrade_Traveler59AdvancedArticulators"	
 		EditorName="AlienStalkerSquad"
 		Description="Desc:AlienStalker"
 		TypeDescription="Type:AlienStalker"
@@ -61,7 +62,7 @@
 				</ModelConditionState>
 			</ScriptedModelDraw>
 		</Draws>
-		<Behaviors>
+		<Behaviors>	
 			<AttributeModifierPoolUpdate
 				id="513BC476" />
 			<AttributeModifierUpgrade
@@ -93,6 +94,11 @@
 				WaypointModeTerminal="True"
 				AttributeModifier="Modifier_MultifunctionUpgradeCenterArmor">
 				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterArmor</TriggeredBy>
+			</AttributeModifierUpgrade>
+			<AttributeModifierUpgrade
+				id="Upgrade_Traveler59AdvancedArticulators"
+				AttributeModifier="AttributeModifier_AdvancedArticulators2">
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy>
 			</AttributeModifierUpgrade>
 			<StancesBehavior
 				id="54CA416E"
@@ -547,43 +553,6 @@
 				AllyUnitExclude=""
 				EnemyUnitInclude="HARVESTER"
 				EnemyUnitExclude="STRUCTURE"
-				MinimumCutoff="0"
-				UpdateTime="1s"
-				MaxFrequency="0"
-				RandomizeTargetLocation="False" />		
-			<!-- AI use transports! -->
-			<AISpecialPowerUpdate
-				id="335B0612"
-				CommandButtonName="Command_EnterTransport"
-				SecondaryCommandButtonName=""
-				SpecialPowerAIType="SPECIAL_POWER_BUFF_ALLY"
-				SpecialPowerRadius="300"
-				ReinforceDistance="0"
-				SpellMakesAStructure=""
-				SpecificUnit=""
-				UnitKindOf="TRANSPORT"
-				AllyUnitInclude="TRANSPORT"
-				AllyUnitExclude="INFANTRY"
-				EnemyUnitInclude=""
-				EnemyUnitExclude=""
-				MinimumCutoff="0"
-				UpdateTime="1s"
-				MaxFrequency="0"
-				RandomizeTargetLocation="False" />
-			<AISpecialPowerUpdate
-				id="335B0613"
-				CommandButtonName="Command_EnterTransport"
-				SecondaryCommandButtonName=""
-				SpecialPowerAIType="SPECIAL_POWER_BUFF_ALLY"
-				SpecialPowerRadius="300"
-				ReinforceDistance="0"
-				SpellMakesAStructure=""
-				SpecificUnit=""
-				UnitKindOf="METAUNIT"
-				AllyUnitInclude="METAUNIT"
-				AllyUnitExclude="INFANTRY"
-				EnemyUnitInclude=""
-				EnemyUnitExclude=""
 				MinimumCutoff="0"
 				UpdateTime="1s"
 				MaxFrequency="0"
