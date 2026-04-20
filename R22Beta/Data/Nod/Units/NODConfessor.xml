@@ -82,6 +82,12 @@
 						WeaponSlotType="PRIMARY_WEAPON"
 						BoneName="B_WEAPONA_FX" />
 				</ModelConditionState>
+			<ModelConditionState
+				ParseCondStateType="PARSE_NORMAL"
+				ConditionsYes="USER_6">
+				<Model
+					Name="W3DContainer:NUCnfsrUpgrd_SKN" />
+			</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="INSIDE_GARRISON">
@@ -355,6 +361,14 @@
 						AnimationName="NU_BlkHnd_ATRA"
 						AnimationMode="LOOP" />
 				</AnimationState>
+              <AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USING_WEAPON_A USER_6"
+					Flags="MAINTAIN_FRAME_ACROSS_STATES">
+					<Animation
+						AnimationName="NUCnfsrUpgrd_ATKC"
+						AnimationMode="LOOP" />
+        </AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USING_WEAPON_A"
@@ -590,6 +604,10 @@
 					<Weapon
 						Ordering="SECONDARY_WEAPON"
 						Template="NODConfessorGrenade" />
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="NODConfessorChargedParticleBeam"
+						ObjectStatus="WEAPON_UPGRADED_01" />
 				</WeaponSlotHardpoint>
 			</WeaponSetUpdate>
 			<Physics
@@ -649,6 +667,12 @@
 				StatusToSet="WEAPON_UPGRADED_01">
 				<TriggeredBy>Upgrade_NodTechCenterChargedParticleBeam</TriggeredBy>
 			</StatusBitsUpgrade>
+			<ModelConditionUpgrade
+				id="ModuleTag_CPBModelCondition"
+				Permanent="true"
+				AddConditionFlags="USER_6">
+				<TriggeredBy>Upgrade_NodTechCenterChargedParticleBeam</TriggeredBy>
+			</ModelConditionUpgrade>
 			<AudioLoopUpgrade id="ChargedParticleBeamUpgrade" SoundToPlay="AudioEvent:NOD_Awakened_ChargedParticleBeamGunAvailable">
 				<TriggeredBy>Upgrade_NodTechCenterChargedParticleBeam</TriggeredBy>
 			</AudioLoopUpgrade>
