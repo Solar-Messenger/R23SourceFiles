@@ -239,6 +239,9 @@
 					<Texture
 						Original="NUBlkHnd"
 						New="NUBlkHnd_UG" />
+					<Texture
+						Original="HC_NUBlkHnd"
+						New="HC_NUBlkHnd_UG" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -1848,12 +1851,37 @@
 						IsPlayerUpgradePermanent="False" />
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="NodBlackhandFlamethrower_Raged"
-						Upgrade="Upgrade_Raged"
+						Template="NODBlackHandUpgradedFlamethrower"
+						Upgrade=""
 						ObjectStatus="WEAPON_UPGRADED_01"
-						IsPlayerUpgradePermanent="False" />				
+						IsPlayerUpgradePermanent="False" />	
 				</WeaponSlotHardpoint>
 			</WeaponSetUpdate>
+			<StatusBitsUpgrade
+				id="E6191BDE"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				StatusToSet="WEAPON_UPGRADED_01"
+				StatusToClear=""
+				ApplyToContained="False">
+				<TriggeredBy>Upgrade_BlackHandSecretShrinePurifyingFlame</TriggeredBy>
+			</StatusBitsUpgrade>
+			<ModelConditionUpgrade
+				id="59B5E0DE"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				AddConditionFlags="USER_6"
+				RemoveConditionFlags=""
+				AddTempConditionFlag="TOPPLED"
+				TempConditionTime="0s">
+				<TriggeredBy>Upgrade_BlackHandSecretShrinePurifyingFlame</TriggeredBy>
+			</ModelConditionUpgrade>
 		</Behaviors>
 		<AI>
 			<AIUpdate
