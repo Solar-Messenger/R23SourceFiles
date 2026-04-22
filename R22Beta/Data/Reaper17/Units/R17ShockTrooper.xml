@@ -20,7 +20,7 @@
 		VoicePriority="132"
 		EditorName="Reaper17ShockTrooper"
 		Description="Desc:Reaper17ShockTrooper"
-		WorldMapArmoryUpgradesAllowed="Upgrade_AlienShockTrooperPlasmaDiskLauncher Upgrade_AlienShockTrooperBlinkPack"
+		WorldMapArmoryUpgradesAllowed="Upgrade_AlienShockTrooperPlasmaDiskLauncher Upgrade_AlienShockTrooperBlinkPack Upgrade_Traveler59AdvancedArticulators"
 		TypeDescription="Type:Reaper17ShockTrooper">
 		<DisplayName>NAME:ALIENShockTrooper</DisplayName>
 		<DisplayUpgrade
@@ -420,7 +420,45 @@
 				</FXShader>
 				<ObjectStatusValidation
 					RequiredStatus="WEAPON_UPGRADED_03" />	
-			</LaserDraw>			
+			</LaserDraw>		
+			<ScriptedModelDraw		
+				id="ModuleTag_DrawSpeedBoostFX_09"
+				AttachToBoneInAnotherModule="B_LEG09">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:FXInvisBone" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT"/>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_3 MOVING">
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="AlienSpeedTrails"
+						FollowBone="true" />
+				</AnimationState>
+			</ScriptedModelDraw>
+			<ScriptedModelDraw		
+				id="ModuleTag_DrawSpeedBoostFX_12"
+				AttachToBoneInAnotherModule="B_LEG12">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:FXInvisBone" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT"/>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_3 MOVING">
+					<ParticleSysBone
+						BoneName="INVISBONE01"
+						FXParticleSystemTemplate="AlienSpeedTrails"
+						FollowBone="true" />
+				</AnimationState>
+			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
 			<AttributeModifierPoolUpdate 
@@ -559,6 +597,19 @@
 			<AudioLoopUpgrade id="ShockTrooperPlasmaDiskLauncherUpgradeSound" SoundToPlay="AudioEvent:ALI_ShockTrooper_PlasmaDiskLauncherUpgrade"> 
 				<TriggeredBy>Upgrade_AlienShockTrooperPlasmaDiskLauncher</TriggeredBy> 
 			</AudioLoopUpgrade> 			
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModTraveler59AdvancedArticulators"
+				AttributeModifier="AttributeModifier_AdvancedArticulators2">
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy>
+			</AttributeModifierUpgrade>			
+			<ModelConditionUpgrade
+				id="ModuleTag_AdvancedArticulatorsFX"
+				AddConditionFlags="USER_3">
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy>
+			</ModelConditionUpgrade>			
+			<AudioLoopUpgrade id="ALI_AdvancedArticulators_Upgrade" SoundToPlay="AudioEvent:ALI_AdvancedArticulators_Upgrade"> 
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy> 
+			</AudioLoopUpgrade> 
 		</Behaviors>
 		<AI>
 			<AIUpdate

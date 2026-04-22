@@ -66,7 +66,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon="ShockTrooperIcon"
 		ReinvisibilityDelay="4s"
-		WorldMapArmoryUpgradesAllowed="Upgrade_AlienShockTrooperPlasmaDiskLauncher Upgrade_AlienShockTrooperBlinkPack"
+		WorldMapArmoryUpgradesAllowed="Upgrade_AlienShockTrooperPlasmaDiskLauncher Upgrade_AlienShockTrooperBlinkPack Upgrade_Traveler59AdvancedArticulators"
 		CaptureTime="0s"
 		BuildCost="800"
 		RefundValue="0"
@@ -732,42 +732,16 @@
 				StartRechargeOnExit="False"
 				GoIdleInStartPreparation="True"
 				FaceTarget="True" />
-			<AISpecialPowerUpdate
-				id="7795C520"
-				CommandButtonName="Asset not found in stream: [D39107AF]"
-				SecondaryCommandButtonName=""
-				SpecialPowerAIType="SPECIAL_POWER_BUFF_ALLY"
-				SpecialPowerRadius="300"
-				ReinforceDistance="0"
-				SpellMakesAStructure=""
-				SpecificUnit=""
-				UnitKindOf="TRANSPORT"
-				AllyUnitInclude="TRANSPORT"
-				AllyUnitExclude="INFANTRY"
-				EnemyUnitInclude=""
-				EnemyUnitExclude=""
-				MinimumCutoff="0"
-				UpdateTime="1s"
-				MaxFrequency="0"
-				RandomizeTargetLocation="False" />
-			<AISpecialPowerUpdate
-				id="F40741AA"
-				CommandButtonName="Asset not found in stream: [D39107AF]"
-				SecondaryCommandButtonName=""
-				SpecialPowerAIType="SPECIAL_POWER_BUFF_ALLY"
-				SpecialPowerRadius="300"
-				ReinforceDistance="0"
-				SpellMakesAStructure=""
-				SpecificUnit=""
-				UnitKindOf="METAUNIT"
-				AllyUnitInclude="METAUNIT"
-				AllyUnitExclude="INFANTRY"
-				EnemyUnitInclude=""
-				EnemyUnitExclude=""
-				MinimumCutoff="0"
-				UpdateTime="1s"
-				MaxFrequency="0"
-				RandomizeTargetLocation="False" />
+			<AttributeModifierUpgrade
+				id="EDB35FB5"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				AttributeModifier="AttributeModifier_AdvancedArticulators2">
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<HordeAIUpdate
