@@ -66,6 +66,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon="RazorDroneIcon"
 		ReinvisibilityDelay="4s"
+		WorldMapArmoryUpgradesAllowed="Upgrade_Traveler59AdvancedArticulators"
 		CaptureTime="0s"
 		BuildCost="300"
 		RefundValue="0"
@@ -452,6 +453,16 @@
 				<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
 				<RankToReleaseWhenAttacking>2</RankToReleaseWhenAttacking>
 			</HordeContain>
+			<AttributeModifierUpgrade
+				id="A921E313"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				AttributeModifier="AttributeModifier_AdvancedArticulators_Disint">
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy>
+			</AttributeModifierUpgrade>
 			<ProductionUpdate
 				id="749674DE"
 				MaxQueueEntries="99"

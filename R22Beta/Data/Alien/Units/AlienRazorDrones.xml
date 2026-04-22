@@ -17,6 +17,7 @@
 		ProductionQueueType="INFANTRY"
 		UnitCategory="INFANTRY"
 		WeaponCategory="CANNON"
+		WorldMapArmoryUpgradesAllowed="Upgrade_Traveler59AdvancedArticulators"
 		VoicePriority="76"
 		EditorName="AlienRazorDrones"
 		Description="Desc:AlienRazorDrones"
@@ -602,6 +603,40 @@
       <TemporarilyDefectUpdate
         id="ModuleTag_TemporarilyDefect"
         DefectionFrameCount="300" />
+			<AttributeModifierUpgrade
+				id="A921E313"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				AttributeModifier="AttributeModifier_AdvancedArticulators_Disint">
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy>
+			</AttributeModifierUpgrade>
+			<ModelConditionUpgrade
+				id="6A992A8D"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				AddConditionFlags="USER_3"
+				RemoveConditionFlags=""
+				AddTempConditionFlag="TOPPLED"
+				TempConditionTime="0s">
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy>
+			</ModelConditionUpgrade>
+			<AudioLoopUpgrade
+				id="CDA6A0B8"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				SoundToPlay="AudioEvent:ALI_AdvancedArticulators_Upgrade"
+				KillAfterMS="0">
+				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy>
+			</AudioLoopUpgrade>
 		</Behaviors>
 		<AI>
 			<AIUpdate
