@@ -66,7 +66,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="7s"
-		WorldMapArmoryUpgradesAllowed="Upgrade_NODEmpBurst"
+		WorldMapArmoryUpgradesAllowed="Upgrade_NODEmpBurst Upgrade_NODTechCenterLaserCapacitor"
 		CaptureTime="0s"
 		BuildCost="500"
 		RefundValue="0"
@@ -1060,6 +1060,18 @@
 				UpdateTime="1s"
 				MaxFrequency="0"
 				RandomizeTargetLocation="False" />
+			<StatusBitsUpgrade
+				id="85B2DF85"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				StatusToSet="WEAPON_UPGRADED_01"
+				StatusToClear=""
+				ApplyToContained="False">
+				<TriggeredBy>Upgrade_NODTechCenterLaserCapacitor</TriggeredBy>
+			</StatusBitsUpgrade>
 			<StatusBitsUpgrade
 				id="1F159A60"
 				RequiresAllTriggers="False"
