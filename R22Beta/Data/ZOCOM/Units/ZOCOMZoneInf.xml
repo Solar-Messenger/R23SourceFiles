@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="us-ascii" ?>
+<?xml version="1.0" encoding="us-ascii" ?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 	
 		<!-- ************************************************************************* ZOCOM  *********************************************************************************** -->
@@ -1663,6 +1663,7 @@
 				id="ModuleTag_UpgradeWeapon"
 				StatusToSet="WEAPON_UPGRADED_01">
 				<TriggeredBy>Upgrade_ZoneRaiderScannerPack</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperScannerPack</TriggeredBy>
 			</StatusBitsUpgrade>				
 			
 			<LaserState
@@ -1936,6 +1937,7 @@
 				HideSubObjectsOnRemove="False"
 				UnHideSubObjectsOnRemove="False">
 				<TriggeredBy>Upgrade_ZoneRaiderScannerPack</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperScannerPack</TriggeredBy>
 			</SubObjectsUpgrade>
 			<StatusBitsUpgrade
 				id="1F159A60"
@@ -1973,6 +1975,7 @@
 				NonStackable="False"
 				RespawnNearbyHordeMembers="False">
 				<TriggeredBy>Upgrade_ZoneRaiderAutoInjectors</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperAutoInjectors</TriggeredBy>
 			</AutoHealBehavior>
 			<SubObjectsUpgrade
 				id="D5931974"
@@ -1989,6 +1992,7 @@
 				HideSubObjectsOnRemove="False"
 				UnHideSubObjectsOnRemove="False">
 				<TriggeredBy>Upgrade_ZoneRaiderAutoInjectors</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperAutoInjectors</TriggeredBy>
 			</SubObjectsUpgrade>
 			<AttributeModifierUpgrade
 				id="2695BE69"
@@ -1999,6 +2003,7 @@
 				WaypointModeTerminal="True"
 				AttributeModifier="ZoneTrooper_AutoInjectors">
 				<TriggeredBy>Upgrade_ZoneRaiderAutoInjectors</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperAutoInjectors</TriggeredBy>
 			</AttributeModifierUpgrade>
 			<CreateAndEnterObjectSpecialPower
 				id="10931FB8"
@@ -2092,6 +2097,7 @@
 				SoundToPlay="AudioEvent:Generic_Infantry_Upgrade"
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_ZoneRaiderScannerPack</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperScannerPack</TriggeredBy>
 			</AudioLoopUpgrade>
 			<AudioLoopUpgrade
 				id="41225284"
@@ -2103,6 +2109,7 @@
 				SoundToPlay="AudioEvent:Generic_Infantry_Upgrade"
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_ZoneRaiderAutoInjectors</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperAutoInjectors</TriggeredBy>
 			</AudioLoopUpgrade>
 		</Behaviors>
 		<AI>
@@ -2651,6 +2658,7 @@
 				id="ModuleTag_UpgradeWeapon"
 				StatusToSet="WEAPON_UPGRADED_01">
 				<TriggeredBy>Upgrade_ZoneRaiderScannerPack</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperScannerPack</TriggeredBy>
 			</StatusBitsUpgrade>							
 			
 			<StealthDetectorUpdate
@@ -3312,6 +3320,7 @@
 				CanDetectWhileContained="False"
 				UseMetaAOI="False">
 				<TriggeredBy>Upgrade_ZoneRaiderScannerPack</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperScannerPack</TriggeredBy>
 			</StealthDetectorUpdate>
 			<AttributeModifierUpgrade
 				id="C0A354E9"
@@ -3322,6 +3331,7 @@
 				WaypointModeTerminal="True"
 				AttributeModifier="ZoneTrooper_ScannerPack">
 				<TriggeredBy>Upgrade_ZoneRaiderScannerPack</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperScannerPack</TriggeredBy>
 			</AttributeModifierUpgrade>
 			<AttributeModifierUpgrade
 				id="2695BE69"
@@ -3332,6 +3342,7 @@
 				WaypointModeTerminal="True"
 				AttributeModifier="ZoneTrooper_AutoInjectors">
 				<TriggeredBy>Upgrade_ZoneRaiderAutoInjectors</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperAutoInjectors</TriggeredBy>
 			</AttributeModifierUpgrade>
 			<CreateAndEnterObjectSpecialPower
 				id="10931FB8"
@@ -3993,6 +4004,7 @@
 				id="ModuleTag_UpgradeWeapon"
 				StatusToSet="WEAPON_UPGRADED_01">
 				<TriggeredBy>Upgrade_ZoneRaiderScannerPack</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperScannerPack</TriggeredBy>
 			</StatusBitsUpgrade>							
 			
 			<StealthDetectorUpdate
@@ -4636,6 +4648,7 @@
 				CanDetectWhileContained="False"
 				UseMetaAOI="False">
 				<TriggeredBy>Upgrade_ZoneRaiderScannerPack</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperScannerPack</TriggeredBy>
 			</StealthDetectorUpdate>
 			<AttributeModifierUpgrade
 				id="C0A354E9"
@@ -4646,6 +4659,7 @@
 				WaypointModeTerminal="True"
 				AttributeModifier="ZoneTrooper_ScannerPack">
 				<TriggeredBy>Upgrade_ZoneRaiderScannerPack</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperScannerPack</TriggeredBy>
 			</AttributeModifierUpgrade>
 			<AttributeModifierUpgrade
 				id="2695BE69"
@@ -4656,6 +4670,7 @@
 				WaypointModeTerminal="True"
 				AttributeModifier="ZoneTrooper_AutoInjectors">
 				<TriggeredBy>Upgrade_ZoneRaiderAutoInjectors</TriggeredBy>
+				<TriggeredBy>Upgrade_ZoneTrooperAutoInjectors</TriggeredBy>
 			</AttributeModifierUpgrade>
 			<CreateAndEnterObjectSpecialPower
 				id="10931FB8"
