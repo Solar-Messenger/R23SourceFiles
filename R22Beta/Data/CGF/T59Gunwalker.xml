@@ -66,7 +66,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="7s"
-		WorldMapArmoryUpgradesAllowed="Upgrade_AlienMinorForcefieldGenerator"
+		WorldMapArmoryUpgradesAllowed="Upgrade_AlienMinorForcefieldGenerator Upgrade_Reaper17MinorForceFieldGenerator"
 		CaptureTime="0s"
 		BuildCost="700"
 		RefundValue="0"
@@ -1313,8 +1313,33 @@
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
 			</StatusBitsUpgrade>
+			<StatusBitsUpgrade
+				id="15A65F15"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				StatusToSet="SHIELDBODY_ENABLED"
+				StatusToClear=""
+				ApplyToContained="False">
+				<TriggeredBy>Upgrade_AlienMinorForcefieldGenerator</TriggeredBy>
+				<TriggeredBy>Upgrade_Reaper17MinorForceFieldGenerator</TriggeredBy>
+			</StatusBitsUpgrade>
 			<ShieldBodyUpdate
 				id="477C6A8E" />
+			<AudioLoopUpgrade
+				id="54D1DE9D"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				SoundToPlay="AudioEvent:ALI_AttenudatedForcefield_Upgrade"
+				KillAfterMS="0">
+				<TriggeredBy>Upgrade_AlienMinorForcefieldGenerator</TriggeredBy>
+				<TriggeredBy>Upgrade_Reaper17MinorForceFieldGenerator</TriggeredBy>
+			</AudioLoopUpgrade>
 		</Behaviors>
 		<AI>
 			<AIUpdate
