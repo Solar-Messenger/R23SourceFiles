@@ -70,6 +70,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="7s"
+		WorldMapArmoryUpgradesAllowed="Upgrade_GDIArmoryRailgunTech"
 		CaptureTime="0s"
 		BuildCost="2000"
 		RefuntValue="0"
@@ -784,6 +785,7 @@
 				id="ModuleTag_RailgunUpgrade"
 				AddConditionFlags="USER_5">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</ModelConditionUpgrade>
 			<TemporarilyDefectUpdate
 				id="3473AFD2"

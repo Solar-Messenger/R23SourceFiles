@@ -69,7 +69,8 @@
 		WeaponCategory="CANNON"
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
-		ReinvisibilityDelay="4s"					
+		ReinvisibilityDelay="4s"	
+		WorldMapArmoryUpgradesAllowed="Upgrade_GDIArmoryRailgunTech"
 		CaptureTime="0s"
 		BuildCost="2000"
 		RefuntValue="0"
@@ -996,8 +997,80 @@
 						LocalPlayerOnly="True" />
 				</ModelConditionState>
 			</ScriptedModelDraw>
+			<LaserDraw
+				id="ModuleTag_LaserDistort01"
+				UseDistortionShader="true"
+				Texture1_UTile="1"
+				Texture1_VTile=".5"
+				Texture1_UScrollRate="0"
+				Texture1_VScrollRate=".2"
+				Texture1_NumFrames="1"
+				Texture1_FrameRate="30"
+				Texture2_UTile="1"
+				Texture2_VTile=".01"
+				Texture2_UScrollRate="0"
+				Texture2_VScrollRate="1"
+				Texture2_NumFrames="1"
+				Texture2_FrameRate="1"
+				LaserWidth="50"
+				WeaponSlotID="1"
+				LaserStateID="0">
+				<FXShader
+					ShaderName="Laser.fx"
+					TechniqueIndex="0">
+					<Constants>
+						<Texture
+							Name="Texture1">
+							<Value>FXRailGunCoreDistortion</Value>
+						</Texture>
+						<Texture
+							Name="Texture2">
+							<Value>FXRailGunCoreMask</Value>
+						</Texture>
+					</Constants>
+				</FXShader>
+			</LaserDraw>
+			<LaserDraw
+				id="ModuleTag_LaserDistort02"
+				UseDistortionShader="true"
+				Texture1_UTile="1"
+				Texture1_VTile=".5"
+				Texture1_UScrollRate="0"
+				Texture1_VScrollRate=".2"
+				Texture1_NumFrames="1"
+				Texture1_FrameRate="30"
+				Texture2_UTile="1"
+				Texture2_VTile=".01"
+				Texture2_UScrollRate="0"
+				Texture2_VScrollRate="1"
+				Texture2_NumFrames="1"
+				Texture2_FrameRate="1"
+				LaserWidth="50"
+				WeaponSlotID="2"
+				LaserStateID="1">
+				<FXShader
+					ShaderName="Laser.fx"
+					TechniqueIndex="0">
+					<Constants>
+						<Texture
+							Name="Texture1">
+							<Value>FXRailGunCoreDistortion</Value>
+						</Texture>
+						<Texture
+							Name="Texture2">
+							<Value>FXRailGunCoreMask</Value>
+						</Texture>
+					</Constants>
+				</FXShader>
+			</LaserDraw>
 		</Draws>
 		<Behaviors>
+			<LaserState
+				id="ModuleTag_LaserState"
+				LaserId="0"></LaserState>
+			<LaserState
+				id="ModuleTag_LaserState2"
+				LaserId="1"></LaserState>
 			<StancesBehavior
 				id="54CA416E"
 				StanceTemplate="Generic" />		
@@ -1035,12 +1108,14 @@
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="GDIBattleBaseCannon" />
-						<!--
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="GDIGolemCannonRailgun"
-						ObjectStatus="WEAPON_UPGRADED_01" />		
--->						
+						ObjectStatus="WEAPON_UPGRADED_01" />	
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="GDIBattleBaseRailgun01_Accelerated"
+						ObjectStatus="WEAPON_UPGRADED_01 RIDERLESS" />
 					<TurretSettings
 						NaturalTurretAngle="90d"
 						TurretTurnRate="200"
@@ -1064,8 +1139,12 @@
 						Template="GDIBattleBaseCannon" />
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="GDIGolemCannonRailgun"
-						ObjectStatus="WEAPON_UPGRADED_01" />						
+						Template="GDIGolemCannonRailgun2"
+						ObjectStatus="WEAPON_UPGRADED_01" />	
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="GDIBattleBaseRailgun01_Accelerated"
+						ObjectStatus="WEAPON_UPGRADED_01 RIDERLESS" />				
 					<TurretSettings
 						NaturalTurretAngle="270d"
 						TurretTurnRate="200"
@@ -1132,7 +1211,7 @@
 					DeathTypes="ALL"
 					DeathTypesForbidden="" />
 			</SlowDeath>
-			<!--
+			
 			<StatusBitsUpgrade
 				id="85B2DF85"
 				RequiresAllTriggers="False"
@@ -1144,6 +1223,7 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</StatusBitsUpgrade>
 			
 			<StatusBitsUpgrade
@@ -1157,13 +1237,15 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</StatusBitsUpgrade>	
 			<SubObjectsUpgrade
 				id="ModuleTag_Upgrade_ShowRailguns"
 				ShowSubObjects="UGRAILMAIN UG_RAILBARREL1 UGRAILMAINR UG_RAILBARREL1R">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</SubObjectsUpgrade>	
--->			
+			
 			<FXListBehavior
 				id="C74C39D8">
 				<DieMuxData

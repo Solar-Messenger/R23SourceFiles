@@ -785,6 +785,7 @@
 				id="ModuleTag_RailgunUpgrade"
 				AddConditionFlags="USER_5">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</ModelConditionUpgrade>
 			<TemporarilyDefectUpdate
 				id="3473AFD2"

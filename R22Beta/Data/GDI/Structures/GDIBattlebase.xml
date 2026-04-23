@@ -69,7 +69,8 @@
 		WeaponCategory="CANNON"
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
-		ReinvisibilityDelay="4s"					
+		ReinvisibilityDelay="4s"	
+		WorldMapArmoryUpgradesAllowed="Upgrade_GDIArmoryRailgunTech"
 		CaptureTime="0s"
 		BuildCost="2000"
 		RefuntValue="0"
@@ -1222,6 +1223,7 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</StatusBitsUpgrade>
 			<StatusBitsUpgrade
 				id="8F5A755C"
@@ -1234,11 +1236,13 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</StatusBitsUpgrade>	
 			<SubObjectsUpgrade
 				id="ModuleTag_Upgrade_ShowRailguns"
 				ShowSubObjects="UGRAILMAIN UG_RAILBARREL1 UGRAILMAINR UG_RAILBARREL1R">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</SubObjectsUpgrade>			
 			<FXListBehavior
 				id="C74C39D8">
