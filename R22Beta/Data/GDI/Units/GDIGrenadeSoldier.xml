@@ -70,7 +70,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="4s"
-		WorldMapArmoryUpgradesAllowed="Upgrade_GDICompositeArmor Upgrade_EMPGrenades"
+		WorldMapArmoryUpgradesAllowed="Upgrade_GDICompositeArmor Upgrade_EMPGrenades Upgrade_SteelTalonsEMPGrenades"
 		CaptureTime="0s"
 		BuildCost="200"
 		RefundValue="0"
@@ -1745,7 +1745,7 @@
 				Fade="False">
 				<Sound
 					Type="INITIAL"
-					List="Multisound:GDI_Generic_VoiceDieMS" />
+					List="GDI_Generic_VoiceDieMS" />
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""
@@ -1897,6 +1897,7 @@
 				KillAfterMS="0"
 				KillOnDeath="False">
 				<TriggeredBy>Upgrade_EMPGrenades</TriggeredBy>
+				<TriggeredBy>Upgrade_SteelTalonsEMPGrenades</TriggeredBy>
 			</AudioLoopUpgrade>
 			<UnpauseSpecialPowerUpgrade
 				id="484F8EEF"
@@ -1908,6 +1909,7 @@
 				SpecialPowerTemplate="SpecialPower_FireEMPGrenades"
 				ObeyRechageOnTrigger="False">
 				<TriggeredBy>Upgrade_EMPGrenades</TriggeredBy>
+				<TriggeredBy>Upgrade_SteelTalonsEMPGrenades</TriggeredBy>
 			</UnpauseSpecialPowerUpgrade>
 			<SpecialPower
 				id="17801DAC"
@@ -2046,6 +2048,7 @@
 				HideSubObjectsOnRemove="False"
 				UnHideSubObjectsOnRemove="False">
 				<TriggeredBy>Upgrade_EMPGrenades</TriggeredBy>
+				<TriggeredBy>Upgrade_SteelTalonsEMPGrenades</TriggeredBy>
 			</SubObjectsUpgrade>
 		</Behaviors>
 		<AI>

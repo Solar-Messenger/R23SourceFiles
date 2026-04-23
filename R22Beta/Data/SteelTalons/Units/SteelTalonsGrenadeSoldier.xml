@@ -66,7 +66,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="4s"
-		WorldMapArmoryUpgradesAllowed="Upgrade_SteelTalonsEMPGrenades"
+		WorldMapArmoryUpgradesAllowed="Upgrade_SteelTalonsEMPGrenades Upgrade_EMPGrenades Upgrade_GDICompositeArmor"
 		CaptureTime="0s"
 		BuildCost="200"
 		RefundValue="0"
@@ -1530,6 +1530,31 @@
 				id="D2E9F553"
 				AttributeModifierInCover="Modifier_Cover"
 				CoverScanRange="10" />
+			<ModelConditionUpgrade
+				id="0A3E1C26"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="True"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				AddConditionFlags="UPGRADED_ARMOR"
+				RemoveConditionFlags=""
+				AddTempConditionFlag="TOPPLED"
+				TempConditionTime="0s">
+				<TriggeredBy>Upgrade_GDICompositeArmor</TriggeredBy>
+			</ModelConditionUpgrade>
+			<ArmorUpgrade
+				id="B93BD0C3"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="True"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				ArmorSetFlag="PLAYER_UPGRADE"
+				KillArmorUpgrade="False"
+				IgnoreArmorUpgrade="False">
+				<TriggeredBy>Upgrade_GDICompositeArmor</TriggeredBy>
+			</ArmorUpgrade>
 			<CreateAndEnterObjectSpecialPower
 				id="10931FB8"
 				SpecialPowerTemplate="SpecialPowerCallForTransportGDI"
@@ -1613,6 +1638,18 @@
 				<Key>9FD1334F</Key>
 			</LargeGroupAudioUpdate>
 			<AudioLoopUpgrade
+				id="0B7AB45B"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				SoundToPlay="AudioEvent:Generic_Infantry_Upgrade"
+				KillAfterMS="0"
+				KillOnDeath="False">
+				<TriggeredBy>Upgrade_GDICompositeArmor</TriggeredBy>
+			</AudioLoopUpgrade>
+			<AudioLoopUpgrade
 				id="8678E95E"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
@@ -1623,6 +1660,7 @@
 				KillAfterMS="0"
 				KillOnDeath="False">
 				<TriggeredBy>Upgrade_SteelTalonsEMPGrenades</TriggeredBy>
+				<TriggeredBy>Upgrade_EMPGrenades</TriggeredBy>
 			</AudioLoopUpgrade>
 			<UnpauseSpecialPowerUpgrade
 				id="484F8EEF"
@@ -1634,6 +1672,7 @@
 				SpecialPowerTemplate="SpecialPower_FireSTEMPGrenades"
 				ObeyRechageOnTrigger="False">
 				<TriggeredBy>Upgrade_SteelTalonsEMPGrenades</TriggeredBy>
+				<TriggeredBy>Upgrade_EMPGrenades</TriggeredBy>
 			</UnpauseSpecialPowerUpgrade>
 			<SpecialPower
 				id="17801DAC"
@@ -1772,6 +1811,7 @@
 				HideSubObjectsOnRemove="False"
 				UnHideSubObjectsOnRemove="False">
 				<TriggeredBy>Upgrade_SteelTalonsEMPGrenades</TriggeredBy>
+				<TriggeredBy>Upgrade_EMPGrenades</TriggeredBy>
 			</SubObjectsUpgrade>
 		</Behaviors>
 		<AI>

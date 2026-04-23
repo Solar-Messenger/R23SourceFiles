@@ -66,7 +66,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon="GrenadierIcon"
 		ReinvisibilityDelay="4s"
-		WorldMapArmoryUpgradesAllowed="Upgrade_GDICompositeArmor Upgrade_EMPGrenades"
+		WorldMapArmoryUpgradesAllowed="Upgrade_GDICompositeArmor Upgrade_EMPGrenades Upgrade_SteelTalonsEMPGrenades"
 		CaptureTime="0s"
 		BuildCost="800"
 		RefundValue="0"
@@ -678,6 +678,7 @@
 				SpecialPowerTemplate="EMPGrenadesGetInRange"
 				ObeyRechageOnTrigger="False">
 				<TriggeredBy>Upgrade_EMPGrenades</TriggeredBy>
+				<TriggeredBy>Upgrade_SteelTalonsEMPGrenades</TriggeredBy>
 			</UnpauseSpecialPowerUpgrade>
 			<SpecialPower
 				id="69178F7E"
