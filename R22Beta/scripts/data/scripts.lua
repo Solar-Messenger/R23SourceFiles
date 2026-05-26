@@ -99,9 +99,10 @@ function ClearGroup(playerTeam, groupId)
 	if groupId == nil or not isValidTeam(playerTeam) then return false end
 
 	local teamTable = getglobal(playerTeam)
-	if type(teamTable) ~= "table" then return false end
+	if type(teamTable) ~= "table" or type(teamTable.groups) ~= "table" then return false end
 
 	clearSubTables(teamTable.groups[groupId])
+	teamTable.groups[groupId] = nil
 	return true
 end
 
@@ -1775,26 +1776,20 @@ function FixBuggingUnit(self, applySpeedBuff)
 		return 
 	end
 
-	-- check if unitAnchor is destroyed or is nil
-	if unitReversing.unitAnchor ~= nil then
-		if unitsReversing[unitReversing.unitAnchor] ~= nil and not EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitReversing.unitAnchor].stringReference) then 
-			--unitReversing.unitAnchor = GetANonBuggingUnit(selectedUnitList, self)
-			SetUnitAnchor(self, GetANonBuggingUnit(selectedUnitList, self))
-		end
-	else
+	-- check if unitAnchor is missing, stale, or destroyed before applying the fix
+	local anchorUnit = unitReversing.unitAnchor ~= nil and unitsReversing[unitReversing.unitAnchor] or nil
+	if anchorUnit == nil or not EvaluateCondition("NAMED_NOT_DESTROYED", anchorUnit.stringReference) then
 		SetUnitAnchor(self, GetANonBuggingUnit(selectedUnitList, self))
-		 --unitReversing.unitAnchor = GetANonBuggingUnit(selectedUnitList, self)
-		 --WriteToFile("GetANonBuggingUnit.txt",  "closest unit:  " .. tostring(unitReversing.unitAnchor) .. "\n")
-		 -- there are no units that arent bugging so lets just stop this one and return the function
-		 if unitReversing.unitAnchor == nil then
-			-- ExecuteAction("NAMED_STOP", self)
-			-- ExecuteAction("NAMED_FLASH_WHITE", unitReversing.selfReference, 2)
-			return 
-		end
+		anchorUnit = unitReversing.unitAnchor ~= nil and unitsReversing[unitReversing.unitAnchor] or nil
+	end
+
+	if anchorUnit == nil then
+		-- ExecuteAction("NAMED_STOP", self)
+		-- ExecuteAction("NAMED_FLASH_WHITE", unitReversing.selfReference, 2)
+		return 
 	end
 
 	--WriteToFile("closeunit.txt",  "closest unit:  " .. tostring(unitReversing.unitAnchor) .. "\n")
-	local anchorUnit = unitsReversing[unitReversing.unitAnchor]
 	if unitReversing.unitAnchor ~= nil and anchorUnit ~= nil then
 		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.stringReference, anchorUnit.stringReference)	
 		unitReversing.hasBeenFixed = true
