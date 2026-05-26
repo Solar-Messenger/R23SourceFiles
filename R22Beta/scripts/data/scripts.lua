@@ -2103,8 +2103,6 @@ function CheckExistingGroups(unitReversing, group)
 			if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].groupId == groupId and EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].stringReference) then
 				unitsReversing[unitRef].groupId = nil
 				unitsReversing[unitRef].groupIdAssigned = false
-				unitsReversing[unitRef].expectedChecksFlag = false
-				unitsReversing[unitRef].hasBeenCounted = false
 				unitsReversing[unitRef].timesTriggeredFast = 0
 				unitsReversing[unitRef].timesTriggeredNormal = 0
 				--unitsReversing[unitRef].firstFrame = 0
