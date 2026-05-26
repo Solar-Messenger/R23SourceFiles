@@ -2292,13 +2292,11 @@ function BackingUpEnd(self)
 	unitReversing.timesTriggeredNormal = 0
 	unitReversing.fastTurnWas0Frames = false
 
+	local groupId = unitReversing.groupId
+	local playerTeam = tostring(ObjectTeamName(self))
 	-- necessary if units stop 
 	SuddenStopCheck(self)
-	
-	local playerTeam = tostring(ObjectTeamName(self))
-
-	local group = GetGroup(playerTeam, unitReversing.groupId) 
-	CheckExistingGroups(unitReversing, group)
+	CheckExistingGroups(unitReversing, GetGroup(playerTeam, groupId))
 end
 
 -- USER_72 has ended, remove NO_COLLISIONS and speed buff if this unit has it.
