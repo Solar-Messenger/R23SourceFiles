@@ -1164,7 +1164,6 @@ function GetUnitReversingData(self)
 			fastTurnWas0Frames = false,
 			hasComeToAStop = false, 
 			unitAnchor = nil, -- is the object id of the the unit to follow in case of bugging
-			bugFrameDiff = 0,
 			hasBeenSelected = false,
 			expectedChecksFlag = false,
 			groupIdAssigned = false,
@@ -1198,7 +1197,7 @@ end
 
 -- returns the size of a a key/value pair table
 function getTableSize(t)
-	if t == nil then return end
+	if t == nil then return 0 end
 	local size = 0
 	for k, _ in t do
 		if k ~= nil then 
@@ -1416,7 +1415,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 		isBugging = true
 	end
 
-    --if isBugging then ExecuteAction("NAMED_FLASH_WHITE", self, 2) end
+    if isBugging then ExecuteAction("NAMED_FLASH_WHITE", self, 2) end
 	if not unitReversing.hasBeenCounted then
 		group.checksDone = group.checksDone + 1
 		unitReversing.hasBeenCounted = true
@@ -1425,20 +1424,8 @@ function CheckForObjReverseBugging(self, frameDiff)
 	-- First determine if this unit is bugging and add it to the list, dont fix units that are being already fixed
 	if isBugging then
 		-- cache the units if they are to be fixed in this table
-		unitReversing.bugFrameDiff = frameDiff
 		--ExecuteAction("NAMED_FLASH", self, 2)
-		-- verify the unit doesnt already exist in the table to prevent duplicate entries
-		local alreadyExists = false
-		for _, v in unitsToFixForType[selfObjName] do
-			if v == a then
-				alreadyExists = true
-				break
-			end
-		end
-		if not alreadyExists then
-			tinsert(unitsToFixForType[selfObjName], a)
-			--ExecuteAction("NAMED_FLASH", self, 2)
-		end
+		unitsToFixForType[selfObjName][a] = unitsToFixForType[selfObjName][a] or a
 	end
 
 	-- WriteToFile("checksDoneInt.txt",  tostring(checksDone) .. " num of units bugging: " .. tostring(getn(unitsToFixForType)) "\n")
@@ -1451,19 +1438,6 @@ function CheckForObjReverseBugging(self, frameDiff)
 			--WriteToFile("checksDone.txt", "checks done: " .. tostring(group.checksDone) .. " expected checks: " .. tostring(selectedCount * CHECKS_DONE_THRESHOLD) .. "\n")
 			-- fix units that havent backedUp
 
-			--if group.checksDone >= selectedCount-1 then 
-			--	for _, unitRef in selectedUnitList do
-       		--		local unit = unitsReversing[unitRef]
-					-- make it so units that have never moved are affected
-        	--		if unit ~= nil and not unit.hasBeenFixed and not unit.isReverseMoving and EvaluateCondition("NAMED_NOT_DESTROYED", unit.stringReference) 
-			--		and (ObjectTestModelCondition(unit.selfReference, "MOVING") == false) then
-						--ExecuteAction("NAMED_FLASH_WHITE", unit.selfReference, 2)
-						-- maybe for each unit that starts to move in the group check if any single unit isnt moving
-                		--FixBuggingUnit(unit.selfReference, false)
-        	--		end
- 			--	 end
-			--end
-
 			-- if number of units bugging is less than the count * BUG_THRESHOLD_SMALL_GROUP
 			-- if more than LARGE_GROUP_SIZE units are selected, make the detection more forgiving
 
@@ -1473,9 +1447,10 @@ function CheckForObjReverseBugging(self, frameDiff)
 			local totalBuggingPerType = {}
 
 			-- value of totalBuggingPerType is the object id, key is object name (ej: NodScorpionBuggy)
-			for unitType, unitID in unitsToFixForType do 
-				totalBuggingPerType[unitType] = getn(unitID) 
-				totalBugging = totalBugging + getn(unitID) 
+			 for unitType, unitTable in unitsToFixForType do
+				local tableSize = getTableSize(unitTable) or 0
+				totalBuggingPerType[unitType] = tableSize
+				totalBugging = totalBugging + tableSize
 			end
 			--ExecuteAction("SHOW_MILITARY_CAPTION", tostring(totalBugging), 2)	
 			if totalBugging <= maxBugging then
@@ -1586,36 +1561,29 @@ function CheckForObjReverseBugging(self, frameDiff)
 		-- Apply fixes if threshold was met
 		-- fixUnits alone triggers the fix so that a non-bugging unit that pushes
 		-- checksDone over the threshold can still fix earlier-detected bugging units
-		if fixUnits then
+		 if fixUnits then
 			local totalToFix = 0
-			for _, unitType in group.unitsToFixByType do totalToFix = totalToFix + getn(unitType) end
+
+			for unitType, unitsOfType in group.unitsToFixByType do
+				if not group.fixCancelledByType[unitType] then
+					totalToFix = totalToFix + getTableSize(unitsOfType)
+				end
+			end
+
 			if totalToFix > 0 then
 				--WriteToFile("fixUnits.txt", "fixing " .. tostring(totalToFix) .. " units\n\n\n" .. "------------------------------------------------")
-				for k, unitType in group.unitsToFixByType do
-					if not group.fixCancelledByType[k] then
-						for i = getn(unitType), 1, -1 do
-							local buggingUnit = unitsReversing[unitType[i]]
+				for unitType, unitsOfType in group.unitsToFixByType do
+					if not group.fixCancelledByType[unitType] then
+						for unitId,_ in unitsOfType do
+							local buggingUnit = unitsReversing[unitId]
 							if buggingUnit ~= nil then
-								local buggingRef = buggingUnit.selfReference
-								--ExecuteAction("NAMED_FLASH_WHITE", buggingRef, 2)
-								FixBuggingUnit(buggingRef, true)
-							else
-								if unitType[i] ~= nil then
-									tremove(unitType, i)
-								end
+								FixBuggingUnit(buggingUnit.selfReference, true)
+								group.unitsToFixByType[unitType][unitId] = nil
 							end
 						end
 					end
 				end
-			elseif isBugging then
-				--ExecuteAction("NAMED_FLASH", self, 2)
-				FixBuggingUnit(self, true)
 			end
-		elseif isBugging and group.checksDone >= floor(group.expectedChecks*CHECKS_DONE_THRESHOLD) then
-			if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.stringReference, 4) then
-				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 4, 0)
-			end
-			--unitReversing.hasBeenFixed = false
 		end
 	end
 end
