@@ -2239,7 +2239,13 @@ function CancelProduction(self)
 	ObjectCreateAndFireTempWeapon(self, "KillUnitsComingOut")
 end
 
+function onCreatedCrystalShieldDummy(self)
+	ObjectDoSpecialPower(self, "SpecialPower_GrantPackUpgrade")	
+end
 
+function onCreatedCrystalShield(self)
+	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_1", 1, 100)
+end
 
 function OnGDIWatchTowerCreated(self)
 	ObjectHideSubObjectPermanently( self, "MuzzleFlash_01", true )

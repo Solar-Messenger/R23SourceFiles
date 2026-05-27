@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<ObjectCreationList
+		id="OCL_AlienCrystalShieldDummy">
+		<CreateObject
+			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND"
+			Options="IGNORE_ALL_OBJECTS DO_NOT_TREAT_AS_STRUCTURE">
+			<CreateObject>AlienCrystalShieldDummy</CreateObject>
+		</CreateObject>
+	</ObjectCreationList>
+
+	<ObjectCreationList
+		id="OCL_AlienCrystalShield">
+		<CreateObject
+			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND"
+			Options="IGNORE_ALL_OBJECTS"
+			TempModelCondition="USER_1"
+			TempModelConditionTime="1s">
+			<CreateObject>AlienCrystalShield</CreateObject>
+		</CreateObject>
+	</ObjectCreationList>
+
 	<!-- husk ocl's (change Disposition to RELATIVE_ANGLE) -->
 
 	<ObjectCreationList

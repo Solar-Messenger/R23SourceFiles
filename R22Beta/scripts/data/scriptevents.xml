@@ -1570,6 +1570,15 @@
         <EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnHarvDestroyed_103" DebugSingleStep="false"/>		
     </EventList>
     
+
+	<EventList Name="CrystalShieldDummyFunctions" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="onCreatedCrystalShieldDummy" DebugSingleStep="false"/>
+    </EventList>
+
+	<EventList Name="CrystalShieldFunctions" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="onCreatedCrystalShield" DebugSingleStep="false"/>
+    </EventList>
+
     <EventList Name="GDIOrcaAirstrikeEventsList" Inherit="GDIAirstrikeOrcaWeapon">
 		<EventHandler EventName="OnCreated" ScriptFunctionName="onCreatedGDIOrcaAirstrike" DebugSingleStep="false"/>
     </EventList>
