@@ -1210,7 +1210,6 @@ end
 function UnitIsMoving(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil then return end
-
 	unitReversing.hasComeToAStop = false
 end
 
@@ -1346,7 +1345,7 @@ end
 function UnitNoLongerMoving(self)
 	--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 	local unitId,unitReversing = GetUnitReversingData(self)
-	if unitReversing == nil then return end
+	if unitReversing == nil then return end	
 	if not unitReversing.wasAttackingBeforeReverse then
 		unitReversing.hasComeToAStop = true
 		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
@@ -1355,6 +1354,9 @@ function UnitNoLongerMoving(self)
 		--unitReversing.hasComeToAStop = false
 		--ExecuteAction("NAMED_FLASH", self, 2)
 	end
+	
+	-- trick to get units to reverse move with UNIT_GUARD_OBJECT (causes units to reverse when force firing, force attacking)
+	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 48, 1)
 
 	-- unitAnchor corresponds with objectId
 	--if unitReversing.unitAnchor ~= nil then
@@ -1415,7 +1417,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 		isBugging = true
 	end
 
-    if isBugging then ExecuteAction("NAMED_FLASH_WHITE", self, 2) end
+    --if isBugging then ExecuteAction("NAMED_FLASH_WHITE", self, 2) end
 	if not unitReversing.hasBeenCounted then
 		group.checksDone = group.checksDone + 1
 		unitReversing.hasBeenCounted = true
@@ -1495,20 +1497,20 @@ function CheckForObjReverseBugging(self, frameDiff)
 					local unitBugDataType = unitBugDataTable[objName]
 					bugDuration = unitBugDataType.frameCount
 
-					local thirdTurnFrameCountForType = (group.thirdTurnFrameCountByType and group.thirdTurnFrameCountByType [objName]) or {}
-					local thirdTurnUnitCountForType = 0
-					thirdTurnFrameCountForType, thirdTurnUnitCountForType = currentTurnData(thirdTurnFrameCountForType)
-					if thirdTurnUnitCountForType > 1 then
-						local avgThirdTurnCount = floor((thirdTurnFrameCountForType + thirdTurnUnitCountForType - 1) / thirdTurnUnitCountForType) 
+					--local thirdTurnFrameCountForType = (group.thirdTurnFrameCountByType and group.thirdTurnFrameCountByType [objName]) or {}
+					--local thirdTurnUnitCountForType = 0
+					--thirdTurnFrameCountForType, thirdTurnUnitCountForType = currentTurnData(thirdTurnFrameCountForType)
+					--if thirdTurnUnitCountForType > 1 then
+					--	local avgThirdTurnCount = floor((thirdTurnFrameCountForType + thirdTurnUnitCountForType - 1) / thirdTurnUnitCountForType) 
 						--WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
 						--WriteToFile("objTable2.txt",  "thirdTurnFrameCountForType: " .. tostring(thirdTurnFrameCountForType) .. " thirdTurnUnitCountForType: " .. tostring(thirdTurnUnitCountForType) .. "\n")
-						if avgThirdTurnCount >= bugDuration-unitBugDataType.avgTurnCountOffset-1 then
-							group.fixCancelledByType = group.fixCancelledByType or {}
-							group.fixCancelledByType[objName] = true
+					--	if avgThirdTurnCount >= bugDuration-unitBugDataType.avgTurnCountOffset-1 then
+					--		group.fixCancelledByType = group.fixCancelledByType or {}
+					--		group.fixCancelledByType[objName] = true
 							--print("avgThirdTurnCount false positive filter")
 							-- ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-						end
-					end
+					--	end
+					--end
 				
 					-- WriteToFile("objTable.txt",  tostring(getTableSize(objTable)) .. "\n")
 					-- per-type counts for avg third turn cancellation
@@ -1755,7 +1757,10 @@ function FixBuggingUnit(self, applySpeedBuff)
 
 	--WriteToFile("closeunit.txt",  "closest unit:  " .. tostring(unitReversing.unitAnchor) .. "\n")
 	if unitReversing.unitAnchor ~= nil and anchorUnit ~= nil then
-		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.stringReference, anchorUnit.stringReference)	
+		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.stringReference, anchorUnit.stringReference)
+		-- trick to get units to reverse move with UNIT_GUARD_OBJECT (causes units to reverse when force firing, force attacking)
+		-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 48, 1)
+		-- trick to get units to reverse move with UNIT_GUARD_OBJECT
 		unitReversing.hasBeenFixed = true
 		-- add this units objectid to the unitsFollowingMe array of the anchor unit
 		-- anchorUnit.unitsFollowingMe[a] = a
@@ -1801,9 +1806,10 @@ function FixBuggingUnit(self, applySpeedBuff)
 					SetUnitAnchor(unitsReversing[unitRef].selfReference, nonBuggingUnit)
 					-- move this unit to the previously assigned non bugging unit
 					if unitsReversing[unitRef].hasBeenFixed and EvaluateCondition("UNIT_HAS_UPGRADE",unitsReversing[unitRef].stringReference, "Upgrade_ReverseMoveSpeedBuff") and ObjectTestModelCondition(unitsReversing[unitRef].selfReference, "USER_72") then
-						--print("assigning to different unit")
 						local newAnchorUnit = unitsReversing[nonBuggingUnit]
 						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].stringReference, newAnchorUnit.stringReference)
+						-- trick to get units to reverse move with UNIT_GUARD_OBJECT (causes units to reverse when force firing, force attacking)
+						-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[unitRef].stringReference, 48, 1)	
 						-- add this units objectid to the unitsFollowingMe array of the anchor unit
 						-- newAnchorUnit.unitsFollowingMe[unitRef] = unitRef
 						--newAnchorUnit.isBeingFollowed = true
