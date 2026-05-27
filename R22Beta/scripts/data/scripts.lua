@@ -1966,7 +1966,7 @@ function RemoveFromUnitSelection(self)
     end
 end
 
-function CheckExistingGroups(unitReversing, group)
+function CheckExistingGroups(unitReversing, group, groupId)
 	if group == nil or unitReversing == nil then return false end
 	local reverseUnitList = {}
 	if group ~= nil and group.reverseUnits ~= nil then
@@ -1980,7 +1980,6 @@ function CheckExistingGroups(unitReversing, group)
 
 	--if checksDone == unitReversing.groupId.selectedCount-1 then
 	local clearList = true
-	local groupId  = unitReversing.groupId
 
 	-- units that are reverse moving
 	local liveReverseCount = 0
@@ -2069,7 +2068,7 @@ function GroupUnitOnDeath(self)
 				end
 			end
 			-- check if theres no units left in the group and if so , clear the global.
-			local groupWasCleared = CheckExistingGroups(unitReversing, group)
+			local groupWasCleared = CheckExistingGroups(unitReversing, group, groupId)
 			if not groupWasCleared and IsGroupEmpty(group) then
 				--unitGroups[groupId] = nil
 				ClearGroup(playerTeam, groupId)
@@ -2202,7 +2201,7 @@ function BackingUpEnd(self)
 	local playerTeam = tostring(ObjectTeamName(self))
 	-- necessary if units stop 
 	SuddenStopCheck(self)
-	CheckExistingGroups(unitReversing, GetGroup(playerTeam, groupId))
+	CheckExistingGroups(unitReversing, GetGroup(playerTeam, groupId), groupId)
 end
 
 -- USER_72 has ended, remove NO_COLLISIONS and speed buff if this unit has it.
