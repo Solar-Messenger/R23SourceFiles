@@ -96,14 +96,13 @@ function clearSubTables(t, seen)
 end
 
 function ClearGroup(playerTeam, groupId)
-	if groupId == nil or not isValidTeam(playerTeam) then return false end
+	if groupId == nil or not isValidTeam(playerTeam) then return end
 
 	local teamTable = getglobal(playerTeam)
-	if type(teamTable) ~= "table" or type(teamTable.groups) ~= "table" then return false end
+	if type(teamTable) ~= "table" or type(teamTable.groups) ~= "table" then return end
 
 	clearSubTables(teamTable.groups[groupId])
 	teamTable.groups[groupId] = nil
-	return true
 end
 
 function GetGroup(playerTeam, groupId)
