@@ -162,7 +162,7 @@ unitsReversing = {}
 TURN_TRIGGER_COUNT = 2 -- number of turn triggers before checking if unit is bugging
 NO_COLLISION_DURATION = 4 -- seconds to disable collision on a bugged unit during fix
 REVERSE_SPAM_FRAME_WINDOW = 1 -- frames within which a repeat reverse-move command is ignored
-CHECKS_DONE_THRESHOLD = 0.90 -- ratio of units that must finish checking before fix decision
+CHECKS_DONE_THRESHOLD = 0.80 -- ratio of units that must finish checking before fix decision
 BUG_THRESHOLD_LARGE_GROUP = 0.35 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
 BUG_THRESHOLD_SMALL_GROUP = 0.70 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
@@ -223,9 +223,9 @@ unitBugDataTable = {
 	["7A639A9A"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Black Hand Specter
 
 	-- SCRIN UNITS --
-	["B8802763"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.45 }, -- Scrin Seeker
-	["DB2B7D2F"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.45 }, -- Reaper-17 Seeker
-	["7296891C"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.45 }, -- Traveler-59 Seeker
+	["B8802763"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Scrin Seeker
+	["DB2B7D2F"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Reaper-17 Seeker
+	["7296891C"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Traveler-59 Seeker
 
 	["AF991372"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.45 }, -- Scrin Devourer Tank
 	["416EFDFF"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.45 }, -- Reaper-17 Devourer Tank
@@ -1340,18 +1340,6 @@ function UnitNoLongerMoving(self)
 	
 	-- trick to get units to reverse move with UNIT_GUARD_OBJECT (causes units to reverse when force firing, force attacking)
 	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 48, 1)
-
-	-- unitAnchor corresponds with objectId
-	--if unitReversing.unitAnchor ~= nil then
-		-- unit im anchored to
-	--	local unitImFollowing = unitsReversing[unitReversing.unitAnchor]
-	--	if unitImFollowing ~= nil and unitImFollowing.beingFollowedBy[unitId] then
-			-- check if beingFollowedBy table if its empty and then assign isBeingFollowed to false if so, else remove this unit from its subtable
-			--unitImFollowing.isBeingFollowed = false
-	--		ExecuteAction("NAMED_FLASH_WHITE", unitImFollowing.selfReference, 2)
-	--		unitImFollowing.beingFollowedBy[unitId] = nil
-	--	end
-	--end
 end
 
 function CheckForObjReverseBugging(self, frameDiff)
@@ -1592,8 +1580,6 @@ function BackingUpFastTurnEnd(self)
 			end
 			-- clear this to prevent desync
 			group.firstTurnFrameCountByType[objName][unitId] = frameDiff
-			--group.firstTurnFrameCountByType[objName] = (group.firstTurnFrameCountByType[objName] or 0) + frameDiff
-			--group.firstTurnUnitCountByType[objName] = (group.firstTurnUnitCountByType[objName] or 0) + 1
 		end
 		CheckForObjReverseBugging(self, frameDiff)
 	end
@@ -1610,8 +1596,6 @@ function BackingUpFastTurnEnd(self)
 			end
 			-- clear this to prevent desync
 			group.thirdTurnFrameCountByType[objName][unitId] = frameDiff
-			--group.thirdTurnFrameCountByType[objName] = (group.thirdTurnFrameCountByType[objName] or 0) + frameDiff
-			--group.thirdTurnUnitCountByType[objName] = (group.thirdTurnUnitCountByType[objName] or 0) + 1
 		end		
 	end
 
@@ -1700,11 +1684,8 @@ function FixBuggingUnit(self, applySpeedBuff)
 		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.stringReference, anchorUnit.stringReference)
 		-- trick to get units to reverse move with UNIT_GUARD_OBJECT (causes units to reverse when force firing, force attacking)
 		-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 48, 1)
-		-- trick to get units to reverse move with UNIT_GUARD_OBJECT
 		unitReversing.hasBeenFixed = true
 		-- add this units objectid to the unitsFollowingMe array of the anchor unit
-		-- anchorUnit.unitsFollowingMe[a] = a
-		--anchorUnit.isBeingFollowed = true
 		anchorUnit.beingFollowedBy[a] = a
 		-- remove from first,turn average calculation 
 		local objName = getObjectName(self)
@@ -1750,9 +1731,6 @@ function FixBuggingUnit(self, applySpeedBuff)
 						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].stringReference, newAnchorUnit.stringReference)
 						-- trick to get units to reverse move with UNIT_GUARD_OBJECT (causes units to reverse when force firing, force attacking)
 						-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[unitRef].stringReference, 48, 1)	
-						-- add this units objectid to the unitsFollowingMe array of the anchor unit
-						-- newAnchorUnit.unitsFollowingMe[unitRef] = unitRef
-						--newAnchorUnit.isBeingFollowed = true
 						newAnchorUnit.beingFollowedBy[unitRef] = unitRef
 					end
 				end
@@ -1918,8 +1896,6 @@ function AddToUnitSelection(self)
 					teamTable.reverseUnits[unitId] = unitId
 					teamTable.reverseUnitCount = getTableSize(teamTable.reverseUnits)
 					--store a table of current selected unit types
-					--if teamTable.reverseUnitsByType[objName] == nil then
-					--teamTable.reverseUnitsByType[objName] = (teamTable.reverseUnitsByType[objName] or 0) + 1 
 					if teamTable.reverseUnitsByType[objName] == nil then
 						teamTable.reverseUnitsByType[objName] = {}
 						--getGlobals()
