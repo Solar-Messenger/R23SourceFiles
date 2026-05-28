@@ -615,7 +615,6 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
-				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
 			</StatusBitsUpgrade>
 			<StatusBitsUpgrade
 				id="A801B574"
@@ -627,7 +626,6 @@
 				StatusToSet="RIDER2"
 				StatusToClear=""
 				ApplyToContained="False">
-				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
 			</StatusBitsUpgrade>
 			<ModelConditionUpgrade

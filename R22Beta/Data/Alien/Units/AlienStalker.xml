@@ -355,10 +355,10 @@
 				<Weapon
 					Ordering="PRIMARY_WEAPON"
 					Template="AlienStalkerShardWeapon" />
-				<Weapon
+				<!--<Weapon
 					Ordering="PRIMARY_WEAPON"
 					Template="AlienStalkerBlueShardWeapon"
-					ObjectStatus="WEAPON_UPGRADED_01" />
+					ObjectStatus="WEAPON_UPGRADED_01" />-->
 				</WeaponSlotHardpoint>
 			</WeaponSetUpdate>
 			<Physics
