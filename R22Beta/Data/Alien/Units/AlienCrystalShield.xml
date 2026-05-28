@@ -83,6 +83,12 @@
 				MinLifetime="20s"
 				MaxLifetime="20s" />
 		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="ModuleTag_SoWeCanUseWeapon"
+				AutoAcquireEnemiesWhenIdle="NO"
+				AILuaEventsList="CrystalShieldFunctions" />
+		</AI>
 		<Body>
 			<ActiveBody
 				id="ModuleTag_Body"

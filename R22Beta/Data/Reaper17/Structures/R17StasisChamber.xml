@@ -562,7 +562,7 @@
 				AdjustVictim="False"
 				UseDistanceFromCommandCenter="False"
 				ChildModuleHandlesFX="False"
-				OCL="OCL_AlienCrystalShield"
+				OCL="OCL_AlienCrystalShieldDummy"
 				CreateLocation="CREATE_AT_LOCATION"
 				MaxCreateCount="0"
 				NumberToSpawn="1"

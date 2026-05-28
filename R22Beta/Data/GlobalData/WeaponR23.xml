@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<WeaponTemplate
+		id="TiberiumHiveWeapon"
+		Name="TiberiumHiveWeapon"
+		RadiusDamageAffects="ENEMIES NEUTRALS NOT_SIMILAR"
+		>
+		<PreAttackDelay
+			MinSeconds="1.0s"
+			MaxSeconds="2.5s"
+		/>
+		<FiringDuration
+			MinSeconds="0.2s"
+			MaxSeconds="0.2s"
+		/>
+		<Nuggets>
+			<DamageNugget
+				Damage="10.0"
+				Radius="20.0"
+				UnderAttackOverrideEvaEvent="DamagedByTiberium"
+				DamageType="UNRESISTABLE"
+				DamageFXType="ALIEN_CANNON"
+				DeathType="BURNED">
+				<!--		<SpecialObjectFilter
+					Rule="ANY"
+					Include="INFANTRY" >
+					<ExcludeThing>AlienBuzzers</ExcludeThing>
+					<ExcludeThing>AlienBuzzers_Slaved</ExcludeThing>
+					<ExcludeThing>AlienAssimilator</ExcludeThing>
+					<ExcludeThing>AlienMastermind</ExcludeThing>
+					<ExcludeThing>AlienBlinkMastermind</ExcludeThing>
+					<ExcludeThing>AlienRazorDrones</ExcludeThing>
+					<ExcludeThing>AlienRazorDroneSquad</ExcludeThing>
+					<ExcludeThing>AlienShockTrooper</ExcludeThing>
+					<ExcludeThing>AlienShockTrooperSquad</ExcludeThing>
+					<ExcludeThing>AlienShockTrooperSquad_Veteran</ExcludeThing>
+					<ExcludeThing>AlienStalker</ExcludeThing>
+					<ExcludeThing>AlienStalkerSquad</ExcludeThing>
+					<ExcludeThing>MutantMarauder</ExcludeThing>
+					<ExcludeThing>MutantMarauderSquad</ExcludeThing>
+					<ExcludeThing>Viceroid</ExcludeThing>
+					<ExcludeThing>GDIZoneTrooper</ExcludeThing>
+					<ExcludeThing>GDIZoneTrooperSquad</ExcludeThing>
+				</SpecialObjectFilter>
+		-->
+			</DamageNugget>
+		</Nuggets>
+	</WeaponTemplate>
+
 	<!-- modifier vs other scorps applied -->
 
 	<WeaponTemplate

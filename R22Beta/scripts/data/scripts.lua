@@ -96,13 +96,13 @@ function clearSubTables(t, seen)
 end
 
 function ClearGroup(playerTeam, groupId)
-	if groupId == nil or not isValidTeam(playerTeam) then return false end
+	if groupId == nil or not isValidTeam(playerTeam) then return end
 
 	local teamTable = getglobal(playerTeam)
-	if type(teamTable) ~= "table" then return false end
+	if type(teamTable) ~= "table" or type(teamTable.groups) ~= "table" then return end
 
+	clearSubTables(teamTable.groups[groupId])
 	teamTable.groups[groupId] = nil
-	return true
 end
 
 function GetGroup(playerTeam, groupId)
@@ -177,27 +177,8 @@ unitBugDataTable = {
 	-- reallyDamagedDurationMult: Multiplier applied to frameCount when the unit has the REALLYDAMAGED status.
 	--                            Damaged units turn slower, so the bug lasts longer (e.g. 1.5 = 50% longer duration).
 	--
-	-- avgTurnCountOffset:        Offset subtracted from bugDuration when comparing the average third-turn frame count.
-	--                            Used to distinguish a legitimate 180-degree turn (whole group turning) from a bug
-	--                            (only a few units stuck turning). Lower values = more sensitive detection (more false
-	--                            positives). Higher values = less sensitive (fewer false positives). 
-	--							  Used in: 1st false positive filter
-	--
 	-- bugCheckLowerLimit:        Lower bound of the frame window used to detect if a unit is reverse-bugging.
 	--                            Lower values detect more units but may increase false positives.
-	--
-	-- bugCheckUpperLimit:        Upper bound of the frame window used to detect if a unit is reverse-bugging.
-	--                            Lower values detect more units but may increase false positives.
-	--
-	-- thirdTurnMinRatio:         Minimum proportion of the group that must have performed a third turn for the fix
-	--                            to apply. If fewer than this ratio turned 3 times, the group is likely doing a normal
-	--                            turn, not bugging. 
-	-- 							  Used in: 3rd false positive filter
-	--
-	-- notMovingBackupRatio:      Proportion of units that were stationary before backing up. If this ratio is exceeded,
-	--                            the fix is allowed even when thirdTurnMinRatio is not met (handles units that were
-	--                            attacking and then reverse-moved).
-	-- 							  Used in: 3rd false positive filter
 	--
 	-- avgFirstTurnRatio:         Multiplier applied to bugDuration when checking the average first-turn frame count.
 	--                            If the average is at or above this ratio of bugDuration, only units whose frameDiff
@@ -205,105 +186,105 @@ unitBugDataTable = {
 	--							  Used in: 2nd false positive filter
 
 	-- NOD UNITS --
-	["E3C841B0"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.50 }, -- Mok Raider Buggy
-	["79609108"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.50 }, -- Black Hand Raider Buggy
-	["6354531D"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.50 }, -- Nod Raider Buggy
+	["E3C841B0"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.40 }, -- Mok Raider Buggy
+	["79609108"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.40 }, -- Black Hand Raider Buggy
+	["6354531D"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.40 }, -- Nod Raider Buggy
 
-	["1B44D6AE"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.40 }, -- Mok Scorpion Tank
-	["A33F11AF"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.40 }, -- Black Hand Scorpion Tank
-	["2F9131D"]  = { frameCount = 11, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.40 }, -- Nod Scorpion Tank
+	["1B44D6AE"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.40 }, -- Mok Scorpion Tank
+	["A33F11AF"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.40 }, -- Black Hand Scorpion Tank
+	["2F9131D"]  = { frameCount = 11, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.40 }, -- Nod Scorpion Tank
 	
-	["26538D"]   = { frameCount = 7,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = -2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.50 }, -- Nod Stealth Tank
-	["1025B90B"] = { frameCount = 7,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = -2, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.50 }, -- Marked of Kane Stealth Tank
+	["26538D"]   = { frameCount = 7,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.50 }, -- Nod Stealth Tank
+	["1025B90B"] = { frameCount = 7,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.50 }, -- Marked of Kane Stealth Tank
 
-	["F38615BD"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.40 }, -- Black Hand Mantis (Shares locomotor with Scorpion Tank)
+	["F38615BD"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.40 }, -- Black Hand Mantis (Shares locomotor with Scorpion Tank)
 
-	["FD8822B1"] = { frameCount = 14, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 4, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Nod Flame Tank
-	["1E1AEEBE"] = { frameCount = 14, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 4, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Black Hand Flame Tank
+	["FD8822B1"] = { frameCount = 14, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Nod Flame Tank
+	["1E1AEEBE"] = { frameCount = 14, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Black Hand Flame Tank
 
-	["4F9DF943"] = { frameCount = 14, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Nod Beam Cannon
-	["3D143A57"] = { frameCount = 14, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Marked of Kane Beam Cannon
-	["7F5C5CDA"] = { frameCount = 14, reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Black Hand Beam Cannon
+	["4F9DF943"] = { frameCount = 14, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Nod Beam Cannon
+	["3D143A57"] = { frameCount = 14, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Marked of Kane Beam Cannon
+	["7F5C5CDA"] = { frameCount = 14, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Black Hand Beam Cannon
 
-	["53024F73"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Nod Reckoner
-	["3000821A"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Marked of Kane Reckoner
-	["198BF501"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Black Hand Reckoner
+	["53024F73"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.36 }, -- Nod Reckoner
+	["3000821A"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.36 }, -- Marked of Kane Reckoner
+	["198BF501"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.36 }, -- Black Hand Reckoner
 
-	["12CEBD57"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Nod Emissary
-	["BDC39D7D"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Marked of Kane Emissary
-	["7D560AEC"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Black Hand Emissary
+	["12CEBD57"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.36 }, -- Nod Emissary
+	["BDC39D7D"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.36 }, -- Marked of Kane Emissary
+	["7D560AEC"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.36 }, -- Black Hand Emissary
 
-	["3A3D109A"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -3, bugCheckLowerLimit = 5, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Nod Harvester
-	["C3785BFE"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -3, bugCheckLowerLimit = 5, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Marked of Kane Harvester
-	["21661DFB"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -3, bugCheckLowerLimit = 5, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Black Hand Harvester
+	["3A3D109A"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Nod Harvester
+	["C3785BFE"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Marked of Kane Harvester
+	["21661DFB"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Black Hand Harvester
 
-	["4D1CFBBD"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 3, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Nod Specter
-	["9A533FC7"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 3, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Marked of Kane Specter
-	["7A639A9A"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 3, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Black Hand Specter
+	["4D1CFBBD"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Nod Specter
+	["9A533FC7"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Marked of Kane Specter
+	["7A639A9A"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Black Hand Specter
 
 	-- SCRIN UNITS --
-	["B8802763"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 0.01, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.45 }, -- Scrin Seeker
-	["DB2B7D2F"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 0.01, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.45 }, -- Reaper-17 Seeker
-	["7296891C"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 0.01, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.45 }, -- Traveler-59 Seeker
+	["B8802763"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Scrin Seeker
+	["DB2B7D2F"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Reaper-17 Seeker
+	["7296891C"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Traveler-59 Seeker
 
-	["AF991372"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.45 }, -- Scrin Devourer Tank
-	["416EFDFF"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.45 }, -- Reaper-17 Devourer Tank
+	["AF991372"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.45 }, -- Scrin Devourer Tank
+	["416EFDFF"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.45 }, -- Reaper-17 Devourer Tank
 
-	["77A0E8A9"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -2, bugCheckLowerLimit = 3, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.15, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.45 }, -- Scrin Corruptor
-	["B187F87A"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -2, bugCheckLowerLimit = 3, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.15, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.45 }, -- Reaper-17 Corruptor
-	["91B5B69D"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -2, bugCheckLowerLimit = 3, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.15, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.45 }, -- Traveler-59 Corruptor
+	["77A0E8A9"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.45 }, -- Scrin Corruptor
+	["B187F87A"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.45 }, -- Reaper-17 Corruptor
+	["91B5B69D"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.45 }, -- Traveler-59 Corruptor
 
-	["1A54C1B"]  = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -6, bugCheckLowerLimit = 3, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.05, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.60 }, -- Scrin Gunwalker
-	["7FCCFDE3"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -6, bugCheckLowerLimit = 3, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.05, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.60 }, -- Reaper-17 Shard Walker
-	["51430053"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -6, bugCheckLowerLimit = 3, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.05, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.60 }, -- Traveler-59 Gunwalker
+	["1A54C1B"]  = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.60 }, -- Scrin Gunwalker
+	["7FCCFDE3"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.60 }, -- Reaper-17 Shard Walker
+	["51430053"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.60 }, -- Traveler-59 Gunwalker
 
 	-- GDI UNITS --
-	["D01CFD88"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- GDI APC
-	["7CC56843"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Steel Talons APC
-	["64BCB106"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- ZOCOM APC
-	["AF462A8F"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- GDI Veteran APC
-	["BD7701CB"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- ZOCOM Veteran APC
+	["D01CFD88"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.45 }, -- GDI APC
+	["7CC56843"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.45 }, -- Steel Talons APC
+	["64BCB106"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.45 }, -- ZOCOM APC
+	["AF462A8F"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.45 }, -- GDI Veteran APC
+	["BD7701CB"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.45 }, -- ZOCOM Veteran APC
 
-	["F714BBD3"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 2, bugCheckLowerLimit = 6, bugCheckUpperLimit = 7, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- ZOCOM Predator Tank
-	["E6EAD02C"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 2, bugCheckLowerLimit = 6, bugCheckUpperLimit = 7, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- GDI Predator Tank
+	["F714BBD3"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 6, avgFirstTurnRatio = 0.36 }, -- ZOCOM Predator Tank
+	["E6EAD02C"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 6, avgFirstTurnRatio = 0.36 }, -- GDI Predator Tank
 
-	["AE73138F"] = { frameCount = 25,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 9, bugCheckUpperLimit = 10, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- ZOCOM Zone Shatterer
-	["2144BD64"] = { frameCount = 25,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 9, bugCheckUpperLimit = 10, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- GDI Shatterer
+	["AE73138F"] = { frameCount = 25,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 9, avgFirstTurnRatio = 0.36 }, -- ZOCOM Zone Shatterer
+	["2144BD64"] = { frameCount = 25,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 9, avgFirstTurnRatio = 0.36 }, -- GDI Shatterer
 
-	["12E1C8C8"] = { frameCount = 28,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 6, bugCheckLowerLimit = 9, bugCheckUpperLimit = 11, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- ZOCOM Mammoth Tank
-	["BC0A0849"] = { frameCount = 28,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 6, bugCheckLowerLimit = 9, bugCheckUpperLimit = 11, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- GDI Mammoth Tank
-	["C1B5AB13"] = { frameCount = 28,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 6, bugCheckLowerLimit = 9, bugCheckUpperLimit = 11, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Steel Talons Mammoth Tank
+	["12E1C8C8"] = { frameCount = 28,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 9, avgFirstTurnRatio = 0.36 }, -- ZOCOM Mammoth Tank
+	["BC0A0849"] = { frameCount = 28,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 9, avgFirstTurnRatio = 0.36 }, -- GDI Mammoth Tank
+	["C1B5AB13"] = { frameCount = 28,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 9, avgFirstTurnRatio = 0.36 }, -- Steel Talons Mammoth Tank
 	
-	["5A6044BC"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -2, bugCheckLowerLimit = 2, bugCheckUpperLimit = 3, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- ZOCOM Slingshot
-	["B54034FF"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -2, bugCheckLowerLimit = 2, bugCheckUpperLimit = 3, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- GDI Slingshot
-	["4AFAC6E8"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -2, bugCheckLowerLimit = 2, bugCheckUpperLimit = 3, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Steel Talons Slingshot
+	["5A6044BC"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 2, avgFirstTurnRatio = 0.36 }, -- ZOCOM Slingshot
+	["B54034FF"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 2, avgFirstTurnRatio = 0.36 }, -- GDI Slingshot
+	["4AFAC6E8"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 2, avgFirstTurnRatio = 0.36 }, -- Steel Talons Slingshot
 
-	["ZOCOMMCV"] = { frameCount = 20,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- ZOCOM MCV
-	["GDIMCV"] = { frameCount = 20,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- GDI MCV
-	["SteelTalonsMCV"] = { frameCount = 20,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Steel Talons MCV
+	["ZOCOMMCV"] = { frameCount = 20,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- ZOCOM MCV
+	["GDIMCV"] = { frameCount = 20,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- GDI MCV
+	["SteelTalonsMCV"] = { frameCount = 20,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Steel Talons MCV
 
-	["30354418"] = { frameCount = 35,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- ZOCOM MARV
-	["GDIMARV"] = { frameCount = 35,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- GDI MARV
-	["565BE825"] = { frameCount = 35,  reallyDamagedDurationMult = 1.5, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Steel Talons MARV
+	["30354418"] = { frameCount = 35,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- ZOCOM MARV
+	["GDIMARV"] = { frameCount = 35,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- GDI MARV
+	["565BE825"] = { frameCount = 35,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Steel Talons MARV
 
-	["FD890B01"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- ZOCOM Surveyor
-	["921C06CC"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- GDI Surveyor
-	["F3F183DD"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 0, bugCheckLowerLimit = 4, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Steel Talons Surveyor
+	["FD890B01"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.36 }, -- ZOCOM Surveyor
+	["921C06CC"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.36 }, -- GDI Surveyor
+	["F3F183DD"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.36 }, -- Steel Talons Surveyor
 
-	["AD5F0217"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.50 }, -- ZOCOM Pitbull
-	["6FF52808"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.50 }, -- GDI Pitbull
-	["C6387E0"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.50 }, -- Steel Talons Pitbull
-	["AABD1C1F"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.50 }, -- ZOCOM Veteran Pitbull
-	["D9E0C318"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.50 }, -- GDI Veteran Pitbull
-	["90BA3D4D"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -1, bugCheckLowerLimit = 3, bugCheckUpperLimit = 2, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.50 }, -- Steel Talons Veteran Pitbull
+	["AD5F0217"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.50 }, -- ZOCOM Pitbull
+	["6FF52808"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.50 }, -- GDI Pitbull
+	["C6387E0"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.50 }, -- Steel Talons Pitbull
+	["AABD1C1F"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.50 }, -- ZOCOM Veteran Pitbull
+	["D9E0C318"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.50 }, -- GDI Veteran Pitbull
+	["90BA3D4D"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.50 }, -- Steel Talons Veteran Pitbull
 
-	["6FCB2318"] = { frameCount = 12,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- ZOCOM Rig
-	["B48BEDD2"] = { frameCount = 12,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- GDI Rig
-	["82D6E5D8"] = { frameCount = 12,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = 1, bugCheckLowerLimit = 5, bugCheckUpperLimit = 6, thirdTurnMinRatio = 0.35, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Steel Talons Rig
+	["6FCB2318"] = { frameCount = 12,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- ZOCOM Rig
+	["B48BEDD2"] = { frameCount = 12,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- GDI Rig
+	["82D6E5D8"] = { frameCount = 12,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Steel Talons Rig
 
-	["D258354"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -3, bugCheckLowerLimit = 5, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- GDI Harvester
-	["F52AEEDF"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -3, bugCheckLowerLimit = 5, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 }, -- Steel Talons Heavy Harvester
-	["C23B3A15"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, avgTurnCountOffset = -3, bugCheckLowerLimit = 5, bugCheckUpperLimit = 4, thirdTurnMinRatio = 0.25, notMovingBackupRatio = 0.15, avgFirstTurnRatio = 0.36 } -- ZOCOM Harvester
+	["D258354"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- GDI Harvester
+	["F52AEEDF"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Steel Talons Heavy Harvester
+	["C23B3A15"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 } -- ZOCOM Harvester
 }
 
 MAX_FRAMES_WHEN_NOT_HARVESTED = 900 -- 60s
@@ -1166,7 +1147,6 @@ function GetUnitReversingData(self)
 			fastTurnWas0Frames = false,
 			hasComeToAStop = false, 
 			unitAnchor = nil, -- is the object id of the the unit to follow in case of bugging
-			bugFrameDiff = 0,
 			hasBeenSelected = false,
 			expectedChecksFlag = false,
 			groupIdAssigned = false,
@@ -1180,9 +1160,11 @@ function GetUnitReversingData(self)
 end
 
 -- Sets the initial frame when a unit fast turns while backing up, triggered by +BACKING_UP +TURN_LEFT_HIGH_SPEED
-function BackingUpFast(self)
+function BackingUpInitGroup(self)
 	local _,unitReversing = GetUnitReversingData(self)
-	--local curFrame = GetFrame()
+	if not unitReversing.isReverseMoving then 
+		BackingUp(self) 
+	end
 end
 
 function GetNumberOfUnitsMoving(selectedUnitList)
@@ -1198,7 +1180,7 @@ end
 
 -- returns the size of a a key/value pair table
 function getTableSize(t)
-	if t == nil then return end
+	if t == nil then return 0 end
 	local size = 0
 	for k, _ in t do
 		if k ~= nil then 
@@ -1211,7 +1193,6 @@ end
 function UnitIsMoving(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil then return end
-
 	unitReversing.hasComeToAStop = false
 end
 
@@ -1347,7 +1328,7 @@ end
 function UnitNoLongerMoving(self)
 	--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 	local unitId,unitReversing = GetUnitReversingData(self)
-	if unitReversing == nil then return end
+	if unitReversing == nil then return end	
 	if not unitReversing.wasAttackingBeforeReverse then
 		unitReversing.hasComeToAStop = true
 		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
@@ -1356,18 +1337,9 @@ function UnitNoLongerMoving(self)
 		--unitReversing.hasComeToAStop = false
 		--ExecuteAction("NAMED_FLASH", self, 2)
 	end
-
-	-- unitAnchor corresponds with objectId
-	--if unitReversing.unitAnchor ~= nil then
-		-- unit im anchored to
-	--	local unitImFollowing = unitsReversing[unitReversing.unitAnchor]
-	--	if unitImFollowing ~= nil and unitImFollowing.beingFollowedBy[unitId] then
-			-- check if beingFollowedBy table if its empty and then assign isBeingFollowed to false if so, else remove this unit from its subtable
-			--unitImFollowing.isBeingFollowed = false
-	--		ExecuteAction("NAMED_FLASH_WHITE", unitImFollowing.selfReference, 2)
-	--		unitImFollowing.beingFollowedBy[unitId] = nil
-	--	end
-	--end
+	
+	-- trick to get units to reverse move with UNIT_GUARD_OBJECT (causes units to reverse when force firing, force attacking)
+	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 48, 1)
 end
 
 function CheckForObjReverseBugging(self, frameDiff)
@@ -1397,12 +1369,9 @@ function CheckForObjReverseBugging(self, frameDiff)
 	if selectedCount <= 0 then return end
 	--WriteToFile("groupId.txt",  tostring(unitReversing.groupId) .. " group size: " .. tostring(group.unitCount) .. " reverse move unit count: " .. tostring(group.reverseUnitCount) .. "\n")
 	unitReversing.wasAttackingBeforeReverse = false
-	local lowerLimit = unitBugData.bugCheckLowerLimit
-	local upperLimit = unitBugData.bugCheckUpperLimit
-	-- WriteToFile("upperLimit.txt",  tostring(upperLimit) .. "\n")
 	-- lowerLimit causes false positives when units are ordered to move at more than screen distance
-	if frameDiff > bugDuration + upperLimit then frameDiff = bugDuration end
-	local inBugRange = frameDiff >= bugDuration - lowerLimit and frameDiff <= bugDuration + upperLimit
+	--if frameDiff > bugDuration + upperLimit then frameDiff = bugDuration end
+	local inBugRange = frameDiff >= bugDuration - unitBugData.bugCheckLowerLimit 
 	-- if the average first turn frameDiff for this unit type equals bugDuration, override inBugRange
 	group.unitsToFixByType[selfObjName] = group.unitsToFixByType[selfObjName] or {}
 	local unitsToFixForType = group.unitsToFixByType
@@ -1428,20 +1397,8 @@ function CheckForObjReverseBugging(self, frameDiff)
 	-- First determine if this unit is bugging and add it to the list, dont fix units that are being already fixed
 	if isBugging then
 		-- cache the units if they are to be fixed in this table
-		unitReversing.bugFrameDiff = frameDiff
 		--ExecuteAction("NAMED_FLASH", self, 2)
-		-- verify the unit doesnt already exist in the table to prevent duplicate entries
-		local alreadyExists = false
-		for _, v in unitsToFixForType[selfObjName] do
-			if v == a then
-				alreadyExists = true
-				break
-			end
-		end
-		if not alreadyExists then
-			tinsert(unitsToFixForType[selfObjName], a)
-			--ExecuteAction("NAMED_FLASH", self, 2)
-		end
+		unitsToFixForType[selfObjName][a] = unitsToFixForType[selfObjName][a] or a
 	end
 
 	-- WriteToFile("checksDoneInt.txt",  tostring(checksDone) .. " num of units bugging: " .. tostring(getn(unitsToFixForType)) "\n")
@@ -1453,18 +1410,6 @@ function CheckForObjReverseBugging(self, frameDiff)
 		if group.checksDone >= floor(group.expectedChecks*CHECKS_DONE_THRESHOLD) then
 			--WriteToFile("checksDone.txt", "checks done: " .. tostring(group.checksDone) .. " expected checks: " .. tostring(selectedCount * CHECKS_DONE_THRESHOLD) .. "\n")
 			-- fix units that havent backedUp
-			if group.checksDone >= selectedCount-1 then 
-				for _, unitRef in selectedUnitList do
-       				local unit = unitsReversing[unitRef]
-					-- make it so units that have never moved are affected
-        			if unit ~= nil and not unit.hasBeenFixed and not unit.isReverseMoving and EvaluateCondition("NAMED_NOT_DESTROYED", unit.stringReference) 
-					and (ObjectTestModelCondition(unit.selfReference, "MOVING") == false) then
-						--ExecuteAction("NAMED_FLASH_WHITE", unit.selfReference, 2)
-						-- maybe for each unit that starts to move in the group check if any single unit isnt moving
-                		FixBuggingUnit(unit.selfReference, false)
-        			end
- 				 end
-			end
 
 			-- if number of units bugging is less than the count * BUG_THRESHOLD_SMALL_GROUP
 			-- if more than LARGE_GROUP_SIZE units are selected, make the detection more forgiving
@@ -1475,9 +1420,10 @@ function CheckForObjReverseBugging(self, frameDiff)
 			local totalBuggingPerType = {}
 
 			-- value of totalBuggingPerType is the object id, key is object name (ej: NodScorpionBuggy)
-			for unitType, unitID in unitsToFixForType do 
-				totalBuggingPerType[unitType] = getn(unitID) 
-				totalBugging = totalBugging + getn(unitID) 
+			 for unitType, unitTable in unitsToFixForType do
+				local tableSize = getTableSize(unitTable) or 0
+				totalBuggingPerType[unitType] = tableSize
+				totalBugging = totalBugging + tableSize
 			end
 			--ExecuteAction("SHOW_MILITARY_CAPTION", tostring(totalBugging), 2)	
 			if totalBugging <= maxBugging then
@@ -1521,21 +1467,6 @@ function CheckForObjReverseBugging(self, frameDiff)
 					
 					local unitBugDataType = unitBugDataTable[objName]
 					bugDuration = unitBugDataType.frameCount
-
-					local thirdTurnFrameCountForType = (group.thirdTurnFrameCountByType and group.thirdTurnFrameCountByType [objName]) or {}
-					local thirdTurnUnitCountForType = 0
-					thirdTurnFrameCountForType, thirdTurnUnitCountForType = currentTurnData(thirdTurnFrameCountForType)
-					if thirdTurnUnitCountForType > 1 then
-						local avgThirdTurnCount = floor((thirdTurnFrameCountForType + thirdTurnUnitCountForType - 1) / thirdTurnUnitCountForType) 
-						--WriteToFile("average.txt",  tostring(avgThirdTurnCount) .. "\n")
-						--WriteToFile("objTable2.txt",  "thirdTurnFrameCountForType: " .. tostring(thirdTurnFrameCountForType) .. " thirdTurnUnitCountForType: " .. tostring(thirdTurnUnitCountForType) .. "\n")
-						if avgThirdTurnCount >= bugDuration-unitBugDataType.avgTurnCountOffset-1 then
-							group.fixCancelledByType = group.fixCancelledByType or {}
-							group.fixCancelledByType[objName] = true
-							--print("avgThirdTurnCount false positive filter")
-							-- ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-						end
-					end
 				
 					-- WriteToFile("objTable.txt",  tostring(getTableSize(objTable)) .. "\n")
 					-- per-type counts for avg third turn cancellation
@@ -1550,73 +1481,39 @@ function CheckForObjReverseBugging(self, frameDiff)
 						--WriteToFile("averageFirst.txt",  tostring(avgFirstTurnCount) .. " " .. tostring(floor(bugDuration*unitBugDataType.avgFirstTurnRatio+0.5)) .. "\n")
 						if avgFirstTurnCount >= floor(bugDuration*unitBugDataType.avgFirstTurnRatio+0.5) then
 							--print("avgFirstTurnRatio false positive filter")
+							group.fixCancelledByType = group.fixCancelledByType or {}
 							group.fixCancelledByType[objName] = true
 						end
 					end
 				end
-
-				if not group.thirdTurnCountChecked then
-					group.thirdTurnCountChecked = true
-					-- total across all types for thirdTurnMinRatio check
-					local notAllTypesAreBugging = false
-					-- objCount is table of all units of objName 
-					for objName,objCount in group.reverseUnitsByType do 
-						local count = getTableSize(objCount)
-						local unitBugDataType = unitBugDataTable[objName]
-						local thirdTurnFrameCountForType = (group.thirdTurnFrameCountByType and group.thirdTurnFrameCountByType [objName]) or {}
-						local thirdTurnUnitCountForType = 0
-						_, thirdTurnUnitCountForType = currentTurnData(thirdTurnFrameCountForType)
-						--WriteToFile("data.txt", "thirdTurnUnitCount: " .. tostring(thirdTurnUnitCountForType) .. " is less than " .. tostring(ceil(count*unitBugData.thirdTurnMinRatio)) .. " group.unitsNotMovingBeforeBackingUp: " .. tostring(group.unitsNotMovingBeforeBackingUp) .. " is more than: " .. tostring(ceil(count*unitBugData.notMovingBackupRatio)) .. " unit count: " .. tostring(count) .. "\n")
-						local unitsBuggingOfThisType = totalBuggingPerType[objName] or 0
-						if not ((unitsBuggingOfThisType <= thirdTurnUnitCountForType) and (thirdTurnUnitCountForType >= 1) and thirdTurnUnitCountForType < ceil(count*unitBugDataType.thirdTurnMinRatio) and not (group.unitsNotMovingBeforeBackingUp >= ceil(count*unitBugDataType.notMovingBackupRatio))) then
-							notAllTypesAreBugging = true
-							--group.fixCancelledByType[objName] = true
-							-- group.fixCancelled = true
-							--ExecuteAction("NAMED_FLASH", self, 2)
-						end
-					end
-					if not notAllTypesAreBugging then
-						--print("notAllTypesAreBugging false positive filter")
-						fixUnits = false
-					end
-				end
 			end
-
 		end
 
 		-- Apply fixes if threshold was met
 		-- fixUnits alone triggers the fix so that a non-bugging unit that pushes
 		-- checksDone over the threshold can still fix earlier-detected bugging units
-		if fixUnits then
+		 if fixUnits then
 			local totalToFix = 0
-			for _, unitType in group.unitsToFixByType do totalToFix = totalToFix + getn(unitType) end
+			for unitType, unitsOfType in group.unitsToFixByType do
+				if not group.fixCancelledByType[unitType] then
+					totalToFix = totalToFix + getTableSize(unitsOfType)
+				end
+			end
+
 			if totalToFix > 0 then
 				--WriteToFile("fixUnits.txt", "fixing " .. tostring(totalToFix) .. " units\n\n\n" .. "------------------------------------------------")
-				for k, unitType in group.unitsToFixByType do
-					if not group.fixCancelledByType[k] then
-						for i = getn(unitType), 1, -1 do
-							local buggingUnit = unitsReversing[unitType[i]]
+				for unitType, unitsOfType in group.unitsToFixByType do
+					if not group.fixCancelledByType[unitType] then
+						for unitId,_ in unitsOfType do
+							local buggingUnit = unitsReversing[unitId]
 							if buggingUnit ~= nil then
-								local buggingRef = buggingUnit.selfReference
-								--ExecuteAction("NAMED_FLASH_WHITE", buggingRef, 2)
-								FixBuggingUnit(buggingRef, true)
-							else
-								if unitType[i] ~= nil then
-									tremove(unitType, i)
-								end
+								FixBuggingUnit(buggingUnit.selfReference, true)
+								group.unitsToFixByType[unitType][unitId] = nil
 							end
 						end
 					end
 				end
-			elseif isBugging then
-				--ExecuteAction("NAMED_FLASH", self, 2)
-				FixBuggingUnit(self, true)
 			end
-		elseif isBugging and group.checksDone >= floor(group.expectedChecks*CHECKS_DONE_THRESHOLD) then
-			if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitReversing.stringReference, 4) then
-				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 4, 0)
-			end
-			--unitReversing.hasBeenFixed = false
 		end
 	end
 end
@@ -1642,6 +1539,7 @@ end
 
 function BackingUpFastTurn(self)
 	local _,unitReversing = GetUnitReversingData(self)
+	BackingUpInitGroup(self)
 	local playerTeam = tostring(ObjectTeamName(self))
 	local group = GetGroup(playerTeam, unitReversing.groupId)
 	--local group = unitGroups[unitReversing.groupId]
@@ -1682,8 +1580,6 @@ function BackingUpFastTurnEnd(self)
 			end
 			-- clear this to prevent desync
 			group.firstTurnFrameCountByType[objName][unitId] = frameDiff
-			--group.firstTurnFrameCountByType[objName] = (group.firstTurnFrameCountByType[objName] or 0) + frameDiff
-			--group.firstTurnUnitCountByType[objName] = (group.firstTurnUnitCountByType[objName] or 0) + 1
 		end
 		CheckForObjReverseBugging(self, frameDiff)
 	end
@@ -1700,8 +1596,6 @@ function BackingUpFastTurnEnd(self)
 			end
 			-- clear this to prevent desync
 			group.thirdTurnFrameCountByType[objName][unitId] = frameDiff
-			--group.thirdTurnFrameCountByType[objName] = (group.thirdTurnFrameCountByType[objName] or 0) + frameDiff
-			--group.thirdTurnUnitCountByType[objName] = (group.thirdTurnUnitCountByType[objName] or 0) + 1
 		end		
 	end
 
@@ -1772,32 +1666,26 @@ function FixBuggingUnit(self, applySpeedBuff)
 		return 
 	end
 
-	-- check if unitAnchor is destroyed or is nil
-	if unitReversing.unitAnchor ~= nil then
-		if unitsReversing[unitReversing.unitAnchor] ~= nil and not EvaluateCondition("NAMED_NOT_DESTROYED",unitsReversing[unitReversing.unitAnchor].stringReference) then 
-			--unitReversing.unitAnchor = GetANonBuggingUnit(selectedUnitList, self)
-			SetUnitAnchor(self, GetANonBuggingUnit(selectedUnitList, self))
-		end
-	else
+	-- check if unitAnchor is missing, stale, or destroyed before applying the fix
+	local anchorUnit = unitReversing.unitAnchor ~= nil and unitsReversing[unitReversing.unitAnchor] or nil
+	if anchorUnit == nil or not EvaluateCondition("NAMED_NOT_DESTROYED", anchorUnit.stringReference) then
 		SetUnitAnchor(self, GetANonBuggingUnit(selectedUnitList, self))
-		 --unitReversing.unitAnchor = GetANonBuggingUnit(selectedUnitList, self)
-		 --WriteToFile("GetANonBuggingUnit.txt",  "closest unit:  " .. tostring(unitReversing.unitAnchor) .. "\n")
-		 -- there are no units that arent bugging so lets just stop this one and return the function
-		 if unitReversing.unitAnchor == nil then
-			-- ExecuteAction("NAMED_STOP", self)
-			-- ExecuteAction("NAMED_FLASH_WHITE", unitReversing.selfReference, 2)
-			return 
-		end
+		anchorUnit = unitReversing.unitAnchor ~= nil and unitsReversing[unitReversing.unitAnchor] or nil
+	end
+
+	if anchorUnit == nil then
+		-- ExecuteAction("NAMED_STOP", self)
+		-- ExecuteAction("NAMED_FLASH_WHITE", unitReversing.selfReference, 2)
+		return 
 	end
 
 	--WriteToFile("closeunit.txt",  "closest unit:  " .. tostring(unitReversing.unitAnchor) .. "\n")
-	local anchorUnit = unitsReversing[unitReversing.unitAnchor]
 	if unitReversing.unitAnchor ~= nil and anchorUnit ~= nil then
-		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.stringReference, anchorUnit.stringReference)	
+		ExecuteAction("UNIT_GUARD_OBJECT", unitReversing.stringReference, anchorUnit.stringReference)
+		-- trick to get units to reverse move with UNIT_GUARD_OBJECT (causes units to reverse when force firing, force attacking)
+		-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 48, 1)
 		unitReversing.hasBeenFixed = true
 		-- add this units objectid to the unitsFollowingMe array of the anchor unit
-		-- anchorUnit.unitsFollowingMe[a] = a
-		--anchorUnit.isBeingFollowed = true
 		anchorUnit.beingFollowedBy[a] = a
 		-- remove from first,turn average calculation 
 		local objName = getObjectName(self)
@@ -1839,12 +1727,10 @@ function FixBuggingUnit(self, applySpeedBuff)
 					SetUnitAnchor(unitsReversing[unitRef].selfReference, nonBuggingUnit)
 					-- move this unit to the previously assigned non bugging unit
 					if unitsReversing[unitRef].hasBeenFixed and EvaluateCondition("UNIT_HAS_UPGRADE",unitsReversing[unitRef].stringReference, "Upgrade_ReverseMoveSpeedBuff") and ObjectTestModelCondition(unitsReversing[unitRef].selfReference, "USER_72") then
-						--print("assigning to different unit")
 						local newAnchorUnit = unitsReversing[nonBuggingUnit]
 						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].stringReference, newAnchorUnit.stringReference)
-						-- add this units objectid to the unitsFollowingMe array of the anchor unit
-						-- newAnchorUnit.unitsFollowingMe[unitRef] = unitRef
-						--newAnchorUnit.isBeingFollowed = true
+						-- trick to get units to reverse move with UNIT_GUARD_OBJECT (causes units to reverse when force firing, force attacking)
+						-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[unitRef].stringReference, 48, 1)	
 						newAnchorUnit.beingFollowedBy[unitRef] = unitRef
 					end
 				end
@@ -2010,8 +1896,6 @@ function AddToUnitSelection(self)
 					teamTable.reverseUnits[unitId] = unitId
 					teamTable.reverseUnitCount = getTableSize(teamTable.reverseUnits)
 					--store a table of current selected unit types
-					--if teamTable.reverseUnitsByType[objName] == nil then
-					--teamTable.reverseUnitsByType[objName] = (teamTable.reverseUnitsByType[objName] or 0) + 1 
 					if teamTable.reverseUnitsByType[objName] == nil then
 						teamTable.reverseUnitsByType[objName] = {}
 						--getGlobals()
@@ -2057,7 +1941,7 @@ function RemoveFromUnitSelection(self)
     end
 end
 
-function CheckExistingGroups(unitReversing, group)
+function CheckExistingGroups(unitReversing, group, groupId)
 	if group == nil or unitReversing == nil then return false end
 	local reverseUnitList = {}
 	if group ~= nil and group.reverseUnits ~= nil then
@@ -2071,7 +1955,6 @@ function CheckExistingGroups(unitReversing, group)
 
 	--if checksDone == unitReversing.groupId.selectedCount-1 then
 	local clearList = true
-	local groupId  = unitReversing.groupId
 
 	-- units that are reverse moving
 	local liveReverseCount = 0
@@ -2088,7 +1971,7 @@ function CheckExistingGroups(unitReversing, group)
         end
     end
 
-	if liveReverseCount > 0 and unitsNotReverseMovingCount < ceil(liveReverseCount * 0.8) then
+	if liveReverseCount > 0 and unitsNotReverseMovingCount < ceil(liveReverseCount * 0.75) then
 		clearList = false
 	end
 
@@ -2098,7 +1981,7 @@ function CheckExistingGroups(unitReversing, group)
 			-- WriteToFile("groupUnitList.txt", tostring(unitRef) .. "\n")
 			-- if the id is the same as the id in current index clear it
 			if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].groupId == groupId and EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].stringReference) then
-				--unitsReversing[unitRef].groupId = nil
+				unitsReversing[unitRef].groupId = nil
 				unitsReversing[unitRef].groupIdAssigned = false
 				unitsReversing[unitRef].expectedChecksFlag = false
 				unitsReversing[unitRef].hasBeenCounted = false
@@ -2111,6 +1994,7 @@ function CheckExistingGroups(unitReversing, group)
 					--ExecuteAction("NAMED_FLASH", unitsReversing[unitRef].selfReference, 2)
 					BuggedUnitTimeoutEnd(unitsReversing[unitRef].selfReference)
 				end
+				--ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[unitRef].selfReference, 2)
 			end
 		end
 		--WriteToFile("cleared list.txt", tostring(unitReversing.groupId) .. " " ..  tostring(unitReversing.groupIdAssigned) .. "\n")
@@ -2159,7 +2043,7 @@ function GroupUnitOnDeath(self)
 				end
 			end
 			-- check if theres no units left in the group and if so , clear the global.
-			local groupWasCleared = CheckExistingGroups(unitReversing, group)
+			local groupWasCleared = CheckExistingGroups(unitReversing, group, groupId)
 			if not groupWasCleared and IsGroupEmpty(group) then
 				--unitGroups[groupId] = nil
 				ClearGroup(playerTeam, groupId)
@@ -2218,7 +2102,7 @@ function SuddenStopCheck(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil or unitReversing.groupId == nil then return end
 	local resetGroupId = function()
-		--%unitReversing.groupId = nil
+		%unitReversing.groupId = nil
 		%unitReversing.groupIdAssigned = false
 		--%unitReversing.firstFrame = 0
 	end
@@ -2288,13 +2172,11 @@ function BackingUpEnd(self)
 	unitReversing.timesTriggeredNormal = 0
 	unitReversing.fastTurnWas0Frames = false
 
+	local groupId = unitReversing.groupId
+	local playerTeam = tostring(ObjectTeamName(self))
 	-- necessary if units stop 
 	SuddenStopCheck(self)
-	
-	local playerTeam = tostring(ObjectTeamName(self))
-
-	local group = GetGroup(playerTeam, unitReversing.groupId) 
-	CheckExistingGroups(unitReversing, group)
+	CheckExistingGroups(unitReversing, GetGroup(playerTeam, groupId), groupId)
 end
 
 -- USER_72 has ended, remove NO_COLLISIONS and speed buff if this unit has it.
@@ -2333,7 +2215,13 @@ function CancelProduction(self)
 	ObjectCreateAndFireTempWeapon(self, "KillUnitsComingOut")
 end
 
+function onCreatedCrystalShieldDummy(self)
+	ObjectDoSpecialPower(self, "SpecialPower_GrantPackUpgrade")	
+end
 
+function onCreatedCrystalShield(self)
+	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_1", 1, 100)
+end
 
 function OnGDIWatchTowerCreated(self)
 	ObjectHideSubObjectPermanently( self, "MuzzleFlash_01", true )
