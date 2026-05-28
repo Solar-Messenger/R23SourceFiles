@@ -1792,7 +1792,7 @@ function AssignRandomAnchor(self)
 			SetUnitAnchor(self, randomUnitId)
 		end
 	end
-	ObjectBroadcastEventToAllies(self, "UnitAnchorEvent", 50)
+	ObjectBroadcastEventToAllies(self, "UnitAnchorEvent", 65)
 end
 
 -- Triggered by +BACKING_UP
