@@ -615,7 +615,7 @@
 				StatusToSet="WEAPON_UPGRADED_01"
 				StatusToClear=""
 				ApplyToContained="False">
-				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<!--<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>-->
 				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 			</StatusBitsUpgrade>
 			<StatusBitsUpgrade
@@ -629,19 +629,19 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
-				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<!--<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>-->
 			</StatusBitsUpgrade>
 			<ModelConditionUpgrade
 				id="ModuleTag_GDIRailgunTech"
 				AddConditionFlags="USER_6">
 				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
-				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<!--<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>-->
 			</ModelConditionUpgrade>
 			<AudioLoopUpgrade 
 				id="RailCannonUpgradeSound" 
 				SoundToPlay="AudioEvent:GDI_RailCannon_Upgrade">
 				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
-				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
+				<!--<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>-->
 			</AudioLoopUpgrade>
 		</Behaviors>
 		<AI>
