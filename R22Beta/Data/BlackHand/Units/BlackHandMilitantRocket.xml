@@ -26,8 +26,8 @@
 		WorldMapArmoryUpgradesAllowed="">
 		<DisplayName
 			xai:joinAction="Replace" xmlns:xai="uri:ea.com:eala:asset:instance">Name:NODMilitantRocket</DisplayName>
-		<DisplayUpgrade
-			id="Tag_DisplayUpgrade1">Upgrade_BlackHandBlackDisciplesUpgrade</DisplayUpgrade>
+		<!--<DisplayUpgrade
+			id="Tag_DisplayUpgrade1">Upgrade_BlackHandBlackDisciplesUpgrade</DisplayUpgrade>-->
 		<ArmorSet
 			Armor="NODRocketMilitantArmor"
 			DamageFX="InfantryDamageFX" />
@@ -580,7 +580,7 @@
 				SuppressionDuration="5s"
 				AttributeModifierSuppressed="Modifier_Test_Suppression"
 				AttributeModifierForceMove="Modifier_Test_Suppression_ForceMove" />
-			<AttributeModifierUpgrade
+			<!--<AttributeModifierUpgrade
 				id="Upgrade_TiberiumInfusion"
 				AttributeModifier="AttributeModifier_TiberiumInfusion">
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
@@ -589,19 +589,19 @@
 				id="ModuleTag_TiberiumInfusion2"
 				StatusToSet="HAS_TIBERIUM_UPGRADE">
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
-			</StatusBitsUpgrade>
+			</StatusBitsUpgrade>-->
 			<FindCoverBehavior
 				id="ModuleTag_FCB"
 				CoverScanRange="10.0"
 				AttributeModifierInCover="Modifier_Cover" />
 			<!--Tiberium Infusion Armor Upgrade-->
-			<ArmorUpgrade xmlns="uri:ea.com:eala:asset"
+			<!--<ArmorUpgrade xmlns="uri:ea.com:eala:asset"
 							id="Upgrade_TiberiumInfusionArmor"
 							Permanent="true"
 							ArmorSetFlag="PLAYER_UPGRADE"
 				>
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
-			</ArmorUpgrade>
+			</ArmorUpgrade>-->
 			<LargeGroupAudioUpdate
 				id="LGAU">
 				<Key>GDI_MissileSoldier</Key>
@@ -614,11 +614,11 @@
 			<AudioLoopUpgrade id="NOD_BlackDisciples_Upgrade" SoundToPlay="AudioEvent:NOD_BlackDisciples_Upgrade">
 				<TriggeredBy>Upgrade_BlackHandBlackDisciplesUpgrade</TriggeredBy>
 			</AudioLoopUpgrade>
-			<AudioLoopUpgrade
+			<!--<AudioLoopUpgrade
 				id="TiberiumInfusionUpgradeSound"
 				SoundToPlay="AudioEvent:NOD_TiberiumUpgrade">
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
-			</AudioLoopUpgrade>
+			</AudioLoopUpgrade>-->
 			<AudioLoopUpgrade
 				id="NODConfessorUpgradeSound"
 				SoundToPlay="AudioEvent:NOD_Confessor_Upgrade">

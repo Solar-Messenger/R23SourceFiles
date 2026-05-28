@@ -1579,7 +1579,7 @@
 					DeathTypes="DETONATED"
 					DeathTypesForbidden="" />
 			</SlowDeath>
-			<AttributeModifierUpgrade
+			<!--<AttributeModifierUpgrade
 				id="3129F082"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
@@ -1588,7 +1588,7 @@
 				WaypointModeTerminal="True"
 				AttributeModifier="AttributeModifier_TiberiumInfusion">
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
-			</AttributeModifierUpgrade>
+			</AttributeModifierUpgrade>-->
 			<SuppressionUpdate
 				id="3AE0061F"
 				UpdateDelay="1s"
@@ -1601,7 +1601,7 @@
 				id="53580964"
 				AttributeModifierInCover="Modifier_Cover"
 				CoverScanRange="10" />
-			<ArmorUpgrade
+			<!--<ArmorUpgrade
 				id="11A0FF32"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
@@ -1612,7 +1612,7 @@
 				KillArmorUpgrade="False"
 				IgnoreArmorUpgrade="False">
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
-			</ArmorUpgrade>
+			</ArmorUpgrade>-->
 			<LargeGroupAudioUpdate
 				id="00F75CF5"
 				FramesBetweenUpdatesMin="3"
@@ -1620,7 +1620,7 @@
 				UnitWeight="1">
 				<Key>GDI_GrenadierSoldier</Key> 
 			</LargeGroupAudioUpdate>
-			<AudioLoopUpgrade
+			<!--<AudioLoopUpgrade
 				id="829D13C1"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
@@ -1630,7 +1630,7 @@
 				SoundToPlay="AudioEvent:NOD_TiberiumUpgrade"
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
-			</AudioLoopUpgrade>
+			</AudioLoopUpgrade>-->
 			<AudioLoopUpgrade
 				id="AABB462D"
 				RequiresAllTriggers="False"

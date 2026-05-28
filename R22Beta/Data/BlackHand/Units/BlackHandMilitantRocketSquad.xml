@@ -356,7 +356,7 @@
 			SetBonusModelConditionOnSpeedBonus="False"
 			SecondaryQueue="False"
 			IgnorePreReqs="False" />
-		<AttributeModifierUpgrade
+		<!--<AttributeModifierUpgrade
 			id="3129F082"
 			RequiresAllTriggers="False"
 			RequiresAllConflictingTriggers="False"
@@ -370,7 +370,7 @@
 				Trigger="0" />
 			<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
 			<TriggeredBy>Upgrade_MoKTiberiumInfusion</TriggeredBy>
-		</AttributeModifierUpgrade>
+		</AttributeModifierUpgrade>-->
 		<AimWeapon
 			id="06370EA6"
 			AimLowThreshold="0"
