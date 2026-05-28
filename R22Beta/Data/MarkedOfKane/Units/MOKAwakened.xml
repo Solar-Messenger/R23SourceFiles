@@ -70,7 +70,7 @@
 		HasFiredRecentlyTime="2s"
 		UnitTypeIcon=""
 		ReinvisibilityDelay="4s"
-		WorldMapArmoryUpgradesAllowed="Upgrade_NodTechCenterChargedParticleBeam"
+		WorldMapArmoryUpgradesAllowed=""
 		CaptureTime="0s"
 		BuildCost="400"
 		RefundValue="0"
@@ -1367,12 +1367,12 @@
 						Upgrade=""
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
-					<Weapon
+					<!--<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="NODCyborgChargedParticleBeam1"
 						Upgrade=""
 						ObjectStatus="WEAPON_UPGRADED_01"
-						IsPlayerUpgradePermanent="False" />
+						IsPlayerUpgradePermanent="False" />-->
 				</WeaponSlotHardpoint>
 			</WeaponSetUpdate>
 			<SpecialPower
@@ -1589,7 +1589,7 @@
 				id="LGAU">
 				<Key>GDI_ZoneTrooper</Key>
 			</LargeGroupAudioUpdate>
-			<StatusBitsUpgrade
+			<!--<StatusBitsUpgrade
 				id="E6191BDE"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
@@ -1600,7 +1600,7 @@
 				StatusToClear=""
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_NodTechCenterChargedParticleBeam</TriggeredBy>
-			</StatusBitsUpgrade>
+			</StatusBitsUpgrade>-->
 			<StatusBitsUpgrade
 				id="1F159A60"
 				RequiresAllTriggers="False"
@@ -1613,7 +1613,7 @@
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
 			</StatusBitsUpgrade>
-			<SubObjectsUpgrade
+			<!--<SubObjectsUpgrade
 				id="17B1FEF5"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
@@ -1628,8 +1628,8 @@
 				HideSubObjectsOnRemove="False"
 				UnHideSubObjectsOnRemove="False">
 				<TriggeredBy>Upgrade_NodTechCenterChargedParticleBeam</TriggeredBy>
-			</SubObjectsUpgrade>
-			<ModelConditionUpgrade
+			</SubObjectsUpgrade>-->
+			<!--<ModelConditionUpgrade
 				id="11E412A4"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
@@ -1641,8 +1641,8 @@
 				AddTempConditionFlag="TOPPLED"
 				TempConditionTime="0s">
 				<TriggeredBy>Upgrade_NodTechCenterChargedParticleBeam</TriggeredBy>
-			</ModelConditionUpgrade>
-			<AudioLoopUpgrade
+			</ModelConditionUpgrade>-->
+			<!--<AudioLoopUpgrade
 				id="77E4C545"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
@@ -1652,7 +1652,7 @@
 				SoundToPlay="AudioEvent:NOD_Awakened_ChargedParticleBeamGunAvailable"
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_NodTechCenterChargedParticleBeam</TriggeredBy>
-			</AudioLoopUpgrade>
+			</AudioLoopUpgrade>-->
 			<!--
 			<AttributeModifierUpgrade
 				id="ModuleTag_SetDurationEmp"
