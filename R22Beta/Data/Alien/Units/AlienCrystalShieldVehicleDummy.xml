@@ -5,7 +5,7 @@
 		Side="Neutral"
 		EditorSorting="MISC_MAN_MADE"
 		RadarPriority="NOT_ON_RADAR"
-		KindOf="HIDE_IF_FOGGED IMMOBILE UNATTACKABLE NOT_AUTOACQUIRABLE VEHICLE"
+		KindOf="HIDE_IF_FOGGED IMMOBILE UNATTACKABLE NOT_AUTOACQUIRABLE"
 		EditorName="AlienCrystalShieldVehicleDummy">
 		<DisplayName>AlienCrystalShieldVehicleDummy</DisplayName>
 		<ArmorSet
