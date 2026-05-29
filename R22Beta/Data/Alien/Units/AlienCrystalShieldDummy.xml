@@ -50,9 +50,9 @@
 				id="ModuleTag_ReplaceSelf"
 				NewObjectUnpackTime="0s"
 				DisabledDuringUnpack="false"
-				CheckBuildAssistant="true">
+				CheckBuildAssistant="false">
 				<TriggeredBy>Upgrade_Pack</TriggeredBy>
-				<ReplacementTemplate>AlienCrystalShield</ReplacementTemplate>
+				<ReplacementTemplate>AlienCrystalShieldVehicleDummy</ReplacementTemplate>
 			</ReplaceSelfUpgrade>
 		</Behaviors>
 		<AI>

@@ -14,7 +14,7 @@
 
 	<SpecialPowerTemplate
 		id="SpecialPower_SpawnHuskOCL"
-		TargetType="LOCATION" />
+		TargetType="NONE" />
 
 	<SpecialPowerTemplate
 		id="SpecialPower_ConversionBeamUpgraded"
