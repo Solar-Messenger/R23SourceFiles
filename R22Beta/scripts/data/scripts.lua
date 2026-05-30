@@ -96,20 +96,20 @@ function clearSubTables(t, seen)
 end
 
 function ClearGroup(playerTeam, groupId)
-	if groupId == nil or not isValidTeam(playerTeam) then return end
+	if groupId == nil or not isValidTeam(playerTeam) then return false end
 
 	local teamTable = getglobal(playerTeam)
-	if type(teamTable) ~= "table" or type(teamTable.groups) ~= "table" then return end
+	if type(teamTable) ~= "table" or type(teamTable.groups) ~= "table" then return false end
 
-	clearSubTables(teamTable.groups[groupId])
 	teamTable.groups[groupId] = nil
+	return true
 end
 
 function GetGroup(playerTeam, groupId)
 	if groupId == nil or not isValidTeam(playerTeam) then return nil end
 
 	local teamTable = getglobal(playerTeam)
-	if type(teamTable) ~= "table" then return nil end
+	if type(teamTable) ~= "table" or type(teamTable.groups) ~= "table" then return nil end
 
 	return teamTable.groups[groupId]
 end
@@ -1162,9 +1162,14 @@ end
 -- Sets the initial frame when a unit fast turns while backing up, triggered by +BACKING_UP +TURN_LEFT_HIGH_SPEED
 function BackingUpInitGroup(self)
 	local _,unitReversing = GetUnitReversingData(self)
+	if unitReversing == nil then return end
 	if not unitReversing.isReverseMoving then 
 		BackingUp(self) 
 	end
+end
+
+function BackingUpFast(self)
+	BackingUpInitGroup(self)
 end
 
 function GetNumberOfUnitsMoving(selectedUnitList)
@@ -1235,6 +1240,7 @@ function AssignGroupId(unitReversing, a, curFrame, self)
 		local team = tostring(ObjectTeamName(self))
 		local teamTable = isValidTeam(team) and getglobal(team) or nil
 		if teamTable == nil or teamTable.units == nil then return end
+		if type(teamTable.groups) ~= "table" then teamTable.groups = {} end
 		-- first unit in the group, create snapshot and tag all units currently selected, this will also copy the unitsCount over to teamSnapshot.
 		-- local teamSnapshot = DeepCopyTable(teamTable)
 
@@ -1495,7 +1501,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 		 if fixUnits then
 			local totalToFix = 0
 			for unitType, unitsOfType in group.unitsToFixByType do
-				if not group.fixCancelledByType[unitType] then
+				if not group.fixCancelledByType[unitType] and type(unitsOfType) == "table" then
 					totalToFix = totalToFix + getTableSize(unitsOfType)
 				end
 			end
@@ -1503,13 +1509,17 @@ function CheckForObjReverseBugging(self, frameDiff)
 			if totalToFix > 0 then
 				--WriteToFile("fixUnits.txt", "fixing " .. tostring(totalToFix) .. " units\n\n\n" .. "------------------------------------------------")
 				for unitType, unitsOfType in group.unitsToFixByType do
-					if not group.fixCancelledByType[unitType] then
+					if not group.fixCancelledByType[unitType] and type(unitsOfType) == "table" then
+						local fixedUnitIds = {}
 						for unitId,_ in unitsOfType do
 							local buggingUnit = unitsReversing[unitId]
 							if buggingUnit ~= nil then
 								FixBuggingUnit(buggingUnit.selfReference, true)
-								group.unitsToFixByType[unitType][unitId] = nil
 							end
+							tinsert(fixedUnitIds, unitId)
+						end
+						for _,unitId in fixedUnitIds do
+							unitsOfType[unitId] = nil
 						end
 					end
 				end
@@ -1539,6 +1549,7 @@ end
 
 function BackingUpFastTurn(self)
 	local _,unitReversing = GetUnitReversingData(self)
+	if unitReversing == nil then return end
 	BackingUpInitGroup(self)
 	local playerTeam = tostring(ObjectTeamName(self))
 	local group = GetGroup(playerTeam, unitReversing.groupId)
@@ -1728,10 +1739,12 @@ function FixBuggingUnit(self, applySpeedBuff)
 					-- move this unit to the previously assigned non bugging unit
 					if unitsReversing[unitRef].hasBeenFixed and EvaluateCondition("UNIT_HAS_UPGRADE",unitsReversing[unitRef].stringReference, "Upgrade_ReverseMoveSpeedBuff") and ObjectTestModelCondition(unitsReversing[unitRef].selfReference, "USER_72") then
 						local newAnchorUnit = unitsReversing[nonBuggingUnit]
-						ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].stringReference, newAnchorUnit.stringReference)
-						-- trick to get units to reverse move with UNIT_GUARD_OBJECT (causes units to reverse when force firing, force attacking)
-						-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[unitRef].stringReference, 48, 1)	
-						newAnchorUnit.beingFollowedBy[unitRef] = unitRef
+						if newAnchorUnit ~= nil then
+							ExecuteAction("UNIT_GUARD_OBJECT", unitsReversing[unitRef].stringReference, newAnchorUnit.stringReference)
+							-- trick to get units to reverse move with UNIT_GUARD_OBJECT (causes units to reverse when force firing, force attacking)
+							-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitsReversing[unitRef].stringReference, 48, 1)	
+							newAnchorUnit.beingFollowedBy[unitRef] = unitRef
+						end
 					end
 				end
 			end
@@ -1753,9 +1766,10 @@ function AssignRandomAnchor(self)
 	-- Online interface lag sometimes assigns harvesters to a unit group, only use harvesters of this type as a candidate for anchor.
 	if unitReversing.isReverseMoveHarvester then 
 		--selectedUnitList = group.reverseUnitsByType[getObjectName(self)]
+		if group.reverseUnits == nil then return end
 		local reverseHarvesters = {}
 		for _,unitRef in group.reverseUnits do
-			if unitsReversing[unitRef].isReverseMoveHarvester then
+			if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].isReverseMoveHarvester then
 				reverseHarvesters[unitRef] = unitRef
 			end
 		end
@@ -2167,12 +2181,12 @@ function BackingUpEnd(self)
 	unitReversing.timesTriggeredFast = 0
 	unitReversing.timesTriggeredNormal = 0
 	unitReversing.fastTurnWas0Frames = false
-	unitReversing.groupIdAssigned = false
 
 	local groupId = unitReversing.groupId
 	local playerTeam = tostring(ObjectTeamName(self))
 	-- necessary if units stop 
 	SuddenStopCheck(self)
+	unitReversing.groupIdAssigned = false
 	CheckExistingGroups(unitReversing, GetGroup(playerTeam, groupId), groupId)
 end
 
