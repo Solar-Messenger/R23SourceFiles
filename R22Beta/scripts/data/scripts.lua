@@ -2167,6 +2167,7 @@ function BackingUpEnd(self)
 	unitReversing.timesTriggeredFast = 0
 	unitReversing.timesTriggeredNormal = 0
 	unitReversing.fastTurnWas0Frames = false
+	unitReversing.groupIdAssigned = false
 
 	local groupId = unitReversing.groupId
 	local playerTeam = tostring(ObjectTeamName(self))
