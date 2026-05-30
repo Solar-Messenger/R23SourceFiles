@@ -190,14 +190,14 @@ unitBugDataTable = {
 	["79609108"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.40 }, -- Black Hand Raider Buggy
 	["6354531D"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.40 }, -- Nod Raider Buggy
 
-	["1B44D6AE"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.40 }, -- Mok Scorpion Tank
-	["A33F11AF"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.40 }, -- Black Hand Scorpion Tank
-	["2F9131D"]  = { frameCount = 11, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.40 }, -- Nod Scorpion Tank
+	["1B44D6AE"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.40 }, -- Mok Scorpion Tank
+	["A33F11AF"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.40 }, -- Black Hand Scorpion Tank
+	["2F9131D"]  = { frameCount = 11, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.40 }, -- Nod Scorpion Tank
 	
-	["26538D"]   = { frameCount = 7,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.50 }, -- Nod Stealth Tank
-	["1025B90B"] = { frameCount = 7,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.50 }, -- Marked of Kane Stealth Tank
+	["26538D"]   = { frameCount = 7,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 2, avgFirstTurnRatio = 0.50 }, -- Nod Stealth Tank
+	["1025B90B"] = { frameCount = 7,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 2, avgFirstTurnRatio = 0.50 }, -- Marked of Kane Stealth Tank
 
-	["F38615BD"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.40 }, -- Black Hand Mantis (Shares locomotor with Scorpion Tank)
+	["F38615BD"] = { frameCount = 11, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.40 }, -- Black Hand Mantis (Shares locomotor with Scorpion Tank)
 
 	["FD8822B1"] = { frameCount = 14, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Nod Flame Tank
 	["1E1AEEBE"] = { frameCount = 14, reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Black Hand Flame Tank
@@ -223,20 +223,20 @@ unitBugDataTable = {
 	["7A639A9A"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Black Hand Specter
 
 	-- SCRIN UNITS --
-	["B8802763"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Scrin Seeker
-	["DB2B7D2F"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Reaper-17 Seeker
-	["7296891C"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.36 }, -- Traveler-59 Seeker
+	["B8802763"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.40 }, -- Scrin Seeker
+	["DB2B7D2F"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.40 }, -- Reaper-17 Seeker
+	["7296891C"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.40 }, -- Traveler-59 Seeker
 
-	["AF991372"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.45 }, -- Scrin Devourer Tank
-	["416EFDFF"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.45 }, -- Reaper-17 Devourer Tank
+	["AF991372"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.50 }, -- Scrin Devourer Tank
+	["416EFDFF"] = { frameCount = 12, reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 5, avgFirstTurnRatio = 0.50 }, -- Reaper-17 Devourer Tank
 
-	["77A0E8A9"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.45 }, -- Scrin Corruptor
-	["B187F87A"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.45 }, -- Reaper-17 Corruptor
-	["91B5B69D"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.45 }, -- Traveler-59 Corruptor
+	["77A0E8A9"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 2, avgFirstTurnRatio = 0.60 }, -- Scrin Corruptor
+	["B187F87A"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 2, avgFirstTurnRatio = 0.60 }, -- Reaper-17 Corruptor
+	["91B5B69D"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 2, avgFirstTurnRatio = 0.60 }, -- Traveler-59 Corruptor
 
-	["1A54C1B"]  = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.60 }, -- Scrin Gunwalker
-	["7FCCFDE3"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.60 }, -- Reaper-17 Shard Walker
-	["51430053"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.60 }, -- Traveler-59 Gunwalker
+	["1A54C1B"]  = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 2, avgFirstTurnRatio = 0.60 }, -- Scrin Gunwalker
+	["7FCCFDE3"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 2, avgFirstTurnRatio = 0.60 }, -- Reaper-17 Shard Walker
+	["51430053"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 2, avgFirstTurnRatio = 0.60 }, -- Traveler-59 Gunwalker
 
 	-- GDI UNITS --
 	["D01CFD88"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.45 }, -- GDI APC
@@ -2101,7 +2101,13 @@ end
 function SuddenStopCheck(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil or unitReversing.groupId == nil then return end
+	local groupId = unitReversing.groupId
+	local playerTeam = tostring(ObjectTeamName(self))
+	local group = GetGroup(playerTeam, groupId)
+	if group == nil or group.reverseUnits == nil or group.reverseUnitCount == nil then return resetGroupId() end
+
 	local resetGroupId = function()
+		--CheckExistingGroups(%unitReversing, %group, %groupId)
 		%unitReversing.groupId = nil
 		%unitReversing.groupIdAssigned = false
 		--%unitReversing.firstFrame = 0
@@ -2113,10 +2119,6 @@ function SuddenStopCheck(self)
 	end
 	unitReversing.lastMoveWasReverse = false
 	--unitReversing.isReverseMoving = false
-	local playerTeam = tostring(ObjectTeamName(self))
-	local group = GetGroup(playerTeam, unitReversing.groupId)
-	--local group = unitGroups[unitReversing.groupId]
-	if group == nil or group.reverseUnits == nil or group.reverseUnitCount == nil then return resetGroupId() end
 	local curFrame = GetFrame()
 	-- the duration of the reverse move since this unit came to an abrupt stop
 	-- if most units are still moving but this one suddenly stopped, it bugged
