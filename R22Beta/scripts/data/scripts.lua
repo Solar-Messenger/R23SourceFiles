@@ -2104,18 +2104,12 @@ function SuddenStopCheck(self)
 	local groupId = unitReversing.groupId
 	local playerTeam = tostring(ObjectTeamName(self))
 	local group = GetGroup(playerTeam, groupId)
-	if group == nil or group.reverseUnits == nil or group.reverseUnitCount == nil then return resetGroupId() end
-
-	local resetGroupId = function()
-		--CheckExistingGroups(%unitReversing, %group, %groupId)
-		%unitReversing.groupId = nil
-		%unitReversing.groupIdAssigned = false
-		--%unitReversing.firstFrame = 0
-	end
-	if ObjectTestModelCondition(self, "MOVING") or unitReversing.hasBeenFixed or unitReversing.hasComeToAStop or not unitReversing.lastMoveWasReverse then return resetGroupId() end
+	
+	if group == nil or group.reverseUnits == nil or group.reverseUnitCount == nil then return end
+	if ObjectTestModelCondition(self, "MOVING") or unitReversing.hasBeenFixed or unitReversing.hasComeToAStop or not unitReversing.lastMoveWasReverse then return end
 	-- check if its DOCKING or DOCKING_BEGINNING (to prevent harvesters from checking for bugs while docking)
 	if unitReversing.isReverseMoveHarvester then
-		if ObjectTestModelCondition(self, "DOCKING") or ObjectTestModelCondition(self, "DOCKING_BEGINNING") or ObjectTestModelCondition(self, "DOCKING_ENDING") then return resetGroupId() end
+		if ObjectTestModelCondition(self, "DOCKING") or ObjectTestModelCondition(self, "DOCKING_BEGINNING") or ObjectTestModelCondition(self, "DOCKING_ENDING") then return end
 	end
 	unitReversing.lastMoveWasReverse = false
 	--unitReversing.isReverseMoving = false
@@ -2130,7 +2124,7 @@ function SuddenStopCheck(self)
 	-- 15 frames works for Seeker (frameCount=12), ratio: 15/12 = 1.25
 	-- This is necessary to prevent tagging units that never backed up but got the model state somehow.
 	local unitBugData = unitBugDataTable[getObjectName(self)]
-	if unitBugData == nil then return resetGroupId() end
+	if unitBugData == nil then return end
 	local bugDuration = unitBugData.frameCount
 	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and floor(bugDuration*unitBugData.reallyDamagedDurationMult+0.5) or bugDuration
 	local maxFrameDiff = floor(bugDuration * 1.25)
@@ -2151,7 +2145,7 @@ function SuddenStopCheck(self)
 			FixBuggingUnit(self, true)
 		end
 	end
-	resetGroupId()
+
 end
 
 -- Triggered by -BACKING_UP, this triggers when multiple reverse move commands.
