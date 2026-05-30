@@ -101,6 +101,10 @@ function ClearGroup(playerTeam, groupId)
 	local teamTable = getglobal(playerTeam)
 	if type(teamTable) ~= "table" or type(teamTable.groups) ~= "table" then return false end
 
+	local group = teamTable.groups[groupId]
+	if type(group) == "table" then
+		clearSubTables(group)
+	end
 	teamTable.groups[groupId] = nil
 	return true
 end
