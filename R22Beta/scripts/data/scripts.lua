@@ -1794,7 +1794,7 @@ end
 -- Triggered by +BACKING_UP
 function BackingUp(self)
     local a, unitReversing = GetUnitReversingData(self)
-	if unitReversing == nil then return end
+	if unitReversing == nil or unitReversing.isReverseMoving then return end
 	if unitReversing.isReverseMoveHarvester then
 		if ObjectTestModelCondition(self, "DOCKING") or ObjectTestModelCondition(self, "DOCKING_BEGINNING") or ObjectTestModelCondition(self, "DOCKING_ENDING") then return end
 	end
