@@ -99,12 +99,8 @@ function ClearGroup(playerTeam, groupId)
 	if groupId == nil or not isValidTeam(playerTeam) then return false end
 
 	local teamTable = getglobal(playerTeam)
-	if type(teamTable) ~= "table" or type(teamTable.groups) ~= "table" then return false end
+	if type(teamTable) ~= "table" then return false end
 
-	local group = teamTable.groups[groupId]
-	if type(group) == "table" then
-		clearSubTables(group)
-	end
 	teamTable.groups[groupId] = nil
 	return true
 end
