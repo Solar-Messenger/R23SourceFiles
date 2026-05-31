@@ -1999,7 +1999,7 @@ function CheckExistingGroups(unitReversing, group, groupId)
 			-- WriteToFile("groupUnitList.txt", tostring(unitRef) .. "\n")
 			-- if the id is the same as the id in current index clear it
 			if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].groupId == groupId and EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].stringReference) then
-				unitsReversing[unitRef].groupId = nil
+				--unitsReversing[unitRef].groupId = nil
 				unitsReversing[unitRef].groupIdAssigned = false
 				unitsReversing[unitRef].expectedChecksFlag = false
 				unitsReversing[unitRef].hasBeenCounted = false
