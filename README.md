@@ -4,6 +4,19 @@ In the future, I’m open to sharing, but I want to avoid situations where my wo
 
 This cannot be compiled as a standalone mod as it does not contain all of the 1.02+ files, only the ones I have modified or added over the years.
 
+
+# R24s - R24u Changelog
+
+## Bug Fixes
+
+* Fixed an issue causing Black Hand Commandos to stealth within garrisons.
+* Fixed an issue causing cyborgs, Nod Tiberium infused infantry to not take damage from Infestation Hives.
+* Fixed an issue causing units to go through Stasis Shields while reverse moving. [Video Link]https://youtu.be/qH2a-spm3fI
+* Significant improvements made to the reverse move workaround have been made. [Video Link]https://youtu.be/wCe6bbZnP4U
+* Fixed an issue causing Kane Edition Devastator Warship, Planetary Assault Carriers to show the Traveler Engine mesh after being constructed.
+* A desync cause has been fixed.
+* A crash issue reported by some users from versions R24s to R24t has been fixed.
+
 # R24q Changelog
 
 ## Balance Changes
