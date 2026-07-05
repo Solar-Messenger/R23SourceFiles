@@ -201,9 +201,11 @@
 			<Conditions>-ATTACHED</Conditions>
 		</ObjectStatusEvent>	
 
-		<!-- Used for rax free squads fix -->
+		<!-- Used for rax free squads fix 
+		 -IS_MOVING_TO_RALLY_POINT is when the entire squad has come out -->
+		
 		<ObjectStatusEvent Name="OnLeavingFactory">
-			<Conditions>+UNSELECTABLE +IS_LEAVING_FACTORY</Conditions>
+			<Conditions>-IS_MOVING_TO_RALLY_POINT</Conditions>
 		</ObjectStatusEvent>	
 		
 		<ObjectStatusEvent Name="OnLeavingFactory1">
@@ -213,7 +215,6 @@
 		<ObjectStatusEvent Name="OnEnclosed">
 			<Conditions>+ENCLOSED</Conditions>
 		</ObjectStatusEvent>		
-
 		<!-- Used for raged units -->
 		<ModelConditionEvent Name="OnRaged">
 			<Conditions>+EMOTION_DISSIDENT</Conditions>
@@ -889,6 +890,7 @@
 		<ScriptedEvent Name="OnBeamTargetInit" />	
 
 		<ScriptedEvent Name="TiberiumEvent" />	
+		<ScriptedEvent Name="SquadEvent" />	
 		<ScriptedEvent Name="UnitAnchorEvent" />
 		<ScriptedEvent Name="GettingOutOfTheWayEvent" />
     </Events>
@@ -1286,6 +1288,7 @@
 
 	<EventList Name="GDIZoneTrooperFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIZoneTrooperCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1359,7 +1362,9 @@
 	<EventHandler EventName="OnCreated"	ScriptFunctionName="OnStalkerCreated" DebugSingleStep="false"/>
 	</EventList>
 
+	<!-- disint members-->
 	<EventList Name="RazorDroneFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="SteelTalonsRifleSoldierFunctions_R24" Inherit="BaseScriptFunctions">

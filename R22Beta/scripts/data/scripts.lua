@@ -158,6 +158,7 @@ flushPlayerTeams()
 harvesterData = {}
 crystalData = {}
 unitsReversing = {}
+squadTables = {}
 
 TURN_TRIGGER_COUNT = 2 -- number of turn triggers before checking if unit is bugging
 NO_COLLISION_DURATION = 4 -- seconds to disable collision on a bugged unit during fix
@@ -3131,8 +3132,36 @@ function SquadLookupTable_R24(x)  -- x = object template
 	
 end
 
+function GetSquadAttributes(self)
+
+	local objId = getObjectId(self)
+
+	squadTables[objId] = squadTables[objId] or {
+		squadSize = 0
+	}
+	return objId, squadTables[objId]
+
+end
+
+-- self is the squad member, broadcasting events to horde members doesnt pass the reference of the horde object
+function GetSquadSize(self, string) 
+
+	-- establish relationnship between horde and members 
+	--print(tostring(other))
+	local squad = squadTables[string] 
+	squad.squadSize = squad.squadSize + 1
+	
+end
+
 -- When squad appears at rax
 function OnSquadExitRax_R24(self)	
+	--print("exiting barracks")
+	-- broadcast an event to members test
+	-- ObjectBroadcastEventToAllies(self,"OnCallAPCDestroyed", 99999)
+	local objId,squad = GetSquadAttributes(self)
+	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
+	WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squad.squadSize) .. "\n")
+
 
 	-- Get current frame and object desc
 	local c = GetFrame()
