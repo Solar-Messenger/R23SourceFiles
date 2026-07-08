@@ -1364,7 +1364,7 @@
 				PassengersTestCollisionHeight="-1000"
 				NumberOfExitPaths="1"
 				DoorOpenTime="1"
-				ObjectStatusOfContained="CAN_ATTACK UNSELECTABLE ENCLOSED"
+				ObjectStatusOfContained="CAN_ATTACK UNSELECTABLE ENCLOSED RIDER4"
 				ModifierRequiredTime="100"
 				KillIfEmptyTime="0s"
 				ModelConditionsWhenNotEmpty=""
@@ -1495,6 +1495,9 @@
 				<MemberTemplateStatusInfo
 					ThingTemplate="MutantMarauderSquad"
 					ObjectStatus="RIDER1" />	
+				<MemberTemplateStatusInfo
+					ThingTemplate="GDIZoneTrooperSquad"
+					ObjectStatus="RIDER4" />	
 			</HordeTransportContain>
 			<MoveToPositionAndEvacuateSpecialPower
 				id="DCF3501A"
@@ -1976,4 +1979,3 @@
 		<DisplayUpgrade>Upgrade_GDIAPAmmo</DisplayUpgrade>
 	</GameObject>
 </AssetDeclaration>
-

@@ -159,6 +159,7 @@ harvesterData = {}
 crystalData = {}
 unitsReversing = {}
 squadTables = {}
+squadMemberTable = {}
 
 TURN_TRIGGER_COUNT = 2 -- number of turn triggers before checking if unit is bugging
 NO_COLLISION_DURATION = 4 -- seconds to disable collision on a bugged unit during fix
@@ -3070,77 +3071,32 @@ function OnSquadDestroyed_103(self)
 
 end
 
+-- ############################# R25 Hammerhead Garrison fix ###################################
 
--- How many frames (minimum) it takes for each squad to exit rax (No. members * rax exit delay)
-function SquadLookupTable_R24(x)  -- x = object template
-	
-	local delay1 = 1 -- gdi rax delay
-	local delay2 = 1 -- nod rax delay
-	local delay3 = 5 -- scrin rax delay
-	local ans = 0
-	
-	-- Disints
-	if strfind(tostring(x), "2B9428D0") ~= nil or strfind(tostring(x), "240FB1") ~= nil then
-		ans = 5*delay3
-	-- Shocks
-	elseif strfind(tostring(x), "4803957E") ~= nil or strfind(tostring(x), "6495F509") ~= nil or strfind(tostring(x), "40241AC3") ~= nil then
-		ans = 3*delay3
-	-- Ravs
-	elseif strfind(tostring(x), "32EA13B3") ~= nil or strfind(tostring(x), "7F2D0EF5") ~= nil or strfind(tostring(x), "72A9F5D5") ~= nil then
-		ans = 3*delay3
-	-- Cults
-	elseif strfind(tostring(x), "C46CECA2") ~= nil then
-		ans = 5*delay3
-	-- Rifles
-	elseif strfind(tostring(x), "9096966E") ~= nil or strfind(tostring(x), "AC645E3") ~= nil or strfind(tostring(x), "CF35F1B4") ~= nil then
-		ans = 6*delay1
-	-- Missiles
-	elseif strfind(tostring(x), "EF1252DB") ~= nil or strfind(tostring(x), "EA23C76F") ~= nil or strfind(tostring(x), "17A153BA") ~= nil then
-		ans = 2*delay1
-	-- Grenades
-	elseif strfind(tostring(x), "42896060") ~= nil or strfind(tostring(x), "C43CF79F") ~= nil or strfind(tostring(x), "FC6A915") ~= nil then
-		ans = 4*delay1
-	-- Zones
-	elseif strfind(tostring(x), "5D5E5931") ~= nil or strfind(tostring(x), "D213112") ~= nil or strfind(tostring(x), "7E8CB87C") ~= nil then
-		ans = 4*delay1
-	-- Militants
-	elseif strfind(tostring(x), "BC36257A") ~= nil then
-		ans = 9*delay2
-	-- Rockets
-	elseif strfind(tostring(x), "89C45844") ~= nil or strfind(tostring(x), "20126F6") ~= nil or strfind(tostring(x), "C3011861") ~= nil then
-		ans = 2*delay2
-	-- Shadows
-	elseif strfind(tostring(x), "A6E10008") ~= nil or strfind(tostring(x), "6AEA240A") ~= nil then
-		ans = 4*delay2
-	-- Blackhands/Tibtrooper
-	elseif strfind(tostring(x), "5F44F92F") ~= nil or strfind(tostring(x), "128ABF1") ~= nil or strfind(tostring(x), "E6E24EF7") ~= nil then
-		ans = 6*delay2
-	-- Fanatics
-	elseif strfind(tostring(x), "BE7C389D") ~= nil or strfind(tostring(x), "8E0F9C9") ~= nil or strfind(tostring(x), "6093B1BE") ~= nil then
-		ans = 5*delay2
-	-- Enlightened/Awakened
-	elseif strfind(tostring(x), "D5BE6F6C") ~= nil or strfind(tostring(x), "B27DDF67") ~= nil then
-		ans = 3*delay2
-	-- Concabs
-	elseif strfind(tostring(x), "FDEF5E7") ~= nil then
-		ans = 6*delay2		
-	else 
-		return nil
-	end
-	
-	return ans
-	
+function GarrisonedInHammerheads(self)
+	print("a unit has entered the hammerhead!")
 end
 
 function GetSquadAttributes(self)
-
 	local objId = getObjectId(self)
-
 	squadTables[objId] = squadTables[objId] or {
 		squadSize = 0
 	}
 	return objId, squadTables[objId]
+end
 
+function GetSquadMemberAttributes(self)
+	local objId = getObjectId(self)
+	squadMemberTable[objId] = squadMemberTable[objId] or {
+		squadObject = nil
+	}
+	return objId, squadTables[objId]
+end
+
+-- Enters in Hammerhead Event (here we enable the banner carrier via ObjectStatus change referenced via a stringref and disable 
+-- the members with NO_ATTACK object status, also via  string ref)
+function OnSquadGarrisonedHammerhead(self)
+	print("the squad has entered the hammerhead!")
 end
 
 -- self is the squad member, broadcasting events to horde members doesnt pass the reference of the horde object
@@ -3150,7 +3106,13 @@ function GetSquadSize(self, string)
 	--print(tostring(other))
 	local squad = squadTables[string] 
 	squad.squadSize = squad.squadSize + 1
-	
+	-- get object description of member
+	WriteToFile("ObjectDescription.txt",  "Object: " .. tostring(getObjectName(self)) .. "\n")
+	-- if this member is the banner carrier flag it
+
+	-- associate this squad member with the squad object 
+	local objId,squadMember = GetSquadMemberAttributes(self)
+	squadMember[objId].squadObject = string
 end
 
 -- When squad appears at rax
@@ -3160,56 +3122,15 @@ function OnSquadExitRax_R24(self)
 	-- ObjectBroadcastEventToAllies(self,"OnCallAPCDestroyed", 99999)
 	local objId,squad = GetSquadAttributes(self)
 	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
+	-- squad size is 4 here. 
 	WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squad.squadSize) .. "\n")
 
-
-	-- Get current frame and object desc
-	local c = GetFrame()
-	local a = ObjectDescription(self)
-	
-	--local s = "Unit leaving factory: " .. a
-	--ExecuteAction("SHOW_MILITARY_CAPTION", s, 2)		
-	
-	-- Save current frame and object into table
-	squadtable[a] = c
-	
-end
-
--- When squad finishes leaving rax
-function OnSquadExitRax1_R24(self)
-
-	-- Get current frame and object desc
-	local c = GetFrame()
-	local a = ObjectDescription(self)
-
-	if squadtable[a] ~= nil then
-		
-		-- Subtract current frame from saved frame in table to get time difference
-		local diff = c - squadtable[a]
-		local squadLookUp = SquadLookupTable_R24(ObjectTemplateName(self))	
-		--local s = "Factory exit time: " .. tostring(diff) .. ", Expected exit time: " .. tostring(squadLookUp)
-		--ExecuteAction("SHOW_MILITARY_CAPTION", s, 2)	
-
-		-- If diff is less than time taken for full squad to exit, kill the squad
-		if squadLookUp ~= nil then
-			if diff < squadLookUp then
-				ExecuteAction("NAMED_DELETE", self);		
-				--local s = "Unit destroyed to prevent exploit: " .. tostring(a)
-				--ExecuteAction("SHOW_MILITARY_CAPTION", s, 2)				
-			end
-		end
-
-		-- To ensure this routine is never re-run (eg when garrisoning)
-		squadtable[a] = nil
-	end
-	
 end
 
 function OnSquadDestroyed_R24(self)
-	local a = ObjectDescription(self)
-
-	-- To ensure this routine is never re-run (eg when garrisoning)
-	squadtable[a] = nil
+	local objId = getObjectId(self)
+	-- cleanup
+	squadTables[objId] = nil
 
 end
 
