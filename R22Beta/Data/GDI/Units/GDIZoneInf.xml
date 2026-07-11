@@ -1133,9 +1133,6 @@
 				<TriggeredBy>Upgrade_ZoneTrooperScannerPack</TriggeredBy>
 			</StatusBitsUpgrade>				
 			
-			<LaserState
-				id="91499CE3"
-				LaserId="0" />
 			<Physics
 				id="CD7D8A59"
 				MaxXRotationVelocity="360"
@@ -1759,7 +1756,7 @@
 		<DisplayUpgrade>Upgrade_ZoneTrooperAutoInjectors</DisplayUpgrade>
 	</GameObject>
 
-
+	<!-- REMOVE ATTACK_NEEDS_LINE_OF_SIGHT -->
 	<GameObject
 		id="GDIZoneTrooperGarrisoned"
 		KindOf="SELECTABLE CAN_ATTACK CAN_CAST_REFLECTIONS INFANTRY PRELOAD ATTACK_NEEDS_LINE_OF_SIGHT PATH_THROUGH_INFANTRY LINE_OF_SIGHT_IGNORES_BUILDINGS"
@@ -1865,6 +1862,8 @@
 			ConquerMetricsOverrideAntiMask="ANTI_GROUND"
 			UnitBuilderStandardCombatUnit="True" />
 		<Draws>
+			
+
 			<ScriptedModelDraw
 				id="ModuleTag_Draw"
 				OkToChangeModelColor="true"
@@ -1872,811 +1871,215 @@
 				MaxRecoilDistance="0.1"
 				RecoilDamping="2.0"
 				RecoilSettleSpeed="3.0"
-				ExtraPublicBone="MUZZLEFLASH">
+				ExtraPublicBone="ZT_HIPS ZT_RFOREARM MAIN_THRSTR_L RIFLE">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT">
 					<Model
-						Name="W3DContainer:GUZNTRPR_SKN2" />
+						Name="W3DContainer:GUZNTRPR_SKNGAR" />
 					<WeaponFireFXBone
 						WeaponSlotType="PRIMARY_WEAPON"
-						BoneName="MUZZLEFLASH" />
+						WeaponSlotID="1"
+						BoneName="ZT_HIPS" />
 					<WeaponRecoilBone
 						WeaponSlotType="PRIMARY_WEAPON"
-						BoneName="MUZZLEFLASH" />
+						WeaponSlotID="1"
+						BoneName="ZT_HIPS" />
 					<WeaponMuzzleFlash
 						WeaponSlotType="PRIMARY_WEAPON"
-						BoneName="MUZZLEFLASH" />
+						WeaponSlotID="1"
+						BoneName="ZT_HIPS" />
 					<WeaponLaunchBone
 						WeaponSlotType="PRIMARY_WEAPON"
-						BoneName="MUZZLEFLASH" />
-				</ModelConditionState>
+						WeaponSlotID="1"
+						BoneName="ZT_HIPS" />
 
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="FORMATION_PREVIEW">
-					<Model
-						Name="W3DContainer:FXInfantry_FP" />
-				</ModelConditionState>
-			
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_1">
-					<Model
-						Name="W3DContainer:GUZNTRPR_SKN2" />
-					<Texture
-						Original="GUZnTrpr"
-						New="GUZnTrpr01" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_2">
-					<Model
-						Name="W3DContainer:GUZNTRPR_SKN2" />
-					<Texture
-						Original="GUZnTrpr"
-						New="GUZnTrpr02" />
-				</ModelConditionState>
-				
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_3">
-					<Model
-						Name="W3DContainer:GUZNTRPR_SKN2" />
-					<Texture
-						Original="GUZnTrpr"
-						New="GUZnTrpr03" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_4">
-					<Model
-						Name="W3DContainer:GUZNTRPR_SKN2" />
-					<Texture
-						Original="GUZnTrpr"
-						New="GUZnTrpr04" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6">
-					<Model
-						Name="W3DContainer:GUZNTRPR_SKN2" />
-					<Texture
-						Original="GUZnTrpr"
-						New="GUZnTrpr05" />
-				</ModelConditionState>
-		
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="FORMATION_PREVIEW">
-					<!-- no anim -->
-				</AnimationState>
-				
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="INSIDE_GARRISON">
-					<Model
-						Name="W3DContainer:GUGar_Zone" />
+					<!-- weapon 2-->
+
 					<WeaponFireFXBone
 						WeaponSlotType="PRIMARY_WEAPON"
-						BoneName="B_WEAPONA_FX" />
+						WeaponSlotID="2"
+						BoneName="ZT_RFOREARM" />
+					<WeaponRecoilBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						WeaponSlotID="2"
+						BoneName="ZT_RFOREARM" />
+					<WeaponMuzzleFlash
+						WeaponSlotType="PRIMARY_WEAPON"
+						WeaponSlotID="2"
+						BoneName="ZT_RFOREARM" />
 					<WeaponLaunchBone
 						WeaponSlotType="PRIMARY_WEAPON"
-						BoneName="B_WEAPONA_FX" />
+						WeaponSlotID="2"
+						BoneName="ZT_RFOREARM" />
+
+					<!-- weapon 3 -->
+
+					<WeaponFireFXBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						WeaponSlotID="3"
+						BoneName="MAIN_THRSTR_L" />
+					<WeaponRecoilBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						WeaponSlotID="3"
+						BoneName="MAIN_THRSTR_L" />
+					<WeaponMuzzleFlash
+						WeaponSlotType="PRIMARY_WEAPON"
+						WeaponSlotID="3"
+						BoneName="MAIN_THRSTR_L" />
+					<WeaponLaunchBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						WeaponSlotID="3"
+						BoneName="MAIN_THRSTR_L" />
+						
+					<!-- weapon 4 -->
+
+					<WeaponFireFXBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						WeaponSlotID="4"
+						BoneName="RIFLE" />
+					<WeaponRecoilBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						WeaponSlotID="4"
+						BoneName="RIFLE" />
+					<WeaponMuzzleFlash
+						WeaponSlotType="PRIMARY_WEAPON"
+						WeaponSlotID="4"
+						BoneName="RIFLE" />
+					<WeaponLaunchBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						WeaponSlotID="4"
+						BoneName="RIFLE" />
 				</ModelConditionState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="INSIDE_GARRISON">
-					<!-- no anim -->
-				</AnimationState>
-				<!-- IDLE STATES -->
-        <AnimationState
-					ParseCondStateType="PARSE_DEFAULT"
-					StateName="STATE_Idle"
-					Flags="RESTART_ANIM_WHEN_COMPLETE">
-         <!-- AllowRepeatInRandomPick="true" -->
-          <Animation
-						AnimationName="GUZnTrpr_BRDA"
-						AnimationMode="ONCE"
-            AnimationBlendTime="15"
-						AnimationPriority="75"
-						AnimationSpeedFactorMin="0.9"
-						AnimationSpeedFactorMax="1.1" />
-          <Animation
-						AnimationName="GUZnTrpr_BRDE"
-						AnimationMode="ONCE"
-            AnimationBlendTime="5"
-						AnimationPriority="25"
-            AnimationSpeedFactorMin="0.9"
-						AnimationSpeedFactorMax="1.1" />
-          <Animation
-						AnimationName="GUZnTrpr_BRDF"
-						AnimationMode="ONCE"
-            AnimationBlendTime="5"
-						AnimationPriority="25"
-            AnimationSpeedFactorMin="0.9"
-						AnimationSpeedFactorMax="1.1" />
-          <Animation
-						AnimationName="GUZnTrpr_BRDG"
-						AnimationMode="ONCE"
-            AnimationBlendTime="5"
-						AnimationPriority="6"
-            AnimationSpeedFactorMin="0.9"
-						AnimationSpeedFactorMax="1.1" />
-          <!-- 
-          <Animation
-						AnimationName="GUZnTrpr_BRDB"
-						AnimationMode="ONCE"
-            AnimationBlendTime="5"
-						AnimationPriority="15"
-            AnimationSpeedFactorMin="0.9"
-						AnimationSpeedFactorMax="1.1" />  -->
-          <Animation
-						AnimationName="GUZnTrpr_BRDC"
-						AnimationMode="ONCE"
-            AnimationBlendTime="5"
-						AnimationPriority="6"
-            AnimationSpeedFactorMin="0.9"
-						AnimationSpeedFactorMax="1.1" />
-          <Animation
-						AnimationName="GUZnTrpr_BRDD"
-						AnimationMode="ONCE"
-            AnimationBlendTime="5"
-						AnimationPriority="15"
-            AnimationSpeedFactorMin="0.9"
-						AnimationSpeedFactorMax="1.1" />
-        </AnimationState>
-				<!-- DYING -->
-				<!--
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="FRONTCRUSHED">
-					<Animation
-						AnimationName="AUShkTrpr_CDTA"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				-->
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="FRONTCRUSHED">
-					<Animation
-						AnimationName="GUZNTRPR_DIED"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="BACKCRUSHED">
-					<Animation
-						AnimationName="GUZNTRPR_CDTC"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Animation
-						AnimationName="GUZNTRPR_DIEA"
-						AnimationMode="ONCE" />
-					<Animation
-						AnimationName="GUZNTRPR_DIEB"
-						AnimationMode="ONCE" />
-					<Animation
-						AnimationName="GUZNTRPR_DIEC"
-						AnimationMode="ONCE" />
-					<Animation
-						AnimationName="GUZNTRPR_DIED"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<!-- AIRBORNE - Jumpjet ability -->
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="SPECIAL_WEAPON_ONE UNPACKING"
-					StateName="State_JumpJetInitiate">
-					<Animation
-						AnimationName="GUZNTRPR_JET1"
-						AnimationMode="ONCE" />
-					<ParticleSysBone
-						BoneName="Main_Thrstr_R"
-						FXParticleSystemTemplate="GDIZTJumpStartDist"
-						FollowBone="true" />
-					<ParticleSysBone
-						BoneName="Main_Thrstr_R"
-						FXParticleSystemTemplate="GDIZTJumpStartFire"
-						FollowBone="true" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="ABOUT_TO_HIT"
-					StateName="State_AboutToLand">
-					<Animation
-						AnimationName="GUZNTRPR_JET4"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="SPECIAL_WEAPON_ONE PACKING"
-					StateName="State_JumpJetJumping">
-					<Animation
-						AnimationName="GUZNTRPR_JET2"
-						AnimationMode="ONCE" />
-					<ParticleSysBone
-						BoneName="MAIN_THRSTR"
-						FXParticleSystemTemplate="GDIZTFireDust"
-						FollowBone="true" />
-					<ParticleSysBone
-						BoneName="MAIN_THRSTR"
-						FXParticleSystemTemplate="GDIZTFireDist"
-						FollowBone="true" />
-					<ParticleSysBone
-						BoneName="MAIN_THRSTR"
-						FXParticleSystemTemplate="GDIZTFireFire"
-						FollowBone="true" />
-					<ParticleSysBone
-						BoneName="ZT_SPINE2"
-						FXParticleSystemTemplate="GDIZTJumpTrailFire"
-						FollowBone="true" />
-					<ParticleSysBone
-						BoneName="ZT_SPINE2"
-						FXParticleSystemTemplate="GDIZTJumpTrailSmoke"
-						FollowBone="true" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="THROWN_PROJECTILE">
-					<Animation
-						AnimationName="GUZNTRPR_JET3"
-						AnimationMode="ONCE"
-						AnimationBlendTime="10"/>
-					<ParticleSysBone
-						BoneName="ZT_SPINE2"
-						FXParticleSystemTemplate="GDIZTJumpTrailFire"
-						FollowBone="true" />
-					<ParticleSysBone
-						BoneName="ZT_SPINE2"
-						FXParticleSystemTemplate="GDIZTJumpTrailSmoke"
-						FollowBone="true" />					
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="STUNNED_FLAILING"
-					Flags="RANDOMSTART">
-					<Animation
-						AnimationName="GUZNTRPR_FLYA"
-						AnimationMode="LOOP" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING SPLATTED">
-					<Animation
-						AnimationName="GUZNTRPR_LNDA"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="STUNNED_STANDING_UP">
-					<Animation
-						AnimationName="GUZNTRPR_GTPA"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="STUNNED">
-					<Animation
-						AnimationName="GUZNTRPR_LNDA"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<!-- MOVING AND ATTACKING -->
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="MOVING FIRING_OR_PREATTACK_A"
-					Flags="RANDOMSTART">
-					<Animation
-						AnimationName="GUZNTRPR_RUNA"
-						AnimationMode="LOOP"
-						Distance="50" />
-				</AnimationState>
-				<!-- MOVING -->
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="MOVING"
-					Flags="RANDOMSTART RESTART_ANIM_WHEN_COMPLETE">
-          <!--	<Animation
-						AnimationName="GUZNTRPR_RUNA"
-						AnimationMode="LOOP"
-						Distance="50" /> -->
-					<Animation
-						AnimationName="GUZNTRPR_RUNB"
-						AnimationMode="LOOP"
-						AnimationPriority="75"
-						Distance="50" />
-					<Animation
-						AnimationName="GUZNTRPR_RUNC"
-						AnimationMode="LOOP"
-						AnimationPriority="75"
-						Distance="50" />
-				</AnimationState>
-				<!-- ATTACKING -->
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="FIRING_OR_PREATTACK_A">
-					<Animation
-						AnimationName="GUZnTrpr_FIRC"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USING_WEAPON_A">
-					<Animation
-						AnimationName="GUZNTRPR_FIRC"
-						AnimationMode="MANUAL" />
-				</AnimationState>
-				<!-- EMOTIONS -->
-				<!-- CELEBRATING -->
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-          Flags="RESTART_ANIM_WHEN_COMPLETE"
-					ConditionsYes="EMOTION_CELEBRATING">
-					<Animation
-						AnimationName="GUZNTRPR_CHRA"
-						AnimationMode="ONCE"
-            AnimationBlendTime="10"
-						AnimationSpeedFactorMin="0.8"
-						AnimationSpeedFactorMax="1.2" />
-          <Animation
-						AnimationName="GUZNTRPR_CHRC"
-						AnimationMode="ONCE"
-            AnimationBlendTime="10"
-						AnimationSpeedFactorMin="0.8"
-						AnimationSpeedFactorMax="1.2" />
-				</AnimationState>
-				<!-- SELECTED -->
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="SELECTED"
-          Flags="RESTART_ANIM_WHEN_COMPLETE"
-					StateName="STATE_Selected">
-					<Animation
-						AnimationName="GUZnTrpr_IDLA"
-						AnimationMode="ONCE"
-            AnimationBlendTime="15"
-            AnimationPriority="50"
-            AnimationSpeedFactorMin="0.8"
-						AnimationSpeedFactorMax="1.2" />
-          <Animation
-						AnimationName="GUZnTrpr_IDLB"
-						AnimationMode="ONCE"
-            AnimationBlendTime="5"
-            AnimationPriority="25"
-            AnimationSpeedFactorMin="0.8"
-						AnimationSpeedFactorMax="1.2" />
-          <Animation
-						AnimationName="GUZnTrpr_IDLC"
-						AnimationMode="ONCE"
-            AnimationBlendTime="5"
-            AnimationPriority="15"
-            AnimationSpeedFactorMin="0.8"
-						AnimationSpeedFactorMax="1.2" />
-          <Animation
-						AnimationName="GUZnTrpr_IDLD"
-						AnimationMode="ONCE"
-            AnimationBlendTime="5"
-            AnimationPriority="25"
-            AnimationSpeedFactorMin="0.8"
-						AnimationSpeedFactorMax="1.2" />
-          <Animation
-						AnimationName="GUZnTrpr_IDLE"
-						AnimationMode="ONCE"
-            AnimationBlendTime="5"
-            AnimationPriority="15"
-            AnimationSpeedFactorMin="0.8"
-						AnimationSpeedFactorMax="1.2" />
-				</AnimationState>
-				<!-- TRANSITIONS -->
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					AnimNickName=""
-					ConditionsYes=""
-					Name=""
-					StateName="TRANS_AboutToHitGround_To_Idle"
-					Flags=""
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						Flags=""
-						AnimationName="GUZNTRPR_JET5"
-						AnimationMode="ONCE"
-						AnimNickName=""
-						Distance="0"
-						AnimationBlendTime="5"
-						AnimationSpeedFactorMin="0.5"
-						AnimationSpeedFactorMax="0.5"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					StateName="TRANS_IdleToSelected">
-					<Animation
-						AnimationName="GUZNTRPR_ATNA"
-						AnimationMode="ONCE"
-            AnimationBlendTime="5"
-						AnimationSpeedFactorMin="0.9"
-						AnimationSpeedFactorMax="1.1" />
-          <Animation
-						AnimationName="GUZNTRPR_ATNB"
-						AnimationMode="ONCE"
-            AnimationBlendTime="5"
-						AnimationSpeedFactorMin="0.9"
-						AnimationSpeedFactorMax="1.1" />
-					<Animation
-						AnimationName="GUZNTRPR_ATNC"
-						AnimationMode="ONCE"
-            AnimationBlendTime="5"
-						AnimationSpeedFactorMin="0.9"
-						AnimationSpeedFactorMax="1.1" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					StateName="TRANS_SelectedToIdle">
-					<Animation
-						AnimationName="GUZNTRPR_2BRD"
-						AnimationMode="ONCE"
-            AnimationBlendTime="18"
-						AnimationSpeedFactorMin="0.9"
-						AnimationSpeedFactorMax="1.1" />
-          <Animation
-						AnimationName="GUZNTRPR_2BRDB"
-						AnimationMode="ONCE"
-            AnimationBlendTime="18"
-						AnimationSpeedFactorMin="0.8"
-						AnimationSpeedFactorMax="1.1" />
-				</AnimationState>
+		
 			</ScriptedModelDraw>
 
-			<ScriptedModelDraw		
-				id="ModuleTag_DrawJumpJetFX">
-				<ModelConditionState
-					ParseCondStateType="PARSE_DEFAULT">
-					<Model
-						Name="" />
-				</ModelConditionState>
-				<AnimationState
-					ParseCondStateType="PARSE_DEFAULT"
-					StateName="STATE_Idle">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-						Prev = CurDrawablePrevAnimationState()
-						if Prev == "State_AboutToLand" then CurDrawableSetTransitionAnimState( "TRANS_AboutToHitGround_To_Idle" ) end						
-					</Script>
-				</AnimationState>
-				<!--
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="JUST_BUILT">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")									
-					</Script>
-				</AnimationState>
-	-->
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="INSIDE_GARRISON">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="FRONTCRUSHED">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="BACKCRUSHED">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-		
-				<!-- jump jetting -->
-		
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="SPECIAL_WEAPON_ONE UNPACKING"
-					StateName="State_JumpJetInitiate">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-		
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="ABOUT_TO_HIT"
-					StateName="State_AboutToLand">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="SPECIAL_WEAPON_ONE PACKING"
-					StateName="State_JumpJetJumping">
-					<Script>
-						CurDrawableShowSubObject("UGJump2")
-						Prev = CurDrawablePrevAnimationState();
-						if Prev == "State_AboutToLand" then CurDrawableSetTransitionAnimState( "TRANS_AboutToHitGround_To_Idle" ) end;
-					</Script>
-				</AnimationState>
-			
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="THROWN_PROJECTILE">
-					<Script>
-						CurDrawableShowSubObject("UGJump2")				
-					</Script>			
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="STUNNED_FLAILING">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING SPLATTED">
-						<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="STUNNED_STANDING_UP">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="STUNNED">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="MOVING FIRING_OR_PREATTACK_A">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")	
-						Prev = CurDrawablePrevAnimationState();
-						if Prev == "State_AboutToLand" then CurDrawableSetTransitionAnimState( "TRANS_AboutToHitGround_To_Idle" ) end;
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="MOVING">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="FIRING_OR_PREATTACK_A">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USING_WEAPON_A">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="EMOTION_CELEBRATING">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="SELECTED">
-					<Script>
-						Prev = CurDrawablePrevAnimationState()
-						if Prev == "STATE_Idle" then CurDrawableSetTransitionAnimState("TRANS_IdleToSelected") end
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_1">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_2">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_3">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_4">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-				
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					StateName="TRANS_AboutToHitGround_To_Idle">
-					<Script>
-						CurDrawableHideSubObject("UGJump2")				
-					</Script>
-				</AnimationState>
-			</ScriptedModelDraw>
-
-			<SpotlightDraw
-				id="2380E047"
-				Name=""
-				RecoilDamping="0.4"
-				MaxRecoilDistance="3"
-				InitialRecoilSpeed="2"
-				RecoilSettleSpeed="0.065"
-				MinLODRequired="LOW"
-				ProjectileBoneFeedbackEnabledSlots=""
-				TrackMarks=""
-				AttachToBoneInAnotherModule="Zt_Spine2"
-				DependencySharedModelFlags=""
-				TrackMarksLeftBone=""
-				TrackMarksRightBone=""
-				RampMesh1=""
-				RampMesh2=""
-				WallBoundsMesh=""
-				RaisedWallMesh=""
-				HighDetailLODThreshold="0"
-				LowDetailLODThreshold="0"
-				WadingParticleSys=""
-				AlphaCameraFadeOuterRadius="0"
-				AlphaCameraFadeInnerRadius="0"
-				AlphaCameraAtInnerRadius="100%"
-				StaticSortLevelWhileFading="-1"
-				BirthFadeTime="0"
-				OkToChangeModelColor="False"
-				AnimationsRequirePower="True"
-				UseYAxisForTurretRotation="False"
-				TrackMarksOnlyWhenCorneringQuickly="False"
-				UseProducerTexture="False"
-				NoRotate="False"
-				UseFiringArcRotation="False"
-				Selectable="True"
-				RandomTextureFixedRandomIndex="False"
-				ParticlesAttachedToAnimatedBones="False"
-				ParticleBonesCheckDrawable="False"
-				ShadowForceDisable="False"
-				SwitchModelLODMode="False"
-				StaticModelLODMode="False"
-				ShowShadowWhileContained="False"
-				UseStandardModelNames="False"
-				UseDefaultAnimation="False"
-				BirthFadeAdditive="False"
-				ZWriteDisableOverride="False"
-				MultiPlayerOnly="False"
-				AffectedByStealth="True"
-				InvertStealthOpacity="False"
-				HighDetailOnly="False"
-				SetAnimsToLastFrameOnConstructionComplete="True"
-				RefreshTime="2s"
-				SweepTime="1s"
-				AlwaysOn="False">
-				<ModelConditionState
-					ParseCondStateType="PARSE_DEFAULT"
-					Name=""
-					ConditionsYes=""
-					Skeleton=""
-					ModelAnimationPrefix=""
-					PortraitImage=""
-					ButtonImage=""
-					OverrideTooltip=""
-					id=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DMesh:FXSPOTLIGHT"
-						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					Name=""
-					ConditionsYes="FORMATION_PREVIEW"
-					Skeleton=""
-					ModelAnimationPrefix=""
-					PortraitImage=""
-					ButtonImage=""
-					OverrideTooltip=""
-					id=""
-					RetainSubObjects="False">
-					<Model
-						Name=""
-						ExtraMesh="False" />
-				</ModelConditionState>
-			</SpotlightDraw>	
 			<LaserDraw
-				id="A9F37056"
+				id="ModuleTag_LaserDistort0"
+				UseDistortionShader="true"
 				Texture1_UTile="1"
-				Texture1_VTile="0.5"
-				Texture2_UTile="1"
-				Texture2_VTile="0.01"
+				Texture1_VTile=".5"
 				Texture1_UScrollRate="0"
-				Texture1_VScrollRate="0.2"
-				Texture2_UScrollRate="0"
-				Texture2_VScrollRate="1"
+				Texture1_VScrollRate=".2"
 				Texture1_NumFrames="1"
 				Texture1_FrameRate="30"
+				Texture2_UTile="1"
+				Texture2_VTile=".01"
+				Texture2_UScrollRate="0"
+				Texture2_VScrollRate="1"
 				Texture2_NumFrames="1"
 				Texture2_FrameRate="1"
-				LaserWidth="50"
-				WeaponSlotID="-1"
 				LaserStateID="0"
-				UseDistortionShader="True">
+				WeaponSlotID="1"
+				LaserWidth="50">
 				<FXShader
 					ShaderName="Laser.fx"
-					TechniqueName=""
 					TechniqueIndex="0">
 					<Constants>
 						<Texture
 							Name="Texture1">
-							<Value>FXRailgunCoreDistortion</Value>
+							<Value>FXRailGunCoreDistortion</Value>
+						</Texture>
+						<Texture
+							Name="Texture2">
+							<Value>FXRailGunCoreMask</Value>
+						</Texture>
+					</Constants>
+				</FXShader>
+			</LaserDraw>
+
+			<LaserDraw
+				id="ModuleTag_LaserDistort1"
+				UseDistortionShader="true"
+				Texture1_UTile="1"
+				Texture1_VTile=".5"
+				Texture1_UScrollRate="0"
+				Texture1_VScrollRate=".2"
+				Texture1_NumFrames="1"
+				Texture1_FrameRate="30"
+				Texture2_UTile="1"
+				Texture2_VTile=".01"
+				Texture2_UScrollRate="0"
+				Texture2_VScrollRate="1"
+				Texture2_NumFrames="1"
+				Texture2_FrameRate="1"
+				LaserStateID="1"
+				WeaponSlotID="2"
+				LaserWidth="50">
+				<FXShader
+					ShaderName="Laser.fx"
+					TechniqueIndex="0">
+					<Constants>
+						<Texture
+							Name="Texture1">
+							<Value>FXRailGunCoreDistortion</Value>
+						</Texture>
+						<Texture
+							Name="Texture2">
+							<Value>FXRailGunCoreMask</Value>
+						</Texture>
+					</Constants>
+				</FXShader>
+			</LaserDraw>
+
+			<LaserDraw
+				id="ModuleTag_LaserDistort2"
+				UseDistortionShader="true"
+				Texture1_UTile="1"
+				Texture1_VTile=".5"
+				Texture1_UScrollRate="0"
+				Texture1_VScrollRate=".2"
+				Texture1_NumFrames="1"
+				Texture1_FrameRate="30"
+				Texture2_UTile="1"
+				Texture2_VTile=".01"
+				Texture2_UScrollRate="0"
+				Texture2_VScrollRate="1"
+				Texture2_NumFrames="1"
+				Texture2_FrameRate="1"
+				LaserStateID="2"
+				WeaponSlotID="3"
+				LaserWidth="50">
+				<FXShader
+					ShaderName="Laser.fx"
+					TechniqueIndex="0">
+					<Constants>
+						<Texture
+							Name="Texture1">
+							<Value>FXRailGunCoreDistortion</Value>
+						</Texture>
+						<Texture
+							Name="Texture2">
+							<Value>FXRailGunCoreMask</Value>
+						</Texture>
+					</Constants>
+				</FXShader>
+			</LaserDraw>
+
+			<LaserDraw
+				id="ModuleTag_LaserDistort3"
+				UseDistortionShader="true"
+				Texture1_UTile="1"
+				Texture1_VTile=".5"
+				Texture1_UScrollRate="0"
+				Texture1_VScrollRate=".2"
+				Texture1_NumFrames="1"
+				Texture1_FrameRate="30"
+				Texture2_UTile="1"
+				Texture2_VTile=".01"
+				Texture2_UScrollRate="0"
+				Texture2_VScrollRate="1"
+				Texture2_NumFrames="1"
+				Texture2_FrameRate="1"
+				LaserStateID="3"
+				WeaponSlotID="4"
+				LaserWidth="50">
+				<FXShader
+					ShaderName="Laser.fx"
+					TechniqueIndex="0">
+					<Constants>
+						<Texture
+							Name="Texture1">
+							<Value>FXRailGunCoreDistortion</Value>
 						</Texture>
 						<Texture
 							Name="Texture2">
@@ -2863,7 +2266,9 @@
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
 				</WeaponSlotHardpoint>
-				<!-- WEAPON_UPRADED_01 -->
+
+				
+				<!-- WEAPON_UPRADED_01
 				<WeaponSlotHardpoint
 					ID="2"
 					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
@@ -2875,22 +2280,22 @@
 						Upgrade="Upgrade_SquadMember1Enhanced"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />	
-				</WeaponSlotHardpoint>
+				</WeaponSlotHardpoint>  -->
 
 				<!-- squad member 2 -->
 				<WeaponSlotHardpoint
-					ID="3"
+					ID="2"
 					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
 					WeaponChoiceCriteria="PREFER_MOST_DAMAGE"
 					AllowInterleavedFiring="False">
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="ZoneTrooperMachineGun"
+						Template="ZoneTrooperMachineGun2"
 						Upgrade="Upgrade_SquadMember2"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
 				</WeaponSlotHardpoint>
-				<!-- WEAPON_UPRADED_01 -->
+				<!-- WEAPON_UPRADED_01 
 				<WeaponSlotHardpoint
 					ID="4"
 					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
@@ -2902,22 +2307,22 @@
 						Upgrade="Upgrade_SquadMember2Enhanced"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />	
-				</WeaponSlotHardpoint>
+				</WeaponSlotHardpoint> -->
 
 				<!-- squad member 3 -->
 				<WeaponSlotHardpoint
-					ID="5"
+					ID="3"
 					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
 					WeaponChoiceCriteria="PREFER_MOST_DAMAGE"
 					AllowInterleavedFiring="False">
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="ZoneTrooperMachineGun"
+						Template="ZoneTrooperMachineGun3"
 						Upgrade="Upgrade_SquadMember3"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
 				</WeaponSlotHardpoint>
-				<!-- WEAPON_UPRADED_01 -->
+				<!-- WEAPON_UPRADED_01
 				<WeaponSlotHardpoint
 					ID="6"
 					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
@@ -2929,22 +2334,22 @@
 						Upgrade="Upgrade_SquadMember3Enhanced"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />	
-				</WeaponSlotHardpoint>
+				</WeaponSlotHardpoint>  -->
 
 				<!-- squad member 4 -->
 				<WeaponSlotHardpoint
-					ID="7"
+					ID="4"
 					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
 					WeaponChoiceCriteria="PREFER_MOST_DAMAGE"
 					AllowInterleavedFiring="False">
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="ZoneTrooperMachineGun"
+						Template="ZoneTrooperMachineGun4"
 						Upgrade="Upgrade_SquadMember4"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
 				</WeaponSlotHardpoint>
-				<!-- WEAPON_UPRADED_01 -->
+				<!-- WEAPON_UPRADED_01
 				<WeaponSlotHardpoint
 					ID="8"
 					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
@@ -2956,13 +2361,9 @@
 						Upgrade="Upgrade_SquadMember4Enhanced"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />	
-				</WeaponSlotHardpoint>
+				</WeaponSlotHardpoint>  -->
 
 			</WeaponSetUpdate>
-
-			<RandomModelCondition
-				id="ModuleTag_RandomSkin"
-				Conditions="USER_1 USER_2 USER_3 USER_4 USER_6" /> 
 			
 			<StatusBitsUpgrade
 				id="ModuleTag_UpgradeWeapon"
@@ -2972,8 +2373,17 @@
 			
 			<!-- add three more laser states here -->
 			<LaserState
-				id="91499CE3"
-				LaserId="0" />
+				id="ModuleTag_LaserState"
+				LaserId="0"></LaserState>
+			<LaserState
+				id="ModuleTag_LaserState1"
+				LaserId="1"></LaserState>
+			<LaserState
+				id="ModuleTag_LaserState2"
+				LaserId="2"></LaserState>
+			<LaserState
+				id="ModuleTag_LaserState3"
+				LaserId="3"></LaserState>
 			<Physics
 				id="CD7D8A59"
 				MaxXRotationVelocity="360"
@@ -4031,8 +3441,8 @@
 				<BannerCarrierPosition>
 					<UnitType>GDIZoneTrooperGarrisoned</UnitType>
 					<Pos
-						x="-20"
-						y="-20" />
+						x="0"
+						y="0" />
 				</BannerCarrierPosition>
 				<BannerCarriersAllowed>GDIZoneTrooperGarrisoned</BannerCarriersAllowed>
 			</HordeContain>
