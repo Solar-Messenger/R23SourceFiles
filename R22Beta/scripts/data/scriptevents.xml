@@ -1298,7 +1298,7 @@
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIZoneTrooperCreated" DebugSingleStep="false"/>
 		<!-- also fires on the banner carrier! -->
 		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRider4"	ScriptFunctionName="GarrisonedInHammerheads" DebugSingleStep="false"/>
+		<!--<EventHandler EventName="OnRider4"	ScriptFunctionName="GarrisonedInHammerheads" DebugSingleStep="false"/>-->
 	</EventList>
 
 	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">

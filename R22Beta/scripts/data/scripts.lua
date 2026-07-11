@@ -3073,6 +3073,7 @@ end
 
 -- ############################# R25 Hammerhead Garrison fix ###################################
 
+-- disable weapons on squad members, allow on the 5th member whether it be the banner carrier or extra member.
 function GarrisonedInHammerheads(self)
 	print("a unit has entered the hammerhead!")
 end
@@ -3080,7 +3081,9 @@ end
 function GetSquadAttributes(self)
 	local objId = getObjectId(self)
 	squadTables[objId] = squadTables[objId] or {
-		squadSize = 0
+		--squadSize = 0
+		squadMembers = {},
+		squadLeader = nil
 	}
 	return objId, squadTables[objId]
 end
@@ -3088,7 +3091,9 @@ end
 function GetSquadMemberAttributes(self)
 	local objId = getObjectId(self)
 	squadMemberTable[objId] = squadMemberTable[objId] or {
-		squadObject = nil
+		squadObject = nil,
+		selfRef = self,
+		stringRef = SetObjectReference(self)
 	}
 	return objId, squadTables[objId]
 end
@@ -3097,34 +3102,83 @@ end
 -- the members with NO_ATTACK object status, also via  string ref)
 function OnSquadGarrisonedHammerhead(self)
 	print("the squad has entered the hammerhead!")
+
+	local squadId, squad = GetSquadAttributes(self)
+
+	for squadMemberId,v in squad.squadMembers do
+
+		-- the unit that should shoot here -> 3FFB163C (GDIZoneTrooperGarrisoned)
+		WriteToFile("squadMembersInHammerhead.txt",  "Member: " .. tostring(squadMemberId) .. "\n")
+
+		-- units to apply NO_ATTACK to -> B821E76D (GDIZoneTrooper)
+		
+	end
 end
 
 -- self is the squad member, broadcasting events to horde members doesnt pass the reference of the horde object
+-- string is the reference to the sqaud
 function GetSquadSize(self, string) 
 
-	-- establish relationnship between horde and members 
-	--print(tostring(other))
 	local squad = squadTables[string] 
-	squad.squadSize = squad.squadSize + 1
 	-- get object description of member
 	WriteToFile("ObjectDescription.txt",  "Object: " .. tostring(getObjectName(self)) .. "\n")
-	-- if this member is the banner carrier flag it
+	-- if this member is the banner carrier, assign it as squad leader
+	if strfind(getObjectName(self), "3FFB163C") ~= nil then
+		squad.squadLeader = getObjectId(self)
+	end
 
-	-- associate this squad member with the squad object 
+	-- associate this squad member with the squad object
 	local objId,squadMember = GetSquadMemberAttributes(self)
+
+	-- add to the squad members table this unit
+	squad.squadMembers[objId] = objId
+	-- add a reference to this member of the squad it belongs to
 	squadMember[objId].squadObject = string
+
 end
 
 -- When squad appears at rax
 function OnSquadExitRax_R24(self)	
-	--print("exiting barracks")
-	-- broadcast an event to members test
-	-- ObjectBroadcastEventToAllies(self,"OnCallAPCDestroyed", 99999)
 	local objId,squad = GetSquadAttributes(self)
 	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
 	-- squad size is 4 here. 
-	WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squad.squadSize) .. "\n")
+	local squadSize = getTableSize(squad.squadMembers)
+	WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
 
+	-- apply upgrades to the squadLeader, use id to access member table to get its string and self 
+	WriteToFile("squadLeader.txt",  "squad leader: " .. tostring(squad.squadLeader) .. "\n")
+
+	GrantUpgradesToLeader(squad)
+end
+
+-- grants as many upgrades to the squadLeader as there are squadMembers (obtained by getTableSize) for enabling weapons
+function GrantUpgradesToLeader(squad)
+	local squadSize = getTableSize(squad.squadMembers)-1
+	local squadLeader = squadMemberTable[squad.squadLeader]
+	WriteToFile("data.txt",  "squadSize: " .. tostring(squadSize) .. " squadLeader: " .. tostring(squadLeader) .. "\n")
+
+	-- 1 member alive
+	if squadSize == 1 then
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
+	end
+	-- 2 members alive
+	if squadSize == 2 then
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
+	end
+	-- 3 members alive
+	if squadSize == 3 then
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember3") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember3") end
+	end
+	-- 4 members alive
+	if squadSize == 4 then
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember3") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember3") end
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember4") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember4") end
+	end
 end
 
 function OnSquadDestroyed_R24(self)
@@ -3134,6 +3188,10 @@ function OnSquadDestroyed_R24(self)
 
 end
 
+-- when a member dies clear it up here
+function OnMemberDestroyed_R24(self)
+
+end
 
 -- ############################# MOBA FUNCTIONS ###################################
 
