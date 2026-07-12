@@ -1756,10 +1756,10 @@
 		<DisplayUpgrade>Upgrade_ZoneTrooperAutoInjectors</DisplayUpgrade>
 	</GameObject>
 
-	<!-- REMOVE ATTACK_NEEDS_LINE_OF_SIGHT -->
+
 	<GameObject
 		id="GDIZoneTrooperGarrisoned"
-		KindOf="SELECTABLE CAN_ATTACK CAN_CAST_REFLECTIONS INFANTRY PRELOAD ATTACK_NEEDS_LINE_OF_SIGHT PATH_THROUGH_INFANTRY LINE_OF_SIGHT_IGNORES_BUILDINGS"
+		KindOf="SELECTABLE CAN_ATTACK CAN_CAST_REFLECTIONS INFANTRY PRELOAD NO_COLLIDE ATTACK_NEEDS_LINE_OF_SIGHT PATH_THROUGH_INFANTRY LINE_OF_SIGHT_IGNORES_BUILDINGS"
 		ReviveText=""
 		RecruitText=""
 		Description="Desc:GDIZoneTrooper"
@@ -2800,6 +2800,7 @@
 			</AudioLoopUpgrade>
 		</Behaviors>
 		<AI>
+			<!-- explore combined chldren and share xp with them -->
 			<AIUpdate
 				id="92D32A8E"
 				AttackPriority=""
@@ -3409,7 +3410,6 @@
 				Formation="MAIN"
 				Slots="4"
 				ObjectStatusOfContained=""
-				MeleeAttackLeashDistance="1"
 				SpawnBannerCarrierImmediately="true"
 				ConditionForEntry="INVALID">
 				<PassengerFilter

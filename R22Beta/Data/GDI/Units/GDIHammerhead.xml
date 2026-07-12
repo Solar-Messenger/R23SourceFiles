@@ -1495,9 +1495,6 @@
 				<MemberTemplateStatusInfo
 					ThingTemplate="MutantMarauderSquad"
 					ObjectStatus="RIDER1" />	
-				<MemberTemplateStatusInfo
-					ThingTemplate="GDIZoneTrooperSquad"
-					ObjectStatus="RIDER4" />	
 			</HordeTransportContain>
 			<MoveToPositionAndEvacuateSpecialPower
 				id="DCF3501A"
