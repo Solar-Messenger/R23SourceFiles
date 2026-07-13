@@ -3073,9 +3073,49 @@ end
 
 -- ############################# R25 Hammerhead Garrison fix ###################################
 
+function SquadIsAttacking(self)
+	print("squad is attacking!")
+end
+
 -- disable weapons on squad members, allow on the 5th member whether it be the banner carrier or extra member.
-function GarrisonedInHammerheads(self)
-	print("a unit has entered the hammerhead!")
+function GarrisonedInHammerhead(self)
+	print("the squad has entered the hammerhead!")
+
+	local _,squad = GetSquadAttributes(self)
+	for squadMemberId,_ in squad.squadMembers do
+		-- the unit that should shoot here -> 3FFB163C (GDIZoneTrooperGarrisoned)
+		--WriteToFile("squadMembersInHammerhead.txt",  "Member: " .. tostring(squadMemberId) .. "Leader: " .. tostring(squad.squadLeader) .. "\n")
+
+		-- units to apply NO_ATTACK to -> B821E76D (GDIZoneTrooper)
+		if strfind(squadMemberId, tostring(squad.squadLeader)) == nil then
+			-- if member is not leader - set unit to no attack
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 5, 1)
+		else
+			-- if member is the leader remove NO_ATTACK status
+			print("leader found")
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 5, 0)
+		end
+	end
+end
+
+function GarrisonedInHammerheadEnd(self)
+	print("the squad has exited the hammerhead!")
+
+	local _,squad = GetSquadAttributes(self)
+	for squadMemberId,_ in squad.squadMembers do
+		-- the unit that should shoot here -> 3FFB163C (GDIZoneTrooperGarrisoned)
+		--WriteToFile("squadMembersInHammerhead.txt",  "Member: " .. tostring(squadMemberId) .. "Leader: " .. tostring(squad.squadLeader) .. "\n")
+
+		-- units to apply NO_ATTACK to -> B821E76D (GDIZoneTrooper)
+		if strfind(squadMemberId, tostring(squad.squadLeader)) == nil then
+			-- if member is not leader - set unit to attack
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 5, 0)
+		else
+			-- if member is the leader set NO_ATTACK status
+			print("leader found")
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 5, 1)
+		end
+	end
 end
 
 function GetSquadAttributes(self)
@@ -3083,7 +3123,8 @@ function GetSquadAttributes(self)
 	squadTables[objId] = squadTables[objId] or {
 		--squadSize = 0
 		squadMembers = {},
-		squadLeader = nil
+		squadLeader = nil,
+		stringRef = SetObjectReference(self)
 	}
 	return objId, squadTables[objId]
 end
@@ -3098,30 +3139,13 @@ function GetSquadMemberAttributes(self)
 	return objId, squadTables[objId]
 end
 
--- Enters in Hammerhead Event (here we enable the banner carrier via ObjectStatus change referenced via a stringref and disable 
--- the members with NO_ATTACK object status, also via  string ref)
-function OnSquadGarrisonedHammerhead(self)
-	print("the squad has entered the hammerhead!")
-
-	local squadId, squad = GetSquadAttributes(self)
-
-	for squadMemberId,v in squad.squadMembers do
-
-		-- the unit that should shoot here -> 3FFB163C (GDIZoneTrooperGarrisoned)
-		WriteToFile("squadMembersInHammerhead.txt",  "Member: " .. tostring(squadMemberId) .. "\n")
-
-		-- units to apply NO_ATTACK to -> B821E76D (GDIZoneTrooper)
-		
-	end
-end
-
 -- self is the squad member, broadcasting events to horde members doesnt pass the reference of the horde object
 -- string is the reference to the sqaud
 function GetSquadSize(self, string) 
 
 	local squad = squadTables[string] 
 	-- get object description of member
-	WriteToFile("ObjectDescription.txt",  "Object: " .. tostring(getObjectName(self)) .. "\n")
+	--WriteToFile("ObjectDescription.txt",  "Object: " .. tostring(getObjectName(self)) .. "\n")
 	-- if this member is the banner carrier, assign it as squad leader
 	if strfind(getObjectName(self), "3FFB163C") ~= nil then
 		squad.squadLeader = getObjectId(self)
@@ -3143,10 +3167,11 @@ function OnSquadExitRax_R24(self)
 	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
 	-- squad size is 4 here. 
 	local squadSize = getTableSize(squad.squadMembers)
-	WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
+	if squadSize == nil then return end
+	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
 
 	-- apply upgrades to the squadLeader, use id to access member table to get its string and self 
-	WriteToFile("squadLeader.txt",  "squad leader: " .. tostring(squad.squadLeader) .. "\n")
+	--WriteToFile("squadLeader.txt",  "squad leader: " .. tostring(squad.squadLeader) .. "\n")
 
 	GrantUpgradesToLeader(squad)
 end
@@ -3155,8 +3180,8 @@ end
 function GrantUpgradesToLeader(squad)
 	local squadSize = getTableSize(squad.squadMembers)-1
 	local squadLeader = squadMemberTable[squad.squadLeader]
-	WriteToFile("data.txt",  "squadSize: " .. tostring(squadSize) .. " squadLeader: " .. tostring(squadLeader) .. "\n")
-
+	if squadLeader == nil then return end
+	--WriteToFile("data.txt",  "squadSize: " .. tostring(squadSize) .. " squadLeader: " .. tostring(squadLeader) .. "\n")
 	-- 1 member alive
 	if squadSize == 1 then
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
@@ -3179,6 +3204,9 @@ function GrantUpgradesToLeader(squad)
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember3") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember3") end
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember4") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember4") end
 	end
+
+	-- the squad leader by default should not be able to shoot 
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadLeader.stringRef, 5, 1)
 end
 
 function OnSquadDestroyed_R24(self)

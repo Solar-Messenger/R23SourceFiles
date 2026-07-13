@@ -578,6 +578,10 @@
 		<ModelConditionEvent Name="OnSelectedEnd">
 			<Conditions>-SELECTED</Conditions>
 		</ModelConditionEvent>		
+
+		<ModelConditionEvent Name="OnAttack">
+			<Conditions>+FIRING_A</Conditions>
+		</ModelConditionEvent>
 		
 		<!-- R23 tib events -->
 
@@ -725,7 +729,11 @@
 		</ObjectStatusEvent>					
 		<ObjectStatusEvent Name="OnFiringWeaponEnd">
 			<Conditions>-IS_FIRING_WEAPON</Conditions>
-		</ObjectStatusEvent>			
+		</ObjectStatusEvent>	
+		
+		<ObjectStatusEvent Name="OnAimingWeapon">
+			<Conditions>+IS_AIMING_WEAPON</Conditions>
+		</ObjectStatusEvent>
 
 		<ObjectStatusEvent Name="OnHealth0">
 			<Conditions>+HEALTH_PERCENT_0</Conditions>
@@ -999,9 +1007,10 @@
 		<EventHandler EventName="OnSelected"	ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
 		<EventHandler EventName="OnSelectedEnd"	ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/> -->
 		<EventHandler EventName="OnLeavingFactory" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>				
-		<EventHandler EventName="OnLeavingFactory1" ScriptFunctionName="OnSquadExitRax1_R24" DebugSingleStep="false"/>		
+		<!--<EventHandler EventName="OnLeavingFactory1" ScriptFunctionName="OnSquadExitRax1_R24" DebugSingleStep="false"/>		-->
 		<EventHandler EventName="OnDestroyed" ScriptFunctionName="OnSquadDestroyed_R24" DebugSingleStep="false"/>	
-		<EventHandler EventName="OnRider4"	ScriptFunctionName="GarrisonedInHammerheads" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRider4"	ScriptFunctionName="GarrisonedInHammerhead" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRider4End"	ScriptFunctionName="GarrisonedInHammerheadEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NodCyborgSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">

@@ -1871,7 +1871,7 @@
 				MaxRecoilDistance="0.1"
 				RecoilDamping="2.0"
 				RecoilSettleSpeed="3.0"
-				ExtraPublicBone="ZT_HIPS ZT_RFOREARM MAIN_THRSTR_L RIFLE">
+				ExtraPublicBone="MUZZLEFLASH">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT">
 					<Model
@@ -1879,76 +1879,80 @@
 					<WeaponFireFXBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="1"
-						BoneName="ZT_HIPS" />
+						BoneName="MUZZLEFLASH" />
 					<WeaponRecoilBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="1"
-						BoneName="ZT_HIPS" />
+						BoneName="MUZZLEFLASH" />
 					<WeaponMuzzleFlash
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="1"
-						BoneName="ZT_HIPS" />
+						BoneName="MUZZLEFLASH" />
 					<WeaponLaunchBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="1"
-						BoneName="ZT_HIPS" />
+						BoneName="MUZZLEFLASH" />
+					<Turret TurretNameKey="MUZZLEFLASH" TurretID="1" />
 
 					<!-- weapon 2-->
 
 					<WeaponFireFXBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="2"
-						BoneName="ZT_RFOREARM" />
+						BoneName="MUZZLEFLASH" />
 					<WeaponRecoilBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="2"
-						BoneName="ZT_RFOREARM" />
+						BoneName="MUZZLEFLASH" />
 					<WeaponMuzzleFlash
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="2"
-						BoneName="ZT_RFOREARM" />
+						BoneName="MUZZLEFLASH" />
 					<WeaponLaunchBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="2"
-						BoneName="ZT_RFOREARM" />
+						BoneName="MUZZLEFLASH" />
+					<Turret TurretNameKey="MUZZLEFLASH" TurretID="2" />
 
 					<!-- weapon 3 -->
 
 					<WeaponFireFXBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="3"
-						BoneName="MAIN_THRSTR_L" />
+						BoneName="MUZZLEFLASH" />
 					<WeaponRecoilBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="3"
-						BoneName="MAIN_THRSTR_L" />
+						BoneName="MUZZLEFLASH" />
 					<WeaponMuzzleFlash
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="3"
-						BoneName="MAIN_THRSTR_L" />
+						BoneName="MUZZLEFLASH" />
 					<WeaponLaunchBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="3"
-						BoneName="MAIN_THRSTR_L" />
+						BoneName="MUZZLEFLASH" />
+					<Turret TurretNameKey="MUZZLEFLASH" TurretID="3" />
 						
 					<!-- weapon 4 -->
 
 					<WeaponFireFXBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="4"
-						BoneName="RIFLE" />
+						BoneName="MUZZLEFLASH" />
 					<WeaponRecoilBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="4"
-						BoneName="RIFLE" />
+						BoneName="MUZZLEFLASH" />
 					<WeaponMuzzleFlash
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="4"
-						BoneName="RIFLE" />
+						BoneName="MUZZLEFLASH" />
 					<WeaponLaunchBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="4"
-						BoneName="RIFLE" />
+						BoneName="MUZZLEFLASH" />
+					<Turret TurretNameKey="MUZZLEFLASH" TurretID="4" />
 				</ModelConditionState>
 		
 			</ScriptedModelDraw>
@@ -2254,114 +2258,104 @@
 				id="E3D95180">
 
 				<!-- squad member 1 -->
-				<WeaponSlotHardpoint
-					ID="1"
-					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
-					WeaponChoiceCriteria="PREFER_MOST_DAMAGE"
-					AllowInterleavedFiring="False">
+				<WeaponSlotTurret ID="1">
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="NODRocketBunkerHubWeaponDummy"
+						Upgrade=""
+						ObjectStatus=""
+						IsPlayerUpgradePermanent="False" />
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="ZoneTrooperMachineGun"
 						Upgrade="Upgrade_SquadMember1"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
-				</WeaponSlotHardpoint>
-
-				
-				<!-- WEAPON_UPRADED_01
-				<WeaponSlotHardpoint
-					ID="2"
-					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
-					WeaponChoiceCriteria="PREFER_MOST_DAMAGE"
-					AllowInterleavedFiring="False">
-					<Weapon
-						Ordering="PRIMARY_WEAPON"
-						Template="ZoneTrooperMachineGun1"
-						Upgrade="Upgrade_SquadMember1Enhanced"
-						ObjectStatus=""
-						IsPlayerUpgradePermanent="False" />	
-				</WeaponSlotHardpoint>  -->
+					<TurretSettings 
+						TurretTurnRate="180" 
+						MinIdleScanTime="1.0s"
+						MaxIdleScanTime="5.0s" 
+						MinIdleScanAngle="0.0" 
+						MaxIdleScanAngle="100.0"
+						RecenterWhenOutOfTurnRange="false">
+						<TurretAITargetChooserData CanAcquireDynamicIfAssignedOutOfRange="true" />
+					</TurretSettings>
+				</WeaponSlotTurret>
 
 				<!-- squad member 2 -->
-				<WeaponSlotHardpoint
-					ID="2"
-					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
-					WeaponChoiceCriteria="PREFER_MOST_DAMAGE"
-					AllowInterleavedFiring="False">
+				<WeaponSlotTurret ID="1">
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="NODRocketBunkerHubWeaponDummy"
+						Upgrade=""
+						ObjectStatus=""
+						IsPlayerUpgradePermanent="False" />
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="ZoneTrooperMachineGun2"
 						Upgrade="Upgrade_SquadMember2"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
-				</WeaponSlotHardpoint>
-				<!-- WEAPON_UPRADED_01 
-				<WeaponSlotHardpoint
-					ID="4"
-					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
-					WeaponChoiceCriteria="PREFER_MOST_DAMAGE"
-					AllowInterleavedFiring="False">
+					<TurretSettings 
+						TurretTurnRate="180" 
+						MinIdleScanTime="1.0s"
+						MaxIdleScanTime="5.0s" 
+						MinIdleScanAngle="0.0" 
+						MaxIdleScanAngle="100.0"
+						RecenterWhenOutOfTurnRange="false">
+						<TurretAITargetChooserData CanAcquireDynamicIfAssignedOutOfRange="true" />
+					</TurretSettings>
+				</WeaponSlotTurret>
+		
+				<!-- squad member 3 -->
+				<WeaponSlotTurret ID="1">
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="ZoneTrooperMachineGun1"
-						Upgrade="Upgrade_SquadMember2Enhanced"
+						Template="NODRocketBunkerHubWeaponDummy"
+						Upgrade=""
 						ObjectStatus=""
-						IsPlayerUpgradePermanent="False" />	
-				</WeaponSlotHardpoint> -->
-
-				<!-- squad member 3 -->
-				<WeaponSlotHardpoint
-					ID="3"
-					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
-					WeaponChoiceCriteria="PREFER_MOST_DAMAGE"
-					AllowInterleavedFiring="False">
+						IsPlayerUpgradePermanent="False" />
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="ZoneTrooperMachineGun3"
 						Upgrade="Upgrade_SquadMember3"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
-				</WeaponSlotHardpoint>
-				<!-- WEAPON_UPRADED_01
-				<WeaponSlotHardpoint
-					ID="6"
-					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
-					WeaponChoiceCriteria="PREFER_MOST_DAMAGE"
-					AllowInterleavedFiring="False">
-					<Weapon
-						Ordering="PRIMARY_WEAPON"
-						Template="ZoneTrooperMachineGun1"
-						Upgrade="Upgrade_SquadMember3Enhanced"
-						ObjectStatus=""
-						IsPlayerUpgradePermanent="False" />	
-				</WeaponSlotHardpoint>  -->
+					<TurretSettings 
+						TurretTurnRate="180" 
+						MinIdleScanTime="1.0s"
+						MaxIdleScanTime="5.0s" 
+						MinIdleScanAngle="0.0" 
+						MaxIdleScanAngle="100.0"
+						RecenterWhenOutOfTurnRange="false">
+						<TurretAITargetChooserData CanAcquireDynamicIfAssignedOutOfRange="true" />
+					</TurretSettings>
+				</WeaponSlotTurret>
 
 				<!-- squad member 4 -->
-				<WeaponSlotHardpoint
-					ID="4"
-					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
-					WeaponChoiceCriteria="PREFER_MOST_DAMAGE"
-					AllowInterleavedFiring="False">
+				<WeaponSlotTurret ID="1">
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="NODRocketBunkerHubWeaponDummy"
+						Upgrade=""
+						ObjectStatus=""
+						IsPlayerUpgradePermanent="False" />
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="ZoneTrooperMachineGun4"
 						Upgrade="Upgrade_SquadMember4"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
-				</WeaponSlotHardpoint>
-				<!-- WEAPON_UPRADED_01
-				<WeaponSlotHardpoint
-					ID="8"
-					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
-					WeaponChoiceCriteria="PREFER_MOST_DAMAGE"
-					AllowInterleavedFiring="False">
-					<Weapon
-						Ordering="PRIMARY_WEAPON"
-						Template="ZoneTrooperMachineGun1"
-						Upgrade="Upgrade_SquadMember4Enhanced"
-						ObjectStatus=""
-						IsPlayerUpgradePermanent="False" />	
-				</WeaponSlotHardpoint>  -->
+					<TurretSettings 
+						TurretTurnRate="180" 
+						MinIdleScanTime="1.0s"
+						MaxIdleScanTime="5.0s" 
+						MinIdleScanAngle="0.0" 
+						MaxIdleScanAngle="100.0"
+						RecenterWhenOutOfTurnRange="false">
+						<TurretAITargetChooserData CanAcquireDynamicIfAssignedOutOfRange="true" />
+					</TurretSettings>
+				</WeaponSlotTurret>
 
 			</WeaponSetUpdate>
 			
@@ -2828,7 +2822,7 @@
 					StartupDelay="0s"
 					SympathyRange="100"
 					CheckVisionRange="False"
-					CanPickDynamicTargets="True"
+					CanPickDynamicTargets="False"
 					RotateToTargetWhenAiming="True"
 					CanAutoAcquireNonAutoAcquirable="False"
 					TargetingCompareList="DefaultTargetingCompareList" />
@@ -3444,6 +3438,7 @@
 						x="0"
 						y="0" />
 				</BannerCarrierPosition>
+				<!-- for apcs etc that cant fire over buildings-->
 				<BannerCarriersAllowed>GDIZoneTrooperGarrisoned</BannerCarriersAllowed>
 			</HordeContain>
 
@@ -4158,36 +4153,14 @@
 		</Behaviors>
 		<AI>
 			<HordeAIUpdate
-				id="3D82CD5B"
-				AttackPriority=""
+				id="ModuleTag_HordeAIUpdate"
 				AutoAcquireEnemiesWhenIdle="YES ATTACK_BUILDINGS"
-				StopChaseDistance="500"
-				HoldGroundCloseRangeDistance="0"
-				AILuaEventsList="GenericSquadFunctions_R24"
-				MinCowerTime="3s"
-				MaxCowerTime="5s"
-				RampageTime="0s"
-				BurningDeathTime="0s"
-				TimeToEjectPassengersOnRampage="0"
-				ComboLocomotorSet="NORMAL"
-				ComboLocoAttackDistance="80"
-				IdleTargetTime="0s"
-				MaxCombineChildren="1"
-				SpawnOffsetRadius="0"
-				StandGround="False"
-				CanAttackWhileContained="True"
-				RampageRequiresAflame="False"
-				FadeOnPortals="False">
+				MaxCowerTime="5.0s"
+				MinCowerTime="3.0s"
+				CanAttackWhileContained="true"
+				AILuaEventsList="GenericSquadFunctions_R24">
 				<UnitAITargetChooserData
-					IdleScanDelay="0.8s"
-					ReacquireDelay="5s"
-					StartupDelay="0s"
-					SympathyRange="100"
-					CheckVisionRange="False"
-					CanPickDynamicTargets="True"
-					RotateToTargetWhenAiming="True"
-					CanAutoAcquireNonAutoAcquirable="False"
-					TargetingCompareList="DefaultTargetingCompareList" />
+					SympathyRange="100.0" />
 			</HordeAIUpdate>
 		</AI>
 		<Body>
