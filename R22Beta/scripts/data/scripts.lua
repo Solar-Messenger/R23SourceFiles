@@ -3124,7 +3124,9 @@ function GetSquadAttributes(self)
 		--squadSize = 0
 		squadMembers = {},
 		squadLeader = nil,
-		stringRef = SetObjectReference(self)
+		stringRef = SetObjectReference(self),
+		selfRef = self,
+		spawnedSize = 0
 	}
 	return objId, squadTables[objId]
 end
@@ -3168,12 +3170,30 @@ function OnSquadExitRax_R24(self)
 	-- squad size is 4 here. 
 	local squadSize = getTableSize(squad.squadMembers)
 	if squadSize == nil then return end
+	squad.spawnedSize = squadSize
+
+	if isSquadExploit(squad) then return end
+
 	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
 
 	-- apply upgrades to the squadLeader, use id to access member table to get its string and self 
 	--WriteToFile("squadLeader.txt",  "squad leader: " .. tostring(squad.squadLeader) .. "\n")
 
 	GrantUpgradesToLeader(squad)
+end
+
+squadSizeTable = {
+	["5D5E5931"] = 4 -- GDIZoneTrooperSquad
+}
+
+function isSquadExploit(squad)
+	if squad == nil then return end
+	-- compare squad size to the full squad size (obtained via squadSizeTable)
+	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))]+1 then 
+		ExecuteAction("NAMED_DELETE", squad.selfRef)
+		return true
+	end
+	return false
 end
 
 -- grants as many upgrades to the squadLeader as there are squadMembers (obtained by getTableSize) for enabling weapons
