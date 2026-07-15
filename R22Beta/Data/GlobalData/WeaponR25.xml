@@ -9,13 +9,14 @@
 		PreAttackType="PER_SHOT"
 		ClipSize="1"
 		AutoReloadsClip="AUTO"
-		FireSound="ZoneTrooperGunFire"
+		FireSound="AudioEvent:ZoneTrooperGunFire"
 		FireFX="FX_RailGunFire"
 		FireVeteranFX="FX_RailGunFireHeroic"
 		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
 		AntiMask="ANTI_GROUND"
 		CanFireWhileMoving="true"
 		AcceptableAimDelta="10d"
+		ForbiddenFiringObjectStatus="RIDER4"
 		>
 
 		<PreAttackDelay
@@ -67,6 +68,7 @@
 		AntiMask="ANTI_GROUND"
 		CanFireWhileMoving="true"
 		AcceptableAimDelta="10d"
+		ForbiddenFiringObjectStatus="RIDER4"
 		>
 
 		<PreAttackDelay
@@ -107,6 +109,7 @@
 		AntiMask="ANTI_GROUND"
 		CanFireWhileMoving="true"
 		AcceptableAimDelta="10d"
+		RequiredFiringObjectStatus="RIDER4"
 		>
 
 		<PreAttackDelay
@@ -160,6 +163,7 @@
 		AntiMask="ANTI_GROUND"	
 		CanFireWhileMoving="true"
 		AcceptableAimDelta="10d"
+		RequiredFiringObjectStatus="RIDER4"
 		>
 
 		<PreAttackDelay
@@ -212,6 +216,7 @@
 		AntiMask="ANTI_GROUND"
 		CanFireWhileMoving="true"
 		AcceptableAimDelta="10d"
+		RequiredFiringObjectStatus="RIDER4"
 		>
 
 		<PreAttackDelay
@@ -264,6 +269,7 @@
 		AntiMask="ANTI_GROUND"
 		CanFireWhileMoving="true"
 		AcceptableAimDelta="10d"
+		RequiredFiringObjectStatus="RIDER4"
 		>
 
 		<PreAttackDelay
