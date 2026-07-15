@@ -3082,6 +3082,8 @@ function GarrisonedInHammerhead(self)
 	print("the squad has entered the hammerhead!")
 
 	local _,squad = GetSquadAttributes(self)
+	local upgradeVeterancy = false
+	local squadLeader = squadMemberTable[squad.squadLeader]
 	for squadMemberId,_ in squad.squadMembers do
 		-- the unit that should shoot here -> 3FFB163C (GDIZoneTrooperGarrisoned)
 		--WriteToFile("squadMembersInHammerhead.txt",  "Member: " .. tostring(squadMemberId) .. "Leader: " .. tostring(squad.squadLeader) .. "\n")
@@ -3090,11 +3092,36 @@ function GarrisonedInHammerhead(self)
 		if strfind(squadMemberId, tostring(squad.squadLeader)) == nil then
 			-- if member is not leader - set unit to no attack
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 5, 1)
+
+			-- if members have veterancy, upgrade the leader
+			--if EvaluateCondition("UNIT_HAS_UPGRADE",squadMemberTable[squadMemberId].stringRef, "Upgrade_Veterancy_HEROIC") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_HEROIC") end
+			if EvaluateCondition("UNIT_HAS_UPGRADE",squadMemberTable[squadMemberId].stringRef, "Upgrade_Veterancy_HEROIC") then
+				upgradeVeterancy = true
+			end
 		else
 			-- if member is the leader remove NO_ATTACK status
 			print("leader found")
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 5, 0)
 		end
+	end
+
+	if upgradeVeterancy and not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_VETERAN") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_VETERAN") end
+	if upgradeVeterancy and not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_ELITE") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_ELITE") end
+	if upgradeVeterancy and not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_HEROIC") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_HEROIC") end
+
+	--if upgradeVeterancy and not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_VETERAN") then ObjectGrantUpgrade(squad.selfRef, "Upgrade_Veterancy_VETERAN") end
+	--if upgradeVeterancy and not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_ELITE") then ObjectGrantUpgrade(squad.selfRef, "Upgrade_Veterancy_ELITE") end
+	--if upgradeVeterancy and not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_HEROIC") then ObjectGrantUpgrade(squad.selfRef, "Upgrade_Veterancy_HEROIC") end
+
+	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_HEROIC") then print("squad is heroic") end
+
+	if upgradeVeterancy then
+		-- enable WEAPON_UPGRADED_03 object status
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_2")
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_3")
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_4")
+		--print("upgradeVeterancy")
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadLeader.stringRef, 126, 1)
 	end
 end
 
@@ -3114,6 +3141,9 @@ function GarrisonedInHammerheadEnd(self)
 			-- if member is the leader set NO_ATTACK status
 			print("leader found")
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 5, 1)
+
+			-- if leader has veterancy upgrade the members
+			--if EvaluateCondition("UNIT_HAS_UPGRADE",squadMemberTable[squadMemberId].stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
 		end
 	end
 end

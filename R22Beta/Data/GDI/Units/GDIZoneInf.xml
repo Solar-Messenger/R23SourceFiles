@@ -1105,12 +1105,13 @@
 						Upgrade=""
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
+						<!--
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="ZoneTrooperMachineGun1"
 						Upgrade=""
 						ObjectStatus="WEAPON_UPGRADED_01"
-						IsPlayerUpgradePermanent="False" />	
+						IsPlayerUpgradePermanent="False" />	-->
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="ZoneTrooperMachineGun_Accelerated"
@@ -1131,7 +1132,11 @@
 				id="ModuleTag_UpgradeWeapon"
 				StatusToSet="WEAPON_UPGRADED_01">
 				<TriggeredBy>Upgrade_ZoneTrooperScannerPack</TriggeredBy>
-			</StatusBitsUpgrade>				
+			</StatusBitsUpgrade>	
+			
+			<LaserState
+				id="ModuleTag_LaserState"
+				LaserId="0"></LaserState>
 			
 			<Physics
 				id="CD7D8A59"
@@ -1756,10 +1761,10 @@
 		<DisplayUpgrade>Upgrade_ZoneTrooperAutoInjectors</DisplayUpgrade>
 	</GameObject>
 
-
+	<!-- LINE_OF_SIGHT_IGNORES_BUILDINGS prevents banner carrier sharing xp -->
 	<GameObject
 		id="GDIZoneTrooperGarrisoned"
-		KindOf="SELECTABLE CAN_ATTACK CAN_CAST_REFLECTIONS INFANTRY PRELOAD NO_COLLIDE ATTACK_NEEDS_LINE_OF_SIGHT PATH_THROUGH_INFANTRY LINE_OF_SIGHT_IGNORES_BUILDINGS"
+		KindOf="SELECTABLE CAN_ATTACK CAN_CAST_REFLECTIONS INFANTRY PRELOAD ATTACK_NEEDS_LINE_OF_SIGHT PATH_THROUGH_INFANTRY LINE_OF_SIGHT_IGNORES_BUILDINGS"
 		ReviveText=""
 		RecruitText=""
 		Description="Desc:GDIZoneTrooper"
@@ -1875,84 +1880,84 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT">
 					<Model
-						Name="W3DContainer:GUZNTRPR_SKNGAR" />
+						Name="W3DContainer:FXINVISBONE" />
 					<WeaponFireFXBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="1"
-						BoneName="MUZZLEFLASH" />
+						BoneName="INVISBONE01" />
 					<WeaponRecoilBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="1"
-						BoneName="MUZZLEFLASH" />
+						BoneName="INVISBONE01" />
 					<WeaponMuzzleFlash
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="1"
-						BoneName="MUZZLEFLASH" />
+						BoneName="INVISBONE01" />
 					<WeaponLaunchBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="1"
-						BoneName="MUZZLEFLASH" />
-					<Turret TurretNameKey="MUZZLEFLASH" TurretID="1" />
+						BoneName="INVISBONE01" />
+					<Turret TurretNameKey="INVISBONE01" TurretID="1" />
 
 					<!-- weapon 2-->
 
 					<WeaponFireFXBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="2"
-						BoneName="MUZZLEFLASH" />
+						BoneName="INVISBONE01" />
 					<WeaponRecoilBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="2"
-						BoneName="MUZZLEFLASH" />
+						BoneName="INVISBONE01" />
 					<WeaponMuzzleFlash
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="2"
-						BoneName="MUZZLEFLASH" />
+						BoneName="INVISBONE01" />
 					<WeaponLaunchBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="2"
-						BoneName="MUZZLEFLASH" />
-					<Turret TurretNameKey="MUZZLEFLASH" TurretID="2" />
+						BoneName="INVISBONE01" />
+					<Turret TurretNameKey="INVISBONE01" TurretID="2" />
 
 					<!-- weapon 3 -->
 
 					<WeaponFireFXBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="3"
-						BoneName="MUZZLEFLASH" />
+						BoneName="INVISBONE01" />
 					<WeaponRecoilBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="3"
-						BoneName="MUZZLEFLASH" />
+						BoneName="INVISBONE01" />
 					<WeaponMuzzleFlash
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="3"
-						BoneName="MUZZLEFLASH" />
+						BoneName="INVISBONE01" />
 					<WeaponLaunchBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="3"
-						BoneName="MUZZLEFLASH" />
-					<Turret TurretNameKey="MUZZLEFLASH" TurretID="3" />
+						BoneName="INVISBONE01" />
+					<Turret TurretNameKey="INVISBONE01" TurretID="3" />
 						
 					<!-- weapon 4 -->
 
 					<WeaponFireFXBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="4"
-						BoneName="MUZZLEFLASH" />
+						BoneName="INVISBONE01" />
 					<WeaponRecoilBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="4"
-						BoneName="MUZZLEFLASH" />
+						BoneName="INVISBONE01" />
 					<WeaponMuzzleFlash
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="4"
-						BoneName="MUZZLEFLASH" />
+						BoneName="INVISBONE01" />
 					<WeaponLaunchBone
 						WeaponSlotType="PRIMARY_WEAPON"
 						WeaponSlotID="4"
-						BoneName="MUZZLEFLASH" />
-					<Turret TurretNameKey="MUZZLEFLASH" TurretID="4" />
+						BoneName="INVISBONE01" />
+					<Turret TurretNameKey="INVISBONE01" TurretID="4" />
 				</ModelConditionState>
 		
 			</ScriptedModelDraw>
@@ -2254,20 +2259,36 @@
 			<TemporarilyDefectUpdate
 				id="01009D1F"
 				DefectionFrameCount="300" />
+			<!--
+			<AttachUpdate
+				id="ModuleTag_Attach"
+				Range="20.0"
+				Teleport="true"
+				UseGeometry="true"
+				DetachWhenParentHealed="false">
+				<ObjectFilter
+					Rule="NONE">
+					<IncludeThing>GDIZoneTrooperSquad</IncludeThing>
+				</ObjectFilter>
+			</AttachUpdate>
+		--> 
+
 			<WeaponSetUpdate
 				id="E3D95180">
 
 				<!-- squad member 1 -->
-				<WeaponSlotTurret ID="1">
+				<WeaponSlotTurret 
+					ID="1"
+					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE">
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="NODRocketBunkerHubWeaponDummy"
+						Template="ZoneTrooperMachineGunFake"
 						Upgrade=""
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="ZoneTrooperMachineGun"
+						Template="ZoneTrooperMachineGun1"
 						Upgrade="Upgrade_SquadMember1"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
@@ -2283,10 +2304,12 @@
 				</WeaponSlotTurret>
 
 				<!-- squad member 2 -->
-				<WeaponSlotTurret ID="1">
+				<WeaponSlotTurret 
+					ID="2"
+					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE">
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="NODRocketBunkerHubWeaponDummy"
+						Template="ZoneTrooperMachineGunFake"
 						Upgrade=""
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
@@ -2308,10 +2331,12 @@
 				</WeaponSlotTurret>
 		
 				<!-- squad member 3 -->
-				<WeaponSlotTurret ID="1">
+				<WeaponSlotTurret 
+					ID="3"
+					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE">
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="NODRocketBunkerHubWeaponDummy"
+						Template="ZoneTrooperMachineGunFake"
 						Upgrade=""
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
@@ -2333,10 +2358,12 @@
 				</WeaponSlotTurret>
 
 				<!-- squad member 4 -->
-				<WeaponSlotTurret ID="1">
+				<WeaponSlotTurret 
+					ID="4"
+					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE">
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="NODRocketBunkerHubWeaponDummy"
+						Template="ZoneTrooperMachineGunFake"
 						Upgrade=""
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
@@ -2822,7 +2849,7 @@
 					StartupDelay="0s"
 					SympathyRange="100"
 					CheckVisionRange="False"
-					CanPickDynamicTargets="False"
+					CanPickDynamicTargets="True"
 					RotateToTargetWhenAiming="True"
 					CanAutoAcquireNonAutoAcquirable="False"
 					TargetingCompareList="DefaultTargetingCompareList" />
@@ -2853,107 +2880,20 @@
 				RemoveUpgradesOnDeath="False"
 				BurningDeathBehavior="False" />
 		</Body>
-		<ClientBehaviors>
-			<AnimationSoundClientBehavior
-				id="59D403AD"
-				MaxUpdateRangeCap="0">
-				<Sound
-					Sound="AudioEvent:Bodyfall"
-					Animation="GUZNTRPR_LNDA"
-					Frame="7" />
-				<Sound
-					Sound="AudioEvent:Bodyfall"
-					Animation="GUZNTRPR_DIEA"
-					Frame="66" />
-				<Sound
-					Sound="AudioEvent:Bodyfall"
-					Animation="GUZNTRPR_DIEB"
-					Frame="34" />
-				<Sound
-					Sound="AudioEvent:Bodyfall"
-					Animation="GUZNTRPR_DIEC"
-					Frame="78" />
-				<Sound
-					Sound="AudioEvent:Bodyfall"
-					Animation="GUZNTRPR_DIED"
-					Frame="19" />
-			</AnimationSoundClientBehavior>
-			<ModelConditionAudioLoopClientBehavior
-				id="7FB9C66C">
-				<ModelConditionSound
-					Sound="AudioEvent:GDI_ZoneRaider_JumpJetLand"
-					RequiredFlags="ABOUT_TO_HIT"
-					ExcludedFlags="DYING" />
-			</ModelConditionAudioLoopClientBehavior>
-			<ModelConditionAudioLoopClientBehavior
-				id="E3977E34">
-				<ModelConditionSound
-					Sound="AudioEvent:GDI_RailgunAccelerator_EnergyStripeLoop"
-					RequiredFlags="USING_WEAPON_C"
-					ExcludedFlags="" />
-			</ModelConditionAudioLoopClientBehavior>
-		</ClientBehaviors>
 		<Geometry
 			IsSmall="True">
 			<Shape
 				Type="CYLINDER"
 				ContactPointGeneration="NONE"
 				Name=""
-				MajorRadius="7"
-				MinorRadius="7"
+				MajorRadius="0"
+				MinorRadius="0"
 				Other=""
 				Height="13"
 				FrontAngle="0d"
 				Active="True"
 				UsedForHealthBox="True" />
 		</Geometry>
-		<AudioArrayVoice>
-			<AudioEntry
-				Sound="AudioEvent:GDI_ZoneTrooper_VoiceAttack"
-				AudioType="voiceAttack" />
-			<AudioEntry
-				Sound="AudioEvent:GDI_ZoneTrooper_VoiceCreate"
-				AudioType="voiceFullyCreated" />
-			<AudioEntry
-				Sound="AudioEvent:GDI_ZoneTrooper_VoiceGarrison"
-				AudioType="voiceGarrison" />
-			<AudioEntry
-				Sound="AudioEvent:GDI_ZoneTrooper_VoiceMoveAttack"
-				AudioType="voiceAttackAfterMoving" />
-			<AudioEntry
-				Sound="AudioEvent:GDI_ZoneTrooper_VoiceMove"
-				AudioType="voiceGuard" />
-			<AudioEntry
-				Sound="AudioEvent:GDI_ZoneTrooper_VoiceMove"
-				AudioType="voiceMove" />
-			<AudioEntry
-				Sound="AudioEvent:GDI_ZoneTrooper_VoiceRetreat"
-				AudioType="voiceRetreatToCastle" />
-			<AudioEntry
-				Sound="Multisound:GDI_ZoneTrooper_VoiceSelectMS"
-				AudioType="voiceSelect" />
-			<AudioEntry
-				Sound="Multisound:GDI_ZoneTrooper_VoiceSelectBattleMS"
-				AudioType="voiceSelectBattle" />
-			<NamedEntry
-				Sound="AudioEvent:GDI_ZoneTrooper_VoiceMoveJumpJet"
-				Name="InitiateJumpJets" />
-		</AudioArrayVoice>
-		<EvaEvents
-			EvaEventDieOwner="UnitLost"
-			EvaEventDamagedOwner="UnitUnderAttack"
-			EvaEventDamagedFromShroudedSourceOwner="UnitUnderAttackFromShroudedUnit"
-			EvaEventDamagedByFireOwner="GenericUnitBeingBurned"
-			EvaEventSecondDamageFarFromFirstScanRange="600"    
-			EvaEventSecondDamageFarFromFirstTimeoutMS="31000" 
-			EvaEventAmbushed="UnitAmbushed"
-			EvaEnemyObjectSightedEvent="GenericEnemyUnitSighted"
-			EvaEventDetectedEnemy="EnemyStealthUnitDiscovered"
-			EvaEventAvailableForProduction="NewConstructionOptions"
-			EvaEventProductionStarted="UnitConstructionStarted"
-			EvaEventBuildOnHold="BuildOnHold"
-			EvaEventBuildCancelled="BuildCancelled"
-			EvaEventPromotedOwner="UnitPromoted" />
 		<ShadowInfo
 			Type="DECAL"
 			Texture="shadowi"
