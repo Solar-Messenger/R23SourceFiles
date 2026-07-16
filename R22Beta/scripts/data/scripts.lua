@@ -3071,10 +3071,51 @@ function OnSquadDestroyed_103(self)
 
 end
 
--- ############################# R25 Support Power Selection fix ###################################
+-- ############################# R25 Helper Functions ###################################
 
 function OnSpecialPowerUsed(self)
 	print("special power used")
+end
+
+function GetRankOfObject(unitRef) 
+	local squadLevel = 1
+	if EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_VETERAN") then
+		-- apply veteran level 
+		squadLevel = 2
+	end
+
+	if EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_ELITE") then
+		-- apply elite level 
+		squadLevel = 3
+	end
+
+	if EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_HEROIC") then
+		-- apply heroic level 
+		squadLevel = 4
+	end
+	return squadLevel
+end
+
+
+function isLeaderHigherRanked(squad)
+
+	-- check which type of unit has the best rank
+	local bestCurrentRank = 1
+	local bestUnitRank = nil
+	for squadMemberId,_ in squad.squadMembers do
+		--bestCurrentRank = bestCurrentRank and GetRankOfObject(squadMemberTable[squadMemberId].stringRef) > bestCurrentRank or bestCurrentRank
+		local rank = GetRankOfObject(squadMemberTable[squadMemberId].stringRef)
+		if rank > bestCurrentRank then
+			bestCurrentRank = rank
+			bestUnitRank = squadMemberTable[squadMemberId]
+		end
+	end
+
+	if bestUnitRank.isLeader then 
+		return true
+	end
+
+	return false
 end
 
 -- ############################# R25 Hammerhead Garrison fix ###################################
@@ -3093,64 +3134,66 @@ function SquadHasLeveledUp(self)
 	-- squad leader (banner carrier)
 	local squadLeader = squadMemberTable[squad.squadLeader]
 	-- get one of the squad members that isnt the banner carrier
-	local squadMember = squadMemberTable[next(squad.squadMembers)]
+	local firstMember = squadMemberTable[next(squad.squadMembers)]
 
 	--print("squad leader: " .. tostring(squadLeader) .. " squad member: " .. tostring(squadMember))
 
-	local squadIsHeroic = false
-	local squadIsElite = false
-	local squadIsVeteran = false
 
-	-- compare the rank of the banner carrier and one of the squad members 
-	-- EvaluateCondition("UNIT_COMPARE_RANK", UNIT, COMPARISON, INT)
-	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_HEROIC") then
-		-- apply heroic level 
-		squadIsHeroic = true
-	end
+	local squadLevel = GetRankOfObject(squad.stringRef) 
+	-- is this unit underranked? 
+	local rankEverythingUp = EvaluateCondition("UNIT_COMPARE_RANK", squadMember.stringRef, 0, squadLevel)
 
-	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_ELITE") then
-		-- apply elite level 
-		squadIsElite = true
-	end
-
-	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_VETERAN") then
-		-- apply veteran level 
-		squadIsVeteran = true
-	end
-
-	for objId,_ in squad.squadMembers do 
-		if squadIsVeteran then
-			-- apply veteran level to all members 
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, "GDIZoneTrooperSquadExperienceLevel_2")
+	-- currently the issue is when the leader garrisons the hammerhead already elite but because it didnt gain xp, its next promotion must be treated as a heroic one , promoting all the members is also necessary
+	-- in this case.
+	if rankEverythingUp then
+		-- Assign the rank to be squadLevel + 1 for everything 
+		if isLeaderHigherRanked(squad) then
+			print("the leader is higher ranked than the members!")
+		else
+			print("the members are higher ranked than the leader!")
 		end
-		if squadIsElite then
-			-- apply veteran level to all members 
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, "GDIZoneTrooperSquadExperienceLevel_3")
-		end
-		if squadIsHeroic then
-			-- apply veteran level to all members 
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, "GDIZoneTrooperSquadExperienceLevel_4")
+	else
+
+		-- If this units current level is less than the squad after promotion, check if this member is the banner or not and issue
+		-- a promotion according to the squadLevel + 1 if its below 4
+
+		-- has this unit got less rank than the squad ? if so promote the leader and this unit by squadLevel 
+		if squadMember.isLeader then print("the squad leader has promoted!") end
+		local level = tostring("GDIZoneTrooperSquadExperienceLevel_" .. squadLevel)
+		-- check every unit in the squad to see if any have less rank than the squad 
+		WriteToFile("level.txt",  level .. "\n")
+		for squadMemberId,_ in squad.squadMembers do
+			WriteToFile("counting.txt",  squadMemberId .. " ")
+			-- COMPARISON ["<"]=0, ["<="]=1, ["=="]=2, [">="]=3, [">"]=4, ["~="]=5
+			if EvaluateCondition("UNIT_COMPARE_RANK", squadMemberTable[squadMemberId].stringRef, 0, squadLevel) then
+				print("syncing unit ranks!")
+				-- if the unit that has less rank is the leader, promote it to the level of the squad
+				if squadMemberTable[squadMemberId].isLeader then 
+					ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, level)
+				else
+					-- apply experience rank to every member 
+					for objId,_ in squad.squadMembers do
+						if not squadMemberTable[objId].isLeader then
+							ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, level)
+						end
+					end
+				end
+				break
+			end
 		end
 	end
 
-	if squadIsVeteran then
-		-- apply veteran level squad leader
-		print("squad is veteran, applying veteran level")
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_2")
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_VETERAN") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_VETERAN") end
-	end
-	if squadIsElite then
-		-- apply veteran level to squad leader
-		print("squad is elite, applying veteran elite")
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_3")
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_ELITE") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_ELITE") end
-	end
-	if squadIsHeroic then
-		-- apply veteran level to squad leader
-		print("squad is heroic, applying veteran heroic")
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_4")
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_HEROIC") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_HEROIC") end
-	end
+	
+	-- Does the leader have less rank than the squad currently?
+	--if EvaluateCondition("UNIT_COMPARE_RANK", squadLeader.stringRef, 0, squadLevel) then
+	--	if squadLevel < 4 then 
+	--		print("promoting the leader!")
+	--		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, level)
+	--	end
+	--end
+
+	--if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_VETERAN") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_VETERAN") end
+
 end
 
 function SquadIsAttacking(self)
@@ -3201,7 +3244,8 @@ function GetSquadAttributes(self)
 		squadLeader = nil,
 		stringRef = SetObjectReference(self),
 		selfRef = self,
-		spawnedSize = 0
+		spawnedSize = 0,
+		lastPromotedRank = nil
 	}
 	return objId, squadTables[objId]
 end
@@ -3211,7 +3255,8 @@ function GetSquadMemberAttributes(self)
 	squadMemberTable[objId] = squadMemberTable[objId] or {
 		squadObject = nil,
 		selfRef = self,
-		stringRef = SetObjectReference(self)
+		stringRef = SetObjectReference(self),
+		isLeader = false
 	}
 	return objId, squadMemberTable[objId]
 end
@@ -3229,11 +3274,9 @@ function GetSquadSize(self, string)
 	-- if this member is the banner carrier, assign it as squad leader
 	if strfind(getObjectName(self), "3FFB163C") ~= nil then
 		squad.squadLeader = getObjectId(self)
-	else
-		-- add to the squad members table this unit
-		squad.squadMembers[objId] = objId
+		squadMember.isLeader = true
 	end
-
+	squad.squadMembers[objId] = objId
 	-- add a reference to this member of the squad it belongs to
 	squadMember.squadObject = string
 
