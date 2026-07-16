@@ -3073,8 +3073,42 @@ end
 
 -- ############################# R25 Hammerhead Garrison fix ###################################
 
-function MemberHasRider(self)
+-- Triggered by LEVELED
+function SquadHasLeveledUp(self)
 	--print("member has rider")
+	-- Increment squad Experience rank (incremented by one for each promotion)
+	-- check the highest rank of members and banner carrier and increment everything based on that rank
+
+	-- get the squad object 
+	local _,squadMember = GetSquadMemberAttributes(self)
+	-- problematic
+	--print(squadMember.squadObject)
+	local squad = squadTables[squadMember.squadObject] 
+	local leaderLevel = nil
+	-- squad leader (banner carrier)
+	local squadLeader = squadMemberTable[squad.squadLeader]
+	-- get one of the squad members that isnt the banner carrier
+	local squadMember = nil
+	for objId,_ in squad.squadMembers do 
+		-- is not the banner carrier
+		if strfind(getObjectName(self), "3FFB163C") == nil then
+			squadMember = squadMemberTable[objId]
+			break
+		end
+	end
+	print("squad leader: " .. tostring(squadLeader) .. " squad member: " .. tostring(squadMember))
+
+	-- compare the rank of the banner carrier and one of the squad members 
+
+
+
+	--
+
+	local memberLevel = nil
+
+	-- get highest experience level of the horde, banner carrier 
+
+
 end
 
 function SquadIsAttacking(self)
@@ -3106,17 +3140,17 @@ function GarrisonedInHammerhead(self)
 	-- give current veterancy to garrisoned unit 
 	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_VETERAN") then 
 		print("squad is veteran") 
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_2")
+		--ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_2")
 	end
 
 	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_ELITE") then 
 		print("squad is elite") 
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_3")
+		--ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_3")
 	end
 
 	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_HEROIC") then 
 		print("squad is heroic") 
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_4")
+		--ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_4")
 	end
 end
 
@@ -3154,15 +3188,15 @@ function GarrisonedInHammerheadEnd(self)
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 44, 0)
 
 		if isVeteran then
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[squadMemberId].stringRef, "GDIZoneTrooperSquadExperienceLevel_2")
+			--ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[squadMemberId].stringRef, "GDIZoneTrooperSquadExperienceLevel_2")
 		end
 
 		if isElite then
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[squadMemberId].stringRef, "GDIZoneTrooperSquadExperienceLevel_3")
+			--ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[squadMemberId].stringRef, "GDIZoneTrooperSquadExperienceLevel_3")
 		end
 
 		if isHeroic then
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[squadMemberId].stringRef, "GDIZoneTrooperSquadExperienceLevel_4")
+			--ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[squadMemberId].stringRef, "GDIZoneTrooperSquadExperienceLevel_4")
 		end
 	end
 end
@@ -3187,7 +3221,7 @@ function GetSquadMemberAttributes(self)
 		selfRef = self,
 		stringRef = SetObjectReference(self)
 	}
-	return objId, squadTables[objId]
+	return objId, squadMemberTable[objId]
 end
 
 -- self is the squad member, broadcasting events to horde members doesnt pass the reference of the horde object
@@ -3208,7 +3242,7 @@ function GetSquadSize(self, string)
 	-- add to the squad members table this unit
 	squad.squadMembers[objId] = objId
 	-- add a reference to this member of the squad it belongs to
-	squadMember[objId].squadObject = string
+	squadMember.squadObject = string
 
 end
 

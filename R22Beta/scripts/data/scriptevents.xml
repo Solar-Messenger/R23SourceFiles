@@ -632,6 +632,10 @@
 		<ModelConditionEvent Name="OnCapturedEnd">
 			<Conditions>-CAPTURED</Conditions>
 		</ModelConditionEvent>		
+
+		<ModelConditionEvent Name="OnLeveledUp">
+			<Conditions>+LEVELED</Conditions>
+		</ModelConditionEvent>		
 		
 		<ModelConditionEvent Name="OnUsingWeaponA">
 			<Conditions>+USING_WEAPON_A</Conditions>
@@ -1308,6 +1312,7 @@
 		<!-- also fires on the banner carrier! -->
 		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
 		<!--<EventHandler EventName="OnRider4"	ScriptFunctionName="MemberHasRider" DebugSingleStep="false"/>-->
+		<EventHandler EventName="OnLeveledUp"	ScriptFunctionName="SquadHasLeveledUp" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">

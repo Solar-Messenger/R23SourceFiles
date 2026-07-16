@@ -1089,6 +1089,33 @@
 				DoFlash="True">
 				<TriggeredBy>Upgrade_ProductionVeterancy_HEROIC</TriggeredBy>
 			</LevelUpUpgrade>
+
+
+			<LevelUpUpgrade
+                id="ModuleTag_LevelUpUpgrade1"
+                LevelCap="2"
+                DoFlash="false"
+                LevelsToGain="1">
+            	<TriggeredBy>Upgrade_Veterancy_VETERAN</TriggeredBy>
+       		 </LevelUpUpgrade> 
+
+			 <LevelUpUpgrade
+                id="ModuleTag_LevelUpUpgrade2"
+                LevelCap="3"
+                DoFlash="false"
+                LevelsToGain="2">
+            	<TriggeredBy>Upgrade_Veterancy_ELITE</TriggeredBy>
+       		 </LevelUpUpgrade> 
+
+			 <LevelUpUpgrade
+                id="ModuleTag_LevelUpUpgrade3"
+                LevelCap="4"
+                DoFlash="false"
+                LevelsToGain="3">
+            	<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
+       		 </LevelUpUpgrade> 
+
+
 			<TemporarilyDefectUpdate
 				id="01009D1F"
 				DefectionFrameCount="300" />
@@ -1448,6 +1475,7 @@
 				AttributeModifier="ZoneTrooper_AutoInjectors">
 				<TriggeredBy>Upgrade_ZoneTrooperAutoInjectors</TriggeredBy>
 			</AttributeModifierUpgrade>
+
 			<CreateAndEnterObjectSpecialPower
 				id="10931FB8"
 				SpecialPowerTemplate="SpecialPowerCallForTransportGDI"
@@ -4490,6 +4518,31 @@
 				DoFlash="True">
 				<TriggeredBy>Upgrade_ProductionVeterancy_HEROIC</TriggeredBy>
 			</LevelUpUpgrade>
+
+			<LevelUpUpgrade
+                id="ModuleTag_LevelUpUpgrade1"
+                LevelCap="2"
+                DoFlash="false"
+                LevelsToGain="1">
+            	<TriggeredBy>Upgrade_Veterancy_VETERAN</TriggeredBy>
+       		 </LevelUpUpgrade> 
+
+			 <LevelUpUpgrade
+                id="ModuleTag_LevelUpUpgrade2"
+                LevelCap="3"
+                DoFlash="false"
+                LevelsToGain="2">
+            	<TriggeredBy>Upgrade_Veterancy_ELITE</TriggeredBy>
+       		 </LevelUpUpgrade> 
+
+			 <LevelUpUpgrade
+                id="ModuleTag_LevelUpUpgrade3"
+                LevelCap="4"
+                DoFlash="false"
+                LevelsToGain="3">
+            	<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
+       		 </LevelUpUpgrade> 
+
 			<TemporarilyDefectUpdate
 				id="01009D1F"
 				DefectionFrameCount="100" />
