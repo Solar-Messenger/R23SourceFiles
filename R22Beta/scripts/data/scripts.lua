@@ -3071,6 +3071,12 @@ function OnSquadDestroyed_103(self)
 
 end
 
+-- ############################# R25 Support Power Selection fix ###################################
+
+function OnSpecialPowerUsed(self)
+	print("special power used")
+end
+
 -- ############################# R25 Hammerhead Garrison fix ###################################
 
 -- Triggered by LEVELED
@@ -3084,31 +3090,67 @@ function SquadHasLeveledUp(self)
 	-- problematic
 	--print(squadMember.squadObject)
 	local squad = squadTables[squadMember.squadObject] 
-	local leaderLevel = nil
 	-- squad leader (banner carrier)
 	local squadLeader = squadMemberTable[squad.squadLeader]
 	-- get one of the squad members that isnt the banner carrier
-	local squadMember = nil
-	for objId,_ in squad.squadMembers do 
-		-- is not the banner carrier
-		if strfind(getObjectName(self), "3FFB163C") == nil then
-			squadMember = squadMemberTable[objId]
-			break
-		end
-	end
-	print("squad leader: " .. tostring(squadLeader) .. " squad member: " .. tostring(squadMember))
+	local squadMember = squadMemberTable[next(squad.squadMembers)]
+
+	--print("squad leader: " .. tostring(squadLeader) .. " squad member: " .. tostring(squadMember))
+
+	local squadIsHeroic = false
+	local squadIsElite = false
+	local squadIsVeteran = false
 
 	-- compare the rank of the banner carrier and one of the squad members 
+	-- EvaluateCondition("UNIT_COMPARE_RANK", UNIT, COMPARISON, INT)
+	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_HEROIC") then
+		-- apply heroic level 
+		squadIsHeroic = true
+	end
 
+	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_ELITE") then
+		-- apply elite level 
+		squadIsElite = true
+	end
 
+	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_VETERAN") then
+		-- apply veteran level 
+		squadIsVeteran = true
+	end
 
-	--
+	for objId,_ in squad.squadMembers do 
+		if squadIsVeteran then
+			-- apply veteran level to all members 
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, "GDIZoneTrooperSquadExperienceLevel_2")
+		end
+		if squadIsElite then
+			-- apply veteran level to all members 
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, "GDIZoneTrooperSquadExperienceLevel_3")
+		end
+		if squadIsHeroic then
+			-- apply veteran level to all members 
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, "GDIZoneTrooperSquadExperienceLevel_4")
+		end
+	end
 
-	local memberLevel = nil
-
-	-- get highest experience level of the horde, banner carrier 
-
-
+	if squadIsVeteran then
+		-- apply veteran level squad leader
+		print("squad is veteran, applying veteran level")
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_2")
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_VETERAN") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_VETERAN") end
+	end
+	if squadIsElite then
+		-- apply veteran level to squad leader
+		print("squad is elite, applying veteran elite")
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_3")
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_ELITE") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_ELITE") end
+	end
+	if squadIsHeroic then
+		-- apply veteran level to squad leader
+		print("squad is heroic, applying veteran heroic")
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_4")
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_HEROIC") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_HEROIC") end
+	end
 end
 
 function SquadIsAttacking(self)
@@ -3130,28 +3172,8 @@ function GarrisonedInHammerhead(self)
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 44, 1)
 	end
 
-	--if upgradeVeterancy and not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_VETERAN") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_VETERAN") end
-	--if upgradeVeterancy and not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_ELITE") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_ELITE") end
-	--if upgradeVeterancy and not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_HEROIC") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_HEROIC") end
-	--if upgradeVeterancy and not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_VETERAN") then ObjectGrantUpgrade(squad.selfRef, "Upgrade_Veterancy_VETERAN") end
-	--if upgradeVeterancy and not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_ELITE") then ObjectGrantUpgrade(squad.selfRef, "Upgrade_Veterancy_ELITE") end
-	--if upgradeVeterancy and not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_HEROIC") then ObjectGrantUpgrade(squad.selfRef, "Upgrade_Veterancy_HEROIC") end
-
-	-- give current veterancy to garrisoned unit 
-	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_VETERAN") then 
-		print("squad is veteran") 
-		--ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_2")
-	end
-
-	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_ELITE") then 
-		print("squad is elite") 
-		--ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_3")
-	end
-
-	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_HEROIC") then 
-		print("squad is heroic") 
-		--ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, "GDIZoneTrooperSquadExperienceLevel_4")
-	end
+	-- apply RIDER4 to banner
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squad.squadLeader].stringRef, 44, 1)
 end
 
 function GarrisonedInHammerheadEnd(self)
@@ -3159,46 +3181,16 @@ function GarrisonedInHammerheadEnd(self)
 
 	local _,squad = GetSquadAttributes(self)
 
-	-- give current veterancy to horde members
-	local isVeteran = false
-	local isElite = false
-	local isHeroic = false
-
-	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_VETERAN") then 
-		isVeteran = true
-		print("horde members are veteran") 
-	end
-
-	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_ELITE") then 
-		isElite = true
-		print("horde members are elite") 
-	end
-
-	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_Veterancy_HEROIC") then 
-		isHeroic = true
-		print("horde members are heroic") 
-	end
-
-
 	for squadMemberId,_ in squad.squadMembers do
 		-- the unit that should shoot here -> 3FFB163C (GDIZoneTrooperGarrisoned)
 		--WriteToFile("squadMembersInHammerhead.txt",  "Member: " .. tostring(squadMemberId) .. "Leader: " .. tostring(squad.squadLeader) .. "\n")
 
 		-- remove RIDER4 status from every member
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 44, 0)
-
-		if isVeteran then
-			--ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[squadMemberId].stringRef, "GDIZoneTrooperSquadExperienceLevel_2")
-		end
-
-		if isElite then
-			--ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[squadMemberId].stringRef, "GDIZoneTrooperSquadExperienceLevel_3")
-		end
-
-		if isHeroic then
-			--ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[squadMemberId].stringRef, "GDIZoneTrooperSquadExperienceLevel_4")
-		end
 	end
+
+	-- apply RIDER4 to banner
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squad.squadLeader].stringRef, 44, 0)
 end
 
 function GetSquadAttributes(self)
@@ -3229,18 +3221,19 @@ end
 function GetSquadSize(self, string) 
 
 	local squad = squadTables[string] 
+
+	-- associate this squad member with the squad object
+	local objId,squadMember = GetSquadMemberAttributes(self)
 	-- get object description of member
 	--WriteToFile("ObjectDescription.txt",  "Object: " .. tostring(getObjectName(self)) .. "\n")
 	-- if this member is the banner carrier, assign it as squad leader
 	if strfind(getObjectName(self), "3FFB163C") ~= nil then
 		squad.squadLeader = getObjectId(self)
+	else
+		-- add to the squad members table this unit
+		squad.squadMembers[objId] = objId
 	end
 
-	-- associate this squad member with the squad object
-	local objId,squadMember = GetSquadMemberAttributes(self)
-
-	-- add to the squad members table this unit
-	squad.squadMembers[objId] = objId
 	-- add a reference to this member of the squad it belongs to
 	squadMember.squadObject = string
 
@@ -3272,7 +3265,7 @@ squadSizeTable = {
 function isSquadExploit(squad)
 	if squad == nil then return end
 	-- compare squad size to the full squad size (obtained via squadSizeTable)
-	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))]+1 then 
+	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))] then 
 		ExecuteAction("NAMED_DELETE", squad.selfRef)
 		return true
 	end
