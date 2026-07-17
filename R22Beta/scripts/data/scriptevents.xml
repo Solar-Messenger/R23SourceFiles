@@ -932,6 +932,7 @@
 		<ScriptedEvent Name="SquadEvent" />	
 		<ScriptedEvent Name="UnitAnchorEvent" />
 		<ScriptedEvent Name="GettingOutOfTheWayEvent" />
+		<ScriptedEvent Name="MemberKilledOnBuilt" />
     </Events>
     
     <EventList Name="BaseScriptFunctions">
@@ -1035,6 +1036,8 @@
 		<EventHandler EventName="OnDestroyed" ScriptFunctionName="OnSquadDestroyed_R24" DebugSingleStep="false"/>	
 		<EventHandler EventName="OnRider4"	ScriptFunctionName="GarrisonedInHammerhead" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRider4End"	ScriptFunctionName="GarrisonedInHammerheadEnd" DebugSingleStep="false"/>
+		<!-- new function to receive from horde members that are killed out of the barracks -->
+		<EventHandler EventName="MemberKilledOnBuilt"	ScriptFunctionName="KilledOutOfBarracks" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NodCyborgSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
@@ -1333,6 +1336,7 @@
 		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
 		<!--<EventHandler EventName="OnRider4"	ScriptFunctionName="MemberHasRider" DebugSingleStep="false"/>-->
 		<EventHandler EventName="OnLeveledUp"	ScriptFunctionName="SquadHasLeveledUp" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">

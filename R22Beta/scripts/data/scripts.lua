@@ -3164,7 +3164,6 @@ function SquadHasLeveledUp(self)
 		-- track rank 
 		local level = tostring("GDIZoneTrooperSquadExperienceLevel_" .. squad.lastPromotedRank)
 
-
 		-- apply an attribute modifier for EXPERIENCE to scale for each promotion, so if a unit was promoted this way scale it
 
 		-- if this member has less rank than squadLevel
@@ -3183,7 +3182,6 @@ function SquadHasLeveledUp(self)
 				promoteLeader = true
 			end
 		end
-
 
 		-- promote everything that isnt the squad rank
 		for squadMemberId,_ in squad.squadMembers do
@@ -3295,7 +3293,8 @@ function GetSquadAttributes(self)
 		selfRef = self,
 		spawnedSize = 0,
 		lastPromotedRank = 1,
-		lastPromotedFrame = 0
+		lastPromotedFrame = 0,
+		unitsLost = {}
 	}
 	return objId, squadTables[objId]
 end
@@ -3353,13 +3352,14 @@ function OnSquadExitRax_R24(self)
 end
 
 squadSizeTable = {
-	["5D5E5931"] = 4 -- GDIZoneTrooperSquad
+	["5D5E5931"] = 5 -- GDIZoneTrooperSquad
 }
 
 function isSquadExploit(squad)
 	if squad == nil then return end
-	-- compare squad size to the full squad size (obtained via squadSizeTable)
-	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))] then 
+	-- compare squad size to the full squad size (obtained via squadSizeTable), subtract one for the horde banner carrier
+	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))]-getTableSize(squad.unitsLost) then 
+		--print("squad exploit detected!")
 		ExecuteAction("NAMED_DELETE", squad.selfRef)
 		return true
 	end
@@ -3367,7 +3367,12 @@ function isSquadExploit(squad)
 end
 
 -- horde member killed while leaving barracks -> broadcast an event to squads and decrement the squadSize by 1 
--- Triggered by +DESTROYED +IS_LEAVING_FACTORY event
+-- self is squad , other is the member that died
+function KilledOutOfBarracks(self, other)
+	local _,squad = GetSquadAttributes(self)
+	--squad.unitsLost = squad.unitsLost + 1
+	squad.unitsLost[getObjectId(other)] = true
+end
 
 -- grants as many upgrades to the squadLeader as there are squadMembers (obtained by getTableSize) for enabling weapons
 function GrantUpgradesToLeader(squad)
@@ -3411,7 +3416,15 @@ end
 
 -- when a member dies clear it up here
 function OnMemberDestroyed_R24(self)
+	local objId,squadMember = GetSquadMemberAttributes(self)
+	-- was the unit moving to rally point while it was destroyed?
+	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squadMember.stringRef , 145) then
+		print("horde member has been killed while being built!")
+		-- broadcast an event to squads that are also with the IS_MOVING_TO_RALLY_POINT object status
+		ObjectBroadcastEventToAllies(self,"MemberKilledOnBuilt", 50)
+	end
 
+	-- clean up here
 end
 
 -- ############################# MOBA FUNCTIONS ###################################
