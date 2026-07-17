@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<!-- xp upgrades -->
+
+	<UpgradeTemplate id="Upgrade_200scaler"
+		Type="OBJECT"
+	/>
+
+	<UpgradeTemplate id="Upgrade_300scaler"
+		Type="OBJECT"
+	/>
+
 	<!-- hammerhead garrison fix upgrades -->
 
 	<UpgradeTemplate id="Upgrade_SquadMember1"

@@ -3096,6 +3096,18 @@ function GetRankOfObject(unitRef)
 	return squadLevel
 end
 
+function RankUpSquad(rank)
+	
+	local ranks = {
+		["2"] = "Upgrade_Veterancy_VETERAN",
+		["3"] = "Upgrade_Veterancy_ELITE",
+		["4"] = "Upgrade_Veterancy_HEROIC"
+	}
+
+	return ranks[tostring(rank)]
+
+end
+
 
 function isLeaderHigherRanked(squad)
 
@@ -3138,61 +3150,85 @@ function SquadHasLeveledUp(self)
 
 	--print("squad leader: " .. tostring(squadLeader) .. " squad member: " .. tostring(squadMember))
 
-
 	local squadLevel = GetRankOfObject(squad.stringRef) 
-	-- is this unit underranked? 
-	local rankEverythingUp = EvaluateCondition("UNIT_COMPARE_RANK", squadMember.stringRef, 0, squadLevel)
+	print("promoted!")
+	-- increment squad level 
+	local curFrame = GetFrame()
+	if curFrame ~= squad.lastPromotedFrame then
+		squad.lastPromotedFrame = curFrame
+		squad.lastPromotedRank = squad.lastPromotedRank + 1
+		WriteToFile("unitPromoted.txt",  "Unit Promoted: " .. tostring(squad.lastPromotedRank) .. " times" .. "\n")
+		-- track rank 
+		local level = tostring("GDIZoneTrooperSquadExperienceLevel_" .. squad.lastPromotedRank)
 
-	-- currently the issue is when the leader garrisons the hammerhead already elite but because it didnt gain xp, its next promotion must be treated as a heroic one , promoting all the members is also necessary
-	-- in this case.
-	if rankEverythingUp then
-		-- Assign the rank to be squadLevel + 1 for everything 
-		if isLeaderHigherRanked(squad) then
-			print("the leader is higher ranked than the members!")
-		else
-			print("the members are higher ranked than the leader!")
+
+		-- apply an attribute modifier for EXPERIENCE to scale for each promotion, so if a unit was promoted this way scale it
+
+		-- if this member has less rank than squadLevel
+		-- promote members if false, else promote the leader
+		local promoteLeader = true
+		if EvaluateCondition("UNIT_COMPARE_RANK", squadMember.stringRef, 0, squadLevel) then
+			if squadMember.isLeader then
+				promoteLeader = false
+			end
 		end
-	else
 
-		-- If this units current level is less than the squad after promotion, check if this member is the banner or not and issue
-		-- a promotion according to the squadLevel + 1 if its below 4
 
-		-- has this unit got less rank than the squad ? if so promote the leader and this unit by squadLevel 
-		if squadMember.isLeader then print("the squad leader has promoted!") end
-		local level = tostring("GDIZoneTrooperSquadExperienceLevel_" .. squadLevel)
-		-- check every unit in the squad to see if any have less rank than the squad 
-		WriteToFile("level.txt",  level .. "\n")
+		-- promote everything that isnt the squad rank
 		for squadMemberId,_ in squad.squadMembers do
 			WriteToFile("counting.txt",  squadMemberId .. " ")
 			-- COMPARISON ["<"]=0, ["<="]=1, ["=="]=2, [">="]=3, [">"]=4, ["~="]=5
-			if EvaluateCondition("UNIT_COMPARE_RANK", squadMemberTable[squadMemberId].stringRef, 0, squadLevel) then
-				print("syncing unit ranks!")
-				-- if the unit that has less rank is the leader, promote it to the level of the squad
-				if squadMemberTable[squadMemberId].isLeader then 
-					ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, level)
-				else
-					-- apply experience rank to every member 
-					for objId,_ in squad.squadMembers do
-						if not squadMemberTable[objId].isLeader then
-							ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, level)
-						end
+			print("syncing unit ranks!")
+			-- if the unit that has less rank is the leader, promote it to the level of the squad
+			if squadMemberTable[squadMemberId].isLeader and promoteLeader then 
+				ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, level)
+				-- increment times promoted this way by 1 	
+				squadLeader.timesPromotedWithLua = squadLeader.timesPromotedWithLua + 1
+
+				-- apply xp modifier to this unit 
+				ApplyXPModifier(squadLeader)
+
+				--if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, RankUpSquad(squad.lastPromotedRank)) then ObjectGrantUpgrade(squadLeader.selfRef, RankUpSquad(squad.lastPromotedRank)) end
+				return
+			elseif not promoteLeader then
+				-- apply experience rank to every member 
+				for objId,_ in squad.squadMembers do
+					if not squadMemberTable[objId].isLeader then
+						ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, level)
+						squadMemberTable[objId].timesPromotedWithLua = squadMemberTable[objId].timesPromotedWithLua + 1
+
+						-- apply xp modifier to this unit 
+						ApplyXPModifier(squadMemberTable[objId]) 
+
+						--if not EvaluateCondition("UNIT_HAS_UPGRADE", squadMemberTable[objId].stringRef, RankUpSquad(squad.lastPromotedRank)) then ObjectGrantUpgrade(squadMemberTable[objId].stringRef, RankUpSquad(squad.lastPromotedRank)) end
 					end
 				end
-				break
+				return
 			end
 		end
 	end
+end
 
-	
-	-- Does the leader have less rank than the squad currently?
-	--if EvaluateCondition("UNIT_COMPARE_RANK", squadLeader.stringRef, 0, squadLevel) then
-	--	if squadLevel < 4 then 
-	--		print("promoting the leader!")
-	--		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, level)
-	--	end
-	--end
+function ApplyXPModifier(tableObj) 
 
-	--if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_Veterancy_VETERAN") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_Veterancy_VETERAN") end
+	local timesPromoted = tableObj.timesPromotedWithLua
+
+	local upgrades = {
+		["1"] = "Upgrade_200scaler",
+		["2"] = "Upgrade_300scaler"
+	}
+
+	-- REMOVE UPGRADEES IF THEY EXIST
+	if EvaluateCondition("UNIT_HAS_UPGRADE",tableObj.stringRef, "Upgrade_200scaler") then
+		ObjectRemoveUpgrade(tableObj.selfRef, "Upgrade_200scaler")
+	end
+
+	if EvaluateCondition("UNIT_HAS_UPGRADE",tableObj.stringRef, "Upgrade_300scaler") then
+		ObjectRemoveUpgrade(tableObj.selfRef, "Upgrade_300scaler")
+	end
+
+	-- APPLY THE APPROPRIATE UPGRADE 
+	if not EvaluateCondition("UNIT_HAS_UPGRADE",tableObj.stringRef, upgrades[tostring(timesPromoted)]) then ObjectGrantUpgrade(tableObj.selfRef, upgrades[tostring(timesPromoted)]) end
 
 end
 
@@ -3245,7 +3281,8 @@ function GetSquadAttributes(self)
 		stringRef = SetObjectReference(self),
 		selfRef = self,
 		spawnedSize = 0,
-		lastPromotedRank = nil
+		lastPromotedRank = 1,
+		lastPromotedFrame = 0
 	}
 	return objId, squadTables[objId]
 end
@@ -3256,7 +3293,8 @@ function GetSquadMemberAttributes(self)
 		squadObject = nil,
 		selfRef = self,
 		stringRef = SetObjectReference(self),
-		isLeader = false
+		isLeader = false, 
+		timesPromotedWithLua = 0
 	}
 	return objId, squadMemberTable[objId]
 end

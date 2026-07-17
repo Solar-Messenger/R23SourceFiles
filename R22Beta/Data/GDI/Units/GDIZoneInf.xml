@@ -1450,6 +1450,19 @@
 				<TriggeredBy>Upgrade_ZoneTrooperAutoInjectors</TriggeredBy>
 			</AttributeModifierUpgrade>
 
+			<!-- xp upgrades -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifier200xp"
+				AttributeModifier="Modifier_Grant200percentXp">
+				<TriggeredBy>Upgrade_200scaler</TriggeredBy>
+			</AttributeModifierUpgrade>
+
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifier300xp"
+				AttributeModifier="Modifier_Grant300percentXp">
+				<TriggeredBy>Upgrade_300scaler</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 			<CreateAndEnterObjectSpecialPower
 				id="10931FB8"
 				SpecialPowerTemplate="SpecialPowerCallForTransportGDI"
@@ -2222,6 +2235,20 @@
 				AttributeModifier="Modifier_MultifunctionUpgradeCenterArmor">
 				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterArmor</TriggeredBy>
 			</AttributeModifierUpgrade>
+
+			<!-- xp upgrades -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifier200xp"
+				AttributeModifier="Modifier_Grant200percentXp">
+				<TriggeredBy>Upgrade_200scaler</TriggeredBy>
+			</AttributeModifierUpgrade>
+
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifier300xp"
+				AttributeModifier="Modifier_Grant300percentXp">
+				<TriggeredBy>Upgrade_300scaler</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 			<LevelUpUpgrade
 				id="3D5ED271"
 				RequiresAllTriggers="False"
