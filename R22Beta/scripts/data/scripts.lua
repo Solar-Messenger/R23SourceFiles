@@ -3154,7 +3154,9 @@ function SquadHasLeveledUp(self)
 	--print("promoted!")
 	-- increment squad level 
 	local curFrame = GetFrame()
-	if curFrame ~= squad.lastPromotedFrame then
+	-- condition needs to be enhanced for kills such as killing a MARV, which will grant more than one veterancy rank on the same frame.
+	-- unless the squad rank is more than this on the same frame
+	if curFrame ~= squad.lastPromotedFrame or (curFrame == squad.lastPromotedFrame and squadLevel ~= squad.lastPromotedRank) then
 		squad.lastPromotedFrame = curFrame
 		-- each time a member or banner carrier rnaks up increment the rank by 1 of everything
 		squad.lastPromotedRank = squad.lastPromotedRank + 1
@@ -3204,6 +3206,7 @@ function SquadHasLeveledUp(self)
 				print("promoting members!")
 				for objId,_ in squad.squadMembers do
 					if not squadMemberTable[objId].isLeader then
+						-- if desync then its probably because of the prerequisites 
 						ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, level)
 						squadMemberTable[objId].timesPromotedWithLua = squadMemberTable[objId].timesPromotedWithLua + 1
 
@@ -3362,6 +3365,9 @@ function isSquadExploit(squad)
 	end
 	return false
 end
+
+-- horde member killed while leaving barracks -> broadcast an event to squads and decrement the squadSize by 1 
+-- Triggered by +DESTROYED +IS_LEAVING_FACTORY event
 
 -- grants as many upgrades to the squadLeader as there are squadMembers (obtained by getTableSize) for enabling weapons
 function GrantUpgradesToLeader(squad)
