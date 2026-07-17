@@ -3151,11 +3151,12 @@ function SquadHasLeveledUp(self)
 	--print("squad leader: " .. tostring(squadLeader) .. " squad member: " .. tostring(squadMember))
 
 	local squadLevel = GetRankOfObject(squad.stringRef) 
-	print("promoted!")
+	--print("promoted!")
 	-- increment squad level 
 	local curFrame = GetFrame()
 	if curFrame ~= squad.lastPromotedFrame then
 		squad.lastPromotedFrame = curFrame
+		-- each time a member or banner carrier rnaks up increment the rank by 1 of everything
 		squad.lastPromotedRank = squad.lastPromotedRank + 1
 		WriteToFile("unitPromoted.txt",  "Unit Promoted: " .. tostring(squad.lastPromotedRank) .. " times" .. "\n")
 		-- track rank 
@@ -3166,10 +3167,18 @@ function SquadHasLeveledUp(self)
 
 		-- if this member has less rank than squadLevel
 		-- promote members if false, else promote the leader
-		local promoteLeader = true
-		if EvaluateCondition("UNIT_COMPARE_RANK", squadMember.stringRef, 0, squadLevel) then
+		local promoteLeader = false
+		local promoteMembers = false
+		-- if this unit that just promoted has less level than the squad apply a modifier to it
+
+		-- if this unit and the squad are the same level, promote what isnt this unit (be it member or leader)
+
+		if EvaluateCondition("UNIT_COMPARE_RANK", squadMember.stringRef, 2, squadLevel) then
+			-- leader check
 			if squadMember.isLeader then
-				promoteLeader = false
+				promoteMembers = true
+			else
+				promoteLeader = true
 			end
 		end
 
@@ -3178,9 +3187,9 @@ function SquadHasLeveledUp(self)
 		for squadMemberId,_ in squad.squadMembers do
 			WriteToFile("counting.txt",  squadMemberId .. " ")
 			-- COMPARISON ["<"]=0, ["<="]=1, ["=="]=2, [">="]=3, [">"]=4, ["~="]=5
-			print("syncing unit ranks!")
 			-- if the unit that has less rank is the leader, promote it to the level of the squad
 			if squadMemberTable[squadMemberId].isLeader and promoteLeader then 
+				print("promoting leader!")
 				ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, level)
 				-- increment times promoted this way by 1 	
 				squadLeader.timesPromotedWithLua = squadLeader.timesPromotedWithLua + 1
@@ -3190,8 +3199,9 @@ function SquadHasLeveledUp(self)
 
 				--if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, RankUpSquad(squad.lastPromotedRank)) then ObjectGrantUpgrade(squadLeader.selfRef, RankUpSquad(squad.lastPromotedRank)) end
 				return
-			elseif not promoteLeader then
+			elseif promoteMembers then
 				-- apply experience rank to every member 
+				print("promoting members!")
 				for objId,_ in squad.squadMembers do
 					if not squadMemberTable[objId].isLeader then
 						ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, level)
