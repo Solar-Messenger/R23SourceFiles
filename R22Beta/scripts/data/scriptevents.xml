@@ -663,7 +663,11 @@
 		
 		<ModelConditionEvent Name="MovingOutOfTheWay">
 			<Conditions>+MOVING_OUT_OF_THE_WAY</Conditions>
-		</ModelConditionEvent>		
+		</ModelConditionEvent>	
+		
+		<ModelConditionEvent Name="OnDestroyedSpawn">
+			<Conditions>+USER_59 +DESTROYED</Conditions>
+		</ModelConditionEvent>	
 
 		<ObjectStatusEvent Name="OnTempDefected">
 			<Conditions>+TEMPORARILY_DEFECTED</Conditions>
@@ -1331,7 +1335,7 @@
 	</EventList>
 
 	<EventList Name="GDIZoneTrooperFunctions_R24" Inherit="BaseScriptFunctions">
-		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIZoneTrooperCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIZoneTrooperCreated_R24" DebugSingleStep="false"/>
 		<!-- also fires on the banner carrier! -->
 		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
 		<!--<EventHandler EventName="OnRider4"	ScriptFunctionName="MemberHasRider" DebugSingleStep="false"/>-->
@@ -1792,7 +1796,9 @@
 		<!--
 		<EventHandler EventName="SpecialOne" ScriptFunctionName="OnSpecialPowerUsed" DebugSingleStep="false"/>
 		<EventHandler EventName="SpecialTwo" ScriptFunctionName="OnSpecialPowerUsed" DebugSingleStep="false"/>
-		<EventHandler EventName="SpecialThree" ScriptFunctionName="OnSpecialPowerUsed" DebugSingleStep="false"/> -->
+		<EventHandler EventName="SpecialThree" ScriptFunctionName="OnSpecialPowerUsed" DebugSingleStep="false"/
+		ONLY TRIGGERS THE SPECIAL POWER, DOEESNT SHOW THE RADIUS
+		<EventHandler EventName="OnSelected" ScriptFunctionName="BuildingSelecteed" DebugSingleStep="false"/>> -->
 	</EventList>
 	
 	<!--<EventList Name="GDIRefineryFunctions" Inherit="BaseScriptFunctions">

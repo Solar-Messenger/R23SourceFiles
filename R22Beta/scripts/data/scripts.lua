@@ -3220,6 +3220,11 @@ function SquadHasLeveledUp(self)
 	end
 end
 
+function BuildingSelecteed(self)
+	print("building selected!")
+	ObjectDoSpecialPower(self, "SpecialPowerGDI_SpaceCommandShockwaveArtillery")
+end
+
 function ApplyXPModifier(tableObj) 
 
 	local timesPromoted = tableObj.timesPromotedWithLua
@@ -3294,7 +3299,8 @@ function GetSquadAttributes(self)
 		spawnedSize = 0,
 		lastPromotedRank = 1,
 		lastPromotedFrame = 0,
-		unitsLost = {}
+		unitsLost = {},
+		hasBannerCarrier = false
 	}
 	return objId, squadTables[objId]
 end
@@ -3337,7 +3343,10 @@ function OnSquadExitRax_R24(self)
 	local objId,squad = GetSquadAttributes(self)
 	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
 	-- squad size is 4 here. 
+	local squadData = squadSizeTable[getObjectName(squad.selfRef)]
 	local squadSize = getTableSize(squad.squadMembers)
+	-- used for hammerhead garrisoned squads that can fire over structures
+	squadSize = squadData.hasBanner and squadSize-1 or squadSize
 	if squadSize == nil then return end
 	squad.spawnedSize = squadSize
 
@@ -3352,14 +3361,17 @@ function OnSquadExitRax_R24(self)
 end
 
 squadSizeTable = {
-	["5D5E5931"] = 5 -- GDIZoneTrooperSquad
+	["5D5E5931"] = {size = 4, hasBanner = true} -- GDIZoneTrooperSquad
 }
 
 function isSquadExploit(squad)
 	if squad == nil then return end
 	-- compare squad size to the full squad size (obtained via squadSizeTable), subtract one for the horde banner carrier
-	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))]-getTableSize(squad.unitsLost) then 
-		--print("squad exploit detected!")
+	-- 5 - 2 = 3 
+	--WriteToFile("isExploit.txt",  "spawnedSize: " .. tostring(squad.spawnedSize) .. " " .. " " .. tostring(squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLost)) .. "\n")
+	-- if banner carrier exists it always spawns 
+	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLost) then 
+		print("squad exploit detected!")
 		ExecuteAction("NAMED_DELETE", squad.selfRef)
 		return true
 	end
@@ -3371,6 +3383,7 @@ end
 function KilledOutOfBarracks(self, other)
 	local _,squad = GetSquadAttributes(self)
 	--squad.unitsLost = squad.unitsLost + 1
+	-- if has banner carrier this also increments
 	squad.unitsLost[getObjectId(other)] = true
 end
 
@@ -3414,17 +3427,23 @@ function OnSquadDestroyed_R24(self)
 
 end
 
--- when a member dies clear it up here
+-- when a member dies clear it up here, Triggered by +DESTROYED +USER_59
 function OnMemberDestroyed_R24(self)
 	local objId,squadMember = GetSquadMemberAttributes(self)
 	-- was the unit moving to rally point while it was destroyed?
-	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squadMember.stringRef , 145) then
+	--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squadMember.stringRef , 145) then
 		print("horde member has been killed while being built!")
 		-- broadcast an event to squads that are also with the IS_MOVING_TO_RALLY_POINT object status
 		ObjectBroadcastEventToAllies(self,"MemberKilledOnBuilt", 50)
-	end
-
 	-- clean up here
+end
+
+-- Created squad overriden functions
+
+function OnGDIZoneTrooperCreated_R24(self)
+	OnGDIZoneTrooperCreated(self)
+	-- optimization to prevent +DESTROYED events from always triggering a squad exploit check
+	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_59", 3, 100)
 end
 
 -- ############################# MOBA FUNCTIONS ###################################

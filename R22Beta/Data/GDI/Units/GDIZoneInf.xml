@@ -1779,7 +1779,7 @@
 	<!-- LINE_OF_SIGHT_IGNORES_BUILDINGS prevents banner carrier sharing xp -->
 	<GameObject
 		id="GDIZoneTrooperGarrisoned"
-		KindOf="SELECTABLE CAN_ATTACK CAN_CAST_REFLECTIONS INFANTRY PRELOAD ATTACK_NEEDS_LINE_OF_SIGHT PATH_THROUGH_INFANTRY LINE_OF_SIGHT_IGNORES_BUILDINGS"
+		KindOf="SELECTABLE CAN_ATTACK CAN_CAST_REFLECTIONS INFANTRY PRELOAD ATTACK_NEEDS_LINE_OF_SIGHT PATH_THROUGH_INFANTRY LINE_OF_SIGHT_IGNORES_BUILDINGS NOT_AUTOACQUIRABLE UNATTACKABLE"
 		ReviveText=""
 		RecruitText=""
 		Description="Desc:GDIZoneTrooper"
@@ -2885,29 +2885,9 @@
 			</AIUpdate>
 		</AI>
 		<Body>
-			<ActiveBody
-				id="2857A550"
-				MaxHealth="240"
-				MaxHealthDamaged="0"
-				MaxHealthReallyDamaged="0"
-				InitialHealth="-1"
-				RecoveryTime="0"
-				DodgePercent="0"
-				EnteringDamagedTransitionTime="0s"
-				EnteringReallyDamagedTransitionTime="0s"
-				GrabObject=""
-				GrabFX=""
-				GrabDamage="200"
-				HealingBuffFX=""
-				DamagedAttributeModifier=""
-				ReallyDamagedAttributeModifier=""
-				CheerRadius="200"
-				BurningDeathFX=""
-				SecondChanceUpgrade=""
-				SecondChanceHeal="0"
-				UseDefaultDamageSettings="True"
-				RemoveUpgradesOnDeath="False"
-				BurningDeathBehavior="False" />
+			<ImmortalBody
+				id="ModuleTag_ImmortalBody"
+				MaxHealth="1.0" />
 		</Body>
 		<Geometry
 			IsSmall="True">
