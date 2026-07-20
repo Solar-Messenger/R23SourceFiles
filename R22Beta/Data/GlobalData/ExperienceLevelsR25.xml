@@ -143,7 +143,7 @@
 		Prerequisite="GDIZoneTrooperSquadExperienceLevel_1"
 		RequiredExperience="200"
 		ExperienceAward="405"
-		ModelConditionState="SPECIAL_CHEERING"
+		ModelConditionState="USER_16"
 		Rank="2">
 		<LevelUpTintColor
 			r="1.0"
@@ -172,7 +172,7 @@
 		Prerequisite="GDIZoneTrooperSquadExperienceLevel_2"
 		RequiredExperience="400"
 		ExperienceAward="500"
-		ModelConditionState="SPECIAL_CHEERING"
+		ModelConditionState="USER_17"
 		Rank="3">
 		<LevelUpTintColor
 			r="1.0"
@@ -201,7 +201,7 @@
 		Prerequisite="GDIZoneTrooperSquadExperienceLevel_3"
 		RequiredExperience="600"
 		ExperienceAward="624"
-		ModelConditionState="SPECIAL_CHEERING"
+		ModelConditionState="USER_18"
 		Rank="4">
 		<LevelUpTintColor
 			r="1.0"

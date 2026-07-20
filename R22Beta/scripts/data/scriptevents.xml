@@ -655,7 +655,11 @@
 
 		<ModelConditionEvent Name="OnLeveledUp">
 			<Conditions>+LEVELED</Conditions>
-		</ModelConditionEvent>		
+		</ModelConditionEvent>	
+		
+		<ModelConditionEvent Name="OnLeveledUp1">
+			<Conditions>-LEVELED</Conditions>
+		</ModelConditionEvent>	
 		
 		<ModelConditionEvent Name="OnUsingWeaponA">
 			<Conditions>+USING_WEAPON_A</Conditions>
@@ -1347,7 +1351,12 @@
 	</EventList>
 
 	<EventList Name="GDIZoneTrooperFunctions_R24" Inherit="HordeMemberFunctions_R24">
-		<EventHandler EventName="OnLeveledUp"	ScriptFunctionName="SquadHasLeveledUp" DebugSingleStep="false"/>
+		<!--<EventHandler EventName="OnLeveledUp"	ScriptFunctionName="SquadMemberHasLeveledUp" DebugSingleStep="false"/>-->
+
+		
+		<EventHandler EventName="OnUser16"	ScriptFunctionName="SquadMemberHasLeveledUp" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser17"	ScriptFunctionName="SquadMemberHasLeveledUp" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser18"	ScriptFunctionName="SquadMemberHasLeveledUp" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">

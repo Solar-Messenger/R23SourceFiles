@@ -3132,15 +3132,16 @@ end
 
 -- ############################# R25 Hammerhead Garrison fix ###################################
 
--- Triggered by LEVELED
-function SquadHasLeveledUp(self)
-	-- print("squad has ranked up!")
+-- Triggered by LEVELED, not ideal if many promotions happen on same frame, probably has to be accompanied with USER_16, USER_17, USER_18
+function SquadMemberHasLeveledUp(self)
+	 print("squad member has ranked up!")
 	-- Increment squad Experience rank (incremented by one for each promotion)
 	-- check the highest rank of members and banner carrier and increment everything based on that rank
 	-- get the squad object 
 
-	-- clear the model status so it can be reapplied in quick succession.
-	ExecuteAction("UNIT_CLEAR_MODELCONDITION", self, "LEVELED")		
+	-- clear the model status so it can be reapplied in quick succession.	
+	if not ObjectTestModelCondition(self, "LEVELED") then return end
+
 	local _,squadMember = GetSquadMemberAttributes(self)
 	-- problematic
 	--print(squadMember.squadObject)
@@ -3159,13 +3160,13 @@ function SquadHasLeveledUp(self)
 	-- condition needs to be enhanced for kills such as killing a MARV, which will grant more than one veterancy rank on the same frame.
 	-- unless the squad rank is more than this on the same frame
 
-	--WriteToFile("debug.txt",  "curFrame: " .. tostring(curFrame) .. " squad.lastPromotedFrame: " .. tostring(squad.lastPromotedFrame) .. " squadLevel: " .. tostring(squadLevel) .. " squad.lastPromotedRank: " .. tostring(squad.lastPromotedRank) .. "\n")
+	WriteToFile("debug.txt",  "curFrame: " .. tostring(curFrame) .. " squad.lastPromotedFrame: " .. tostring(squad.lastPromotedFrame) .. " squadLevel: " .. tostring(squadLevel) .. " squad.lastPromotedRank: " .. tostring(squad.lastPromotedRank) .. "\n")
 
 	if curFrame ~= squad.lastPromotedFrame or (curFrame == squad.lastPromotedFrame and squadLevel ~= squad.lastPromotedRank) then
 		squad.lastPromotedFrame = curFrame
 		-- each time a member or banner carrier rnaks up increment the rank by 1 of everything
 		squad.lastPromotedRank = squad.lastPromotedRank + 1
-		--WriteToFile("unitPromoted.txt",  "Unit Promoted: " .. tostring(squad.lastPromotedRank) .. " times" .. "\n")
+		WriteToFile("unitPromoted.txt",  "Unit Promoted: " .. tostring(squad.lastPromotedRank) .. " times" .. "\n")
 		-- track rank 
 		local level = tostring("GDIZoneTrooperSquadExperienceLevel_" .. squad.lastPromotedRank)
 
@@ -3218,6 +3219,8 @@ function SquadHasLeveledUp(self)
 			end
 		end
 	end
+
+
 end
 
 function BuildingSelecteed(self)
