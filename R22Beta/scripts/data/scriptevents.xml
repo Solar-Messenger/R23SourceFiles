@@ -666,7 +666,7 @@
 		</ModelConditionEvent>	
 		
 		<ModelConditionEvent Name="OnDestroyedSpawn">
-			<Conditions>+USER_59 +DESTROYED</Conditions>
+			<Conditions>+DESTROYED +USER_59</Conditions>
 		</ModelConditionEvent>	
 
 		<ObjectStatusEvent Name="OnTempDefected">
