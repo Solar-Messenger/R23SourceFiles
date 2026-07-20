@@ -3188,37 +3188,33 @@ function SquadHasLeveledUp(self)
 			end
 		end
 
-		-- promote everything that isnt the squad rank
-		for squadMemberId,_ in squad.squadMembers do
-			--WriteToFile("counting.txt",  squadMemberId .. " ")
-			-- if the unit that has less rank is the leader, promote it to the level of the squad
-			if squadMemberTable[squadMemberId].isLeader and promoteLeader then 
-				print("promoting leader!")
-				ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, level)
-				-- increment times promoted this way by 1 	
-				squadLeader.timesPromotedWithLua = squadLeader.timesPromotedWithLua + 1
 
-				-- apply xp modifier to this unit 
-				ApplyXPModifier(squadLeader)
+		--WriteToFile("counting.txt",  squadMemberId .. " ")
+		-- if the unit that has less rank is the leader, promote it to the level of the squad
+		if promoteLeader then 
+			print("promoting leader!")
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, level)
+			-- increment times promoted this way by 1 	
+			squadLeader.timesPromotedWithLua = squadLeader.timesPromotedWithLua + 1
 
-				--if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, RankUpSquad(squad.lastPromotedRank)) then ObjectGrantUpgrade(squadLeader.selfRef, RankUpSquad(squad.lastPromotedRank)) end
-				return
-			elseif promoteMembers then
-				-- apply experience rank to every member 
-				print("promoting members!")
-				for objId,_ in squad.squadMembers do
-					if not squadMemberTable[objId].isLeader then
-						-- if desync then its probably because of the prerequisites 
-						ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, level)
-						squadMemberTable[objId].timesPromotedWithLua = squadMemberTable[objId].timesPromotedWithLua + 1
+			-- apply xp modifier to this unit 
+			ApplyXPModifier(squadLeader)
 
-						-- apply xp modifier to this unit 
-						ApplyXPModifier(squadMemberTable[objId]) 
+			--if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, RankUpSquad(squad.lastPromotedRank)) then ObjectGrantUpgrade(squadLeader.selfRef, RankUpSquad(squad.lastPromotedRank)) end
+		elseif promoteMembers then
+			-- apply experience rank to every member 
+			print("promoting members!")
+			for objId,_ in squad.squadMembers do
+				if not squadMemberTable[objId].isLeader then
+					-- if desync then its probably because of the prerequisites 
+					ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, level)
+					squadMemberTable[objId].timesPromotedWithLua = squadMemberTable[objId].timesPromotedWithLua + 1
 
-						--if not EvaluateCondition("UNIT_HAS_UPGRADE", squadMemberTable[objId].stringRef, RankUpSquad(squad.lastPromotedRank)) then ObjectGrantUpgrade(squadMemberTable[objId].stringRef, RankUpSquad(squad.lastPromotedRank)) end
-					end
+					-- apply xp modifier to this unit 
+					ApplyXPModifier(squadMemberTable[objId]) 
+
+					--if not EvaluateCondition("UNIT_HAS_UPGRADE", squadMemberTable[objId].stringRef, RankUpSquad(squad.lastPromotedRank)) then ObjectGrantUpgrade(squadMemberTable[objId].stringRef, RankUpSquad(squad.lastPromotedRank)) end
 				end
-				return
 			end
 		end
 	end
@@ -3440,7 +3436,11 @@ end
 
 function OnSquadDestroyed_R24(self)
 	local objId = getObjectId(self)
-	-- clean up here
+	local _,squad = GetSquadAttributes(self)
+	
+	-- if squad is empty here and is still being constructed, delete it
+
+	-- clean up squad here
 	squadTables[objId] = nil
 
 end
@@ -3451,7 +3451,7 @@ function OnMemberDestroyed_R24(self)
 	-- was the unit moving to rally point while it was destroyed?
 	--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squadMember.stringRef , 145) then
 	if ObjectTestModelCondition(self, "USER_59") then
-		print("horde member has been killed while being built!")
+		--print("horde member has been killed while being built!")
 		-- broadcast an event to squads that are also with the IS_MOVING_TO_RALLY_POINT object status
 		ObjectBroadcastEventToAllies(self,"MemberKilledOnBuilt", 50)
 	end
@@ -3459,6 +3459,20 @@ function OnMemberDestroyed_R24(self)
 	local squad = squadTables[squadMember.squadObject] 
 	squad.squadMembers[objId] = nil
 	squadMemberTable[objId] = nil
+
+	-- no more squadMembers just leader remaining check
+	local firstKey = next(squad.squadMembers)
+	if firstKey ~= nil and next(squad.squadMembers, firstKey) == nil then
+		-- if the one member remaining is the leader, kill the squad
+		local remainingMember = squadMemberTable[firstKey]
+		if remainingMember.isLeader then
+			--print("squad leader is all thats left, deleting the squad.")
+			-- NAMED_KILL to prevent null pointer crashes
+			ExecuteAction("NAMED_KILL", remainingMember.selfRef)
+			-- clean up the banner carrier 
+			squadMemberTable[firstKey] = nil
+		end
+	end
 end
 
 -- Created squad overriden functions
