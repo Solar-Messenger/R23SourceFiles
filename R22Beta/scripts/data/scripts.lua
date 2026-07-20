@@ -3443,9 +3443,11 @@ function OnMemberDestroyed_R24(self)
 	local objId,squadMember = GetSquadMemberAttributes(self)
 	-- was the unit moving to rally point while it was destroyed?
 	--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squadMember.stringRef , 145) then
+	if ObjectTestModelCondition(self, "USER_59") then
 		print("horde member has been killed while being built!")
 		-- broadcast an event to squads that are also with the IS_MOVING_TO_RALLY_POINT object status
 		ObjectBroadcastEventToAllies(self,"MemberKilledOnBuilt", 50)
+	end
 	-- clean up here
 end
 
@@ -3462,7 +3464,7 @@ function OnHordeMemberCreated_R24(self)
 	end
 	
 	-- optimization to prevent +DESTROYED events from always triggering a squad exploit check
-	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_59", 3, 100)
+	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_59", 5, 100)
 end
 
 -- ############################# MOBA FUNCTIONS ###################################
