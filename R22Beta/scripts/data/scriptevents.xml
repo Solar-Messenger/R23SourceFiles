@@ -1329,18 +1329,25 @@
 	</EventList>
 
 	<EventList Name="GDIRifleSoldierFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
+		<!--<EventHandler EventName="OnRider4"	ScriptFunctionName="MemberHasRider" DebugSingleStep="false"/>-->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIRifleSoldierVeteranFunctions_R24" Inherit="BaseScriptFunctions">
 	</EventList>
 
-	<EventList Name="GDIZoneTrooperFunctions_R24" Inherit="BaseScriptFunctions">
-		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIZoneTrooperCreated_R24" DebugSingleStep="false"/>
+	<EventList Name="HordeMemberFunctions_R24" Inherit="BaseScriptFunctions">
 		<!-- also fires on the banner carrier! -->
 		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
 		<!--<EventHandler EventName="OnRider4"	ScriptFunctionName="MemberHasRider" DebugSingleStep="false"/>-->
-		<EventHandler EventName="OnLeveledUp"	ScriptFunctionName="SquadHasLeveledUp" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDIZoneTrooperFunctions_R24" Inherit="HordeMemberFunctions_R24">
+		<EventHandler EventName="OnLeveledUp"	ScriptFunctionName="SquadHasLeveledUp" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">

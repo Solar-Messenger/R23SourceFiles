@@ -3322,16 +3322,18 @@ end
 function GetSquadSize(self, string) 
 
 	local squad = squadTables[string] 
-
+	--ExecuteAction("NAMED_FLASH_WHITE", self, 3)
 	-- associate this squad member with the squad object
 	local objId,squadMember = GetSquadMemberAttributes(self)
 	-- get object description of member
 	--WriteToFile("ObjectDescription.txt",  "Object: " .. tostring(getObjectName(self)) .. "\n")
 	-- if this member is the banner carrier, assign it as squad leader
-	if strfind(getObjectName(self), "3FFB163C") ~= nil then
+
+	if bannerCarrierTable[getObjectName(self)] ~= nil then 
 		squad.squadLeader = getObjectId(self)
 		squadMember.isLeader = true
 	end
+		
 	squad.squadMembers[objId] = objId
 	-- add a reference to this member of the squad it belongs to
 	squadMember.squadObject = string
@@ -3361,14 +3363,23 @@ function OnSquadExitRax_R24(self)
 end
 
 squadSizeTable = {
-	["5D5E5931"] = {size = 4, hasBanner = true} -- GDIZoneTrooperSquad
+	["5D5E5931"] = {size = 4, hasBanner = true}, -- GDIZoneTrooperSquad
+	["9096966E"] = {size = 6, hasBanner = false} -- GDIRifleSoldierSquad
+}
+
+onCreatedTable = {
+	["B821E76D"] = {onCreated = "OnGDIZoneTrooperCreated(self)"} -- GDIZoneTrooper
+}
+
+bannerCarrierTable = {
+	["3FFB163C"] = true -- GDIZoneTrooperGarrisoned
 }
 
 function isSquadExploit(squad)
 	if squad == nil then return end
 	-- compare squad size to the full squad size (obtained via squadSizeTable), subtract one for the horde banner carrier
 	-- 5 - 2 = 3 
-	--WriteToFile("isExploit.txt",  "spawnedSize: " .. tostring(squad.spawnedSize) .. " " .. " " .. tostring(squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLost)) .. "\n")
+	-- WriteToFile("isExploit.txt",  "spawnedSize: " .. tostring(squad.spawnedSize) .. " " .. " " .. tostring(squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLost)) .. "\n")
 	-- if banner carrier exists it always spawns 
 	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLost) then 
 		print("squad exploit detected!")
@@ -3440,8 +3451,16 @@ end
 
 -- Created squad overriden functions
 
-function OnGDIZoneTrooperCreated_R24(self)
-	OnGDIZoneTrooperCreated(self)
+function OnHordeMemberCreated_R24(self)
+
+	-- for horde members with onCreated functions that need to be inherited
+	local objName = getObjectName(self)
+	--print(tostring(objName))
+	if onCreatedTable[objName] ~= nil then
+		--print("doing string!")
+		dostring(onCreatedTable[objName].onCreated)
+	end
+	
 	-- optimization to prevent +DESTROYED events from always triggering a squad exploit check
 	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_59", 3, 100)
 end
