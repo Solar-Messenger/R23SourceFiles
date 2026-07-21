@@ -3168,8 +3168,6 @@ function SquadMemberHasLeveledUp(self)
 		squad.lastPromotedRank = squad.lastPromotedRank + 1
 		WriteToFile("unitPromoted.txt",  "Unit Promoted: " .. tostring(squad.lastPromotedRank) .. " times" .. "\n")
 		-- track rank 
-		local level = tostring("GDIZoneTrooperSquadExperienceLevel_" .. squad.lastPromotedRank)
-
 		-- apply an attribute modifier for EXPERIENCE to scale for each promotion, so if a unit was promoted this way scale it
 
 		-- if this member has less rank than squadLevel
@@ -3189,12 +3187,11 @@ function SquadMemberHasLeveledUp(self)
 			end
 		end
 
-
 		--WriteToFile("counting.txt",  squadMemberId .. " ")
 		-- if the unit that has less rank is the leader, promote it to the level of the squad
 		if promoteLeader then 
 			print("promoting leader!")
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, level)
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, tostring("GDIZoneTrooperSquadExperienceLevelBanner_" .. squad.lastPromotedRank))
 			-- increment times promoted this way by 1 	
 			squadLeader.timesPromotedWithLua = squadLeader.timesPromotedWithLua + 1
 
@@ -3208,7 +3205,7 @@ function SquadMemberHasLeveledUp(self)
 			for objId,_ in squad.squadMembers do
 				if not squadMemberTable[objId].isLeader then
 					-- if desync then its probably because of the prerequisites 
-					ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, level)
+					ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, tostring("GDIZoneTrooperSquadExperienceLevel_" .. squad.lastPromotedRank))
 					squadMemberTable[objId].timesPromotedWithLua = squadMemberTable[objId].timesPromotedWithLua + 1
 
 					-- apply xp modifier to this unit 
@@ -3219,8 +3216,6 @@ function SquadMemberHasLeveledUp(self)
 			end
 		end
 	end
-
-
 end
 
 function BuildingSelecteed(self)
@@ -3459,11 +3454,27 @@ function OnMemberDestroyed_R24(self)
 		ObjectBroadcastEventToAllies(self,"MemberKilledOnBuilt", 50)
 	end
 	-- clean up here
+	--if squadMember.squadObject == nil then print("squad object is nil") end
 	local squad = squadTables[squadMember.squadObject] 
 	squad.squadMembers[objId] = nil
 	squadMemberTable[objId] = nil
 
 	-- no more squadMembers just leader remaining check
+	
+	--local t = {}
+
+	--for k, v in squad.squadMembers do
+	--	if k ~= nil then 
+	--		tinsert(t, k) 
+	--	end
+	--	print("inserting")
+	--end
+
+	--if getn(t) == 1 and squadMemberTable[t[1]].isLeader then
+	--	ExecuteAction("NAMED_KILL", squadMemberTable[t[1]].selfRef)
+	--	squadMemberTable[t[1]] = nil
+	--end
+
 	local firstKey = next(squad.squadMembers)
 	if firstKey ~= nil and next(squad.squadMembers, firstKey) == nil then
 		-- if the one member remaining is the leader, kill the squad
