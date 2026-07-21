@@ -1329,10 +1329,15 @@
 	</EventList>
 
 	<EventList Name="GDIGrenadeSoldierFunctions_R24" Inherit="BaseScriptFunctions">
-		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIGrenadeSoldierCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIMissileSoldierVeteranFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIRifleSoldierFunctions_R24" Inherit="BaseScriptFunctions">

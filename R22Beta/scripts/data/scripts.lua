@@ -3075,13 +3075,17 @@ end
 
 -- this defines squad sizes and if a squad has a hammerhead garrison banner carrier.
 squadSizeTable = {
+	-- vGDI
 	["5D5E5931"] = {size = 4}, -- GDIZoneTrooperSquad
-	["9096966E"] = {size = 6} -- GDIRifleSoldierSquad
+	["9096966E"] = {size = 6}, -- GDIRifleSoldierSquad
+	["42896060"] = {size = 4}, -- GDIGrenadeSoldierSquad
+	["EF1252DB"] = {size = 2} -- GDIGrenadeSoldierSquad
 }
 
 -- if a unit has a function that hides subobjects oncreated, add it here.
 onCreatedTable = {
-	["B821E76D"] = {onCreated = OnGDIZoneTrooperCreated} -- GDIZoneTrooper
+	["B821E76D"] = {onCreated = OnGDIZoneTrooperCreated}, -- GDIZoneTrooper
+	["66CC48AB"] = {onCreated = OnGDIGrenadeSoldierCreated} -- GDIGrenadeSoldier
 }
 
 -- if a unit has hammerhead garrison support, add it here.
@@ -3306,15 +3310,18 @@ function GrantUpgradesToLeader(squad)
 	-- WriteToFile("data.txt",  "squadSize: " .. tostring(squadSize) .. " squadLeader: " .. tostring(squadLeader) .. "\n")
 	-- 1 member alive
 	if squadSize == 1 then
+		print("applying squad size 1 upgrade!")
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
 	end
 	-- 2 members alive
 	if squadSize == 2 then
+		print("applying squad size 2 upgrades!")
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
 	end
 	-- 3 members alive
 	if squadSize == 3 then
+		print("applying squad size 3 upgrades!")
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember3") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember3") end
@@ -3375,7 +3382,7 @@ end
 function OnHordeMemberCreated_R24(self)
 	-- for horde members with onCreated functions that need to be inherited
 	local objName = getObjectName(self)
-	print(tostring(objName))
+	--print(tostring(objName))
 	if onCreatedTable[objName] then
 		onCreatedTable[objName].onCreated(self)
 	end
