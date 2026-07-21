@@ -507,7 +507,11 @@
 		</ModelConditionEvent>				
 		<ModelConditionEvent Name="OnUser35End">
 			<Conditions>-USER_35</Conditions>
-		</ModelConditionEvent>		
+		</ModelConditionEvent>	
+		
+		<ModelConditionEvent Name="DoorOpen1">
+			<Conditions>-DOOR_1_OPENING</Conditions>
+		</ModelConditionEvent>	
 
 		<ModelConditionEvent Name="OnUser55">
 			<Conditions>+USER_55</Conditions>
@@ -1491,6 +1495,7 @@
 	</EventList>
 
 	<EventList Name="GDIHammerheadFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<EventHandler EventName="DoorOpen1" ScriptFunctionName="CheckForPassengers" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIJuggernaughtFunctions_R24" Inherit="SelectionGroupFunctions_R24">

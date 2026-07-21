@@ -3133,9 +3133,28 @@ function ApplyXPModifier(tableObj)
 	if not EvaluateCondition("UNIT_HAS_UPGRADE",tableObj.stringRef, upgrades[tostring(timesPromoted)]) then ObjectGrantUpgrade(tableObj.selfRef, upgrades[tostring(timesPromoted)]) end
 end
 
+hasCheckedForPassengers = false
+
+function CheckForPassengers(self)
+	if not getglobal(hasCheckedForPassengers) then
+		local stringRef = SetObjectReference(self)
+		if EvaluateCondition("UNIT_HAS_PASSENGER", stringRef) then
+			print("has a passenger")
+			for objId,_ in squadTables do
+				-- if has RIDER4 and not the upgrade 
+				local squad = squadTables[objId]
+				if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 44) and not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then
+					GarrisonedInHammerhead(squad.selfRef)
+					setglobal(hasCheckedForPassengers, true) 
+				end
+			end
+		end
+	end
+end
+
 -- disable weapons on squad members, allow on the 5th member whether it be the banner carrier or extra member.
 function GarrisonedInHammerhead(self)
-	--print("the squad has entered the hammerhead!")
+	print("the squad has entered the hammerhead!")
 	-- toggle the squadLeader on here via upgrade
 	local objId,squad = GetSquadAttributes(self)
 	if not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then ObjectGrantUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade") end
@@ -3143,30 +3162,26 @@ function GarrisonedInHammerhead(self)
 
 	local squadLeader = squadMemberTable[squad.squadLeader]
 	GrantUpgradesToLeader(squad)
+
+	-- instead of status i could just use upgrades instead
+
 	for squadMemberId,_ in squad.squadMembers do
-		--WriteToFile("squadMembersInHammerhead.txt",  "Member: " .. tostring(squadMemberId) .. "Leader: " .. tostring(squad.squadLeader) .. "\n")
-		-- apply RIDER4 status to every member
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 44, 1)
+		-- disable the member weapons here 
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadMemberTable[squadMemberId].stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadMemberTable[squadMemberId].selfRef, "Upgrade_SquadMember1") end
 	end
 
-	-- apply RIDER4 to banner (need to get it again as it respawned)
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squad.squadLeader].stringRef, 44, 1)
 end
 
 function GarrisonedInHammerheadEnd(self)
 	print("the squad has exited the hammerhead!")
 	local _,squad = GetSquadAttributes(self)
+	-- instead of status i could just use upgrades instead
+
 	for squadMemberId,_ in squad.squadMembers do
-		-- the unit that should shoot here -> 3FFB163C (GDIZoneTrooperGarrisoned)
-		--WriteToFile("squadMembersInHammerhead.txt",  "Member: " .. tostring(squadMemberId) .. "Leader: " .. tostring(squad.squadLeader) .. "\n")
-		-- remove RIDER4 status from every member
-		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 44, 0)
+		-- enable the member weapons here 
+		if EvaluateCondition("UNIT_HAS_UPGRADE",squadMemberTable[squadMemberId].stringRef, "Upgrade_SquadMember1") then ObjectRemoveUpgrade(squadMemberTable[squadMemberId].selfRef, "Upgrade_SquadMember1") end
 	end
-
-	-- apply RIDER4 to banner (need to get it again as it respawned)
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squad.squadLeader].stringRef, 44, 0)
 	
-
 	-- if banner carrier has higher rank than members, promote members to rank of banner carrier 
 	local firstMember = squadMemberTable[next(squad.squadMembers)]
 	local squadLevel = GetRankOfObject(squad.stringRef) 

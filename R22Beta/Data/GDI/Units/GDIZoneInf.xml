@@ -1106,6 +1106,12 @@
 						Upgrade=""
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperMachineGunFake"
+						Upgrade="Upgrade_SquadMember1"
+						ObjectStatus=""
+						IsPlayerUpgradePermanent="False" />
 						<!--
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
