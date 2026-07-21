@@ -2291,16 +2291,17 @@
 			<!--
 			<AttachUpdate
 				id="ModuleTag_Attach"
-				Range="20.0"
+				Range="1.0"
 				Teleport="true"
-				UseGeometry="true"
+				UseGeometry="false"
 				DetachWhenParentHealed="false">
 				<ObjectFilter
-					Rule="NONE">
+					Rule="NONE"
+					RejectModelCondition="COMBINED_PARENT">
 					<IncludeThing>GDIZoneTrooperSquad</IncludeThing>
 				</ObjectFilter>
 			</AttachUpdate>
-		--> 
+		-->
 
 			<WeaponSetUpdate
 				id="E3D95180">
@@ -2857,7 +2858,7 @@
 				AutoAcquireEnemiesWhenIdle="YES"
 				StopChaseDistance="500"
 				HoldGroundCloseRangeDistance="0"
-				AILuaEventsList="GDIZoneTrooperFunctions_R24"
+				AILuaEventsList="BannerCarrierFunctions_R24"
 				MinCowerTime="0s"
 				MaxCowerTime="0s"
 				RampageTime="0s"
@@ -3345,6 +3346,12 @@
 				KillWhenRestingOnGround="False"
 				OrientToFlightPath="False"
 				IgnoreTerrainHeight="False" />
+			<BannerCarrierUpgrade
+				id="ModuleTag_BannerCarrierUpgrade"
+				Permanent="False">
+				<TriggeredBy>Upgrade_BannerCarrierUpgrade</TriggeredBy>
+			</BannerCarrierUpgrade>
+			<!-- toggle on-off with upgrade -->
 			<HordeContain
 				id="ModuleTag_HordeContain"
 				FrontAngle="4.7123"
@@ -3353,7 +3360,7 @@
 				Formation="MAIN"
 				Slots="4"
 				ObjectStatusOfContained=""
-				SpawnBannerCarrierImmediately="true"
+				BannerCarrierByUpgradeOnly="true"
 				ConditionForEntry="INVALID">
 				<PassengerFilter
 					Rule="NONE"
@@ -3385,7 +3392,7 @@
 					<UnitType>GDIZoneTrooperGarrisoned</UnitType>
 					<Pos
 						x="0"
-						y="0" />
+						y="0" /> 
 				</BannerCarrierPosition>
 				<!-- for apcs etc that cant fire over buildings-->
 				<BannerCarriersAllowed>GDIZoneTrooperGarrisoned</BannerCarriersAllowed>

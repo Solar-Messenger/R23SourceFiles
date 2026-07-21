@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<UpgradeTemplate id="Upgrade_BannerCarrierUpgrade"
+		Type="OBJECT"
+	/>
+
 	<!-- xp upgrades -->
 
 	<UpgradeTemplate id="Upgrade_200scaler"

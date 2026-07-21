@@ -3071,7 +3071,27 @@ function OnSquadDestroyed_103(self)
 
 end
 
+-- ############################# R25 Squad/Member Data ###################################
+
+-- this defines squad sizes and if a squad has a hammerhead garrison banner carrier.
+squadSizeTable = {
+	["5D5E5931"] = {size = 4}, -- GDIZoneTrooperSquad
+	["9096966E"] = {size = 6} -- GDIRifleSoldierSquad
+}
+
+-- if a unit has a function that hides subobjects oncreated, add it here.
+onCreatedTable = {
+	["B821E76D"] = {onCreated = "OnGDIZoneTrooperCreated(self)"} -- GDIZoneTrooper
+}
+
+-- if a unit has hammerhead garrison support, add it here.
+bannerCarrierTable = {
+	["3FFB163C"] = true -- GDIZoneTrooperGarrisoned
+}
+
+
 -- ############################# R25 Helper Functions ###################################
+
 
 function OnSpecialPowerUsed(self)
 	print("special power used")
@@ -3096,137 +3116,10 @@ function GetRankOfObject(unitRef)
 	return squadLevel
 end
 
-function RankUpSquad(rank)
-	
-	local ranks = {
-		["2"] = "Upgrade_Veterancy_VETERAN",
-		["3"] = "Upgrade_Veterancy_ELITE",
-		["4"] = "Upgrade_Veterancy_HEROIC"
-	}
-
-	return ranks[tostring(rank)]
-
-end
-
-
-function isLeaderHigherRanked(squad)
-
-	-- check which type of unit has the best rank
-	local bestCurrentRank = 1
-	local bestUnitRank = nil
-	for squadMemberId,_ in squad.squadMembers do
-		--bestCurrentRank = bestCurrentRank and GetRankOfObject(squadMemberTable[squadMemberId].stringRef) > bestCurrentRank or bestCurrentRank
-		local rank = GetRankOfObject(squadMemberTable[squadMemberId].stringRef)
-		if rank > bestCurrentRank then
-			bestCurrentRank = rank
-			bestUnitRank = squadMemberTable[squadMemberId]
-		end
-	end
-
-	if bestUnitRank.isLeader then 
-		return true
-	end
-
-	return false
-end
-
 -- ############################# R25 Hammerhead Garrison fix ###################################
 
--- Triggered by LEVELED, not ideal if many promotions happen on same frame, probably has to be accompanied with USER_16, USER_17, USER_18
-function SquadMemberHasLeveledUp(self)
-	 print("squad member has ranked up!")
-	-- Increment squad Experience rank (incremented by one for each promotion)
-	-- check the highest rank of members and banner carrier and increment everything based on that rank
-	-- get the squad object 
-
-	-- clear the model status so it can be reapplied in quick succession.	
-	if not ObjectTestModelCondition(self, "LEVELED") then return end
-
-	local _,squadMember = GetSquadMemberAttributes(self)
-	-- problematic
-	--print(squadMember.squadObject)
-	local squad = squadTables[squadMember.squadObject] 
-	-- squad leader (banner carrier)
-	local squadLeader = squadMemberTable[squad.squadLeader]
-	-- get one of the squad members that isnt the banner carrier
-	local firstMember = squadMemberTable[next(squad.squadMembers)]
-
-	--print("squad leader: " .. tostring(squadLeader) .. " squad member: " .. tostring(squadMember))
-
-	local squadLevel = GetRankOfObject(squad.stringRef) 
-	--print("promoted!")
-	-- increment squad level 
-	local curFrame = GetFrame()
-	-- condition needs to be enhanced for kills such as killing a MARV, which will grant more than one veterancy rank on the same frame.
-	-- unless the squad rank is more than this on the same frame
-
-	WriteToFile("debug.txt",  "curFrame: " .. tostring(curFrame) .. " squad.lastPromotedFrame: " .. tostring(squad.lastPromotedFrame) .. " squadLevel: " .. tostring(squadLevel) .. " squad.lastPromotedRank: " .. tostring(squad.lastPromotedRank) .. "\n")
-
-	if curFrame ~= squad.lastPromotedFrame or (curFrame == squad.lastPromotedFrame and squadLevel ~= squad.lastPromotedRank) then
-		squad.lastPromotedFrame = curFrame
-		-- each time a member or banner carrier rnaks up increment the rank by 1 of everything
-		squad.lastPromotedRank = squad.lastPromotedRank + 1
-		WriteToFile("unitPromoted.txt",  "Unit Promoted: " .. tostring(squad.lastPromotedRank) .. " times" .. "\n")
-		-- track rank 
-		-- apply an attribute modifier for EXPERIENCE to scale for each promotion, so if a unit was promoted this way scale it
-
-		-- if this member has less rank than squadLevel
-		-- promote members if false, else promote the leader
-		local promoteLeader = false
-		local promoteMembers = false
-		-- if this unit that just promoted has less level than the squad apply a modifier to it
-
-		-- if this unit and the squad are the same level, promote what isnt this unit (be it member or leader)
-		-- COMPARISON ["<"]=0, ["<="]=1, ["=="]=2, [">="]=3, [">"]=4, ["~="]=5
-		if EvaluateCondition("UNIT_COMPARE_RANK", squadMember.stringRef, 2, squadLevel) then
-			-- leader check
-			if squadMember.isLeader then
-				promoteMembers = true
-			else
-				promoteLeader = true
-			end
-		end
-
-		--WriteToFile("counting.txt",  squadMemberId .. " ")
-		-- if the unit that has less rank is the leader, promote it to the level of the squad
-		if promoteLeader then 
-			print("promoting leader!")
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, tostring("GDIZoneTrooperSquadExperienceLevelBanner_" .. squad.lastPromotedRank))
-			-- increment times promoted this way by 1 	
-			squadLeader.timesPromotedWithLua = squadLeader.timesPromotedWithLua + 1
-
-			-- apply xp modifier to this unit 
-			ApplyXPModifier(squadLeader)
-
-			--if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, RankUpSquad(squad.lastPromotedRank)) then ObjectGrantUpgrade(squadLeader.selfRef, RankUpSquad(squad.lastPromotedRank)) end
-		elseif promoteMembers then
-			-- apply experience rank to every member 
-			print("promoting members!")
-			for objId,_ in squad.squadMembers do
-				if not squadMemberTable[objId].isLeader then
-					-- if desync then its probably because of the prerequisites 
-					ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, tostring("GDIZoneTrooperSquadExperienceLevel_" .. squad.lastPromotedRank))
-					squadMemberTable[objId].timesPromotedWithLua = squadMemberTable[objId].timesPromotedWithLua + 1
-
-					-- apply xp modifier to this unit 
-					ApplyXPModifier(squadMemberTable[objId]) 
-
-					--if not EvaluateCondition("UNIT_HAS_UPGRADE", squadMemberTable[objId].stringRef, RankUpSquad(squad.lastPromotedRank)) then ObjectGrantUpgrade(squadMemberTable[objId].stringRef, RankUpSquad(squad.lastPromotedRank)) end
-				end
-			end
-		end
-	end
-end
-
-function BuildingSelecteed(self)
-	print("building selected!")
-	ObjectDoSpecialPower(self, "SpecialPowerGDI_SpaceCommandShockwaveArtillery")
-end
-
 function ApplyXPModifier(tableObj) 
-
 	local timesPromoted = tableObj.timesPromotedWithLua
-
 	local upgrades = {
 		["1"] = "Upgrade_200scaler",
 		["2"] = "Upgrade_300scaler"
@@ -3243,47 +3136,62 @@ function ApplyXPModifier(tableObj)
 
 	-- APPLY THE APPROPRIATE UPGRADE 
 	if not EvaluateCondition("UNIT_HAS_UPGRADE",tableObj.stringRef, upgrades[tostring(timesPromoted)]) then ObjectGrantUpgrade(tableObj.selfRef, upgrades[tostring(timesPromoted)]) end
-
-end
-
-function SquadIsAttacking(self)
-	print("squad is attacking!")
 end
 
 -- disable weapons on squad members, allow on the 5th member whether it be the banner carrier or extra member.
 function GarrisonedInHammerhead(self)
-	print("the squad has entered the hammerhead!")
+	--print("the squad has entered the hammerhead!")
+	-- toggle the squadLeader on here via upgrade
+	local objId,squad = GetSquadAttributes(self)
+	if not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then ObjectGrantUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade") end
+	HordeBroadcastEventToMembers(self, "SquadBannerEvent", tostring(objId))
 
-	local _,squad = GetSquadAttributes(self)
-	local upgradeVeterancy = false
 	local squadLeader = squadMemberTable[squad.squadLeader]
+	GrantUpgradesToLeader(squad)
 	for squadMemberId,_ in squad.squadMembers do
-		-- the unit that should shoot here -> 3FFB163C (GDIZoneTrooperGarrisoned)
 		--WriteToFile("squadMembersInHammerhead.txt",  "Member: " .. tostring(squadMemberId) .. "Leader: " .. tostring(squad.squadLeader) .. "\n")
-
 		-- apply RIDER4 status to every member
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 44, 1)
 	end
 
-	-- apply RIDER4 to banner
+	-- apply RIDER4 to banner (need to get it again as it respawned)
 	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squad.squadLeader].stringRef, 44, 1)
 end
 
 function GarrisonedInHammerheadEnd(self)
 	print("the squad has exited the hammerhead!")
-
 	local _,squad = GetSquadAttributes(self)
-
 	for squadMemberId,_ in squad.squadMembers do
 		-- the unit that should shoot here -> 3FFB163C (GDIZoneTrooperGarrisoned)
 		--WriteToFile("squadMembersInHammerhead.txt",  "Member: " .. tostring(squadMemberId) .. "Leader: " .. tostring(squad.squadLeader) .. "\n")
-
 		-- remove RIDER4 status from every member
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 44, 0)
 	end
 
-	-- apply RIDER4 to banner
+	-- apply RIDER4 to banner (need to get it again as it respawned)
 	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squad.squadLeader].stringRef, 44, 0)
+	
+
+	-- if banner carrier has higher rank than members, promote members to rank of banner carrier 
+	local firstMember = squadMemberTable[next(squad.squadMembers)]
+	local squadLevel = GetRankOfObject(squad.stringRef) 
+	if EvaluateCondition("UNIT_COMPARE_RANK", firstMember.stringRef, 0, squadLevel) then
+		-- leader check
+		for objId,_ in squad.squadMembers do
+			-- if desync then its probably because of the prerequisites 
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, tostring("GDIZoneTrooperSquadExperienceLevel_" .. squadLevel))
+			squadMemberTable[objId].timesPromotedWithLua = squadMemberTable[objId].timesPromotedWithLua + 1
+			-- apply xp modifier to this unit 
+			ApplyXPModifier(squadMemberTable[objId]) 
+		end
+	end
+	-- toggle the squadLeader off here via upgrade
+	-- kill and remove banner carrier 
+	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then 
+		ObjectRemoveUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade") 
+		ExecuteAction("NAMED_KILL", squadMemberTable[squad.squadLeader].selfRef)
+		squad.squadLeader = nil
+	end
 end
 
 function GetSquadAttributes(self)
@@ -3318,24 +3226,23 @@ end
 -- self is the squad member, broadcasting events to horde members doesnt pass the reference of the horde object
 -- string is the reference to the sqaud
 function GetSquadSize(self, string) 
-
 	local squad = squadTables[string] 
 	--ExecuteAction("NAMED_FLASH_WHITE", self, 3)
 	-- associate this squad member with the squad object
 	local objId,squadMember = GetSquadMemberAttributes(self)
-	-- get object description of member
-	--WriteToFile("ObjectDescription.txt",  "Object: " .. tostring(getObjectName(self)) .. "\n")
-	-- if this member is the banner carrier, assign it as squad leader
-
-	if bannerCarrierTable[getObjectName(self)] ~= nil then 
-		squad.squadLeader = getObjectId(self)
-		squadMember.isLeader = true
-	end
-		
 	squad.squadMembers[objId] = objId
 	-- add a reference to this member of the squad it belongs to
 	squadMember.squadObject = string
+end
 
+-- scripted event that only the banner carrier receives 
+function GetSquadLeader(self, string)
+	-- set the squads leader
+	local squad = squadTables[string] 
+	local objId,squadMember = GetSquadMemberAttributes(self)
+	squad.squadLeader = getObjectId(self)
+	squadMember.isLeader = true
+	squadMember.squadObject = string
 end
 
 -- When squad appears at rax
@@ -3346,42 +3253,18 @@ function OnSquadExitRax_R24(self)
 	local squadData = squadSizeTable[getObjectName(squad.selfRef)]
 	local squadSize = getTableSize(squad.squadMembers)
 	-- used for hammerhead garrisoned squads that can fire over structures
-	squadSize = squadData.hasBanner and squadSize-1 or squadSize
 	if squadSize == nil then return end
 	squad.spawnedSize = squadSize
 
 	if isSquadExploit(squad) then return end
-
 	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
-
-	-- apply upgrades to the squadLeader, use id to access member table to get its string and self 
-	--WriteToFile("squadLeader.txt",  "squad leader: " .. tostring(squad.squadLeader) .. "\n")
-
-	GrantUpgradesToLeader(squad)
 end
-
--- this defines squad sizes and if a squad has a hammerhead garrison banner carrier.
-squadSizeTable = {
-	["5D5E5931"] = {size = 4, hasBanner = true}, -- GDIZoneTrooperSquad
-	["9096966E"] = {size = 6, hasBanner = false} -- GDIRifleSoldierSquad
-}
-
--- if a unit has a function that hides subobjects oncreated, add it here.
-onCreatedTable = {
-	["B821E76D"] = {onCreated = "OnGDIZoneTrooperCreated(self)"} -- GDIZoneTrooper
-}
-
--- if a unit has hammerhead garrison support, add it here.
-bannerCarrierTable = {
-	["3FFB163C"] = true -- GDIZoneTrooperGarrisoned
-}
 
 function isSquadExploit(squad)
 	if squad == nil then return end
-	-- compare squad size to the full squad size (obtained via squadSizeTable), subtract one for the horde banner carrier
+	-- compare squad size to the full squad size (obtained via squadSizeTable)
 	-- 5 - 2 = 3 
 	-- WriteToFile("isExploit.txt",  "spawnedSize: " .. tostring(squad.spawnedSize) .. " " .. " " .. tostring(squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLostOnSpawn)) .. "\n")
-	-- if banner carrier exists it always spawns 
 	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLostOnSpawn) then 
 		print("squad exploit detected!")
 		ExecuteAction("NAMED_DELETE", squad.selfRef)
@@ -3394,17 +3277,15 @@ end
 -- self is squad , other is the member that died
 function KilledOutOfBarracks(self, other)
 	local _,squad = GetSquadAttributes(self)
-	--squad.unitsLostOnSpawn = squad.unitsLostOnSpawn + 1
-	-- if has banner carrier this also increments
 	squad.unitsLostOnSpawn[getObjectId(other)] = true
 end
 
 -- grants as many upgrades to the squadLeader as there are squadMembers (obtained by getTableSize) for enabling weapons
 function GrantUpgradesToLeader(squad)
-	local squadSize = getTableSize(squad.squadMembers)-1
+	local squadSize = getTableSize(squad.squadMembers)
 	local squadLeader = squadMemberTable[squad.squadLeader]
 	if squadLeader == nil then return end
-	--WriteToFile("data.txt",  "squadSize: " .. tostring(squadSize) .. " squadLeader: " .. tostring(squadLeader) .. "\n")
+	-- WriteToFile("data.txt",  "squadSize: " .. tostring(squadSize) .. " squadLeader: " .. tostring(squadLeader) .. "\n")
 	-- 1 member alive
 	if squadSize == 1 then
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
@@ -3422,6 +3303,7 @@ function GrantUpgradesToLeader(squad)
 	end
 	-- 4 members alive
 	if squadSize == 4 then
+		print("applying squad size 4 upgrades!")
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember3") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember3") end
@@ -3435,21 +3317,18 @@ end
 function OnSquadDestroyed_R24(self)
 	local objId = getObjectId(self)
 	local _,squad = GetSquadAttributes(self)
-	
 	-- if squad is empty here and is still being constructed, delete it
-
 	-- clean up squad here
 	squadTables[objId] = nil
-
 end
 
 -- when a member dies clear it up here, Triggered by +DESTROYED +USER_59
 function OnMemberDestroyed_R24(self)
 	local objId,squadMember = GetSquadMemberAttributes(self)
 	-- was the unit moving to rally point while it was destroyed?
-	--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squadMember.stringRef , 145) then
+	-- if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squadMember.stringRef , 145) then
 	if ObjectTestModelCondition(self, "USER_59") then
-		--print("horde member has been killed while being built!")
+		-- print("horde member has been killed while being built!")
 		-- broadcast an event to squads that are also with the IS_MOVING_TO_RALLY_POINT object status
 		ObjectBroadcastEventToAllies(self,"MemberKilledOnBuilt", 50)
 	end
@@ -3460,21 +3339,6 @@ function OnMemberDestroyed_R24(self)
 	squadMemberTable[objId] = nil
 
 	-- no more squadMembers just leader remaining check
-	
-	--local t = {}
-
-	--for k, v in squad.squadMembers do
-	--	if k ~= nil then 
-	--		tinsert(t, k) 
-	--	end
-	--	print("inserting")
-	--end
-
-	--if getn(t) == 1 and squadMemberTable[t[1]].isLeader then
-	--	ExecuteAction("NAMED_KILL", squadMemberTable[t[1]].selfRef)
-	--	squadMemberTable[t[1]] = nil
-	--end
-
 	local firstKey = next(squad.squadMembers)
 	if firstKey ~= nil and next(squad.squadMembers, firstKey) == nil then
 		-- if the one member remaining is the leader, kill the squad
@@ -3490,17 +3354,14 @@ function OnMemberDestroyed_R24(self)
 end
 
 -- Created squad overriden functions
-
 function OnHordeMemberCreated_R24(self)
-
 	-- for horde members with onCreated functions that need to be inherited
 	local objName = getObjectName(self)
 	--print(tostring(objName))
 	if onCreatedTable[objName] ~= nil then
 		--print("doing string!")
 		dostring(onCreatedTable[objName].onCreated)
-	end
-	
+	end	
 	-- optimization to prevent +DESTROYED events from always triggering a squad exploit check
 	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_59", 5, 100)
 end

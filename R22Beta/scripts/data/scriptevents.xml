@@ -938,6 +938,7 @@
 
 		<ScriptedEvent Name="TiberiumEvent" />	
 		<ScriptedEvent Name="SquadEvent" />	
+		<ScriptedEvent Name="SquadBannerEvent" />	
 		<ScriptedEvent Name="UnitAnchorEvent" />
 		<ScriptedEvent Name="GettingOutOfTheWayEvent" />
 		<ScriptedEvent Name="MemberKilledOnBuilt" />
@@ -1035,12 +1036,7 @@
 
 	 <!-- r24 reverse move units -->
 	<EventList Name="GenericSquadFunctions_R24" Inherit="BaseScriptFunctions">
-		<!-- DOESNT WORK ON SQUADS (games kills them before lua destroyed events can take place
-		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeathSquads" DebugSingleStep="false"/>
-		<EventHandler EventName="OnSelected"	ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
-		<EventHandler EventName="OnSelectedEnd"	ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/> -->
 		<EventHandler EventName="OnLeavingFactory" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>				
-		<!--<EventHandler EventName="OnLeavingFactory1" ScriptFunctionName="OnSquadExitRax1_R24" DebugSingleStep="false"/>		-->
 		<EventHandler EventName="OnDestroyed" ScriptFunctionName="OnSquadDestroyed_R24" DebugSingleStep="false"/>	
 		<EventHandler EventName="OnRider4"	ScriptFunctionName="GarrisonedInHammerhead" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRider4End"	ScriptFunctionName="GarrisonedInHammerheadEnd" DebugSingleStep="false"/>
@@ -1334,7 +1330,6 @@
 
 	<EventList Name="GDIRifleSoldierFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
-		<!--<EventHandler EventName="OnRider4"	ScriptFunctionName="MemberHasRider" DebugSingleStep="false"/>-->
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
 	</EventList>
@@ -1343,20 +1338,16 @@
 	</EventList>
 
 	<EventList Name="HordeMemberFunctions_R24" Inherit="BaseScriptFunctions">
-		<!-- also fires on the banner carrier! -->
 		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
-		<!--<EventHandler EventName="OnRider4"	ScriptFunctionName="MemberHasRider" DebugSingleStep="false"/>-->
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIZoneTrooperFunctions_R24" Inherit="HordeMemberFunctions_R24">
-		<!--<EventHandler EventName="OnLeveledUp"	ScriptFunctionName="SquadMemberHasLeveledUp" DebugSingleStep="false"/>-->
+	</EventList>
 
-		
-		<EventHandler EventName="OnUser16"	ScriptFunctionName="SquadMemberHasLeveledUp" DebugSingleStep="false"/>
-		<EventHandler EventName="OnUser17"	ScriptFunctionName="SquadMemberHasLeveledUp" DebugSingleStep="false"/>
-		<EventHandler EventName="OnUser18"	ScriptFunctionName="SquadMemberHasLeveledUp" DebugSingleStep="false"/>
+	<EventList Name="BannerCarrierFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="SquadBannerEvent"	ScriptFunctionName="GetSquadLeader" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">
