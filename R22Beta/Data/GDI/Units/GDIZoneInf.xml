@@ -2636,7 +2636,7 @@
 				Fade="False">
 				<Sound
 					Type="INITIAL"
-					List="GDI_ZoneTrooper_VoiceDie" />
+					List="" />
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""
