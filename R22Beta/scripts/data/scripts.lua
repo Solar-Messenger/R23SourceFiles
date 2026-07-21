@@ -3081,7 +3081,7 @@ squadSizeTable = {
 
 -- if a unit has a function that hides subobjects oncreated, add it here.
 onCreatedTable = {
-	["B821E76D"] = {onCreated = "OnGDIZoneTrooperCreated(self)"} -- GDIZoneTrooper
+	["B821E76D"] = {onCreated = OnGDIZoneTrooperCreated} -- GDIZoneTrooper
 }
 
 -- if a unit has hammerhead garrison support, add it here.
@@ -3091,11 +3091,6 @@ bannerCarrierTable = {
 
 
 -- ############################# R25 Helper Functions ###################################
-
-
-function OnSpecialPowerUsed(self)
-	print("special power used")
-end
 
 function GetRankOfObject(unitRef) 
 	local squadLevel = 1
@@ -3188,10 +3183,18 @@ function GarrisonedInHammerheadEnd(self)
 	-- toggle the squadLeader off here via upgrade
 	-- kill and remove banner carrier 
 	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then 
-		ObjectRemoveUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade") 
 		ExecuteAction("NAMED_KILL", squadMemberTable[squad.squadLeader].selfRef)
+		ObjectRemoveUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade") 
+		print("squad leader removed")
 		squad.squadLeader = nil
 	end
+end
+
+-- Triggered by -RIDER3
+function BannerCarrierExistsCheck(self)
+	local _,squad = GetSquadAttributes(self)
+	print("coming out of armory!")
+	HordeBroadcastEventToMembers(self, "KillLeader")
 end
 
 function GetSquadAttributes(self)
@@ -3357,11 +3360,10 @@ end
 function OnHordeMemberCreated_R24(self)
 	-- for horde members with onCreated functions that need to be inherited
 	local objName = getObjectName(self)
-	--print(tostring(objName))
-	if onCreatedTable[objName] ~= nil then
-		--print("doing string!")
-		dostring(onCreatedTable[objName].onCreated)
-	end	
+	print(tostring(objName))
+	if onCreatedTable[objName] then
+		onCreatedTable[objName].onCreated(self)
+	end
 	-- optimization to prevent +DESTROYED events from always triggering a squad exploit check
 	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_59", 5, 100)
 end

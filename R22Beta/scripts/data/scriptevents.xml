@@ -938,6 +938,7 @@
 
 		<ScriptedEvent Name="TiberiumEvent" />	
 		<ScriptedEvent Name="SquadEvent" />	
+		<ScriptedEvent Name="KillLeader" />	
 		<ScriptedEvent Name="SquadBannerEvent" />	
 		<ScriptedEvent Name="UnitAnchorEvent" />
 		<ScriptedEvent Name="GettingOutOfTheWayEvent" />
@@ -1042,6 +1043,8 @@
 		<EventHandler EventName="OnRider4End"	ScriptFunctionName="GarrisonedInHammerheadEnd" DebugSingleStep="false"/>
 		<!-- new function to receive from horde members that are killed out of the barracks -->
 		<EventHandler EventName="MemberKilledOnBuilt"	ScriptFunctionName="KilledOutOfBarracks" DebugSingleStep="false"/>
+		<!-- check if the horde contains a banner carrier after being healed in the armory -->
+		<EventHandler EventName="OnRider3End"	ScriptFunctionName="BannerCarrierExistsCheck" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NodCyborgSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
@@ -1337,18 +1340,23 @@
 	<EventList Name="GDIRifleSoldierVeteranFunctions_R24" Inherit="BaseScriptFunctions">
 	</EventList>
 
+	<!--
 	<EventList Name="HordeMemberFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
+	</EventList> -->
+
+	<EventList Name="GDIZoneTrooperFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
 	</EventList>
 
-	<EventList Name="GDIZoneTrooperFunctions_R24" Inherit="HordeMemberFunctions_R24">
-	</EventList>
-
 	<EventList Name="BannerCarrierFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="SquadBannerEvent"	ScriptFunctionName="GetSquadLeader" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
+		<EventHandler EventName="KillLeader" ScriptFunctionName="kill" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">

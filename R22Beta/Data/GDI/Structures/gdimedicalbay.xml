@@ -313,7 +313,7 @@
 			<!-- Don't allow allies inside -->
 			<HealContain
 				id="ModuleTag_HordeGarrison"
-				ObjectStatusOfContained="UNSELECTABLE ENCLOSED"
+				ObjectStatusOfContained="UNSELECTABLE ENCLOSED RIDER3"
 				ContainMax="1"
 				AllowEnemiesInside="false"
 				AllowAlliesInside="false"
