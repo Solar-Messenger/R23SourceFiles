@@ -2288,20 +2288,6 @@
 			<TemporarilyDefectUpdate
 				id="01009D1F"
 				DefectionFrameCount="300" />
-			<!--
-			<AttachUpdate
-				id="ModuleTag_Attach"
-				Range="1.0"
-				Teleport="true"
-				UseGeometry="false"
-				DetachWhenParentHealed="false">
-				<ObjectFilter
-					Rule="NONE"
-					RejectModelCondition="COMBINED_PARENT">
-					<IncludeThing>GDIZoneTrooperSquad</IncludeThing>
-				</ObjectFilter>
-			</AttachUpdate>
-		-->
 
 			<WeaponSetUpdate
 				id="E3D95180">

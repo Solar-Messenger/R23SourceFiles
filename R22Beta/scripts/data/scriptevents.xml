@@ -1348,6 +1348,7 @@
 
 	<EventList Name="BannerCarrierFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="SquadBannerEvent"	ScriptFunctionName="GetSquadLeader" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">

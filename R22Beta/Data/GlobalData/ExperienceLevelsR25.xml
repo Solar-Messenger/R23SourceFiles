@@ -129,6 +129,7 @@
 		<Target>GDIZoneTrooperSquad_Veteran</Target>
 		<Target>GDIZoneTrooperSquad</Target>
 		<Target>GDIZoneTrooper</Target>
+		<Target>GDIZoneTrooperGarrisoned</Target>
 		<Decal
 			Texture="decal_G_level1"
 			Texture2="decal_Good_CO" 
@@ -144,7 +145,7 @@
 		Prerequisite="GDIZoneTrooperSquadExperienceLevel_1"
 		RequiredExperience="200"
 		ExperienceAward="405"
-		ModelConditionState="USER_16"
+		ModelConditionState="SPECIAL_CHEERING"
 		Rank="2">
 		<LevelUpTintColor
 			r="1.0"
@@ -156,6 +157,7 @@
 		<Target>GDIZoneTrooperSquad_Veteran</Target>
 		<Target>GDIZoneTrooperSquad</Target>
 		<Target>GDIZoneTrooper</Target>
+		<Target>GDIZoneTrooperGarrisoned</Target>
 		<AttributeModifier>Unit_Veteran</AttributeModifier>
 		<Decal
 			Texture="decal_G_level1"
@@ -172,7 +174,7 @@
 		Prerequisite="GDIZoneTrooperSquadExperienceLevel_2"
 		RequiredExperience="400"
 		ExperienceAward="500"
-		ModelConditionState="USER_17"
+		ModelConditionState="SPECIAL_CHEERING"
 		Rank="3">
 		<LevelUpTintColor
 			r="1.0"
@@ -184,6 +186,7 @@
 		<Target>GDIZoneTrooperSquad_Veteran</Target>
 		<Target>GDIZoneTrooperSquad</Target>
 		<Target>GDIZoneTrooper</Target>
+		<Target>GDIZoneTrooperGarrisoned</Target>
 		<AttributeModifier>Unit_Elite</AttributeModifier>
 		<Decal
 			Texture="decal_G_level1"
@@ -200,7 +203,7 @@
 		Prerequisite="GDIZoneTrooperSquadExperienceLevel_3"
 		RequiredExperience="600"
 		ExperienceAward="624"
-		ModelConditionState="USER_18"
+		ModelConditionState="SPECIAL_CHEERING"
 		Rank="4">
 		<LevelUpTintColor
 			r="1.0"
@@ -212,6 +215,7 @@
 		<Target>GDIZoneTrooperSquad_Veteran</Target>
 		<Target>GDIZoneTrooperSquad</Target>
 		<Target>GDIZoneTrooper</Target>
+		<Target>GDIZoneTrooperGarrisoned</Target>
 		<AttributeModifier>Unit_Heroic</AttributeModifier>
 		<Decal
 			Texture="decal_G_level1"
@@ -223,71 +227,5 @@
 			MaxRadius="200"
 			MaxSelectedUnits="40"/>
 	</ExperienceLevelTemplate>
-
-	<!-- for banner carrier (to hide decal) -->
-
-	<ExperienceLevelTemplate
-		id="GDIZoneTrooperSquadExperienceLevelBanner_1"
-		RequiredExperience="1"
-		ExperienceAward="312"
-		Rank="1">
-		<LevelUpTintColor
-			r="1.0"
-			g="1.0"
-			b="1.0" />
-		<Target>GDIZoneTrooperGarrisoned</Target>
-	</ExperienceLevelTemplate>
-	<ExperienceLevelTemplate
-		id="GDIZoneTrooperSquadExperienceLevelBanner_2"
-		Prerequisite="GDIZoneTrooperSquadExperienceLevelBanner_1"
-		RequiredExperience="200"
-		ExperienceAward="405"
-		ModelConditionState="USER_16"
-		Rank="2">
-		<LevelUpTintColor
-			r="1.0"
-			g="1.0"
-			b="1.0" />
-		<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
-		<LevelUpFxList
-			FxList="FX_GDILevelUp_01" />
-		<Target>GDIZoneTrooperGarrisoned</Target>
-		<AttributeModifier>Unit_Veteran</AttributeModifier>
-	</ExperienceLevelTemplate>
-	<ExperienceLevelTemplate
-		id="GDIZoneTrooperSquadExperienceLevelBanner_3"
-		Prerequisite="GDIZoneTrooperSquadExperienceLevelBanner_2"
-		RequiredExperience="400"
-		ExperienceAward="500"
-		ModelConditionState="USER_17"
-		Rank="3">
-		<LevelUpTintColor
-			r="1.0"
-			g="1.0"
-			b="1.0" />
-		<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
-		<LevelUpFxList
-			FxList="FX_GDILevelUp_02" />
-		<Target>GDIZoneTrooperGarrisoned</Target>
-		<AttributeModifier>Unit_Elite</AttributeModifier>
-	</ExperienceLevelTemplate>
-	<ExperienceLevelTemplate
-		id="GDIZoneTrooperSquadExperienceLevelBanner_4"
-		Prerequisite="GDIZoneTrooperSquadExperienceLevelBanner_3"
-		RequiredExperience="600"
-		ExperienceAward="624"
-		ModelConditionState="USER_18"
-		Rank="4">
-		<LevelUpTintColor
-			r="1.0"
-			g="1.0"
-			b="1.0" />
-		<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
-		<LevelUpFxList
-			FxList="FX_GDILevelUp_03" />
-		<Target>GDIZoneTrooperGarrisoned</Target>
-		<AttributeModifier>Unit_Heroic</AttributeModifier>
-	</ExperienceLevelTemplate>
-
 
 </AssetDeclaration>
