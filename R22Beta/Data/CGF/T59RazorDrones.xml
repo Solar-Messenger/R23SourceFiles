@@ -1456,11 +1456,8 @@
 				AttributeModifierInCover="Modifier_Cover"
 				CoverScanRange="10" />
 			<LargeGroupAudioUpdate
-				id="00F75CF5"
-				FramesBetweenUpdatesMin="3"
-				FramesBetweenUpdatesVariation="2"
-				UnitWeight="1">
-				<Key>1622061557</Key>
+				id="LGAU">
+				<Key>ALI_RazorDrone</Key>
 			</LargeGroupAudioUpdate>
 			<StatusBitsUpgrade
 				id="D305500E"

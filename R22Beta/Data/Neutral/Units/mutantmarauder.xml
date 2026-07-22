@@ -1489,11 +1489,8 @@
 				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
 			</StatusBitsUpgrade>	
 			<LargeGroupAudioUpdate
-				id="00F75CF5"
-				FramesBetweenUpdatesMin="3"
-				FramesBetweenUpdatesVariation="2"
-				UnitWeight="1">
-				<Key>8780BCFD</Key>
+				id="LGAU">
+				<Key>GDI_MissileSoldier</Key>
 			</LargeGroupAudioUpdate>
 		</Behaviors>
 		<AI>
@@ -1669,5 +1666,3 @@
 			CrushAllies="False" />
 	</GameObject>
 </AssetDeclaration>
-
-

@@ -1816,11 +1816,8 @@
 				AttributeModifierInCover="Modifier_Cover"
 				CoverScanRange="10" />
 			<LargeGroupAudioUpdate
-				id="00F75CF5"
-				FramesBetweenUpdatesMin="3"
-				FramesBetweenUpdatesVariation="2"
-				UnitWeight="1">
-				<Key>0x32F69DAD</Key>
+				id="LGAU">
+				<Key>GDI_ZoneTrooper</Key>
 			</LargeGroupAudioUpdate>
 			<AudioLoopUpgrade
 				id="2CD55849"
@@ -2040,4 +2037,3 @@
 	</GameObject>	
 	
 </AssetDeclaration>
-

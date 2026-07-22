@@ -1606,11 +1606,8 @@
 					z="0" />
 			</CreateAndEnterObjectSpecialPower>
 			<LargeGroupAudioUpdate
-				id="2B5CEB19"
-				FramesBetweenUpdatesMin="3"
-				FramesBetweenUpdatesVariation="2"
-				UnitWeight="1">
-				<Key>9FD1334F</Key>
+				id="LGAU">
+				<Key>GDI_GrenadierSoldier</Key>
 			</LargeGroupAudioUpdate>
 			<AudioLoopUpgrade
 				id="8678E95E"
@@ -1959,4 +1956,3 @@
 		<DisplayUpgrade>Upgrade_SteelTalonsEMPGrenades</DisplayUpgrade>
 	</GameObject>
 </AssetDeclaration>
-
