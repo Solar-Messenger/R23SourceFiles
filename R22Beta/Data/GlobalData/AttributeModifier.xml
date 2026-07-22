@@ -1,6 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<AttributeModifier
+		id="Modifier_RemoveVision"
+		Category="INNATE_VISION"
+		ObjectStatusToSet="UNSELECTABLE">
+		<Modifier
+			Type="VISION"
+			Value="0%" />
+		<Modifier
+			Type="SHROUD_CLEARING"
+			Value="0%" />
+	</AttributeModifier>
+
 	<!-- xp modifiers -->
 	 <AttributeModifier
 		id="Modifier_Grant200percentXp"

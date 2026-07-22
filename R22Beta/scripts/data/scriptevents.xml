@@ -203,7 +203,11 @@
 		<!-- Used for Ox fix -->
 		<ModelConditionEvent Name="OnCarrying">
 			<Conditions>+CARRYING</Conditions>
-		</ModelConditionEvent>			
+		</ModelConditionEvent>	
+		
+		<ModelConditionEvent Name="OnCarrying1">
+			<Conditions>-CARRYING</Conditions>
+		</ModelConditionEvent>	
 		
 		<!-- Used for Beam/venom reflector range fix -->
 		<ObjectStatusEvent Name="OnGrabDrop">
@@ -225,8 +229,12 @@
 		 -IS_MOVING_TO_RALLY_POINT is when the entire squad has come out -->
 		
 		<ObjectStatusEvent Name="OnLeavingFactory">
-			<Conditions>-IS_MOVING_TO_RALLY_POINT</Conditions>
+			<Conditions>+UNSELECTABLE +IS_LEAVING_FACTORY</Conditions>
 		</ObjectStatusEvent>	
+
+		<ObjectStatusEvent Name="OnRallyPoint1">
+			<Conditions>-IS_MOVING_TO_RALLY_POINT</Conditions>
+		</ObjectStatusEvent>
 		
 		<ObjectStatusEvent Name="OnLeavingFactory1">
 			<Conditions>-UNSELECTABLE</Conditions>
@@ -513,6 +521,10 @@
 			<Conditions>-DOOR_1_OPENING</Conditions>
 		</ModelConditionEvent>	
 
+		<ModelConditionEvent Name="onLoaded1">
+			<Conditions>-LOADED</Conditions>
+		</ModelConditionEvent>	
+
 		<ModelConditionEvent Name="OnUser55">
 			<Conditions>+USER_55</Conditions>
 		</ModelConditionEvent>	
@@ -703,6 +715,10 @@
 		</ObjectStatusEvent>			
 		<ObjectStatusEvent Name="OnAttackingEnd">
 			<Conditions>-IS_ATTACKING</Conditions>
+		</ObjectStatusEvent>
+
+		<ObjectStatusEvent Name="OnFleeOffMap">
+			<Conditions>+FLEE_OFF_MAP</Conditions>
 		</ObjectStatusEvent>
 		
 		<ObjectStatusEvent Name="OnRider1">
@@ -1041,7 +1057,7 @@
 
 	 <!-- r24 reverse move units -->
 	<EventList Name="GenericSquadFunctions_R24" Inherit="BaseScriptFunctions">
-		<EventHandler EventName="OnLeavingFactory" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>				
+		<EventHandler EventName="OnRallyPoint1" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>				
 		<EventHandler EventName="OnDestroyed" ScriptFunctionName="OnSquadDestroyed_R24" DebugSingleStep="false"/>	
 		<EventHandler EventName="OnRider4"	ScriptFunctionName="GarrisonedInHammerhead" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRider4End"	ScriptFunctionName="GarrisonedInHammerheadEnd" DebugSingleStep="false"/>
@@ -1515,8 +1531,8 @@
 	</EventList>
 
 	<EventList Name="GDIV35Ox_SummonedFunctions_R24" Inherit="BaseScriptFunctions">
-		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIV35Ox_Created_103" DebugSingleStep="false"/>
-		<EventHandler EventName="OnCarrying" ScriptFunctionName="OnGDIV35Ox_Carrying_103" DebugSingleStep="false"/>
+		<!--<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIV35Ox_Created_103" DebugSingleStep="false"/>-->
+		<EventHandler EventName="DoorOpen1" ScriptFunctionName="OnGDIV35Ox_Carrying_R24" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIWolverineFunctions_R24" Inherit="SelectionGroupFunctions_R24">

@@ -3094,6 +3094,14 @@ bannerCarrierTable = {
 }
 
 
+function OnGDIV35Ox_Carrying_R24(self)
+
+	if not EvaluateCondition("UNIT_HAS_PASSENGER", SetObjectReference(self)) then
+		--print("flying off map")
+		ObjectGrantUpgrade( self, "Upgrade_Transporting")
+	end
+end
+
 -- ############################# R25 Helper Functions ###################################
 
 function GetRankOfObject(unitRef) 
@@ -3143,7 +3151,7 @@ function CheckForPassengers(self)
 	if not getglobal(hasCheckedForPassengers) then
 		local stringRef = SetObjectReference(self)
 		if EvaluateCondition("UNIT_HAS_PASSENGER", stringRef) then
-			print("has a passenger")
+			--print("has a passenger")
 			for objId,_ in squadTables do
 				-- if has RIDER4 and not the upgrade 
 				local squad = squadTables[objId]
@@ -3158,7 +3166,7 @@ end
 
 -- disable weapons on squad members, allow on the 5th member whether it be the banner carrier or extra member.
 function GarrisonedInHammerhead(self)
-	print("the squad has entered the hammerhead!")
+	--print("the squad has entered the hammerhead!")
 	-- toggle the squadLeader on here via upgrade
 	local objId,squad = GetSquadAttributes(self)
 	if not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then ObjectGrantUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade") end
@@ -3177,7 +3185,7 @@ function GarrisonedInHammerhead(self)
 end
 
 function GarrisonedInHammerheadEnd(self)
-	print("the squad has exited the hammerhead!")
+	--print("the squad has exited the hammerhead!")
 	local _,squad = GetSquadAttributes(self)
 	-- instead of status i could just use upgrades instead
 
@@ -3202,17 +3210,16 @@ function GarrisonedInHammerheadEnd(self)
 	-- toggle the squadLeader off here via upgrade
 	-- kill and remove banner carrier 
 	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then 
-		ExecuteAction("NAMED_KILL", squadMemberTable[squad.squadLeader].selfRef)
 		ObjectRemoveUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade") 
-		print("squad leader removed")
+		ExecuteAction("NAMED_KILL", squadMemberTable[squad.squadLeader].selfRef)
+		--print("squad leader removed")
 		squad.squadLeader = nil
 	end
 end
 
 -- Triggered by -RIDER3
 function BannerCarrierExistsCheck(self)
-	local _,squad = GetSquadAttributes(self)
-	print("coming out of armory!")
+	--print("coming out of armory!")
 	HordeBroadcastEventToMembers(self, "KillLeader")
 end
 
@@ -3269,6 +3276,7 @@ end
 
 -- When squad appears at rax
 function OnSquadExitRax_R24(self)	
+	--print("squad has finished building")
 	local objId,squad = GetSquadAttributes(self)
 	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
 	-- squad size is 4 here. 
@@ -3287,8 +3295,19 @@ function isSquadExploit(squad)
 	-- compare squad size to the full squad size (obtained via squadSizeTable)
 	-- 5 - 2 = 3 
 	-- WriteToFile("isExploit.txt",  "spawnedSize: " .. tostring(squad.spawnedSize) .. " " .. " " .. tostring(squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLostOnSpawn)) .. "\n")
-	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLostOnSpawn) then 
-		print("squad exploit detected!")
+	local unitsLostSize = getTableSize(squad.unitsLostOnSpawn)
+	
+	local keys = {}
+	for k,_ in squad.unitsLostOnSpawn do
+		tinsert(keys,k)
+	end
+
+	for i = 1, getn(keys) do
+		squad.unitsLostOnSpawn[keys[i]] = nil
+	end
+
+	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))].size-unitsLostSize then 
+		--print("squad exploit detected!")
 		ExecuteAction("NAMED_DELETE", squad.selfRef)
 		return true
 	end
@@ -3310,25 +3329,25 @@ function GrantUpgradesToLeader(squad)
 	-- WriteToFile("data.txt",  "squadSize: " .. tostring(squadSize) .. " squadLeader: " .. tostring(squadLeader) .. "\n")
 	-- 1 member alive
 	if squadSize == 1 then
-		print("applying squad size 1 upgrade!")
+		--print("applying squad size 1 upgrade!")
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
 	end
 	-- 2 members alive
 	if squadSize == 2 then
-		print("applying squad size 2 upgrades!")
+		--print("applying squad size 2 upgrades!")
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
 	end
 	-- 3 members alive
 	if squadSize == 3 then
-		print("applying squad size 3 upgrades!")
+		--print("applying squad size 3 upgrades!")
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember3") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember3") end
 	end
 	-- 4 members alive
 	if squadSize == 4 then
-		print("applying squad size 4 upgrades!")
+		--print("applying squad size 4 upgrades!")
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember3") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember3") end
@@ -3340,6 +3359,7 @@ function GrantUpgradesToLeader(squad)
 end
 
 function OnSquadDestroyed_R24(self)
+	print("squad killed")
 	local objId = getObjectId(self)
 	local _,squad = GetSquadAttributes(self)
 	-- if squad is empty here and is still being constructed, delete it
@@ -3351,9 +3371,10 @@ end
 function OnMemberDestroyed_R24(self)
 	local objId,squadMember = GetSquadMemberAttributes(self)
 	-- was the unit moving to rally point while it was destroyed?
-	-- if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squadMember.stringRef , 145) then
+	print("member killed!")
+	--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squadMember.stringRef , 90) then
 	if ObjectTestModelCondition(self, "USER_59") then
-		-- print("horde member has been killed while being built!")
+		 --print("horde member has been killed while being built!")
 		-- broadcast an event to squads that are also with the IS_MOVING_TO_RALLY_POINT object status
 		ObjectBroadcastEventToAllies(self,"MemberKilledOnBuilt", 50)
 	end
@@ -3362,7 +3383,6 @@ function OnMemberDestroyed_R24(self)
 	local squad = squadTables[squadMember.squadObject] 
 	squad.squadMembers[objId] = nil
 	squadMemberTable[objId] = nil
-
 	-- no more squadMembers just leader remaining check
 	local firstKey = next(squad.squadMembers)
 	if firstKey ~= nil and next(squad.squadMembers, firstKey) == nil then
