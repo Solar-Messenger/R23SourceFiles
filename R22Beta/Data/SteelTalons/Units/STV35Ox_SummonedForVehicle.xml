@@ -747,45 +747,11 @@
 						RejectModelCondition="" />
 				</PassengerData>
 			</HordeTransportContain>
-			<StatusBitsUpgrade
-				id="85B2DF85"
-				RequiresAllTriggers="False"
-				RequiresAllConflictingTriggers="False"
-				Permanent="False"
-				WaypointMode="False"
-				WaypointModeTerminal="True"
-				StatusToSet=""
-				StatusToClear="UNSELECTABLE"
-				ApplyToContained="False">
-				<TriggeredBy>Upgrade_Transporting</TriggeredBy>
-			</StatusBitsUpgrade>
-			<GrantUpgradeCreate
-				id="6F52F9B4"
-				UpgradeToGrant="Upgrade_ObjectDefault"
-				ExemptStatus=""
-				GiveOnBuildComplete="False" />
 			<AttributeModifierUpgrade
-				id="08CDCB6B"
-				RequiresAllTriggers="False"
-				RequiresAllConflictingTriggers="False"
-				Permanent="False"
-				WaypointMode="False"
-				WaypointModeTerminal="True"
-				AttributeModifier="AttributeModifier_TransportEmpty">
-				<TriggeredBy>Upgrade_ObjectDefault</TriggeredBy>
-			</AttributeModifierUpgrade>
-			<RemoveUpgradeUpgrade
-				id="DC0DA0D4"
-				RequiresAllTriggers="False"
-				RequiresAllConflictingTriggers="False"
-				Permanent="False"
-				WaypointMode="False"
-				WaypointModeTerminal="True"
-				SuppressEvaEventForRemoval="False"
-				RemoveFromAllPlayerObjects="False">
+				id="ModuleTag_AttributeRemoveVision"
+				AttributeModifier="Modifier_RemoveVision">
 				<TriggeredBy>Upgrade_Transporting</TriggeredBy>
-				<UpgradeToRemove>Upgrade_ObjectDefault</UpgradeToRemove>
-			</RemoveUpgradeUpgrade>
+			</AttributeModifierUpgrade>			
 		</Behaviors>
 		<AI>
 			<TransportHelicopterAIUpdate
@@ -793,7 +759,7 @@
 				AutoAcquireEnemiesWhenIdle=""
 				StopChaseDistance="500"
 				HoldGroundCloseRangeDistance="0"
-				AILuaEventsList="GDIV35Ox_SummonedForVehicleFunctions_103"
+				AILuaEventsList="GDIV35Ox_SummonedForVehicleFunctions_R24"
 				MinCowerTime="0s"
 				MaxCowerTime="0s"
 				RampageTime="0s"

@@ -3097,7 +3097,7 @@ bannerCarrierTable = {
 function OnGDIV35Ox_Carrying_R24(self)
 
 	if not EvaluateCondition("UNIT_HAS_PASSENGER", SetObjectReference(self)) then
-		--print("flying off map")
+		print("flying off map")
 		ObjectGrantUpgrade( self, "Upgrade_Transporting")
 	end
 end

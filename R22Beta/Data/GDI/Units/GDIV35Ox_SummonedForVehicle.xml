@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 	<GameObject
-		id="SteelTalonsV35Ox_Summoned"
+		id="GDIV35Ox_SummonedForVehicle"
 		KindOf="SELECTABLE CAN_CAST_REFLECTIONS AIRCRAFT TRANSPORT NO_COLLIDE IGNORES_SELECT_ALL SUMMONED VEHICLE"
 		Description="Desc:GDIOx"
 		TypeDescription="Type:GDIOx"
@@ -15,8 +15,8 @@
 		BuildFadeInOnCreateTimeSeconds="0s"
 		FactoryExitWidth="0"
 		FactoryExtraBibWidth="0"
-		Side="SteelTalons"
-		EditorName="SteelTalonsV35Ox_Summoned"
+		Side="GDI"
+		EditorName="GDIV35Ox_SummonedForVehicle"
 		EditorSorting="UNIT"
 		BountyValue="0"
 		BuildTime="1"
@@ -162,7 +162,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_1">
 					<Model
-						Name="GUDropShip_SKN" />
+						Name="W3DContainer:GUDropShip_SKN" />
 					<ParticleSysBone
 						BoneName="FX_Lfan"
 						FXParticleSystemTemplate="orcaexhaust"
@@ -274,14 +274,14 @@
 		</Draws>
 		<Behaviors>
 			<AttributeModifierPoolUpdate
-				id="788FFB50" />
+				id="513BC476" />
 			<SquishCollide
-				id="1B48BDA6"
+				id="8CCB269A"
 				CrushAnimTime="1s"
 				CrushKillDelay="0.5s"
 				UseDirectionCheck="True" />
 			<FireWeaponWhenDead
-				id="E84F2471"
+				id="DDED328F"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
 				Permanent="False"
@@ -303,7 +303,7 @@
 					DeathTypesForbidden="" />
 			</FireWeaponWhenDead>
 			<AutoHealBehavior
-				id="C663B515"
+				id="C07BF5C0"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
 				Permanent="False"
@@ -328,7 +328,7 @@
 				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
 			</AutoHealBehavior>
 			<AttributeModifierUpgrade
-				id="CE6A16D5"
+				id="AA36A1AA"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
 				Permanent="False"
@@ -338,7 +338,7 @@
 				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterSpeed</TriggeredBy>
 			</AttributeModifierUpgrade>
 			<AttributeModifierUpgrade
-				id="F03B3999"
+				id="81C6F752"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
 				Permanent="False"
@@ -348,7 +348,7 @@
 				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterDamage</TriggeredBy>
 			</AttributeModifierUpgrade>
 			<AttributeModifierUpgrade
-				id="4A4E0C88"
+				id="E35F7EC4"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
 				Permanent="False"
@@ -358,10 +358,10 @@
 				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterArmor</TriggeredBy>
 			</AttributeModifierUpgrade>
 			<StancesBehavior
-				id="41CCDAEF"
+				id="54CA416E"
 				StanceTemplate="Generic" />
 			<LevelUpUpgrade
-				id="3D5ED271"
+				id="A92BDFEA"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
 				Permanent="False"
@@ -373,7 +373,7 @@
 				<TriggeredBy>Upgrade_ProductionVeterancy_VETERAN</TriggeredBy>
 			</LevelUpUpgrade>
 			<LevelUpUpgrade
-				id="418DD456"
+				id="5C3F216A"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
 				Permanent="False"
@@ -385,7 +385,7 @@
 				<TriggeredBy>Upgrade_ProductionVeterancy_ELITE</TriggeredBy>
 			</LevelUpUpgrade>
 			<LevelUpUpgrade
-				id="E1726612"
+				id="379F3CE2"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
 				Permanent="False"
@@ -397,7 +397,7 @@
 				<TriggeredBy>Upgrade_ProductionVeterancy_HEROIC</TriggeredBy>
 			</LevelUpUpgrade>
 			<InvisibilityUpdate
-				id="F80B6FD9"
+				id="3BD7F2F5"
 				Options=""
 				UpdatePeriod="0.5s"
 				BroadcastRange="0"
@@ -418,7 +418,7 @@
 				<RequiresUpgrade>Upgrade_CloakingFieldInvisibility</RequiresUpgrade>
 			</InvisibilityUpdate>
 			<StealthUpgrade
-				id="4273058C"
+				id="F2B9DFBE"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
 				Permanent="False"
@@ -427,10 +427,10 @@
 				<TriggeredBy>Upgrade_CloakingFieldInvisibility</TriggeredBy>
 			</StealthUpgrade>
 			<TemporarilyDefectUpdate
-				id="01009D1F"
+				id="3473AFD2"
 				DefectionFrameCount="300" />
 			<WeaponSetUpdate
-				id="E3D95180">
+				id="720F4A50">
 				<WeaponSlotHardpoint
 					ID="1"
 					InterleavedStyle="INTERLEAVE_FIRST_AVAILABLE"
@@ -445,7 +445,7 @@
 				</WeaponSlotHardpoint>
 			</WeaponSetUpdate>
 			<ModelConditionUpgrade
-				id="1E7962BB"
+				id="F4E47196"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
 				Permanent="True"
@@ -458,7 +458,7 @@
 				<TriggeredBy>Upgrade_GDIFaction</TriggeredBy>
 			</ModelConditionUpgrade>
 			<ModelConditionUpgrade
-				id="BE39A3A5"
+				id="32823308"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
 				Permanent="True"
@@ -471,7 +471,7 @@
 				<TriggeredBy>Upgrade_SteelTalonsFaction</TriggeredBy>
 			</ModelConditionUpgrade>
 			<ModelConditionUpgrade
-				id="AE1C99EB"
+				id="3A0753AF"
 				RequiresAllTriggers="False"
 				RequiresAllConflictingTriggers="False"
 				Permanent="True"
@@ -484,7 +484,7 @@
 				<TriggeredBy>Upgrade_ZOCOMFaction</TriggeredBy>
 			</ModelConditionUpgrade>
 			<Physics
-				id="2B7165F3"
+				id="C2B69CF1"
 				MaxXRotationVelocity="360"
 				MaxYRotationVelocity="360"
 				MaxZRotationVelocity="360"
@@ -513,7 +513,7 @@
 				OrientToFlightPath="False"
 				IgnoreTerrainHeight="False" />
 			<ProductionUpdate
-				id="E17127F2"
+				id="433F72FC"
 				MaxQueueEntries="1"
 				NumDoorAnimations="0"
 				DoorOpeningTime="0s"
@@ -534,7 +534,7 @@
 				SecondaryQueue="False"
 				IgnorePreReqs="False" />
 			<MoveToPositionAndEvacuateSpecialPower
-				id="DCF3501A"
+				id="DBDCABC7"
 				SpecialPowerTemplate="SpecialPowerMoveToPositionAndEvacuate"
 				AntiCategory=""
 				AntiFX=""
@@ -599,7 +599,7 @@
 					RejectModelCondition="" />
 			</MoveToPositionAndEvacuateSpecialPower>
 			<SlowDeath
-				id="1673247C"
+				id="73542D4A"
 				SinkRate="0.5"
 				ProbabilityModifier="10"
 				ModifierBonusPerOverkillPercent="0%"
@@ -637,7 +637,7 @@
 					DeathTypesForbidden="TOPPLED" />
 			</SlowDeath>
 			<FXListBehavior
-				id="57E81491">
+				id="C74C39D8">
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""
@@ -656,7 +656,7 @@
 					ForceUseDoFXObj="False" />
 			</FXListBehavior>
 			<HordeTransportContain
-				id="EF5A376E"
+				id="9DC593B0"
 				ContainMax="1"
 				EnterSound="AudioEvent:VehicleEnter"
 				ExitSound="AudioEvent:VehicleExit"
@@ -664,7 +664,7 @@
 				PassengersTestCollisionHeight="-1000"
 				NumberOfExitPaths="1"
 				DoorOpenTime="1"
-				ObjectStatusOfContained="UNSELECTABLE ENCLOSED"
+				ObjectStatusOfContained="UNSELECTABLE"
 				ModifierRequiredTime="100"
 				KillIfEmptyTime="0s"
 				ModelConditionsWhenNotEmpty="CARRYING"
@@ -673,7 +673,7 @@
 				AllowAlliesInside="False"
 				AllowEnemiesInside="False"
 				AllowNeutralInside="False"
-				ShowPips="True"
+				ShowPips="False"
 				CollidePickup="True"
 				EjectPassengersOnDeath="True"
 				KillPassengersOnDeath="True"
@@ -708,15 +708,26 @@
 				ExtendedExitContainerChecks="True"
 				FlyOffMapOnEmpty="True">
 				<PassengerFilter
-					Rule="ANY"
+					Rule="NONE"
 					Relationship=""
 					Alignment="NONE"
-					Include="INFANTRY"
+					Include=""
 					Exclude=""
 					StatusBitFlags=""
 					RejectStatusBitFlags=""
 					AcceptModelCondition=""
-					RejectModelCondition="" />
+					RejectModelCondition="">
+					<IncludeThing>GDIAPC</IncludeThing>
+					<IncludeThing>GDIPitbull</IncludeThing>
+					<IncludeThing>GDIPredator</IncludeThing>
+					<IncludeThing>GDISurveyor</IncludeThing>
+					<IncludeThing>GDISonicTank</IncludeThing>
+					<IncludeThing>Asset not found in stream: [4DC09DD1]</IncludeThing>
+					<IncludeThing>ZOCOMRepairAPC</IncludeThing>
+					<IncludeThing>ZOCOMAPCRepairDrone</IncludeThing>
+					<IncludeThing>Asset not found in stream: [1E2843CD]</IncludeThing>
+					<IncludeThing>GDIAAScout</IncludeThing>
+				</PassengerFilter>
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""
@@ -731,39 +742,29 @@
 						Rule="NONE"
 						Relationship=""
 						Alignment="NONE"
-						Include="INFANTRY"
+						Include="VEHICLE"
 						Exclude=""
 						StatusBitFlags=""
 						RejectStatusBitFlags=""
 						AcceptModelCondition=""
 						RejectModelCondition="" />
 				</PassengerData>
-				<MemberTemplateStatusInfo
-					ThingTemplate="GDISniperSquad"
-					ObjectStatus="CAN_SPOT_FOR_BOMBARD" />
-				<MemberTemplateStatusInfo
-					ThingTemplate="GDISniperSquad_Veteran"
-					ObjectStatus="CAN_SPOT_FOR_BOMBARD" />
-				<MemberTemplateStatusInfo
-					ThingTemplate="ZOCOMSniperSquad"
-					ObjectStatus="CAN_SPOT_FOR_BOMBARD" />
-				<MemberTemplateStatusInfo
-					ThingTemplate="ZOCOMSniperSquad_Veteran"
-					ObjectStatus="CAN_SPOT_FOR_BOMBARD" />
 			</HordeTransportContain>
+
 			<AttributeModifierUpgrade
 				id="ModuleTag_AttributeRemoveVision"
 				AttributeModifier="Modifier_RemoveVision">
 				<TriggeredBy>Upgrade_Transporting</TriggeredBy>
 			</AttributeModifierUpgrade>			
+			
 		</Behaviors>
 		<AI>
 			<TransportHelicopterAIUpdate
-				id="C25548AC"
+				id="5FD28433"
 				AutoAcquireEnemiesWhenIdle=""
 				StopChaseDistance="500"
 				HoldGroundCloseRangeDistance="0"
-				AILuaEventsList="GDIV35Ox_SummonedFunctions_R24"
+				AILuaEventsList="GDIV35Ox_SummonedForVehicleFunctions_R24"
 				MinCowerTime="0s"
 				MaxCowerTime="0s"
 				RampageTime="0s"
@@ -793,11 +794,22 @@
 				CanPathThroughUnitsWhileHarvesting="True"
 				FlyOffMap="REVERSE_DIRECTION"
 				DelayAFterLoadingOrUnloading="0s"
-				FlyOffMapOnUnload="True" />
+				FlyOffMapOnUnload="True">
+				<UnitAITargetChooserData
+					IdleScanDelay="0.8s"
+					ReacquireDelay="5s"
+					StartupDelay="0s"
+					SympathyRange="100"
+					CheckVisionRange="False"
+					CanPickDynamicTargets="True"
+					RotateToTargetWhenAiming="True"
+					CanAutoAcquireNonAutoAcquirable="False"
+					TargetingCompareList="DefaultTargetingCompareList" />
+			</TransportHelicopterAIUpdate>
 		</AI>
 		<Body>
 			<ActiveBody
-				id="8018425E"
+				id="E128C6A2"
 				MaxHealth="2500"
 				MaxHealthDamaged="0"
 				MaxHealthReallyDamaged="0"
@@ -821,7 +833,7 @@
 		</Body>
 		<ClientBehaviors>
 			<AnimationSoundClientBehavior
-				id="59D403AD"
+				id="7A2074AA"
 				MaxUpdateRangeCap="0">
 				<Sound
 					Sound="AudioEvent:V35DropShipCloseDoors"
@@ -833,7 +845,7 @@
 					Frame="1" />
 			</AnimationSoundClientBehavior>
 			<ModelConditionAudioLoopClientBehavior
-				id="13120B33">
+				id="25CD74CF">
 				<ModelConditionSound
 					Sound="AudioEvent:V35DropShipLand"
 					RequiredFlags="LANDING"
@@ -849,10 +861,8 @@
 			<Shape
 				Type="BOX"
 				ContactPointGeneration="NONE"
-				Name=""
 				MajorRadius="37"
 				MinorRadius="3"
-				Other=""
 				Height="25"
 				FrontAngle="0d"
 				Active="True"
@@ -860,10 +870,8 @@
 			<Shape
 				Type="BOX"
 				ContactPointGeneration="NONE"
-				Name=""
 				MajorRadius="8"
 				MinorRadius="30"
-				Other=""
 				Height="25"
 				FrontAngle="0d"
 				Active="True"
@@ -907,8 +915,8 @@
 			EvaEventDamagedOwner="UnitUnderAttack"
 			EvaEventDamagedFromShroudedSourceOwner="UnitUnderAttackFromShroudedUnit"
 			EvaEventDamagedByFireOwner="GenericUnitBeingBurned"
-			EvaEventSecondDamageFarFromFirstScanRange="600"
-			EvaEventSecondDamageFarFromFirstTimeoutMS="31000"
+			EvaEventSecondDamageFarFromFirstScanRange="600"    
+			EvaEventSecondDamageFarFromFirstTimeoutMS="31000" 
 			EvaEventAmbushed="UnitAmbushed"
 			EvaEnemyObjectSightedEvent="GenericEnemyUnitSighted"
 			EvaEventDetectedEnemy="EnemyStealthUnitDiscovered"

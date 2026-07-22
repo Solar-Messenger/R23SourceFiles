@@ -1531,7 +1531,11 @@
 	</EventList>
 
 	<EventList Name="GDIV35Ox_SummonedFunctions_R24" Inherit="BaseScriptFunctions">
-		<!--<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIV35Ox_Created_103" DebugSingleStep="false"/>-->
+		<EventHandler EventName="DoorOpen1" ScriptFunctionName="OnGDIV35Ox_Carrying_R24" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="GDIV35Ox_SummonedForVehicleFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIV35Ox_SummonedForVehicleCreated" DebugSingleStep="false"/>
 		<EventHandler EventName="DoorOpen1" ScriptFunctionName="OnGDIV35Ox_Carrying_R24" DebugSingleStep="false"/>
 	</EventList>
 
