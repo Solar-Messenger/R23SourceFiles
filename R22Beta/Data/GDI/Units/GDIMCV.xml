@@ -33,13 +33,13 @@
 		<ArmorSet
 			Armor="GDIMCVArmor"
 			DamageFX="VehicleDamageFX" />
-		<LocomotorSet
-			Locomotor="GDIMCVLocomotorUnpacking"
-			Condition="NORMAL_UPGRADED"
-			Speed="40.0" />
 		<LocomotorSet 
 			Locomotor="GDIMCVLocomotor"
 			Condition="NORMAL"
+			Speed="40.0" />
+		<LocomotorSet
+			Locomotor="GDIMCVLocomotorUnpacking"
+			Condition="NORMAL_UPGRADED"
 			Speed="40.0" />
 		<Draws>
 			<TruckDraw

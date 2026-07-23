@@ -37,6 +37,10 @@
 			Locomotor="GDIMCVLocomotor"
 			Condition="NORMAL"
 			Speed="40.0" />
+		<LocomotorSet
+			Locomotor="GDIMCVLocomotorUnpacking"
+			Condition="NORMAL_UPGRADED"
+			Speed="40.0" />
 		<Draws>
 			<TruckDraw
 				id="ModuleTag_Draw"
@@ -246,6 +250,12 @@
 			<TemporarilyDefectUpdate
 				id="ModuleTag_TemporarilyDefect"
 				DefectionFrameCount="300" />
+
+			<LocomotorSetUpgrade
+				id="ModuleTag_LocomotorUpgrade">
+				<TriggeredBy>Upgrade_MCVLocomotorUpgrade</TriggeredBy>
+			</LocomotorSetUpgrade>
+			
 			<Physics
 				id="ModuleTag_Physics" />
 			<ProductionUpdate
@@ -307,10 +317,17 @@
 				<TriggeredBy>Upgrade_ReverseMoveSpeedBuff</TriggeredBy>
 			</AttributeModifierUpgrade>
 
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierSpeed0"
+				AttributeModifier="Modifier_Speed0">
+				<TriggeredBy>Upgrade_MCVNoSpeedUpgrade</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 		</Behaviors>
 		<AI>
 			<AIUpdate
 				id="ModuleTag_AI"
+				AILuaEventsList="MCVFunctions_R24"
 				AutoAcquireEnemiesWhenIdle="NO">
 			</AIUpdate>
 		</AI>

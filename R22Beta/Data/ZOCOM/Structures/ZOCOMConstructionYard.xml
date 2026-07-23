@@ -382,7 +382,8 @@
 			/>
 			<ReplaceSelfUpgrade
 				id="ModuleTag_ReplaceSelf"
-				NewObjectUnpackTime="3.37s">
+				NewObjectUnpackTime="3.37s"
+				DisabledDuringUnpack="false">
 				<TriggeredBy>Upgrade_Pack</TriggeredBy>
 				<ReplacementTemplate>ZOCOMMCV</ReplacementTemplate>
 			</ReplaceSelfUpgrade>
