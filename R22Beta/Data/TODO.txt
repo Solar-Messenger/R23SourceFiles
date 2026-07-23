@@ -1,19 +1,19 @@
 TODO: 
-- Implement Carryall vision fix for all Nod factions
 - Implement Garrisoned banner carrier for all GDI units 
 - Implement Garrisoned banner carrier for all ZOCOM units 
 - Implement Garrisoned banner carrier for all SteelTalons units 
 - Implement the free infantry exploit fix to all squads in the game
 - Buff Hammerhead landing time when picking up, dropping off infantry.
-- Buff APC range by 5%
-- Buff grenadier range inside of hammerheads
+- Buff rifle squad damage vs disintegrators by 10%.
 - Make tripods not spawn with shields when captured back.
-- Reduce Avatar hp to 9500 to speed up repair speed. 
-- Change it so Scrin Tripod husks cannot be captured back without the delay the other factions husks have.
-- Make it so units affected by rage generated cannot be controlled by players throughout the duration.
+- Reduce Avatar hp to 9500 to speed up repair speed, compensate via armor buffs. 
+- Make it so units affected by rage generator cannot be controlled by players throughout the duration.
+- Tweak stasis shield so units on the edge are paralyzed.
+- Fix Traveler Engine mesh on Devastator Warships when inside Ion Storms.
+- Fix an issue with MCVs causing them to ignore move commands while packing up.
 
 Done
 - Implemented V35 vision fix for all GDI factions
 - Fixed squad veterancy issue for Mechapedes, Sniper Teams, Black Diciples, Confessor Leaders.
 - Fixed walking step sounds on a few units.
-- 
+- Implement Carryall vision fix for all Nod factions

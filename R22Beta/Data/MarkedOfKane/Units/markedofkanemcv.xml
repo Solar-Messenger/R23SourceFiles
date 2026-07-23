@@ -94,6 +94,10 @@
 			Speed="40"
 			Condition="NORMAL"
 			Locomotor="NODMCVLocomotor" />
+		<LocomotorSet
+			Locomotor="GDIMCVLocomotorUnpacking"
+			Condition="NORMAL_UPGRADED"
+			Speed="40.0" />
 		<Draws>
 			<ScriptedModelDraw
 				id="14EA72D8"
@@ -864,6 +868,13 @@
 				AttributeModifier="Modifier_MultifunctionUpgradeCenterArmor">
 				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterArmor</TriggeredBy>
 			</AttributeModifierUpgrade>
+
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierSpeed0"
+				AttributeModifier="Modifier_Speed0">
+				<TriggeredBy>Upgrade_MCVNoSpeedUpgrade</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 			<LevelUpUpgrade
 				id="A92BDFEA"
 				RequiresAllTriggers="False"
@@ -933,6 +944,12 @@
 			<TemporarilyDefectUpdate
 				id="3473AFD2"
 				DefectionFrameCount="300" />
+
+			<LocomotorSetUpgrade
+				id="ModuleTag_LocomotorUpgrade">
+				<TriggeredBy>Upgrade_MCVLocomotorUpgrade</TriggeredBy>
+			</LocomotorSetUpgrade>
+
 			<Physics
 				id="E128C6A2"
 				MaxXRotationVelocity="360"
@@ -1191,6 +1208,7 @@
 				MaxCowerTime="0s"
 				RampageTime="0s"
 				BurningDeathTime="0s"
+				AILuaEventsList="MCVFunctions_R24"
 				TimeToEjectPassengersOnRampage="0"
 				ComboLocomotorSet="NORMAL"
 				ComboLocoAttackDistance="80"
