@@ -1165,7 +1165,7 @@
 				WaypointMode="False"
 				WaypointModeTerminal="True"
 				NewObjectUnpackTime="3.64s"
-				DisabledDuringUnpack="True"
+				DisabledDuringUnpack="False"
 				CheckBuildAssistant="False">
 				<TriggeredBy>Upgrade_Pack</TriggeredBy>
 				<ReplacementTemplate>NODMCV</ReplacementTemplate>

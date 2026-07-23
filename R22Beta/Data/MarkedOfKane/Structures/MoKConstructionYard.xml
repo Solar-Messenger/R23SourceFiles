@@ -403,7 +403,8 @@
 			/>
 			<ReplaceSelfUpgrade
 				id="ModuleTag_ReplaceSelf"
-				NewObjectUnpackTime="3.64s">
+				NewObjectUnpackTime="3.64s"
+				DisabledDuringUnpack="False">
 				<TriggeredBy>Upgrade_Pack</TriggeredBy>
 				<ReplacementTemplate>MarkedOfKaneMCV</ReplacementTemplate>
 			</ReplaceSelfUpgrade>	
