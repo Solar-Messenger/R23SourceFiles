@@ -236,7 +236,8 @@
 				UpgradeToGive="Upgrade_Pack"/>
 			<ReplaceSelfUpgrade
 				id="ModuleTag_ReplaceSelf"
-				NewObjectUnpackTime="3.0s">
+				NewObjectUnpackTime="3.0s"
+				DisabledDuringUnpack="False">
 				<TriggeredBy>Upgrade_Pack</TriggeredBy>
 				<ReplacementTemplate>AlienMCV</ReplacementTemplate>
 			</ReplaceSelfUpgrade>

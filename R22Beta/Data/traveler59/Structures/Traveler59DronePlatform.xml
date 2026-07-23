@@ -339,7 +339,8 @@
 				UnpackTime="1.5s" />
 			<ReplaceSelfUpgrade
 				id="ModuleTag_ReplaceSelf"
-				NewObjectUnpackTime="3.0s">
+				NewObjectUnpackTime="3.0s"
+				DisabledDuringUnpack="False">
 				<TriggeredBy>Upgrade_Pack</TriggeredBy>
 				<ReplacementTemplate>Traveler59MCV</ReplacementTemplate>
 			</ReplaceSelfUpgrade>

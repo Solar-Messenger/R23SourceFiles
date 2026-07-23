@@ -30,6 +30,10 @@
 			Locomotor="AlienMCVLocomotor"
 			Condition="NORMAL"
 			Speed="40.0" />
+		<LocomotorSet
+			Locomotor="ScrinMCVLocomotorUnpacking"
+			Condition="NORMAL_UPGRADED"
+			Speed="40.0" />
 		<Draws>
 			<TruckDraw
 				id="ModuleTag_Draw"
@@ -197,6 +201,12 @@
 				AttributeModifier="Modifier_MultifunctionUpgradeCenterArmor">
 				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterArmor</TriggeredBy>
 			</AttributeModifierUpgrade>
+
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierSpeed0"
+				AttributeModifier="Modifier_Speed0">
+				<TriggeredBy>Upgrade_MCVNoSpeedUpgrade</TriggeredBy>
+			</AttributeModifierUpgrade>
 			<LevelUpUpgrade
 				id="ModuleTag_LevelUpUpgrade_Veteran"
 				LevelCap="4"
@@ -229,6 +239,11 @@
       <TemporarilyDefectUpdate
         id="ModuleTag_TemporarilyDefect"
         DefectionFrameCount="300" />
+
+		<LocomotorSetUpgrade
+				id="ModuleTag_LocomotorUpgrade">
+				<TriggeredBy>Upgrade_MCVLocomotorUpgrade</TriggeredBy>
+			</LocomotorSetUpgrade>
 <!--
 			<AudioLoopUpgrade 
 				id="ALI_DroneShip_SoundUnpack" 
@@ -304,7 +319,8 @@
 		</Behaviors>
 		<AI>
 			<AIUpdate
-				id="ModuleTag_AI" />
+				id="ModuleTag_AI"
+				AILuaEventsList="MCVFunctions_R24" />
 		</AI>
 		<Body>
 			<!-- if this value changes, make sure the health of the AlienMCVUnpacking is updated too... -->

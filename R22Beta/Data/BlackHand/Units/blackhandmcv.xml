@@ -96,7 +96,7 @@
 			Locomotor="NODMCVLocomotor" />
 
 		<LocomotorSet
-			Locomotor="GDIMCVLocomotorUnpacking"
+			Locomotor="NodMCVLocomotorUnpacking"
 			Condition="NORMAL_UPGRADED"
 			Speed="40.0" />
 		<Draws>
