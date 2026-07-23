@@ -3102,6 +3102,22 @@ function OnGDIV35Ox_Carrying_R24(self)
 	end
 end
 
+-- ############################# R25 MCV FIX ###################################
+
+-- triggered by +UNPACKING 
+function OnMCVUnpacking(self)
+	local stringRef = SetObjectReference(self)
+	if not EvaluateCondition("UNIT_HAS_UPGRADE",stringRef, "Upgrade_MCVNoSpeedUpgrade") then ObjectGrantUpgrade(self, "Upgrade_MCVNoSpeedUpgrade") end
+	if not EvaluateCondition("UNIT_HAS_UPGRADE",stringRef, "Upgrade_MCVLocomotorUpgrade") then ObjectGrantUpgrade(self, "Upgrade_MCVLocomotorUpgrade") end
+end
+
+-- triggered by -UNPACKING 
+function OnMCVUnpackingEnd(self)
+	local stringRef = SetObjectReference(self)
+	if EvaluateCondition("UNIT_HAS_UPGRADE",stringRef, "Upgrade_MCVNoSpeedUpgrade") then ObjectRemoveUpgrade(self, "Upgrade_MCVNoSpeedUpgrade") end
+	if EvaluateCondition("UNIT_HAS_UPGRADE",stringRef, "Upgrade_MCVLocomotorUpgrade") then ObjectRemoveUpgrade(self, "Upgrade_MCVLocomotorUpgrade") end
+end
+
 -- ############################# R25 Helper Functions ###################################
 
 function GetRankOfObject(unitRef) 

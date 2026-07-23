@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	 <AttributeModifier
+		id="Modifier_Speed0"
+		Category="NONE">
+		<Modifier Type="SPEED" Value="0%" />
+	</AttributeModifier>
+
 	<AttributeModifier
 		id="Modifier_RemoveVision"
 		Category="INNATE_VISION"

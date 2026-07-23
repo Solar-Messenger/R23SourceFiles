@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="us-ascii" ?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset">
+		
+		<LocomotorTemplate
+		id="GDIMCVLocomotorUnpacking"
+		Name="GDIMCVLocomotorUnpacking"
+		Surfaces="GROUND RUBBLE CRUSHABLE_OBSTACLE" 
+		TurnTimeSeconds="999999.0s" 
+		TurnTimeDamagedSeconds="0s" 
+		MaxSpeedDamaged="75%"
+		AccelerationSeconds="0s"
+		SlowTurnRadius="0.0" 
+		FastTurnRadius="0.0" 
+		BehaviorZ="NO_MOTIVE_FORCE"	
+		Appearance="FOUR_WHEELS" 
+		ClampOrientationToPathTangent="false"
+		/>
+		
+</AssetDeclaration>
