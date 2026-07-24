@@ -3091,7 +3091,7 @@ squadSizeTable = {
 
 	["6495F509"] = {size = 3, setRider = false}, -- AlienShockTrooperSquad
 	["4803957E"] = {size = 3, setRider = false}, -- Traveler59ShockTrooperSquad
-	["40241AC3"] = {size = 3, setRider = false} -- Reaper17ShockTrooperSquad
+	["40241AC3"] = {size = 3, setRider = false}, -- Reaper17ShockTrooperSquad
 
 	["C46CECA2"] = {size = 5, setRider = false} -- Traveler59CultistSquad
 
@@ -3102,6 +3102,8 @@ onCreatedTable = {
 	["B821E76D"] = {onCreated = OnGDIZoneTrooperCreated}, -- GDIZoneTrooper
 	["66CC48AB"] = {onCreated = OnGDIGrenadeSoldierCreated}, -- GDIGrenadeSoldier
 	["CB613C1D"] = {onCreated = OnStalkerCreated}, -- AlienStalker
+	["A7EFC673"] = {onCreated = OnStalkerCreated}, -- Reaper17Stalker
+	["55C9FDB4"] = {onCreated = OnStalkerCreated} -- Traveler59Stalker
 }
 
 -- if a unit has hammerhead garrison support, add it here.
