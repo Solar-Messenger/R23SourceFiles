@@ -3074,18 +3074,34 @@ end
 -- ############################# R25 Squad/Member Data ###################################
 
 -- this defines squad sizes and if a squad has a hammerhead garrison banner carrier.
+-- setRider defines if a squad has a weapon upgrade within the hammerhead (WEAPON_UPGRADED_01)
 squadSizeTable = {
 	-- vGDI
 	["5D5E5931"] = {size = 4, setRider = true}, -- GDIZoneTrooperSquad
 	["9096966E"] = {size = 6, setRider = true}, -- GDIRifleSoldierSquad
 	["42896060"] = {size = 4, setRider = false}, -- GDIGrenadeSoldierSquad
-	["EF1252DB"] = {size = 2, setRider = false} -- GDIMissileSoldierSquad
+	["EF1252DB"] = {size = 2, setRider = false}, -- GDIMissileSoldierSquad
+	-- vScrin
+	["2B9428D0"] = {size = 5, setRider = false}, -- AlienRazorDroneSquad
+	["240FB1"] = {size = 5, setRider = false}, -- Traveler59RazorDroneSquad
+
+	["32EA13B3"] = {size = 3, setRider = false}, -- AlienStalkerSquad
+	["72A9F5D5"] = {size = 3, setRider = false}, -- Traveler59StalkerSquad
+	["7F2D0EF5"] = {size = 3, setRider = false}, -- Reaper17StalkerSquad
+
+	["6495F509"] = {size = 3, setRider = false}, -- AlienShockTrooperSquad
+	["4803957E"] = {size = 3, setRider = false}, -- Traveler59ShockTrooperSquad
+	["40241AC3"] = {size = 3, setRider = false} -- Reaper17ShockTrooperSquad
+
+	["C46CECA2"] = {size = 5, setRider = false} -- Traveler59CultistSquad
+
 }
 
 -- if a unit has a function that hides subobjects oncreated, add it here.
 onCreatedTable = {
 	["B821E76D"] = {onCreated = OnGDIZoneTrooperCreated}, -- GDIZoneTrooper
-	["66CC48AB"] = {onCreated = OnGDIGrenadeSoldierCreated} -- GDIGrenadeSoldier
+	["66CC48AB"] = {onCreated = OnGDIGrenadeSoldierCreated}, -- GDIGrenadeSoldier
+	["CB613C1D"] = {onCreated = OnStalkerCreated}, -- AlienStalker
 }
 
 -- if a unit has hammerhead garrison support, add it here.
@@ -3175,7 +3191,7 @@ function CheckForPassengers(self)
 			if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 44) and not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then
 				GarrisonedInHammerhead(squad.selfRef)
 				hasCheckedForPassengers = true
-				break
+				return
 			end
 		end
 	end
@@ -3437,6 +3453,7 @@ end
 -- Created squad overriden functions
 function OnHordeMemberCreated_R24(self)
 	-- for horde members with onCreated functions that need to be inherited
+	-- print("setting model condition")
 	local objName = getObjectName(self)
 	--print(tostring(objName))
 	if onCreatedTable[objName] then

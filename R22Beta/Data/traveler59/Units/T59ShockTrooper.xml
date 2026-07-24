@@ -630,6 +630,7 @@
 		<AI>
 			<AIUpdate
 				id="ModuleTag_AI"
+				AILuaEventsList="AlienShockTrooperFunctions_R24"
 				AutoAcquireEnemiesWhenIdle="YES">
 				<UnitAITargetChooserData
 					SympathyRange="25.0" />

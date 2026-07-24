@@ -1442,6 +1442,9 @@
 	</EventList>
 
 	<EventList Name="Traveler59CultistFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="Traveler59CustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1460,12 +1463,22 @@
 	</EventList>
 
 	<EventList Name="AlienStalkerFunctions_R24" Inherit="BaseScriptFunctions">
-	<EventHandler EventName="OnCreated"	ScriptFunctionName="OnStalkerCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="AlienShockTrooperFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
 	</EventList>
 
 	<!-- disint members-->
 	<EventList Name="RazorDroneFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="SteelTalonsRifleSoldierFunctions_R24" Inherit="BaseScriptFunctions">
