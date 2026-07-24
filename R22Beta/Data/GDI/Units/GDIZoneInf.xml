@@ -3323,7 +3323,35 @@
 						Template="ZoneTrooperSquadRangefinder1"
 						Upgrade=""
 						ObjectStatus="WEAPON_UPGRADED_01"
-						IsPlayerUpgradePermanent="False" />								
+						IsPlayerUpgradePermanent="False" />				
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperSquadRangefinder"
+						ObjectStatus="RIDERLESS" />
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperSquadRangefinder1"
+						ObjectStatus="WEAPON_UPGRADED_01 RIDERLESS" />
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperSquadRangefinder"
+						Upgrade=""
+						ObjectStatus="RIDER1"
+						IsPlayerUpgradePermanent="False" />
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperSquadRangefinder1"
+						Upgrade=""
+						ObjectStatus="RIDER1 WEAPON_UPGRADED_01"
+						IsPlayerUpgradePermanent="False" />	
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperSquadRangefinder"
+						ObjectStatus="RIDER1 RIDERLESS" />
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperSquadRangefinder1"
+						ObjectStatus="RIDER1 WEAPON_UPGRADED_01 RIDERLESS" />
 				</WeaponSlotHardpoint>
 			</WeaponSetUpdate>
 			
