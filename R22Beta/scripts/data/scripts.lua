@@ -3165,7 +3165,7 @@ end
 hasCheckedForPassengers = false
 
 function CheckForPassengers(self)
-	if getglobal(hasCheckedForPassengers) then return end
+	if hasCheckedForPassengers then return end
 	local stringRef = SetObjectReference(self)
 	if EvaluateCondition("UNIT_HAS_PASSENGER", stringRef) then
 		--print("has a passenger")
@@ -3174,12 +3174,15 @@ function CheckForPassengers(self)
 			local squad = squadTables[objId]
 			if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 44) and not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then
 				GarrisonedInHammerhead(squad.selfRef)
-				setglobal(hasCheckedForPassengers, true) 
+				hasCheckedForPassengers = true
 				break
 			end
 		end
 	end
 end
+
+-- flag to enable/disable a xp workaround
+applyHordeXPFix = true
 
 -- enables the squad leader
 function GarrisonedInHammerhead(self)
@@ -3195,10 +3198,10 @@ function GarrisonedInHammerhead(self)
 	local squadLevel = GetRankOfObject(squad.stringRef) 
 	local leaderLevel = GetRankOfObject(squadLeader.stringRef) 
 
-	WriteToFile("leader rank hh.txt",  "Current leader rank: " .. tostring(leaderLevel) .. "\n" .. "squadLevel: " .. tostring(squadLevel) .. "\n" .. "-------------------" .. "\n")
+	--WriteToFile("leader rank hh.txt",  "Current leader rank: " .. tostring(leaderLevel) .. "\n" .. "squadLevel: " .. tostring(squadLevel) .. "\n" .. "-------------------" .. "\n")
 
 	-- rank up leader here if its below the squad level
-	if leaderLevel < squadLevel then
+	if applyHordeXPFix and leaderLevel < squadLevel then
 		-- if desync then its probably because of the prerequisites 
 		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, tostring("GDIZoneTrooperSquadExperienceLevel_" .. squadLevel))
 		squadLeader.timesPromotedWithLua = (squadLevel-leaderLevel)
@@ -3233,10 +3236,11 @@ function GarrisonedInHammerheadEnd(self)
 	local squadLevel = GetRankOfObject(squad.stringRef) 
 	-- i need to reimplement the 2 way experience check again (isLeader) - Banner carriers dont inherit the veterancy when spawned inside of hammerheads 
 	
-	WriteToFile("leader rank.txt",  "Current leader rank: " .. tostring(GetRankOfObject(squadMemberTable[squad.squadLeader].stringRef)) .. "\n" .. "squadLevel: " .. tostring(squadLevel) .. "\n" .. "-------------------" .. "\n")
-	
+	--WriteToFile("leader rank.txt",  "Current leader rank: " .. tostring(GetRankOfObject(squadMemberTable[squad.squadLeader].stringRef)) .. "\n" .. "squadLevel: " .. tostring(squadLevel) .. "\n" .. "-------------------" .. "\n")
+
 	-- 0 -> LT (<), if horde members are ranked lower than the squad 
-	if EvaluateCondition("UNIT_COMPARE_RANK", firstMember.stringRef, 0, squadLevel) then
+	if applyHordeXPFix and EvaluateCondition("UNIT_COMPARE_RANK", firstMember.stringRef, 0, squadLevel) then
+		print("promoting")
 		-- leader check
 		for objId,_ in squad.squadMembers do
 			-- if desync then its probably because of the prerequisites 
