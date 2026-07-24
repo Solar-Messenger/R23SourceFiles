@@ -3142,6 +3142,7 @@ end
 -- ############################# R25 Hammerhead Garrison fix ###################################
 
 function ApplyXPModifier(tableObj) 
+	print("applying xp modifier")
 	local timesPromoted = tableObj.timesPromotedWithLua
 	local upgrades = {
 		["1"] = "Upgrade_200scaler",
@@ -3185,10 +3186,26 @@ function GarrisonedInHammerhead(self)
 	--print("the squad has entered the hammerhead!")
 	-- toggle the squadLeader on here via upgrade
 	local objId,squad = GetSquadAttributes(self)
+	-- dpes not rank up automatically inside a hammerhead sadly.
 	if not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then ObjectGrantUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade") end
 	HordeBroadcastEventToMembers(self, "SquadBannerEvent", tostring(objId))
 	local squadLeader = squadMemberTable[squad.squadLeader]
 	GrantUpgradesToLeader(squad)
+
+	local squadLevel = GetRankOfObject(squad.stringRef) 
+	local leaderLevel = GetRankOfObject(squadLeader.stringRef) 
+
+	WriteToFile("leader rank hh.txt",  "Current leader rank: " .. tostring(leaderLevel) .. "\n" .. "squadLevel: " .. tostring(squadLevel) .. "\n" .. "-------------------" .. "\n")
+
+	-- rank up leader here if its below the squad level
+	if leaderLevel < squadLevel then
+		-- if desync then its probably because of the prerequisites 
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, tostring("GDIZoneTrooperSquadExperienceLevel_" .. squadLevel))
+		squadLeader.timesPromotedWithLua = (squadLevel-leaderLevel)
+		-- apply xp modifier to this unit 
+		ApplyXPModifier(squadLeader) 
+	end
+
 	-- this enables the fake weapon for the regular members
 	for squadMemberId,_ in squad.squadMembers do
 		-- grant RIDER1 status to either the riflemen squad or zone trooper squad 
@@ -3212,13 +3229,19 @@ function GarrisonedInHammerheadEnd(self)
 	end
 	-- if banner carrier has higher rank than members, promote members to rank of banner carrier 
 	local firstMember = squadMemberTable[next(squad.squadMembers)]
+	local memberLevel = GetRankOfObject(firstMember.stringRef) 
 	local squadLevel = GetRankOfObject(squad.stringRef) 
+	-- i need to reimplement the 2 way experience check again (isLeader) - Banner carriers dont inherit the veterancy when spawned inside of hammerheads 
+	
+	WriteToFile("leader rank.txt",  "Current leader rank: " .. tostring(GetRankOfObject(squadMemberTable[squad.squadLeader].stringRef)) .. "\n" .. "squadLevel: " .. tostring(squadLevel) .. "\n" .. "-------------------" .. "\n")
+	
+	-- 0 -> LT (<), if horde members are ranked lower than the squad 
 	if EvaluateCondition("UNIT_COMPARE_RANK", firstMember.stringRef, 0, squadLevel) then
 		-- leader check
 		for objId,_ in squad.squadMembers do
 			-- if desync then its probably because of the prerequisites 
 			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, tostring("GDIZoneTrooperSquadExperienceLevel_" .. squadLevel))
-			squadMemberTable[objId].timesPromotedWithLua = squadMemberTable[objId].timesPromotedWithLua + 1
+			squadMemberTable[objId].timesPromotedWithLua = (squadLevel-memberLevel)
 			-- apply xp modifier to this unit 
 			ApplyXPModifier(squadMemberTable[objId]) 
 		end
@@ -3380,7 +3403,7 @@ end
 function OnMemberDestroyed_R24(self)
 	local objId,squadMember = GetSquadMemberAttributes(self)
 	-- was the unit moving to rally point while it was destroyed?
-	print("member killed!")
+	--print("member killed!")
 	--if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squadMember.stringRef , 90) then
 	if ObjectTestModelCondition(self, "USER_59") then
 		 --print("horde member has been killed while being built!")
