@@ -3188,7 +3188,6 @@ function GarrisonedInHammerhead(self)
 	if not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then ObjectGrantUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade") end
 	HordeBroadcastEventToMembers(self, "SquadBannerEvent", tostring(objId))
 	local squadLeader = squadMemberTable[squad.squadLeader]
-	print(tostring(squadLeader))
 	GrantUpgradesToLeader(squad)
 	-- this enables the fake weapon for the regular members
 	for squadMemberId,_ in squad.squadMembers do
