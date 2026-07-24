@@ -848,7 +848,12 @@
 		</ObjectStatusEvent>	
 		<ObjectStatusEvent Name="OnEMPEnd">
 			<Conditions>-DO_NOT_PICK_ME</Conditions>
-		</ObjectStatusEvent>					
+		</ObjectStatusEvent>	
+		
+		<!-- triggered when a unit garrisoned within a hammerhead has its weapon upgraded -->
+		 <ObjectStatusEvent Name="OnWeaponUpgradedHH">
+			<Conditions>+WEAPON_UPGRADED_01</Conditions>
+		</ObjectStatusEvent>	
 
 		
 		<!-- Used by heroes and transports with heroes -->
@@ -1384,6 +1389,7 @@
 		<EventHandler EventName="SquadBannerEvent"	ScriptFunctionName="GetSquadLeader" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
 		<EventHandler EventName="KillLeader" ScriptFunctionName="kill" DebugSingleStep="false"/>
+		<EventHandler EventName="OnWeaponUpgradedHH"	ScriptFunctionName="SquadHasBeenUpgraded" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">

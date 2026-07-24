@@ -3076,10 +3076,10 @@ end
 -- this defines squad sizes and if a squad has a hammerhead garrison banner carrier.
 squadSizeTable = {
 	-- vGDI
-	["5D5E5931"] = {size = 4}, -- GDIZoneTrooperSquad
-	["9096966E"] = {size = 6}, -- GDIRifleSoldierSquad
-	["42896060"] = {size = 4}, -- GDIGrenadeSoldierSquad
-	["EF1252DB"] = {size = 2} -- GDIMissileSoldierSquad
+	["5D5E5931"] = {size = 4, setRider = true}, -- GDIZoneTrooperSquad
+	["9096966E"] = {size = 6, setRider = true}, -- GDIRifleSoldierSquad
+	["42896060"] = {size = 4, setRider = false}, -- GDIGrenadeSoldierSquad
+	["EF1252DB"] = {size = 2, setRider = false} -- GDIMissileSoldierSquad
 }
 
 -- if a unit has a function that hides subobjects oncreated, add it here.
@@ -3164,17 +3164,17 @@ end
 hasCheckedForPassengers = false
 
 function CheckForPassengers(self)
-	if not getglobal(hasCheckedForPassengers) then
-		local stringRef = SetObjectReference(self)
-		if EvaluateCondition("UNIT_HAS_PASSENGER", stringRef) then
-			--print("has a passenger")
-			for objId,_ in squadTables do
-				-- if has RIDER4 and not the upgrade 
-				local squad = squadTables[objId]
-				if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 44) and not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then
-					GarrisonedInHammerhead(squad.selfRef)
-					setglobal(hasCheckedForPassengers, true) 
-				end
+	if getglobal(hasCheckedForPassengers) then return end
+	local stringRef = SetObjectReference(self)
+	if EvaluateCondition("UNIT_HAS_PASSENGER", stringRef) then
+		--print("has a passenger")
+		for objId,_ in squadTables do
+			-- if has RIDER4 and not the upgrade 
+			local squad = squadTables[objId]
+			if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 44) and not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then
+				GarrisonedInHammerhead(squad.selfRef)
+				setglobal(hasCheckedForPassengers, true) 
+				break
 			end
 		end
 	end
@@ -3188,13 +3188,29 @@ function GarrisonedInHammerhead(self)
 	if not EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then ObjectGrantUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade") end
 	HordeBroadcastEventToMembers(self, "SquadBannerEvent", tostring(objId))
 	local squadLeader = squadMemberTable[squad.squadLeader]
+	print(tostring(squadLeader))
 	GrantUpgradesToLeader(squad)
+	-- this enables the fake weapon for the regular members
+	for squadMemberId,_ in squad.squadMembers do
+		-- grant RIDER1 status to either the riflemen squad or zone trooper squad 
+		if squad.setRider then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 41, 1)
+		end
+	end
 end
 
 -- removes squad leader and applies its rankups if any to the horde members.
 function GarrisonedInHammerheadEnd(self)
 	--print("the squad has exited the hammerhead!")
+	-- this disables the fake weapon for the regular members
 	local _,squad = GetSquadAttributes(self)
+	-- instead of status i could just use upgrades instead
+	for squadMemberId,_ in squad.squadMembers do
+		-- remove RIDER1 status to either the riflemen squad or zone trooper squad 
+		if squad.setRider then
+			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 41, 0)
+		end
+	end
 	-- if banner carrier has higher rank than members, promote members to rank of banner carrier 
 	local firstMember = squadMemberTable[next(squad.squadMembers)]
 	local squadLevel = GetRankOfObject(squad.stringRef) 
@@ -3236,7 +3252,7 @@ function GetSquadAttributes(self)
 		lastPromotedRank = 1,
 		lastPromotedFrame = 0,
 		unitsLostOnSpawn = {}, -- units lost while coming out of the barracks
-		hasBannerCarrier = false
+		setRider = false
 	}
 	return objId, squadTables[objId]
 end
@@ -3288,6 +3304,12 @@ function OnSquadExitRax_R24(self)
 	squad.spawnedSize = squadSize
 
 	if isSquadExploit(squad) then return end
+
+	-- if the squad is a zone trooper squad, apply setRider to true to enable a weapon upgrade
+	if squadData.setRider then
+		squad.setRider = true
+		print("This unit can receive a weapon upgrade inside the hammerhead")
+	end
 	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
 end
 
@@ -3323,37 +3345,29 @@ function KilledOutOfBarracks(self, other)
 end
 
 -- grants as many upgrades to the squadLeader as there are squadMembers (obtained by getTableSize) for enabling weapons
+-- if removeUpgrade is true - check if the default upgrade is true and remove it 
 function GrantUpgradesToLeader(squad)
 	local squadSize = getTableSize(squad.squadMembers)
-	local squadLeader = squadMemberTable[squad.squadLeader]
+	local squadLeader = squadMemberTable[squad.squadLeader] or nil
+	--if removeUpgrade then print(tostring(squadLeader)) end
 	if squadLeader == nil then return end
 	-- WriteToFile("data.txt",  "squadSize: " .. tostring(squadSize) .. " squadLeader: " .. tostring(squadLeader) .. "\n")
-	-- 1 member alive
-	if squadSize == 1 then
-		--print("applying squad size 1 upgrade!")
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
-		-- 2 members alive
-	elseif squadSize == 2 then
-		--print("applying squad size 2 upgrades!")
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
-		-- 3 members alive
-	elseif squadSize == 3 then
-		--print("applying squad size 3 upgrades!")
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember3") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember3") end
-		-- 4 members alive
-	elseif squadSize == 4 then
-		--print("applying squad size 4 upgrades!")
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember1") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember1") end
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember2") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember2") end
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember3") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember3") end
-		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMember4") then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMember4") end
-	end
 
-	-- the squad leader by default should not be able to shoot 
-	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadLeader.stringRef, 5, 1)
+	-- check if WEAPON_UPGRADED_01 is current status to assign the appropriate upgrade (this is for AP Ammo and Scanner Packs)
+	local upgradeString = EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef , 124) and "Upgrade_SquadMemberEnhanced" or "Upgrade_SquadMember"
+	--print(upgradeString)
+	for i = 1, squadSize, 1 do
+		local upgradeString = upgradeString .. i
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, upgradeString) then ObjectGrantUpgrade(squadLeader.selfRef, upgradeString) end
+		--print("applying upgrade: " .. upgradeString)
+	end
+end
+
+-- triggered by +RIDER4 +WEAPON_UPGRADED_01, removes the Upgrade_SquadMember upgrades from members of squad, event fires on banner carrier
+function SquadHasBeenUpgraded(self)
+	--print("unit upgraded")
+	local _,squadMember = GetSquadMemberAttributes(self)
+	GrantUpgradesToLeader(squadTables[squadMember.squadObject])
 end
 
 function OnSquadDestroyed_R24(self)

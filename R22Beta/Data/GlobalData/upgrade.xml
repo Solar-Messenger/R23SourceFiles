@@ -51,27 +51,27 @@
 
 	<!-- weapon upgrade (if they have them, the upgrades above should be removed before applying these ones) -->
 
-	<UpgradeTemplate id="Upgrade_SquadMember1Enhanced"
+	<UpgradeTemplate id="Upgrade_SquadMemberEnhanced1"
 		Type="OBJECT"
 	/>
 
-	<UpgradeTemplate id="Upgrade_SquadMember2Enhanced"
+	<UpgradeTemplate id="Upgrade_SquadMemberEnhanced2"
 		Type="OBJECT"
 	/>
 
-	<UpgradeTemplate id="Upgrade_SquadMember3Enhanced"
+	<UpgradeTemplate id="Upgrade_SquadMemberEnhanced3"
 		Type="OBJECT"
 	/>
 
-	<UpgradeTemplate id="Upgrade_SquadMember4Enhanced"
+	<UpgradeTemplate id="Upgrade_SquadMemberEnhanced4"
 		Type="OBJECT"
 	/>
 
-	<UpgradeTemplate id="Upgrade_SquadMember5Enhanced"
+	<UpgradeTemplate id="Upgrade_SquadMemberEnhanced5"
 		Type="OBJECT"
 	/>
 
-	<UpgradeTemplate id="Upgrade_SquadMember6Enhanced"
+	<UpgradeTemplate id="Upgrade_SquadMemberEnhanced6"
 		Type="OBJECT"
 	/>
 

@@ -911,7 +911,7 @@
 				Texture2_NumFrames="1"
 				Texture2_FrameRate="1"
 				LaserWidth="50"
-				WeaponSlotID="-1"
+				WeaponSlotID="1"
 				LaserStateID="0"
 				UseDistortionShader="True">
 				<FXShader
@@ -1106,28 +1106,49 @@
 						Upgrade=""
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
+					<!-- grey area, not such which takes precedence if upgrade and status are true at same time-->
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="ZoneTrooperMachineGunFake"
-						Upgrade="Upgrade_SquadMember1"
-						ObjectStatus=""
-						IsPlayerUpgradePermanent="False" />
-						<!--
-					<Weapon
-						Ordering="PRIMARY_WEAPON"
-						Template="ZoneTrooperMachineGun1"
+						Template="ZoneTrooperMachineGun1Enhanced"
 						Upgrade=""
 						ObjectStatus="WEAPON_UPGRADED_01"
-						IsPlayerUpgradePermanent="False" />	-->
+						IsPlayerUpgradePermanent="False" />	
+					<!-- RIDERLESS status given by RGA -->
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="ZoneTrooperMachineGun_Accelerated"
 						ObjectStatus="RIDERLESS" />
-						<!-- MORE RANGE I GUESS -->
+
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="ZoneTrooperMachineGun_Accelerated1"
 						ObjectStatus="WEAPON_UPGRADED_01 RIDERLESS" />
+
+					<!-- RIDER1 is enabled when garrisoned in hammerheads -->
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperMachineGunFake"
+						Upgrade=""
+						ObjectStatus="RIDER1"
+						IsPlayerUpgradePermanent="False" />
+
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperMachineGunFakeEnhanced"
+						Upgrade=""
+						ObjectStatus="RIDER1 WEAPON_UPGRADED_01"
+						IsPlayerUpgradePermanent="False" />	
+					<!-- RIDERLESS status given by RGA -->
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperMachineGunFake"
+						ObjectStatus="RIDER1 RIDERLESS" />
+
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperMachineGunFakeEnhanced"
+						ObjectStatus="RIDER1 WEAPON_UPGRADED_01 RIDERLESS" />
+
 				</WeaponSlotHardpoint>
 			</WeaponSetUpdate>
 
@@ -2311,6 +2332,14 @@
 						Upgrade="Upgrade_SquadMember1"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
+					<!-- scanner packs-->
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperMachineGun1Enhanced"
+						Upgrade="Upgrade_SquadMemberEnhanced1"
+						ObjectStatus=""
+						IsPlayerUpgradePermanent="False" />
+					<!-- handle attributemodifier upgrade for RGA in Lua-->
 					<TurretSettings 
 						TurretTurnRate="180" 
 						MinIdleScanTime="1.0s"
@@ -2338,6 +2367,14 @@
 						Upgrade="Upgrade_SquadMember2"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
+					<!-- scanner packs-->
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperMachineGun2Enhanced"
+						Upgrade="Upgrade_SquadMemberEnhanced2"
+						ObjectStatus=""
+						IsPlayerUpgradePermanent="False" />
+					<!-- handle attributemodifier upgrade for RGA in Lua-->
 					<TurretSettings 
 						TurretTurnRate="180" 
 						MinIdleScanTime="1.0s"
@@ -2365,6 +2402,14 @@
 						Upgrade="Upgrade_SquadMember3"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
+					<!-- scanner packs-->
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperMachineGun3Enhanced"
+						Upgrade="Upgrade_SquadMemberEnhanced3"
+						ObjectStatus=""
+						IsPlayerUpgradePermanent="False" />
+					<!-- handle attributemodifier upgrade for RGA in Lua-->
 					<TurretSettings 
 						TurretTurnRate="180" 
 						MinIdleScanTime="1.0s"
@@ -2392,6 +2437,14 @@
 						Upgrade="Upgrade_SquadMember4"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
+					<!-- scanner packs-->
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperMachineGun4Enhanced"
+						Upgrade="Upgrade_SquadMemberEnhanced4"
+						ObjectStatus=""
+						IsPlayerUpgradePermanent="False" />
+					<!-- handle attributemodifier upgrade for RGA in Lua-->
 					<TurretSettings 
 						TurretTurnRate="180" 
 						MinIdleScanTime="1.0s"

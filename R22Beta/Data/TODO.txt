@@ -10,10 +10,10 @@ TODO:
 - Make it so units affected by rage generator cannot be controlled by players throughout the duration.
 - Tweak stasis shield so units on the edge are paralyzed.
 - Fix Traveler Engine mesh on Devastator Warships when inside Ion Storms.
-- Fix an issue with MCVs causing them to ignore move commands while packing up.
 
 Done
 - Implemented V35 vision fix for all GDI factions
 - Fixed squad veterancy issue for Mechapedes, Sniper Teams, Black Diciples, Confessor Leaders.
 - Fixed walking step sounds on a few units.
 - Implement Carryall vision fix for all Nod factions
+- Fix an issue with MCVs causing them to ignore move commands while packing up.
