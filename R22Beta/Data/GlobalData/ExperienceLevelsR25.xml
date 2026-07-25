@@ -228,4 +228,117 @@
 			MaxSelectedUnits="40"/>
 	</ExperienceLevelTemplate>
 
+	<!-- rifles -->
+
+	<ExperienceLevelTemplate
+		id="GDIRifleSoldierSquadExperienceLevel_1"
+		RequiredExperience="1"
+		ExperienceAward="50"
+		Rank="1">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Target>GDIRifleSoldierSquad_Veteran</Target>
+		<Target>GDIRifleSoldierSquad</Target>
+		<Target>GDIRifleSoldier</Target>
+		<Target>GDIRifleSoldierGarrisoned</Target>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="GDIRifleSoldierSquadExperienceLevel_2"
+		Prerequisite="GDIRifleSoldierSquadExperienceLevel_1"
+		RequiredExperience="900"
+		ExperienceAward="66"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="2">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_01" />
+		<Target>GDIRifleSoldierSquad_Veteran</Target>
+		<Target>GDIRifleSoldierSquad</Target>
+		<Target>GDIRifleSoldier</Target>
+		<Target>GDIRifleSoldierGarrisoned</Target>
+		<AttributeModifier>Unit_Veteran</AttributeModifier>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="GDIRifleSoldierSquadExperienceLevel_3"
+		Prerequisite="GDIRifleSoldierSquadExperienceLevel_2"
+		RequiredExperience="1800"
+		ExperienceAward="84"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="3">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_02" />
+		<Target>GDIRifleSoldierSquad_Veteran</Target>
+		<Target>GDIRifleSoldierSquad</Target>
+		<Target>GDIRifleSoldier</Target>
+		<Target>GDIRifleSoldierGarrisoned</Target>
+		<AttributeModifier>Unit_Elite</AttributeModifier>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="GDIRifleSoldierSquadExperienceLevel_4"
+		Prerequisite="GDIRifleSoldierSquadExperienceLevel_3"
+		RequiredExperience="2700"
+		ExperienceAward="100"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="4">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_03"/>
+		<Target>GDIRifleSoldierSquad_Veteran</Target>
+		<Target>GDIRifleSoldierSquad</Target>
+		<Target>GDIRifleSoldier</Target>
+		<Target>GDIRifleSoldierGarrisoned</Target>
+		<AttributeModifier>Unit_Heroic</AttributeModifier>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+
 </AssetDeclaration>
