@@ -2222,8 +2222,6 @@ function OnUnpackingDisableCommandsEnd(self)
 	ObjectForbidPlayerCommands( self, false )
 end
 
--- FREE INF FIX R24 --
-
 function CancelProduction(self)
 	print("destroyed structure")
 	ObjectCreateAndFireTempWeapon(self, "KillUnitsComingOut")
@@ -3349,7 +3347,7 @@ function OnSquadExitRax_R24(self)
 
 	if isSquadExploit(squad) then return end
 
-	-- if the squad is a zone trooper squad, apply setRider to true to enable a weapon upgrade
+	-- if the squad can receive a weapon upgrade, apply setRider to true to enable it
 	if squadData.setRider then
 		squad.setRider = true
 		print("This unit can receive a weapon upgrade inside the hammerhead")

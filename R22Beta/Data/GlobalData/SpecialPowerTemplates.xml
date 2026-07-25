@@ -2,6 +2,14 @@
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
 	<SpecialPowerTemplate
+		id="SpecialPower_GrantUnpackUpgrade"
+		TargetType="NONE" >
+		<GameDependency>
+			<ForbiddenUpgrade>Upgrade_MCVLocomotorUpgrade</ForbiddenUpgrade>
+		</GameDependency>
+	</SpecialPowerTemplate>
+
+	<SpecialPowerTemplate
 		id="NODSignatureGenerator"
 		ReloadTime="60s"
 		TargetType="NONE"
