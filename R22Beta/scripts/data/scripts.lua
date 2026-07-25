@@ -3335,7 +3335,7 @@ end
 
 -- When squad appears at rax
 function OnSquadExitRax_R24(self)	
-	--print("squad has finished building")
+	print("squad has finished building")
 	local objId,squad = GetSquadAttributes(self)
 	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
 	-- squad size is 4 here. 

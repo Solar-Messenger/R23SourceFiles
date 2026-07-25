@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset">
+
+	<!-- temp model state added for units that were acquired from sold off, destroyed structures -->
+
+	<ObjectCreationList
+		id="OCL_GenericGDIBuildingDestruction">
+		<CreateObject
+			Options="IGNORE_ALL_OBJECTS REQUIRES_LIVE_PLAYER"
+			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s"
+			MinHealth="0.3"
+			MaxHealth="0.75"
+			MinHordeDensity="30"
+			MaxHordeDensity="90">
+			<CreateObject>GDIRifleSoldierSquad</CreateObject>
+		</CreateObject>
+	</ObjectCreationList>
+	<ObjectCreationList
+		id="OCL_GenericGDIBuildingSuicide">
+		<CreateObject
+			Options="IGNORE_ALL_OBJECTS"
+			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s">
+			<CreateObject>GDIRifleSoldierSquad</CreateObject>
+		</CreateObject>
+	</ObjectCreationList>
+
+</AssetDeclaration>
