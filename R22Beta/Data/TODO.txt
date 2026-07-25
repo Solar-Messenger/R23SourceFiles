@@ -11,6 +11,7 @@ TODO:
 - Tweak stasis shield so units on the edge are paralyzed.
 - Fix Traveler Engine mesh on Devastator Warships when inside Ion Storms.
 - Fix an issue causing Tiberium Vibration Scan, Power Signature Scan to be disabled when another support power is used, t2 structure is powered down or sold.
+- Juggernaut/Behemoth turret turn speed increased.
 
 Done
 - Implemented V35 vision fix for all GDI factions

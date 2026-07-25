@@ -4590,13 +4590,41 @@
 						Template="ZoneTrooperSquadRangefinder"
 						Upgrade=""
 						ObjectStatus=""
-						IsPlayerUpgradePermanent="False" />
+						IsPlayerUpgradePermanent="False" />		
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="ZoneTrooperSquadRangefinder1"
 						Upgrade=""
 						ObjectStatus="WEAPON_UPGRADED_01"
-						IsPlayerUpgradePermanent="False" />								
+						IsPlayerUpgradePermanent="False" />				
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperSquadRangefinder"
+						ObjectStatus="RIDERLESS" />
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperSquadRangefinder1"
+						ObjectStatus="WEAPON_UPGRADED_01 RIDERLESS" />
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperSquadRangefinder"
+						Upgrade=""
+						ObjectStatus="RIDER1"
+						IsPlayerUpgradePermanent="False" />
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperSquadRangefinder1"
+						Upgrade=""
+						ObjectStatus="RIDER1 WEAPON_UPGRADED_01"
+						IsPlayerUpgradePermanent="False" />	
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperSquadRangefinder"
+						ObjectStatus="RIDER1 RIDERLESS" />
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="ZoneTrooperSquadRangefinder1"
+						ObjectStatus="RIDER1 WEAPON_UPGRADED_01 RIDERLESS" />
 				</WeaponSlotHardpoint>
 			</WeaponSetUpdate>
 			
@@ -4658,101 +4686,21 @@
 				KillWhenRestingOnGround="False"
 				OrientToFlightPath="False"
 				IgnoreTerrainHeight="False" />
+			<!-- toggle on-off with upgrade -->
 			<HordeContain
-				id="D8175399"
-				ContainMax="0"
-				EnterSound=""
-				ExitSound=""
-				DamagePercentToUnits="0%"
-				PassengersTestCollisionHeight="-1000"
-				NumberOfExitPaths="1"
-				DoorOpenTime="1"
-				ObjectStatusOfContained=""
-				ModifierRequiredTime="100"
-				KillIfEmptyTime="0s"
-				ModelConditionsWhenNotEmpty=""
-				PassengersInTurret="False"
-				AllowOwnPlayerInsideOverride="False"
-				AllowAlliesInside="True"
-				AllowEnemiesInside="True"
-				AllowNeutralInside="True"
-				ShowPips="False"
-				CollidePickup="True"
-				EjectPassengersOnDeath="True"
-				KillPassengersOnDeath="False"
-				HasObjectStatusOfContainedEntry="True"
-				Enabled="True"
-				Slots="4"
-				ExitBone=""
-				ExitPitchRate="0"
-				HealthRegenPercentPerSec="0"
-				ExitDelay="0"
-				TypeOneForWeaponSet=""
-				TypeTwoForWeaponSet=""
-				TypeOneForWeaponState=""
-				TypeTwoForWeaponState=""
-				TypeThreeForWeaponState=""
-				GrabWeapon=""
-				ConditionForEntry="INVALID"
-				ThrowOutPassengersDelay="0"
-				ThrowOutPassengersLandingWarhead=""
-				EnterFadeTime="0"
-				ExitFadeTime="0"
-				ReleaseSnappyness="0.7"
-				ScatterNearbyOnExit="True"
-				OrientLikeContainerOnExit="False"
-				DestroyRidersWhoAreNotFreeToExit="False"
-				ForceOrientationContainer="True"
-				CanGrabStructure="False"
-				FireGrabWeaponOnVictim="True"
-				ShouldThrowOutPassengers="False"
-				FadePassengerOnEnter="False"
-				FadePassengerOnExit="False"
-				FadeReverse="False"
-				ExtendedExitContainerChecks="False"
-				Formation="MAIN"
-				AlternateFormation=""
-				ForcedLocomotorSet="NORMAL"
-				MeleeAttackLeashDistance="60"
-				GeometryFrontAngleRadians="0"
-				EvaEventLastMemberDeath=""
+				id="ModuleTag_HordeContain"
 				FrontAngle="4.7123"
-				FlankedDelaySeconds="2"
-				FlankedDurationSeconds="5"
-				MinimumHordeSize="0"
-				BackupMinDelayTime="0s"
-				BackupMaxDelayTime="0s"
-				BackupMinDistance="0"
-				BackupMaxDistance="0"
-				BackupPercentage="0"
-				RadiusCowerOverride="0"
-				VisionOverrideRear="0"
-				VisionOverrideSide="0"
-				ForbiddenCoverStatus=""
-				UseSlowHordeMovement="True"
-				SpawnBannerCarrierImmediately="False"
-				BannerCarrierByUpgradeOnly="False"
-				DestroyHordeOnBannerDeath="False"
-				ExitBannerCarrierWithHorde="False"
-				FollowTheLeader="False">
+				FlankedDelaySeconds="2.0"
+				ShowPips="false"
+				Formation="MAIN"
+				Slots="4"
+				ObjectStatusOfContained=""
+				BannerCarrierByUpgradeOnly="true"
+				ConditionForEntry="INVALID">
 				<PassengerFilter
 					Rule="NONE"
-					Relationship=""
-					Alignment="NONE"
-					Include="INFANTRY"
-					Exclude=""
-					StatusBitFlags=""
-					RejectStatusBitFlags=""
-					AcceptModelCondition=""
-					RejectModelCondition="" />
-				<DieMuxData
-					ExemptStatus=""
-					RequiredStatus=""
-					DamageAmountRequired="-1"
-					MinKillerAngle="0.9999998d"
-					MaxKillerAngle="-0.9999998d"
-					DeathTypes=""
-					DeathTypesForbidden="" />
+					Include="INFANTRY" />
+				<DieMuxData />
 				<InitialPayload
 					Name="GDIZoneTrooper"
 					Count="4" />
@@ -4763,26 +4711,26 @@
 					UnitType="GDIZoneTrooper">
 					<Position
 						X="-10"
-						Y="-20"
-						LeaderRank="-1"
-						LeaderIndex="0" />
+						Y="-20" />
 					<Position
 						X="10"
-						Y="-10"
-						LeaderRank="-1"
-						LeaderIndex="0" />
+						Y="-10" />
 					<Position
 						X="10"
-						Y="10"
-						LeaderRank="-1"
-						LeaderIndex="0" />
+						Y="10" />
 					<Position
 						X="-10"
-						Y="20"
-						LeaderRank="-1"
-						LeaderIndex="0" />
+						Y="20" />
 				</RankInfo>
 				<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
+				<BannerCarrierPosition>
+					<UnitType>GDIZoneTrooperGarrisoned</UnitType>
+					<Pos
+						x="0"
+						y="0" /> 
+				</BannerCarrierPosition>
+				<!-- for apcs etc that cant fire over buildings-->
+				<BannerCarriersAllowed>GDIZoneTrooperGarrisoned</BannerCarriersAllowed>
 			</HordeContain>
 			<ProductionUpdate
 				id="24F54748"
@@ -5493,36 +5441,14 @@
 		</Behaviors>
 		<AI>
 			<HordeAIUpdate
-				id="3D82CD5B"
-				AttackPriority=""
+				id="ModuleTag_HordeAIUpdate"
 				AutoAcquireEnemiesWhenIdle="YES ATTACK_BUILDINGS"
-				StopChaseDistance="500"
-				HoldGroundCloseRangeDistance="0"
-				AILuaEventsList="GenericSquadFunctions_R24"
-				MinCowerTime="3s"
-				MaxCowerTime="5s"
-				RampageTime="0s"
-				BurningDeathTime="0s"
-				TimeToEjectPassengersOnRampage="0"
-				ComboLocomotorSet="NORMAL"
-				ComboLocoAttackDistance="80"
-				IdleTargetTime="0s"
-				MaxCombineChildren="1"
-				SpawnOffsetRadius="0"
-				StandGround="False"
-				CanAttackWhileContained="True"
-				RampageRequiresAflame="False"
-				FadeOnPortals="False">
+				MaxCowerTime="5.0s"
+				MinCowerTime="3.0s"
+				CanAttackWhileContained="true"
+				AILuaEventsList="GenericSquadFunctions_R24">
 				<UnitAITargetChooserData
-					IdleScanDelay="0.8s"
-					ReacquireDelay="5s"
-					StartupDelay="0s"
-					SympathyRange="100"
-					CheckVisionRange="False"
-					CanPickDynamicTargets="True"
-					RotateToTargetWhenAiming="True"
-					CanAutoAcquireNonAutoAcquirable="False"
-					TargetingCompareList="DefaultTargetingCompareList" />
+					SympathyRange="100.0" />
 			</HordeAIUpdate>
 		</AI>
 		<Body>
