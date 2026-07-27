@@ -64,6 +64,13 @@
 			</TruckDraw>
 		</Draws>
 		<Behaviors>
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 
 
 			<AttributeModifierPoolUpdate
@@ -213,7 +220,7 @@
 			<AIUpdate
 				id="ModuleTag_AI"
 				AutoAcquireEnemiesWhenIdle="NO"
-				AILuaEventsList=""></AIUpdate>
+				AILuaEventsList="SurveyorFunctions_R24"></AIUpdate>
 		</AI>
 		<Body>
 			<ActiveBody

@@ -46,7 +46,7 @@
 			<AIUpdate
 				id="ModuleTag_AI"
 				AILuaEventsList="PhaseDummyFunctions_R24"
-				AutoAcquireEnemiesWhenIdle="YES">
+				AutoAcquireEnemiesWhenIdle="NO">
 				<UnitAITargetChooserData />
 			</AIUpdate>
 		</AI>

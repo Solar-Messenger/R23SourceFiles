@@ -468,6 +468,8 @@
 			RejectStatusBitFlags=""
 			AcceptModelCondition=""
 			RejectModelCondition="">
+			<!-- keep this filter in sync with the SpecialObjectFilter of
+			     AlienPhaseFieldWeapon in WeaponR25.xml -->
 			<IncludeThing>AlienMCV</IncludeThing>
 			<IncludeThing>AlienMCVUnpacking</IncludeThing>
 			<IncludeThing>Reaper17MCV</IncludeThing>

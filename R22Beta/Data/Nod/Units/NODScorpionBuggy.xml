@@ -562,6 +562,13 @@
 			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 			<!-- random speed -->
 
 			<AttributeModifierPoolUpdate

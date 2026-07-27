@@ -469,6 +469,13 @@
 			</LaserDraw>
 		</Draws>
 		<Behaviors>
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 			<!--
 			<PassiveAreaEffectBehavior
 				id="D29AAF86"
