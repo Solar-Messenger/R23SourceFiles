@@ -3,9 +3,8 @@ TODO:
 - Implement Garrisoned banner carrier for all ZOCOM units 
 - Implement Garrisoned banner carrier for all SteelTalons units 
 - Implement the free infantry exploit fix to all squads in the game
-- Reduce Avatar hp to 9500 to speed up repair speed, compensate via armor buffs. 
-- Tweak stasis shield so units on the edge are paralyzed.
 - Fix an issue causing Tiberium Vibration Scan, Power Signature Scan to be disabled when another support power is used, t2 structure is powered down or sold.
+- 
 
 Done
 - Implemented V35 vision fix for all GDI factions
@@ -20,6 +19,8 @@ Done
 - Fix Traveler Engine mesh on Devastator Warships when inside Ion Storms.
 - Fixed Rage Generator model state extended beyond the intended 6 seconds on units affected by EMP -> ensure every unit has the event list for being raged besides aircraft.
 - Make it so units affected by rage generator cannot be controlled by players throughout the duration. -> ensure every unit has the event list for being raged besides aircraft.
+- Reduce Avatar hp to 9500 to speed up repair speed, compensate via armor buffs. 
+- Tweak stasis shield so units on the edge are paralyzed.
 
 Probably too much of a nerf for Reaper-17
 - Make tripods not spawn with shields when captured back.

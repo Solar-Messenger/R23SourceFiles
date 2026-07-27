@@ -4864,6 +4864,7 @@
 		RadiusDamageAffects="NOT_SIMILAR ALLIES ENEMIES NEUTRALS"
 	>
 		<Nuggets>
+			<!-- this is a workaround for the wormhole -->
 			<AttributeModifierNugget
 				Radius="100"
 				PartitionFilterTestType="SPHERE"
@@ -4882,7 +4883,7 @@
 				</SpecialObjectFilter>
 			</AttributeModifierNugget>
 			<TintObjectsNugget
-				Radius="100"
+				Radius="115"
 				PreColorTime="0s"
 				SustainedColorTime="1.25s"
 				ForbiddenTargetObjectStatus="USER_POWERED_DOWN"
@@ -4891,6 +4892,10 @@
 				Frequency="0"
 				Amplitude="0">
 				<Color R="0.2" G="-0.0" B="0.5" />
+				<SpecialObjectFilter
+					Rule="ANY"
+					Include="VEHICLE HUGE_VEHICLE INFANTRY STRUCTURE AIRCRAFT TIBERIUM MINE"
+					StatusBitFlags="USER_PARALYZED" />
 			</TintObjectsNugget>
 		</Nuggets>
 	</WeaponTemplate>
@@ -4904,7 +4909,7 @@
 	>
 		<Nuggets>
 			<ParalyzeNugget
-				Radius="100"
+				Radius="115"
 				DurationSeconds="22.5s"
 				ParalyzeType="USER_PARALYZE">
 				<SpecialObjectFilter
@@ -4916,20 +4921,6 @@
 					<ExcludeThing>AlienCrystalShield</ExcludeThing>
 				</SpecialObjectFilter>
 			</ParalyzeNugget>
-
-			<AttributeModifierNugget
-				Radius="100"
-				PartitionFilterTestType="SPHERE"
-				AttributeModifierName="AttributeModifier_AlienCrystalShield">
-				<SpecialObjectFilter
-					Rule="ANY"
-					Include="VEHICLE HUGE_VEHICLE INFANTRY STRUCTURE AIRCRAFT TIBERIUM MINE">
-					<IncludeThing>IonStorm</IncludeThing>
-					<ExcludeThing>TiberiumFieldSeeded</ExcludeThing>
-					<ExcludeThing>AlienWormhole</ExcludeThing>
-					<ExcludeThing>AlienCrystalShield</ExcludeThing>
-				</SpecialObjectFilter>
-			</AttributeModifierNugget>
 		</Nuggets>
 	</WeaponTemplate>
 
