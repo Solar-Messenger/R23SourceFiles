@@ -92,7 +92,7 @@
 			DamageFX="VehicleDamageFX"
 			Conditions="" />
 		<LocomotorSet
-			Speed="30"
+			Speed="40"
 			Condition="TAXIING"
 			Locomotor="BasicHelicopterTaxiLocomotor" />
 		<LocomotorSet

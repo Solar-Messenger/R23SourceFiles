@@ -96,7 +96,7 @@
 			DamageFX="VehicleDamageFX"
 			Conditions="PLAYER_UPGRADE" />
 		<LocomotorSet
-			Speed="30"
+			Speed="40"
 			Condition="TAXIING"
 			Locomotor="BasicHelicopterTaxiLocomotor" />
 		<LocomotorSet
@@ -2076,5 +2076,3 @@
 		<DisplayUpgrade>Upgrade_CeramicArmor</DisplayUpgrade>
 	</GameObject>
 </AssetDeclaration>
-
-
