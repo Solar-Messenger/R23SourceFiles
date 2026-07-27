@@ -193,7 +193,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:AUDEVWARION"
+						Name="W3DContainer:AUDEVWARION2"
 						ExtraMesh="False" />
 					<Texture
 						Original="AUDevWar"
@@ -255,7 +255,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:AUDEVWARION"
+						Name="W3DContainer:AUDEVWARION2"
 						ExtraMesh="False" />
 					<Texture
 						Original="AUDevWar"
@@ -387,7 +387,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:AUDEVWARION"
+						Name="W3DContainer:AUDEVWARION2"
 						ExtraMesh="False" />
 					<ParticleSysBone
 						BoneName="FXFire01"
@@ -446,7 +446,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:AUDEVWARION"
+						Name="W3DContainer:AUDEVWARION2"
 						ExtraMesh="False" />
 					<Texture
 						Original="AUDevWar"
@@ -963,7 +963,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:AUDEVWARION"
+						Name="W3DContainer:AUDEVWARION2"
 						ExtraMesh="False" />
 					<Texture
 						Original="AUDevWar"
@@ -976,7 +976,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:AUDEVWARION"
+						Name="W3DContainer:AUDEVWARION2"
 						ExtraMesh="False" />
 				</ModelConditionState>
 				<ModelConditionState
@@ -1665,4 +1665,3 @@
 		<DisplayUpgrade>Upgrade_AlienReactorForcefieldGenerator</DisplayUpgrade>
 	</GameObject>
 </AssetDeclaration>
-

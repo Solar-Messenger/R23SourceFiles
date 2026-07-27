@@ -569,27 +569,7 @@
                         ConditionsYes="FORMATION_PREVIEW">
             </AnimationState>
 			</ScriptedModelDraw>
-           <!-- Forcefield Generator -->
-			<ScriptedModelDraw
-				id="ModuleTag_DrawForcefield"
-				OkToChangeModelColor="true">
-				<ModelConditionState
-					ParseCondStateType="PARSE_DEFAULT"></ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_1">
-					<Model
-						Name="W3DContainer:FXShldWarship" />
-					<ShadowInfo
-						Type="ADDITIVE_DECAL"
-						SizeX="100"
-						SizeY="60"
-						OverrideLODVisibility="true"
-						MaxHeight="300"
-						UseHouseColor="true"
-						Texture="AUDronShipDecalIdle" />
-				</ModelConditionState>
-			</ScriptedModelDraw>
+
 			<ScriptedModelDraw		
 				id="ModuleTag_DrawTravelerEnginesFX"
 				AttachToBoneInAnotherModule="roottransform">
@@ -685,7 +665,7 @@
 					ConditionsYes="MOVING USER_5">
 					<Script>
 						CurDrawableHideSubObject("TravEng01")
-						CurDrawableHideSubObject("TravEng02")				
+						CurDrawableHideSubObject("TravEng02")					
 					</Script>	
 				</AnimationState>
 
