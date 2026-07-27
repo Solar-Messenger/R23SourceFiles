@@ -1960,7 +1960,7 @@
 		  FireVeteranFX="FX_AlienAutoCannonFireHeroic"
 		  ClipSize="5"
 		  CanFireWhileMoving="true"
-		  AcceptableAimDelta="25d"
+		  AcceptableAimDelta="15d"
 		  RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
 		  AntiMask="ANTI_GROUND ANTI_STRUCTURE ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY">
 		<FiringDuration
@@ -2002,7 +2002,7 @@
 		  FireVeteranFX="FX_AlienTibShardFireHeroic"
 		  ClipSize="5"
 		  CanFireWhileMoving="true"
-		  AcceptableAimDelta="25d"	  
+		  AcceptableAimDelta="15d"	  
 		  RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
 		  AntiMask="ANTI_GROUND ANTI_STRUCTURE ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY">
 		<FiringDuration
@@ -2033,7 +2033,7 @@
 		  FireVeteranFX="FX_AlienTibShardFireHeroic"
 		  ClipSize="5"
 		  CanFireWhileMoving="true"
-		  AcceptableAimDelta="25d"	  
+		  AcceptableAimDelta="15d"	  
 		  RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
 		  AntiMask="ANTI_GROUND ANTI_STRUCTURE ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY">
 		<FiringDuration

@@ -4,7 +4,7 @@ TODO:
 - Implement Garrisoned banner carrier for all SteelTalons units 
 - Implement the free infantry exploit fix to all squads in the game
 - Fix an issue causing Tiberium Vibration Scan, Power Signature Scan to be disabled when another support power is used, t2 structure is powered down or sold.
-- 
+- nerf MaximumAimDelta of the gunwalker, shardwalker weapons.
 
 Done
 - Implemented V35 vision fix for all GDI factions
