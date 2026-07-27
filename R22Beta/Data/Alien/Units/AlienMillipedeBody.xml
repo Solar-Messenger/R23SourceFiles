@@ -483,6 +483,14 @@
 				StatusToSet="RIDER_IS_PILOT">
 				<TriggeredBy>Upgrade_MechapedeRazorWeapon</TriggeredBy>
 			</StatusBitsUpgrade>
+
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 			<SubObjectsUpgrade
 				id="ModuleTag_ShowLaserWeapon" 
 				ShowSubObjects="DISINTEGRATOR_MODULE">

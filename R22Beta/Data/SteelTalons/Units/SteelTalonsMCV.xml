@@ -323,6 +323,14 @@
 				<TriggeredBy>Upgrade_MCVNoSpeedUpgrade</TriggeredBy>
 			</AttributeModifierUpgrade>
 
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
+
 		</Behaviors>
 		<AI>
 			<AIUpdate

@@ -379,6 +379,14 @@
 				AttributeModifier="Modifier_MultifunctionUpgradeCenterArmor">
 				<TriggeredBy>Upgrade_MultifunctionUpgradeCenterArmor</TriggeredBy>
 			</AttributeModifierUpgrade>
+
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 			<StancesBehavior
 				id="54CA416E"
 				StanceTemplate="Generic" />
@@ -718,7 +726,7 @@
 				CanAttackWhileContained="False"
 				RampageRequiresAflame="False"
 				FadeOnPortals="False" 
-	AILuaEventsList=""/>
+	AILuaEventsList="Reaper17ExplorerFunctions_R24"/>
 		</AI>
 		<Body>
 			<ActiveBody

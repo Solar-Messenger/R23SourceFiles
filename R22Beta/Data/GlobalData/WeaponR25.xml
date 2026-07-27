@@ -70,8 +70,16 @@
 					Rule="ANY"
 					Exclude="AIRCRAFT INFANTRY"
 					Include="VEHICLE">
-					<ExcludeThing>AlienMCV</ExcludeThing>
-					<ExcludeThing>AlienMCVUnpacking</ExcludeThing>
+					<!-- MCVs are phaseable, including the scrin family unpacking objects for
+					     the few seconds they are on the ground. keep in sync with the
+					     ObjectFilter of SpecialPower_PhaseField in SpecialPowerTemplates.xml -->
+					<IncludeThing>AlienMCV</IncludeThing>
+					<IncludeThing>AlienMCVUnpacking</IncludeThing>
+					<IncludeThing>Reaper17MCV</IncludeThing>
+					<IncludeThing>Reaper17MCVUnpacking</IncludeThing>
+					<IncludeThing>Traveler59MCV</IncludeThing>
+					<IncludeThing>Traveler59MCVUnpacking</IncludeThing>
+					<ExcludeThing>Viceroid</ExcludeThing>
 				</SpecialObjectFilter>
 		</LuaEventNugget>
 		</Nuggets>

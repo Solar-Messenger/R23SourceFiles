@@ -717,10 +717,6 @@
 			<Conditions>-IS_ATTACKING</Conditions>
 		</ObjectStatusEvent>
 
-		<ObjectStatusEvent Name="OnPhaseEnd">
-			<Conditions>-OUT_OF_PHASE</Conditions>
-		</ObjectStatusEvent>
-
 		<ObjectStatusEvent Name="OnFleeOffMap">
 			<Conditions>+FLEE_OFF_MAP</Conditions>
 		</ObjectStatusEvent>
@@ -1147,6 +1143,9 @@
 	</EventList>
 
 	<EventList Name="NodFlameTankFunctions_R24" Inherit="GenericRagedFunctions_103">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUp"	ScriptFunctionName="BackingUp" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpRight"	ScriptFunctionName="BackingUpInitGroup" DebugSingleStep="false"/>
@@ -1170,6 +1169,8 @@
 	</EventList>
 
 	<EventList Name="NodHarvesterFunctions_R24" Inherit="BaseScriptFunctions">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMoney1"	ScriptFunctionName="OnMoney1" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMoney2"	ScriptFunctionName="OnMoney2" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMoney3"	ScriptFunctionName="OnMoney3" DebugSingleStep="false"/>
@@ -1237,6 +1238,8 @@
 	</EventList>
 
 	<EventList Name="GDIHarvesterFunctions_R24" Inherit="BaseScriptFunctions">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMoney1"	ScriptFunctionName="OnMoney1" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMoney2"	ScriptFunctionName="OnMoney2" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMoney3"	ScriptFunctionName="OnMoney3" DebugSingleStep="false"/>
@@ -1304,6 +1307,8 @@
 	<!-- Non-reverse unit Lua event lists (R24) -->
 
 	<EventList Name="AlienHarvesterFunctions_R24" Inherit="BaseScriptFunctions">	
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnHarvestingMoney3"	ScriptFunctionName="UpdateMoney3Frames" DebugSingleStep="false"/>
 		<EventHandler EventName="OnHarvestingMoney3End"	ScriptFunctionName="UpdateMoney3FramesEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnHarvesting"	ScriptFunctionName="OnTiberiumHarvested" DebugSingleStep="false"/>
@@ -1451,6 +1456,9 @@
 	</EventList>
 
 	<EventList Name="Reaper17CustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="Traveler59BlinkMastermindFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1464,6 +1472,9 @@
 	</EventList>
 
 	<EventList Name="Traveler59CustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="ZOCOMCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1501,13 +1512,22 @@
 	</EventList>
 
 	<EventList Name="AlienMechapedeFunctions_R24" Inherit="BaseScriptFunctions">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
 	<EventHandler EventName="OnCreated" ScriptFunctionName="OnAlienMechapedeCreated" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienMillipedeHeadFunctions_R24" Inherit="BaseScriptFunctions">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienCustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
 	</EventList>
 
 	<!-- end of infantry -->
@@ -1720,6 +1740,9 @@
     </EventList>
 
 	<EventList Name="AlienMCVUnpackingEventsList" Inherit="BaseScriptFunctions">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
 		<EventHandler EventName="OnCreated" ScriptFunctionName="onCreatedAlienMCVUnpacking" DebugSingleStep="false"/>
 	</EventList>
 
@@ -2013,6 +2036,9 @@
 	</EventList>
    
 	<EventList Name="NODShadowSquadBeaconFunctions" Inherit="BaseScriptFunctions">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
 		<EventHandler EventName="OnCreated"		ScriptFunctionName="OnNODShadowSquadBeaconCreated" DebugSingleStep="false"/>
 	</EventList>
 	

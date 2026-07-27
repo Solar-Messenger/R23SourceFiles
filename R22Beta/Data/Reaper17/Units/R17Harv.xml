@@ -1079,6 +1079,14 @@
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_MarkedOfKaneFaction</TriggeredBy>
 			</StatusBitsUpgrade>
+
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 			<ShieldBodyUpdate
 				id="477C6A8E" />
 		</Behaviors>

@@ -4312,6 +4312,14 @@
 				StatusToSet="WEAPON_UPGRADED_01">
 				<TriggeredBy>Upgrade_AlienBlueShardWeapon</TriggeredBy>
 			</StatusBitsUpgrade>
+
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 			<!--
 			<ModelConditionUpgrade
 				id="ModuleTag_BlackHandNormalFlameUpgrade"

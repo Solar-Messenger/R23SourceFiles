@@ -323,6 +323,14 @@
                 StatusToSet="WEAPON_UPGRADED_03">
                 <TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
             </StatusBitsUpgrade>
+
+        	<!-- phase field -->
+        	<AttributeModifierUpgrade
+        		id="ModuleTag_AttributeModifierUpgradePhaseField"
+        		AttributeModifier="AttributeModifier_AlienPhaseField">
+        		<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+        	</AttributeModifierUpgrade>
+
             <ShieldBodyUpdate
                 id="ModuleTag_ShieldBodyUpdate" />
             <AudioLoopUpgrade

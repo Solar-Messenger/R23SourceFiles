@@ -2027,9 +2027,11 @@ function CheckExistingGroups(unitReversing, group, groupId)
 	return false
 end
 
--- Clears the unitsReversing table of this unit. If it belongs in a group, remove it. 
+-- Clears the unitsReversing table of this unit. If it belongs in a group, remove it.
 function GroupUnitOnDeath(self)
-	local a,unitReversing = GetUnitReversingData(self)	
+	-- phase fix: forget this unit if it died while phased
+	RemovePhasedUnitEntry(self)
+	local a,unitReversing = GetUnitReversingData(self)
 	local groupId = unitReversing and unitReversing.groupId
 
 	-- remove from the group its part of
@@ -3108,7 +3110,7 @@ function RemovePhaseModifier(self)
 	-- subtract from timesPhased for units whoses dummyObject is 
 	local objId = getObjectId(self)
 	local unitsToRemove = {}
-	for _,phasedUnit in phasedUnits do
+	for phasedUnitId,phasedUnit in phasedUnits do
 		-- check if this unit was phased by this expired dummy object and if it was, decrement the timesPhased counter.
 		if phasedUnit.dummyObjects[objId] ~= nil then
 			phasedUnit.timesPhased = phasedUnit.timesPhased - 1
@@ -3118,7 +3120,8 @@ function RemovePhaseModifier(self)
 		if phasedUnit.timesPhased <= 0 then
 			--print("phase has ended!")
 			if EvaluateCondition("UNIT_HAS_UPGRADE",phasedUnit.stringRef, "Upgrade_PhaseField") then ObjectRemoveUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField") end
-			tinsert(unitsToRemove, getObjectId(phasedUnit.selfRef))
+			-- use the table key here, calling getObjectId on the ref of a unit that died mid phase is not safe.
+			tinsert(unitsToRemove, phasedUnitId)
 		end
 	end
 
@@ -3128,6 +3131,21 @@ function RemovePhaseModifier(self)
 		clearSubTables(phasedUnits[unit].dummyObjects)
 		phasedUnits[unit] = nil
 	end
+end
+
+-- removes a units entry from the phased units table. called when a phased unit dies so that
+-- expired dummy objects dont evaluate conditions or remove upgrades on dead references.
+function RemovePhasedUnitEntry(self)
+	local objId = getObjectId(self)
+	if phasedUnits[objId] ~= nil then
+		clearSubTables(phasedUnits[objId].dummyObjects)
+		phasedUnits[objId] = nil
+	end
+end
+
+-- onDestroyed handler for phaseable units whose event lists dont route death through GroupUnitOnDeath.
+function PhasedUnitOnDeath(self)
+	RemovePhasedUnitEntry(self)
 end
 
 -- ############################# R25 Squad/Member Data ###################################
