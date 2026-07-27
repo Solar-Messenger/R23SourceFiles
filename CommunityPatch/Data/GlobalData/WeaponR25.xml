@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<!-- supersonic airstrike fix-->
+
+	<WeaponTemplate
+		id="GDISupersonicAirWeapon"
+		Name="GDISupersonicAirWeapon"
+		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
+		AttackRange="200.0"
+		ClipSize="1"
+		FireFX="FX_GDI_SupersonicAirStrike_Explosion"
+		AutoReloadsClip="NONE"
+		AntiMask="ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY"
+		CanFireWhileMoving="true"
+ 		>
+		<ClipReloadTime
+				MinSeconds="0.3s"
+				MaxSeconds="0.3s" />
+		<Nuggets>
+			<DamageNugget
+				Damage="2500.0"
+				Radius="200.0"
+				DamageTaperOff="75"
+				DamageType="ROCKET"
+				DamageFXType="GDI_RAILGUN"
+				DeathType="NORMAL"
+				CylinderAOE="true"
+				ForbiddenTargetModelCondition="LOCOMOTOR_TAXIING">
+				<SpecialObjectFilter
+					Rule="NONE"
+					Include="AIRCRAFT">
+					<ExcludeThing>GDISuperSonicAirAttack</ExcludeThing>
+				</SpecialObjectFilter>
+				<DamageScalarDetails Scalar= "200%">
+					<Filter
+						Rule="NONE"
+						Include="MOTHERSHIP" />
+				</DamageScalarDetails>
+			</DamageNugget>
+		</Nuggets>
+	</WeaponTemplate>
+
+
 	<WeaponTemplate
 		id="GDIRifleSoldierRifleFake"
 		Name="GDIRifleSoldierRifleFake"
