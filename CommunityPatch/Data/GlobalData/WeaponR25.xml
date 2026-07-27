@@ -127,4 +127,45 @@
 		</Nuggets>
 	</WeaponTemplate>
 
+	<!-- rage generator LuaEventNugget change -->
+	<WeaponTemplate
+		id="NODWarmechRageGenerator"
+		Name="NODWarmechRageGenerator"
+		RadiusDamageAffects="ENEMIES NEUTRALS"
+		FireFX="FX_NODRedeemerRageGenerator">
+		<Nuggets>
+			<DamageNugget
+				Damage="0"
+				Radius="500.0"
+				DelayTimeSeconds="0.0s"
+				DamageType="GRENADE"
+				DamageFXType="NOD_HALLUCINE"
+				DeathType="EXPLODED" >
+			</DamageNugget>
+			<!--
+			<AttributeModifierNugget
+				PartitionFilterTestType="SPHERE"
+				AttributeModifierName="AttributeModifier_Hallucinate"
+				Radius="500" >
+				<SpecialObjectFilter
+					Rule="ANY"
+					Include="INFANTRY VEHICLE"
+					Exclude="AIRCRAFT" />
+			</AttributeModifierNugget>
+			-->
+
+			<LuaEventNugget
+			Radius="500.0"
+			EventName="RageGeneratorEvent"
+			SendToEnemies="true"
+		>
+			<SpecialObjectFilter
+					Rule="ANY"
+					Include="INFANTRY VEHICLE"
+					Exclude="AIRCRAFT" />
+		</LuaEventNugget>
+
+		</Nuggets>
+	</WeaponTemplate>
+
 </AssetDeclaration>

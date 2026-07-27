@@ -10,21 +10,21 @@
 # Un-ignore .gitattributes if you use it
 !.gitattributes
 
-# --- ADD SPECIFIC IGNORES INSIDE R22Beta BELOW THIS LINE ---
+# --- ADD SPECIFIC IGNORES BELOW THIS LINE ---
 R22Beta/Data/maps/**
-R22Beta/Data/StaticMap.xml
-R22Beta/Data/StaticGameObjects.xml
-R22Beta/Data/Alien/Alien.xml
-R22Beta/Data/BlackHand/BlackHand.xml
-R22Beta/Data/GDI/GDI.xml
-R22Beta/Data/MarkedOfKane/MarkedOfKane.xml
-R22Beta/Data/Nod/Nod.xml
-R22Beta/Data/Reaper17/Reaper17.xml
-R22Beta/Data/SteelTalons/SteelTalons.xml
-R22Beta/Data/traveler59/traveler59.xml
-R22Beta/Data/ZOCOM/ZOCOM.xml
+#R22Beta/Data/StaticMap.xml
+#R22Beta/Data/StaticGameObjects.xml
+#R22Beta/Data/Alien/Alien.xml
+#R22Beta/Data/BlackHand/BlackHand.xml
+#R22Beta/Data/GDI/GDI.xml
+#R22Beta/Data/MarkedOfKane/MarkedOfKane.xml
+#R22Beta/Data/Nod/Nod.xml
+#R22Beta/Data/Reaper17/Reaper17.xml
+#R22Beta/Data/SteelTalons/SteelTalons.xml
+#R22Beta/Data/traveler59/traveler59.xml
+#R22Beta/Data/ZOCOM/ZOCOM.xml
 R22Beta/Data/mapsr16/**
-102texturefix/Data/Static.xml
+#102texturefix/Data/Static.xml
 102texturefix/Data/MPSettings.xml
 R22Beta/[\.tmp]*
 R22Beta/Data/test.xml

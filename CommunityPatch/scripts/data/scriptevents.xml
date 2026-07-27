@@ -969,6 +969,7 @@
 		<ScriptedEvent Name="GettingOutOfTheWayEvent" />
 		<ScriptedEvent Name="MemberKilledOnBuilt" />
 		<ScriptedEvent Name="PhaseFieldEvent" />
+		<ScriptedEvent Name="RageGeneratorEvent" />
     </Events>
     
     <EventList Name="BaseScriptFunctions">
@@ -1073,6 +1074,8 @@
 		<EventHandler EventName="MemberKilledOnBuilt"	ScriptFunctionName="KilledOutOfBarracks" DebugSingleStep="false"/>
 		<!-- check if the horde contains a banner carrier after being healed in the armory -->
 		<EventHandler EventName="OnRider3End"	ScriptFunctionName="BannerCarrierExistsCheck" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NodCyborgSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
@@ -1093,6 +1096,8 @@
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GenericReverseMoveVehicleFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1118,7 +1123,8 @@
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NodMobileArtilleryFunctions_R24" Inherit="GenericReverseMoveVehicleFunctions_R24">
@@ -1202,6 +1208,8 @@
 		<EventHandler EventName="UnitAnchorEvent"	ScriptFunctionName="OptimizedUnitAnchor" DebugSingleStep="false"/>
 		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="BeamCannonFunctions_R24" Inherit="GenericReverseMoveVehicleFunctions_R24">
@@ -1271,6 +1279,8 @@
 		<EventHandler EventName="UnitAnchorEvent"	ScriptFunctionName="OptimizedUnitAnchor" DebugSingleStep="false"/>
 		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIMARVFunctions_R24" Inherit="GenericReverseMoveVehicleFunctions_R24">
@@ -1322,6 +1332,8 @@
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
 	</EventList>
 	<!-- infantry -->
 	<EventList Name="BHConfessorSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">

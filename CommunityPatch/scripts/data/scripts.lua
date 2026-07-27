@@ -3071,6 +3071,13 @@ function OnSquadDestroyed_103(self)
 
 end
 
+-- ############################# R25 Redeemer Rage Generator fix  ###################################
+
+-- Duration set to 6 seconds
+function SetRageGeneratorState(self)
+	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "EMOTION_DISSIDENT", 6, 100)
+end
+
 -- ############################# R25 Phase fix  ###################################
 
 -- stores all the phased units on the map, and checks if the times phased counter 
@@ -3092,6 +3099,10 @@ end
 function GrantPhaseModifier(self, other)
 	-- set phased unit 
 	local _,phasedUnit = GetPhasedUnitProperties(self) 
+
+	--ExecuteAction("NAMED_FLASH_WHITE", self, 3)
+	--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "REALLYDAMAGED", 6, 100)
+
 	-- this unit was phased by this specific dummy object, add it to a subtable and increment the timesPhased counter.
 	local dummyObjectId = getObjectId(other)
 	if phasedUnit.dummyObjects[dummyObjectId] == nil then
