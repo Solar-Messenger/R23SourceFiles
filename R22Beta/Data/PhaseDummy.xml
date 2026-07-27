@@ -5,11 +5,17 @@
 		Side="Neutral"
 		EditorSorting="MISC_MAN_MADE"
 		RadarPriority="NOT_ON_RADAR"
-		KindOf="NO_COLLIDE HIDE_IF_FOGGED IMMOBILE UNATTACKABLE NOT_AUTOACQUIRABLE"
+		CommandSet="EmptyCommandSet"
+		IsTrainable="false"
+		KindOf="NO_COLLIDE HIDE_IF_FOGGED IMMOBILE UNATTACKABLE NOT_AUTOACQUIRABLE AIRCRAFT"
 		EditorName="PhaseDummy">
-		<DisplayName>PropName</DisplayName>
+		<DisplayName>PhaseDummy</DisplayName>
 		<ArmorSet
 			Armor="NoArmor" />
+		<LocomotorSet
+			Locomotor="FlyingShadowLocomotor"
+			Condition="NORMAL"
+			Speed="0" />
 		<Draws>
 			<ScriptedModelDraw
 				id="ModuleTag_Draw"
@@ -53,8 +59,22 @@
 		<Body>
 			<ActiveBody
 				id="ModuleTag_Body"
-				MaxHealth="100.0"
-				InitialHealth="100.0" />
+				MaxHealth="100.0" />
 		</Body>
+
+		<Geometry
+			IsSmall="true">
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="7.0"
+				Height="13.0">
+			<Offset
+					x="0"
+					y="35"
+					z="0" />
+			</Shape>
+		</Geometry> 
+		<CrusherInfo
+			CrushableLevel="0" />
 	</GameObject>
 </AssetDeclaration>
