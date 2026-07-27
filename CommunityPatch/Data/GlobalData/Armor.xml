@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude">	
 
+	<!-- avatar armor buff to offset health reduction (for quicker repairs), dont forget to change the heroic auto heal ! -->
+
+	<ArmorTemplate
+		id="NODAvatarArmor"
+		DamageScalar="86.363%"
+		SideDamageScalar="110"
+		RearDamageScalar="150">
+		<Armor
+			Damage="CANNON"
+			Percent="100" />
+		<Armor
+			Damage="ROCKET"
+			Percent="100" />
+		<Armor
+			Damage="GRENADE"
+			Percent="25" />
+		<Armor
+			Damage="GUN"
+			Percent="25" />
+		<Armor
+			Damage="SNIPER"
+			Percent="1" />
+		<Armor
+			Damage="MINE"
+			Percent="100%" />	
+		<Armor
+			Damage="HEALING"
+			Percent="100" />	
+		<Armor
+			Damage="CRUSH"
+			Percent="100" />	
+		<Armor
+			Damage="TIBERIUM"
+			Percent="100" />
+	</ArmorTemplate>
+
 	<!-- cannon armor buffed-->
 	<ArmorTemplate
 		id="AlienStalkerArmor"

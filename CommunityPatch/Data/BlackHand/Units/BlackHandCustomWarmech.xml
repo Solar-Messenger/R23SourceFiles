@@ -1145,7 +1145,7 @@
 				Permanent="False"
 				WaypointMode="False"
 				WaypointModeTerminal="True"
-				HealingAmount="100"
+				HealingAmount="87"
 				HealingDelay="0.5s"
 				StartHealingDelay="1s"
 				Radius="0"
@@ -1861,7 +1861,7 @@
 		<Body>
 			<ActiveBody
 				id="9756DB66"
-				MaxHealth="11000"
+				MaxHealth="9500"
 				MaxHealthDamaged="0"
 				MaxHealthReallyDamaged="0"
 				InitialHealth="-1"
@@ -2120,6 +2120,3 @@
 		<DisplayUpgrade>Upgrade_BlackHandSecretShrinePurifyingFlame</DisplayUpgrade>
 	</GameObject>
 </AssetDeclaration>
-
-
-

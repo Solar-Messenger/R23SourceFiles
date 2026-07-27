@@ -1712,7 +1712,7 @@
 				Permanent="False"
 				WaypointMode="False"
 				WaypointModeTerminal="True"
-				HealingAmount="100"
+				HealingAmount="87"
 				HealingDelay="0.5s"
 				StartHealingDelay="1s"
 				Radius="0"
@@ -4253,18 +4253,6 @@
 				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
 			</AttributeModifierUpgrade>
 
-			<AudioLoopUpgrade
-				id="2CD55849"
-				RequiresAllTriggers="False"
-				RequiresAllConflictingTriggers="False"
-				Permanent="False"
-				WaypointMode="False"
-				WaypointModeTerminal="True"
-				SoundToPlay="Multisound:NOD_PurifyingFlame_UpgradeMS"
-				KillAfterMS="0"
-				KillOnDeath="False">
-				<TriggeredBy>Upgrade_BlackHandSecretShrinePurifyingFlame</TriggeredBy>
-			</AudioLoopUpgrade>
 		</Behaviors>
 		<AI>
 			<DeployStyleAIUpdate
@@ -4287,7 +4275,7 @@
 		<Body>
 			<ActiveBody
 				id="B313F576"
-				MaxHealth="11000"
+				MaxHealth="9500"
 				MaxHealthDamaged="0"
 				MaxHealthReallyDamaged="0"
 				InitialHealth="-1"
@@ -4544,5 +4532,3 @@
 			CrushAllies="False" />
 	</GameObject>
 </AssetDeclaration>
-
-
