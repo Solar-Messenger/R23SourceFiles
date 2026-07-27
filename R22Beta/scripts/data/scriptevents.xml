@@ -1145,7 +1145,6 @@
 	<EventList Name="NodFlameTankFunctions_R24" Inherit="GenericRagedFunctions_103">
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUp"	ScriptFunctionName="BackingUp" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUpRight"	ScriptFunctionName="BackingUpInitGroup" DebugSingleStep="false"/>

@@ -3120,7 +3120,7 @@ function RemovePhaseModifier(self)
 		if phasedUnit.timesPhased <= 0 then
 			--print("phase has ended!")
 			if EvaluateCondition("UNIT_HAS_UPGRADE",phasedUnit.stringRef, "Upgrade_PhaseField") then ObjectRemoveUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField") end
-			-- use the table key here, calling getObjectId on the ref of a unit that died mid phase is not safe.
+			-- use the table key here, it gets the object id of the phased unit
 			tinsert(unitsToRemove, phasedUnitId)
 		end
 	end
