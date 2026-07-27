@@ -1452,20 +1452,10 @@
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
 					<TurretSettings
-						TurretTurnRate="40" 
+						TurretTurnRate="50"
 						TurretPitchRate="20"
-						MinimumPitch="-15d"
-						PitchHeight="50%"
-						ControlledWeaponSlots=""
-						MinIdleScanTime="0s"
-						MaxIdleScanTime="0s"
-						MinIdleScanAngle="0"
-						MaxIdleScanAngle="0"
-						MaxDeflectionClockwise="180d"
-						MaxDeflectionAntiClockwise="180d"
-						NaturalTurretAngle="0d"
-						AllowsPitch="True"
-						RecenterWhenOutOfTurnRange="True"> <!-- changed turretturnspeed from 50 to 40 in r19 -->
+						AllowsPitch="true"
+						MinimumPitch="-15d">
 						<TurretAITargetChooserData
 							IdleScanDelay="0.8s"
 							ReacquireDelay="5s"
@@ -2064,5 +2054,3 @@
 			CrushAllies="False" />
 	</GameObject>
 </AssetDeclaration>
-
-

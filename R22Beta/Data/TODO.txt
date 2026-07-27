@@ -5,13 +5,11 @@ TODO:
 - Implement the free infantry exploit fix to all squads in the game
 - Buff Hammerhead landing time when picking up, dropping off infantry.
 - Buff rifle squad damage vs disintegrators by 10%.
-- Make tripods not spawn with shields when captured back.
 - Reduce Avatar hp to 9500 to speed up repair speed, compensate via armor buffs. 
 - Make it so units affected by rage generator cannot be controlled by players throughout the duration.
 - Tweak stasis shield so units on the edge are paralyzed.
 - Fix Traveler Engine mesh on Devastator Warships when inside Ion Storms.
 - Fix an issue causing Tiberium Vibration Scan, Power Signature Scan to be disabled when another support power is used, t2 structure is powered down or sold.
-- Juggernaut/Behemoth turret turn speed increased.
 
 Done
 - Implemented V35 vision fix for all GDI factions
@@ -19,3 +17,9 @@ Done
 - Fixed walking step sounds on a few units.
 - Implement Carryall vision fix for all Nod factions
 - Fix an issue with MCVs causing them to ignore move commands while packing up.
+- Fix an issue causing phased EMPd units to never relinquish the phased status or visual fx after the timer has elapsed.
+- Juggernaut/Behemoth turret turn speed increased from 40 to 50.
+
+
+Probably too much of a nerf for Reaper-17
+- Make tripods not spawn with shields when captured back.

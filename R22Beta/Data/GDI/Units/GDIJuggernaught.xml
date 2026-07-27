@@ -665,7 +665,7 @@
 						Ordering="PRIMARY_WEAPON"
 						Template="GDIJuggernaughtArtillery" />
 					<TurretSettings
-						TurretTurnRate="40"
+						TurretTurnRate="50"
 						TurretPitchRate="20"
 						AllowsPitch="true"
 						MinimumPitch="-15d">
@@ -907,5 +907,3 @@
 			CrushDecelerationPercent="0%" />
 	</GameObject>
 </AssetDeclaration>
-
-
