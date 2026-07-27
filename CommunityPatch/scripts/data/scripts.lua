@@ -3075,6 +3075,7 @@ end
 
 -- Duration set to 6 seconds
 function SetRageGeneratorState(self)
+	-- on -EMOTION_DISSIDENT then allow player commands again
 	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "EMOTION_DISSIDENT", 6, 100)
 end
 

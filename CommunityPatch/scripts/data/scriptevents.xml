@@ -618,6 +618,10 @@
 		<ModelConditionEvent Name="OnAttack">
 			<Conditions>+FIRING_A</Conditions>
 		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnAttackingPosition">
+			<Conditions>+ATTACKING_POSITION</Conditions>
+		</ModelConditionEvent>
 		
 		<!-- R23 tib events -->
 
@@ -1076,6 +1080,8 @@
 		<EventHandler EventName="OnRider3End"	ScriptFunctionName="BannerCarrierExistsCheck" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NodCyborgSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
@@ -1098,6 +1104,8 @@
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GenericReverseMoveVehicleFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1125,6 +1133,10 @@
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
+		<!-- test event, force firing the ground
+		<EventHandler EventName="OnAttackingPosition"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/> -->
 	</EventList>
 
 	<EventList Name="NodMobileArtilleryFunctions_R24" Inherit="GenericReverseMoveVehicleFunctions_R24">
@@ -1148,7 +1160,7 @@
 	<EventList Name="EmissaryFunctions_R24" Inherit="GenericReverseMoveVehicleFunctions_R24">
 	</EventList>
 
-	<EventList Name="NodFlameTankFunctions_R24" Inherit="GenericRagedFunctions_103">
+	<EventList Name="NodFlameTankFunctions_R24" Inherit="BaseScriptFunctions">
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnBackingUp1"	ScriptFunctionName="BackingUpEnd" DebugSingleStep="false"/>
@@ -1171,6 +1183,10 @@
 		<EventHandler EventName="UnitAnchorEvent"	ScriptFunctionName="OptimizedUnitAnchor" DebugSingleStep="false"/>
 		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NodHarvesterFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1210,6 +1226,8 @@
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="BeamCannonFunctions_R24" Inherit="GenericReverseMoveVehicleFunctions_R24">
@@ -1281,6 +1299,8 @@
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIMARVFunctions_R24" Inherit="GenericReverseMoveVehicleFunctions_R24">
@@ -1334,6 +1354,8 @@
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 	<!-- infantry -->
 	<EventList Name="BHConfessorSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
@@ -1348,7 +1370,11 @@
 		<EventHandler EventName="OnCreated"		ScriptFunctionName="OnGDISniperSquadCreated" DebugSingleStep="false"/>
 	</EventList>
 
-	<EventList Name="GenericRagedFunctions_R24" Inherit="GenericRagedFunctions_103">
+	<EventList Name="GenericRagedFunctions_R24" Inherit="BaseScriptFunctions">
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienBuzzersFunctions_R24" Inherit="SelectionGroupFunctions_R24">
