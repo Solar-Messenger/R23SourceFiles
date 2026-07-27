@@ -31,4 +31,51 @@
 		</Nuggets>
 	</WeaponTemplate>
 
+	<!-- phase field bug workaround-->
+
+	<WeaponTemplate
+		id="AlienPhaseFieldWeaponTrigger"
+		Name="AlienPhaseFieldWeaponTrigger"
+		RadiusDamageAffects="ALLIES"
+		AttackRange="50000.0"
+		>
+		<!-- FireSound="ALI_PhaseGenerator_Begin" no worky -->
+		<!-- FireFX="FX_ALI_PhaseGenerator_Begin" no worky -->
+		<FiringDuration
+			MinSeconds="0.1s"
+			MaxSeconds="0.1s" />
+		<Nuggets>
+			<WeaponOCLNugget WeaponOCL="OCL_PhaseDummy" />
+		</Nuggets>
+	</WeaponTemplate>
+
+	<WeaponTemplate
+		id="AlienPhaseFieldWeapon"
+		Name="AlienPhaseFieldWeapon"
+		RadiusDamageAffects="ALLIES"
+		AttackRange="50000.0"
+		>
+		<!-- FireSound="ALI_PhaseGenerator_Begin" no worky -->
+		<!-- FireFX="FX_ALI_PhaseGenerator_Begin" no worky -->
+		<Nuggets>
+		<!-- spawn a dummy that fires a weapon on created 	-->
+
+		<LuaEventNugget
+			Radius="100.0"
+			EventName="PhaseFieldEvent"
+			SendToAllies="true"
+		>
+			<SpecialObjectFilter
+					Relationship="ALLIES"
+					Rule="ANY"
+					Exclude="AIRCRAFT INFANTRY"
+					Include="VEHICLE">
+					<ExcludeThing>AlienMCV</ExcludeThing>
+					<ExcludeThing>AlienMCVUnpacking</ExcludeThing>
+				</SpecialObjectFilter>
+		</LuaEventNugget>
+		</Nuggets>
+	</WeaponTemplate>
+
+
 </AssetDeclaration>

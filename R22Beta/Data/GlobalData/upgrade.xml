@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<!-- phase field upgrade -->
+	<UpgradeTemplate id="Upgrade_PhaseField"
+		Type="OBJECT"
+	/>
+
 	<UpgradeTemplate id="Upgrade_MCVLocomotorUpgrade"
 		Type="OBJECT"
 	/>

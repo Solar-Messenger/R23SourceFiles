@@ -436,7 +436,6 @@
 
 	<AttributeModifier
 		id="AttributeModifier_AlienPhaseField"
-		Duration="35s"
 		StartFX="FX_ALI_PhaseGenerator_Begin"
 		EndFX="FX_ALI_PhaseGenerator_End"
 		ModelConditionsSet="RIDER3"

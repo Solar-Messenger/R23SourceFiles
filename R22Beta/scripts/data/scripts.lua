@@ -3069,6 +3069,67 @@ function OnSquadDestroyed_103(self)
 
 end
 
+-- ############################# R25 Phase fix  ###################################
+
+-- stores all the phased units on the map, and checks if the times phased counter 
+phasedUnits = {}
+
+function GetPhasedUnitProperties(self) 
+	local objId = getObjectId(self)
+	phasedUnits[objId] = phasedUnits[objId] or {
+		timesPhased = 0,
+		stringRef = SetObjectReference(self),
+		selfRef = self, 
+		dummyObjects = {}
+	}
+	return objId, phasedUnits[objId]
+end
+
+-- maybe the dummy object could dispatch the lua event that way there will be a relationship between the dummy object and objects phased. when the dummy expires it should decrement the timesPhased property of the units it established a relationship with.
+-- here other is a reference to the dummy object, self is this phased unit.
+function GrantPhaseModifier(self, other)
+	-- set phased unit 
+	local _,phasedUnit = GetPhasedUnitProperties(self) 
+	-- this unit was phased by this specific dummy object, add it to a subtable and increment the timesPhased counter.
+	local dummyObjectId = getObjectId(other)
+	if phasedUnit.dummyObjects[dummyObjectId] == nil then
+		phasedUnit.dummyObjects[dummyObjectId] = true
+		phasedUnit.timesPhased = phasedUnit.timesPhased + 1
+	end
+	-- grant upgrade to enable attributemodifierupgrade module for phase field
+	if not EvaluateCondition("UNIT_HAS_UPGRADE",phasedUnit.stringRef, "Upgrade_PhaseField") then ObjectGrantUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField") end
+end
+
+-- triggered after 35s by dummy object, its id is already stored by the phased units and can reliably decrement the timesPhased counter for each unit that this object originally phased.
+-- triggered onDestroyed of the dummy.
+function RemovePhaseModifier(self)
+	--ExecuteAction("NAMED_FLASH_WHITE", self, 3)
+	-- print("dummy destroyed")
+	-- subtract from timesPhased for units whoses dummyObject is 
+	local objId = getObjectId(self)
+	local unitsToRemove = {}
+	for _,phasedUnit in phasedUnits do
+		-- check if this unit was phased by this expired dummy object and if it was, decrement the timesPhased counter.
+		if phasedUnit.dummyObjects[objId] ~= nil then
+			phasedUnit.timesPhased = phasedUnit.timesPhased - 1
+			phasedUnit.dummyObjects[objId] = nil
+		end
+		-- check whether the units phased counter has reached 0 and if it has , remove the phased upgrade
+		if phasedUnit.timesPhased <= 0 then
+			--print("phase has ended!")
+			if EvaluateCondition("UNIT_HAS_UPGRADE",phasedUnit.stringRef, "Upgrade_PhaseField") then ObjectRemoveUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField") end
+			tinsert(unitsToRemove, getObjectId(phasedUnit.selfRef))
+		end
+	end
+
+	-- clean up to avoid desyncs
+	for i = 1, getn(unitsToRemove) do
+		local unit = unitsToRemove[i]
+		clearSubTables(phasedUnits[unit].dummyObjects)
+		phasedUnits[unit] = nil
+	end
+end
+
 -- ############################# R25 Squad/Member Data ###################################
 
 -- this defines squad sizes and if a squad has a hammerhead garrison banner carrier.
@@ -3250,13 +3311,11 @@ function GarrisonedInHammerheadEnd(self)
 	local firstMember = squadMemberTable[next(squad.squadMembers)]
 	local memberLevel = GetRankOfObject(firstMember.stringRef) 
 	local squadLevel = GetRankOfObject(squad.stringRef) 
-	-- i need to reimplement the 2 way experience check again (isLeader) - Banner carriers dont inherit the veterancy when spawned inside of hammerheads 
-	
+	-- i need to reimplement the 2 way experience check again (isLeader) - Banner carriers dont inherit the veterancy when spawned inside of hammerheads 	
 	--WriteToFile("leader rank.txt",  "Current leader rank: " .. tostring(GetRankOfObject(squadMemberTable[squad.squadLeader].stringRef)) .. "\n" .. "squadLevel: " .. tostring(squadLevel) .. "\n" .. "-------------------" .. "\n")
-
 	-- 0 -> LT (<), if horde members are ranked lower than the squad 
 	if applyHordeXPFix and EvaluateCondition("UNIT_COMPARE_RANK", firstMember.stringRef, 0, squadLevel) then
-		print("promoting")
+		-- print("promoting")
 		-- leader check
 		for objId,_ in squad.squadMembers do
 			-- if desync then its probably because of the prerequisites 

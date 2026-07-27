@@ -717,6 +717,10 @@
 			<Conditions>-IS_ATTACKING</Conditions>
 		</ObjectStatusEvent>
 
+		<ObjectStatusEvent Name="OnPhaseEnd">
+			<Conditions>-OUT_OF_PHASE</Conditions>
+		</ObjectStatusEvent>
+
 		<ObjectStatusEvent Name="OnFleeOffMap">
 			<Conditions>+FLEE_OFF_MAP</Conditions>
 		</ObjectStatusEvent>
@@ -968,6 +972,7 @@
 		<ScriptedEvent Name="UnitAnchorEvent" />
 		<ScriptedEvent Name="GettingOutOfTheWayEvent" />
 		<ScriptedEvent Name="MemberKilledOnBuilt" />
+		<ScriptedEvent Name="PhaseFieldEvent" />
     </Events>
     
     <EventList Name="BaseScriptFunctions">
@@ -1076,7 +1081,11 @@
 
 	<EventList Name="NodCyborgSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
 	    <EventHandler EventName="OnCreated"	ScriptFunctionName="OnCyborgSquadCreated_R21g" DebugSingleStep="false"/>
-	</EventList>  	
+	</EventList>  
+
+	<EventList Name="PhaseDummyFunctions_R24" Inherit="BaseScriptFunctions">
+	    <EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhaseModifier" DebugSingleStep="false"/>
+	</EventList>
 
 	<EventList Name="SelectionGroupFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
@@ -1086,6 +1095,8 @@
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GenericReverseMoveVehicleFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1109,6 +1120,9 @@
 		<EventHandler EventName="UnitAnchorEvent"	ScriptFunctionName="OptimizedUnitAnchor" DebugSingleStep="false"/>
 		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+
 	</EventList>
 
 	<EventList Name="NodMobileArtilleryFunctions_R24" Inherit="GenericReverseMoveVehicleFunctions_R24">
