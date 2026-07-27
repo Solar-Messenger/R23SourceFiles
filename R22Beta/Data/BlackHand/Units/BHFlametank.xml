@@ -1292,13 +1292,6 @@
 			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
-			<!-- phase field -->
-			<AttributeModifierUpgrade
-				id="ModuleTag_AttributeModifierUpgradePhaseField"
-				AttributeModifier="AttributeModifier_AlienPhaseField">
-				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
-			</AttributeModifierUpgrade>
-
 			<AttributeModifierPoolUpdate
 				id="788FFB50" />
 			<SquishCollide
@@ -1674,6 +1667,14 @@
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_BlackHandSecretShrinePurifyingFlame</TriggeredBy>
 			</StatusBitsUpgrade>
+
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 			<ModelConditionUpgrade
 				id="75B4C3A3"
 				RequiresAllTriggers="False"

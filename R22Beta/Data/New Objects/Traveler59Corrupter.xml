@@ -390,13 +390,6 @@
             </StreamDraw>
         </Draws>
         <Behaviors>
-        	<!-- phase field -->
-        	<AttributeModifierUpgrade
-        		id="ModuleTag_AttributeModifierUpgradePhaseField"
-        		AttributeModifier="AttributeModifier_AlienPhaseField">
-        		<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
-        	</AttributeModifierUpgrade>
-
               <AttributeModifierPoolUpdate
                 id="DefaultAttributeModifierPoolUpdate" />
             <SquishCollide
@@ -506,6 +499,14 @@
 				StatusToSet="DOES_CONTAIN_TIBERIUM">
 				<TriggeredBy>Upgrade_Traveler59Faction</TriggeredBy>
 			</StatusBitsUpgrade>
+
+        	<!-- phase field -->
+        	<AttributeModifierUpgrade
+        		id="ModuleTag_AttributeModifierUpgradePhaseField"
+        		AttributeModifier="AttributeModifier_AlienPhaseField">
+        		<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+        	</AttributeModifierUpgrade>
+
         </Behaviors>
         <AI>
             <AIUpdate

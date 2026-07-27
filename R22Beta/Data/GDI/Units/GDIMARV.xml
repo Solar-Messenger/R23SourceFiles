@@ -1485,13 +1485,6 @@
 			</TracerModelDraw>
 		</Draws>
 		<Behaviors>
-			<!-- phase field -->
-			<AttributeModifierUpgrade
-				id="ModuleTag_AttributeModifierUpgradePhaseField"
-				AttributeModifier="AttributeModifier_AlienPhaseField">
-				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
-			</AttributeModifierUpgrade>
-
 			<AttributeModifierPoolUpdate
 				id="DefaultAttributeModifierPoolUpdate" />
 			<SquishCollide
@@ -2459,6 +2452,14 @@
 				StatusToClear="WEAPON_UPGRADED_02">
 				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
 			</StatusBitsUpgrade>
+
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 			<FireWeaponUpdate
 				id="ModuleTag_FireWeaponUpdate">
 				<FireWeaponNugget WeaponName="MetaCrushTiberium" FireDelay="0s" FireInterval="0.25s" />

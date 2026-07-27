@@ -348,13 +348,6 @@
 			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
-			<!-- phase field -->
-			<AttributeModifierUpgrade
-				id="ModuleTag_AttributeModifierUpgradePhaseField"
-				AttributeModifier="AttributeModifier_AlienPhaseField">
-				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
-			</AttributeModifierUpgrade>
-
 			<AttributeModifierPoolUpdate
 				id="DefaultAttributeModifierPoolUpdate"/>
 			<SquishCollide
@@ -531,6 +524,14 @@
 				StatusToSet="WEAPON_UPGRADED_02">
 				<TriggeredBy>Upgrade_Reaper17ConversionReserves</TriggeredBy>
 			</StatusBitsUpgrade>
+
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 
 			<AISpecialPowerUpdate
 				id="ModuleTag_AlienDevourerConversionAI"

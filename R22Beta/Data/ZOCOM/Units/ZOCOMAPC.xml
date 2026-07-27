@@ -405,13 +405,6 @@
 			</TracerModelDraw>
 		</Draws>
 		<Behaviors>
-			<!-- phase field -->
-			<AttributeModifierUpgrade
-				id="ModuleTag_AttributeModifierUpgradePhaseField"
-				AttributeModifier="AttributeModifier_AlienPhaseField">
-				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
-			</AttributeModifierUpgrade>
-
 			<AttributeModifierPoolUpdate
 				id="513BC476" />
 			<SquishCollide
@@ -1245,6 +1238,14 @@
 				AttributeModifier="Modifier_ReverseMoveSpeedBuff">
 				<TriggeredBy>Upgrade_ReverseMoveSpeedBuff</TriggeredBy>
 			</AttributeModifierUpgrade>
+
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 		</Behaviors>
 		<AI>
 			<AIUpdate
@@ -1822,13 +1823,6 @@
 			</TracerModelDraw>
 		</Draws>
 		<Behaviors>
-			<!-- phase field -->
-			<AttributeModifierUpgrade
-				id="ModuleTag_AttributeModifierUpgradePhaseField"
-				AttributeModifier="AttributeModifier_AlienPhaseField">
-				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
-			</AttributeModifierUpgrade>
-
 			<AttributeModifierPoolUpdate
 				id="513BC476" />
 			<SquishCollide
@@ -2673,6 +2667,14 @@
 				AttributeModifier="Modifier_ReverseMoveSpeedBuff">
 				<TriggeredBy>Upgrade_ReverseMoveSpeedBuff</TriggeredBy>
 			</AttributeModifierUpgrade>
+
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 
 		</Behaviors>
 		<AI>

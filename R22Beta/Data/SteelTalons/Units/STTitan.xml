@@ -4105,13 +4105,6 @@
 			</LaserDraw>
 		</Draws>
 		<Behaviors>
-			<!-- phase field -->
-			<AttributeModifierUpgrade
-				id="ModuleTag_AttributeModifierUpgradePhaseField"
-				AttributeModifier="AttributeModifier_AlienPhaseField">
-				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
-			</AttributeModifierUpgrade>
-
 			<AttributeModifierPoolUpdate
 				id="788FFB50" />
 			<SquishCollide
@@ -4483,6 +4476,14 @@
 				<TriggeredBy>Upgrade_STArmoryRailgunTech</TriggeredBy>
 				<!--<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>-->
 			</StatusBitsUpgrade>
+
+			<!-- phase field -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradePhaseField"
+				AttributeModifier="AttributeModifier_AlienPhaseField">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+
 			<SubObjectsUpgrade
 				id="01875BF9"
 				RequiresAllTriggers="False"
