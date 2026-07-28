@@ -4,7 +4,6 @@ TODO:
 - Implement Garrisoned banner carrier for all SteelTalons units 
 - Implement the free infantry exploit fix to all squads in the game
 - Fix an issue causing Tiberium Vibration Scan, Power Signature Scan to be disabled when another support power is used, t2 structure is powered down or sold.
-- nerf MaximumAimDelta of the gunwalker, shardwalker weapons.
 
 Done
 - Implemented V35 vision fix for all GDI factions
@@ -21,6 +20,8 @@ Done
 - Make it so units affected by rage generator cannot be controlled by players throughout the duration. -> ensure every unit has the event list for being raged besides aircraft.
 - Reduce Avatar hp to 9500 to speed up repair speed, compensate via armor buffs. 
 - Tweak stasis shield so units on the edge are paralyzed.
+- Nerfed MaximumAimDelta of the gunwalker, shardwalker weapon from 25d to 15d.
+- Fixed an issue causing supersonic airstrike to not deal damage to aircraft on uneven terrain.
 
 Probably too much of a nerf for Reaper-17
 - Make tripods not spawn with shields when captured back.

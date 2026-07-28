@@ -871,7 +871,7 @@
 			<!-- -->
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_1 CLIMBING">
+					ConditionsYes="USER_1 TAKING_OFF">
 					<Script>
 						CurDrawableHideSubObject("Plane04")
 						CurDrawableHideSubObject("exhaust02")
@@ -984,7 +984,7 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="CLIMBING USER_1">
+					ConditionsYes="TAKING_OFF USER_1">
 					<Animation
 						AnimationName="GUFireHwk_FLYA"
 						AnimationMode="LOOP"
@@ -1127,7 +1127,7 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="CLIMBING">
+					ConditionsYes="TAKING_OFF">
 					<Animation
 						AnimationName="GUFireHwk_FLYA"
 						AnimationMode="LOOP"
@@ -1226,7 +1226,7 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="CLIMBING">
+					ConditionsYes="TAKING_OFF">
 					<Model Name="" />
 					<ParticleSysBone
 						BoneName="ROOTTRANSFORM"
@@ -2136,4 +2136,3 @@
 		<DisplayUpgrade>Upgrade_CeramicArmor</DisplayUpgrade>
 	</GameObject>
 </AssetDeclaration>
-

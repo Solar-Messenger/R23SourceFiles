@@ -4867,7 +4867,6 @@
 			<!-- this is a workaround for the wormhole -->
 			<AttributeModifierNugget
 				Radius="100"
-				PartitionFilterTestType="SPHERE"
 				AttributeModifierName="AttributeModifier_SetUnusedUser">
 				<SpecialObjectFilter
 					Rule="ANY"
@@ -4883,7 +4882,7 @@
 				</SpecialObjectFilter>
 			</AttributeModifierNugget>
 			<TintObjectsNugget
-				Radius="115"
+				Radius="100"
 				PreColorTime="0s"
 				SustainedColorTime="1.25s"
 				ForbiddenTargetObjectStatus="USER_POWERED_DOWN"
@@ -4909,7 +4908,7 @@
 	>
 		<Nuggets>
 			<ParalyzeNugget
-				Radius="115"
+				Radius="100"
 				DurationSeconds="22.5s"
 				ParalyzeType="USER_PARALYZE">
 				<SpecialObjectFilter
@@ -4921,6 +4920,19 @@
 					<ExcludeThing>AlienCrystalShield</ExcludeThing>
 				</SpecialObjectFilter>
 			</ParalyzeNugget>
+
+			<AttributeModifierNugget
+				Radius="100"
+				AttributeModifierName="AttributeModifier_AlienCrystalShield">
+				<SpecialObjectFilter
+					Rule="ANY"
+					Include="VEHICLE HUGE_VEHICLE INFANTRY STRUCTURE AIRCRAFT TIBERIUM MINE">
+					<IncludeThing>IonStorm</IncludeThing>
+					<ExcludeThing>TiberiumFieldSeeded</ExcludeThing>
+					<ExcludeThing>AlienWormhole</ExcludeThing>
+					<ExcludeThing>AlienCrystalShield</ExcludeThing>
+				</SpecialObjectFilter>
+			</AttributeModifierNugget>
 		</Nuggets>
 	</WeaponTemplate>
 

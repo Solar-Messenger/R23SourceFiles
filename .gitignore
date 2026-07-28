@@ -1,9 +1,9 @@
 # Ignore everything first
 *
 
-# Now, un-ignore the R22Beta directory AND everything inside it
-!R22Beta/
-!R22Beta/**
+# Now, un-ignore the CommunityPatch directory AND everything inside it
+!CommunityPatch/
+!CommunityPatch/**
 
 # Also un-ignore the .gitignore file itself!
 !.gitignore
@@ -11,26 +11,27 @@
 !.gitattributes
 
 # --- ADD SPECIFIC IGNORES BELOW THIS LINE ---
-R22Beta/Data/maps/**
-#R22Beta/Data/StaticMap.xml
-#R22Beta/Data/StaticGameObjects.xml
-#R22Beta/Data/Alien/Alien.xml
-#R22Beta/Data/BlackHand/BlackHand.xml
-#R22Beta/Data/GDI/GDI.xml
-#R22Beta/Data/MarkedOfKane/MarkedOfKane.xml
-#R22Beta/Data/Nod/Nod.xml
-#R22Beta/Data/Reaper17/Reaper17.xml
-#R22Beta/Data/SteelTalons/SteelTalons.xml
-#R22Beta/Data/traveler59/traveler59.xml
-#R22Beta/Data/ZOCOM/ZOCOM.xml
-R22Beta/Data/mapsr16/**
+CommunityPatch/Data/maps/**
+CommunityPatch/Data/StaticMap.xml
+CommunityPatch/Data/StaticGameObjects.xml
+CommunityPatch/Data/Alien/Alien.xml
+CommunityPatch/Data/BlackHand/BlackHand.xml
+CommunityPatch/Data/GDI/GDI.xml
+CommunityPatch/Data/MarkedOfKane/MarkedOfKane.xml
+CommunityPatch/Data/Nod/Nod.xml
+CommunityPatch/Data/Reaper17/Reaper17.xml
+CommunityPatch/Data/SteelTalons/SteelTalons.xml
+CommunityPatch/Data/traveler59/traveler59.xml
+CommunityPatch/Data/ZOCOM/ZOCOM.xml
+CommunityPatch/Data/mapsr16/**
 #102texturefix/Data/Static.xml
 102texturefix/Data/MPSettings.xml
-R22Beta/[\.tmp]*
-R22Beta/Data/test.xml
+CommunityPatch/[\.tmp]*
+CommunityPatch/Data/test.xml
+CommunityPatch/Data/test2.xml
 CommunityPatch/Data/TODO.txt
 
-R22Beta/.tmp.drivedownload/26449.1744834794173447
-R22Beta/Data/test.xml
-R22Beta/scripts/data/codex-x86_64-pc-windows-msvc.exe
-R22Beta/R25
+CommunityPatch/.tmp.drivedownload/26449.1744834794173447
+CommunityPatch/Data/test.xml
+CommunityPatch/scripts/data/codex-x86_64-pc-windows-msvc.exe
+CommunityPatch/R25

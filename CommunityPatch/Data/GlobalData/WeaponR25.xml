@@ -26,7 +26,7 @@
 				DamageFXType="GDI_RAILGUN"
 				DeathType="NORMAL"
 				CylinderAOE="true"
-				ForbiddenTargetModelCondition="LOCOMOTOR_TAXIING">
+				ForbiddenTargetModelCondition="LOCOMOTOR_TAXIING LANDING TAKING_OFF">
 				<SpecialObjectFilter
 					Rule="NONE"
 					Include="AIRCRAFT">

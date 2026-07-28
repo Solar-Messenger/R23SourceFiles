@@ -530,7 +530,7 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="CLIMBING"
+					ConditionsYes="TAKING_OFF"
 					EnteringStateFX=""
 					FrameForPristineBonePositions="0"
 					ShareAnimation="False"
@@ -873,7 +873,7 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="CLIMBING"
+					ConditionsYes="TAKING_OFF"
 					EnteringStateFX=""
 					FrameForPristineBonePositions="0"
 					ShareAnimation="False"
@@ -1864,7 +1864,7 @@
 					ExcludedFlags="" />
 				<ModelConditionSound
 					Sound="AudioEvent:NOD_VertigoBomb_MoveLift"
-					RequiredFlags="CLIMBING"
+					RequiredFlags="TAKING_OFF"
 					ExcludedFlags="" />
 			</ModelConditionAudioLoopClientBehavior>
 		</ClientBehaviors>
@@ -1985,4 +1985,3 @@
 		<DisplayUpgrade>Upgrade_VertigoDisruptionPod</DisplayUpgrade>
 	</GameObject>
 </AssetDeclaration>
-
