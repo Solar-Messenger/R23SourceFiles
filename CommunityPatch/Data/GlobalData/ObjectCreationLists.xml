@@ -419,7 +419,9 @@
 		id="OCL_ConyardGDIBuildingSuicide">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
-			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND">
+			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s">
 			<CreateObject>GDIRifleSoldierSquad</CreateObject>
 		</CreateObject>
 		<CreateObject
@@ -438,7 +440,9 @@
 		id="OCL_ConyardZOCOMBuildingSuicide">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
-			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND">
+			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s">
 			<CreateObject>ZOCOMRifleSoldierSquad</CreateObject>
 		</CreateObject>
 		<CreateObject
@@ -457,7 +461,9 @@
 		id="OCL_ConyardSteelTalonsBuildingSuicide">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
-			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND">
+			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s">
 			<CreateObject>SteelTalonsRifleSoldierSquad</CreateObject>
 		</CreateObject>
 		<CreateObject
@@ -478,7 +484,9 @@
 		id="OCL_BattleBaseGDIBuildingSuicide">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
-			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND">
+			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s">
 			<CreateObject>GDIRifleSoldierSquad</CreateObject>
 		</CreateObject>
 		<CreateObject
@@ -493,7 +501,9 @@
 		id="OCL_BattleBaseSteelTalonsBuildingSuicide">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
-			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND">
+			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s">
 			<CreateObject>SteelTalonsRifleSoldierSquad</CreateObject>
 		</CreateObject>
 		<CreateObject
@@ -507,7 +517,9 @@
 		id="OCL_BattleBaseZOCOMBuildingSuicide">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
-			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND">
+			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s">
 			<CreateObject>ZOCOMRifleSoldierSquad</CreateObject>
 		</CreateObject>
 		<CreateObject
@@ -717,6 +729,8 @@
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS REQUIRES_LIVE_PLAYER"
 			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s"
 			MinHealth="0.3"
 			MaxHealth="0.75"
 			MinHordeDensity="30"
@@ -728,6 +742,8 @@
 		id="OCL_GenericGDIBuildingSuicide1">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s"
 			MinHordeDensity="85"
 			MaxHordeDensity="86"
 			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND">
@@ -740,6 +756,8 @@
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS REQUIRES_LIVE_PLAYER"
 			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s"
 			MinHealth="0.3"
 			MaxHealth="0.75"
 			MinHordeDensity="30"
@@ -751,6 +769,8 @@
 		id="OCL_GenericSteelTalonsBuildingSuicide1">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s"
 			MinHordeDensity="85"
 			MaxHordeDensity="86"
 			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND">
@@ -763,6 +783,8 @@
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS REQUIRES_LIVE_PLAYER"
 			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s"
 			MinHealth="0.3"
 			MaxHealth="0.75"
 			MinHordeDensity="30"
@@ -774,6 +796,8 @@
 		id="OCL_GenericZOCOMBuildingSuicide1">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
+			TempModelCondition="USER_10"
+			TempModelConditionTime="1.0s"
 			MinHordeDensity="85"
 			MaxHordeDensity="86"
 			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND">
