@@ -22,6 +22,7 @@ Done
 - Tweak stasis shield so units on the edge are paralyzed.
 - Nerfed MaximumAimDelta of the gunwalker, shardwalker weapon from 25d to 15d.
 - Fixed an issue causing supersonic airstrike to not deal damage to aircraft on uneven terrain.
+- Fixed an issue causing Firehawk Stratofighter boosters to disappear while climbing hills.
 
 Probably too much of a nerf for Reaper-17
 - Make tripods not spawn with shields when captured back.

@@ -58,7 +58,7 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT">
 					<Model
-						Name="GUFireHwk_SKN" />
+						Name="W3DContainer:GUFireHwk_SKN" />
 					<ShadowInfo
 						Type="VOLUME" 
 						MaxHeight="131"
@@ -93,7 +93,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED USER_1 LOCOMOTOR_TAXIING USER_5">
 					<Model
-						Name="GUFireHwk_SKN" />
+						Name="W3DContainer:GUFireHwk_SKN" />
 					<Texture
 						Original="GU_FireHawk"
 						New="GU_FireHawkD_K" />
@@ -114,7 +114,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DAMAGED USER_1 LOCOMOTOR_TAXIING USER_5">
 					<Model
-						Name="GUFireHwk_SKN" />
+						Name="W3DContainer:GUFireHwk_SKN" />
 					<Texture
 						Original="GU_FireHawk"
 						New="GU_FireHawk_K" />						
@@ -135,7 +135,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED USER_1 USER_5">
 					<Model
-						Name="GUFireHwk_SKN" />
+						Name="W3DContainer:GUFireHwk_SKN" />
 					<Texture
 						Original="GU_FireHawk"
 						New="GU_FireHawkD_K" />							
@@ -167,7 +167,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DAMAGED USER_1 USER_5">
 					<Model
-						Name="GUFireHwk_SKN" />
+						Name="W3DContainer:GUFireHwk_SKN" />
 					<Texture
 						Original="GU_FireHawk"
 						New="GU_FireHawk_K" />								
@@ -188,7 +188,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DAMAGED USER_5">
 					<Model
-						Name="GUFireHwk_SKN" />
+						Name="W3DContainer:GUFireHwk_SKN" />
 					<Texture
 						Original="GU_FireHawk"
 						New="GU_FireHawk_K" />								
@@ -201,7 +201,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED USER_5">
 					<Model
-						Name="GUFireHwk_SKN" />
+						Name="W3DContainer:GUFireHwk_SKN" />
 					<Texture
 						Original="GU_FireHawk"
 						New="GU_FireHawkD_K" />		
@@ -222,7 +222,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING USER_5">
 					<Model
-						Name="GUFireHwkr_SKN" />
+						Name="W3DContainer:GUFireHwkr_SKN" />
 					<Texture
 						Original="GU_FireHawkD"
 						New="GU_FireHawkD_K" />		
@@ -231,7 +231,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_1 LOCOMOTOR_TAXIING USER_5">
 					<Model
-						Name="GUFireHwk_SKN"/>
+						Name="W3DContainer:GUFireHwk_SKN"/>
 					<Texture
 						Original="GU_FireHawk"
 						New="GU_FireHawk_K" />								
@@ -258,7 +258,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED USER_1 LOCOMOTOR_TAXIING">
 					<Model
-						Name="GUFireHwk_SKN" />
+						Name="W3DContainer:GUFireHwk_SKN" />
 					<Texture
 						Original="GU_FireHawk"
 						New="GU_FireHawkD" />
@@ -280,7 +280,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DAMAGED USER_1 LOCOMOTOR_TAXIING">
 					<Model
-						Name="GUFireHwk_SKN" />
+						Name="W3DContainer:GUFireHwk_SKN" />
 					<ParticleSysBone
 						BoneName="exhaust01"
 						FXParticleSystemTemplate="GDIFireHawkUpgrade02"
@@ -298,7 +298,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED USER_1">
 					<Model
-						Name="GUFireHwk_SKN" />
+						Name="W3DContainer:GUFireHwk_SKN" />
 					<Texture
 						Original="GU_FireHawk"
 						New="GU_FireHawkD" />
@@ -327,7 +327,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DAMAGED USER_1">
 					<Model
-						Name="GUFireHwk_SKN" />
+						Name="W3DContainer:GUFireHwk_SKN" />
 					<ParticleSysBone
 						BoneName="exhaust01"
 						FXParticleSystemTemplate="GDIFireHawkUpgrade02"
@@ -345,7 +345,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DAMAGED">
 					<Model
-						Name="GUFireHwk_SKN" />
+						Name="W3DContainer:GUFireHwk_SKN" />
 					<ParticleSysBone
 						BoneName="ROOTTRANSFORM"
 						FXParticleSystemTemplate="GDIDebrisSmallSmoke"
@@ -355,7 +355,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
 					<Model
-						Name="GUFireHwk_SKN" />
+						Name="W3DContainer:GUFireHwk_SKN" />
 					<Texture
 						Original="GU_FireHawk"
 						New="GU_FireHawkD" />
@@ -376,7 +376,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="GUFireHwkr_SKN" />
+						Name="W3DContainer:GUFireHwkr_SKN" />
 					<Texture
 						Original="GU_FireHawkD"
 						New="GU_FireHawkD" />
@@ -385,7 +385,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_1 LOCOMOTOR_TAXIING">
 					<Model
-						Name="GUFireHwk_SKN"/>
+						Name="W3DContainer:GUFireHwk_SKN"/>
 					<WeaponLaunchBone
 						WeaponSlotID="1"
 						WeaponSlotType="PRIMARY_WEAPON"
@@ -408,14 +408,14 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="FORMATION_PREVIEW">
 					<Model
-						Name="GUFireHwk_FP" />
+						Name="W3DContainer:GUFireHwk_FP" />
 				</ModelConditionState>	
 
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_1 USER_5">
 					<Model
-						Name="GUFireHwk_SKN"/>
+						Name="W3DContainer:GUFireHwk_SKN"/>
 					<Texture
 						Original="GU_FireHawk"
 						New="GU_FireHawk_K" />						
@@ -448,7 +448,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_5">
 					<Model
-						Name="GUFireHwk_SKN"/>
+						Name="W3DContainer:GUFireHwk_SKN"/>
 					<Texture
 						Original="GU_FireHawk"
 						New="GU_FireHawk_K" />						
@@ -481,7 +481,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_1">
 					<Model
-						Name="GUFireHwk_SKN"/>
+						Name="W3DContainer:GUFireHwk_SKN"/>
 					<ParticleSysBone
 						BoneName="exhaust01"
 						FXParticleSystemTemplate="GDIFireHawkUpgrade02"
@@ -827,7 +827,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="">
 					<Model
-						Name="FXInvisBone" />
+						Name="W3DContainer:FXInvisBone" />
 					<ParticleSysBone
 						BoneName="invisbone01"
 						FXParticleSystemTemplate="FireHawkConTrail"
@@ -844,13 +844,13 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="PACKING_TYPE_1 UNPACKING USER_1">
 					<Model
-						Name="FXInvisBone" />
+						Name="W3DContainer:FXInvisBone" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="PACKING_TYPE_1 PACKING USER_1">
 					<Model
-						Name="FXInvisBone" />
+						Name="W3DContainer:FXInvisBone" />
 				</ModelConditionState>
 			</ScriptedModelDraw>
 			
@@ -863,7 +863,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="">
 					<Model
-						Name="FXInvisBone" />
+						Name="W3DContainer:FXInvisBone" />
 					<ParticleSysBone
 						BoneName="invisbone01"
 						FXParticleSystemTemplate="FireHawkConTrail"
@@ -880,13 +880,13 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="PACKING_TYPE_1 UNPACKING USER_1">
 					<Model
-						Name="FXInvisBone" />
+						Name="W3DContainer:FXInvisBone" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="PACKING_TYPE_1 PACKING USER_1">
 					<Model
-						Name="FXInvisBone" />
+						Name="W3DContainer:FXInvisBone" />
 				</ModelConditionState>
 			</ScriptedModelDraw>
 			
