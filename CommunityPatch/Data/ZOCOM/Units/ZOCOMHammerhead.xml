@@ -96,7 +96,7 @@
 			DamageFX="VehicleDamageFX"
 			Conditions="PLAYER_UPGRADE" />
 		<LocomotorSet
-			Speed="40"
+			Speed="30"
 			Condition="TAXIING"
 			Locomotor="BasicHelicopterTaxiLocomotor" />
 		<LocomotorSet
@@ -1897,7 +1897,7 @@
 				CanPathThroughUnitsWhileDocking="True"
 				CanPathThroughUnitsWhileHarvesting="True"
 				FlyOffMap="REVERSE_DIRECTION"
-				DelayAFterLoadingOrUnloading="1s"
+				DelayAFterLoadingOrUnloading="0.5s"
 				FlyOffMapOnUnload="False"
 	AILuaEventsList="ZOCOMHammerheadFunctions_R24">
 				<UnitAITargetChooserData
