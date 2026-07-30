@@ -3071,6 +3071,58 @@ function OnSquadDestroyed_103(self)
 
 end
 
+lastUnitToAttack = {}
+
+function GetLastUnitToAttack(self)
+	local ObjID = getObjectId(self)
+	lastUnitToAttack[ObjID] = lastUnitToAttack[ObjID] or {
+		lastUnit = nil,
+		selfId = ObjID
+	}
+	return lastUnitToAttack[ObjID]
+end
+
+function MakeSonicEmitterTempImmune(self)
+	--print("second life!")
+	ExecuteAction("UNIT_SET_TEAM", self, "/team")	
+	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 15, 1)
+	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "INVISIBLE_STEALTH", 9999, 100)
+end
+
+function SonicEmitterDamaged(self, other)
+	GetLastUnitToAttack(self).lastUnit = other
+end
+
+-- triggered by the deploy 
+function GiveExperiencePoints(self)
+	local unitDestroyed = GetLastUnitToAttack(self)
+	local lastUnit = unitDestroyed.lastUnit
+	local sonic = tostring(ObjectDescription(self))
+	local attacker = tostring(ObjectDescription(lastUnit))
+	print (sonic .. " attacker: " .. attacker)
+	-- give 2000 xp to the unit that killed this
+	ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", SetObjectReference(lastUnit), 2000)
+
+	-- if unit is an infantry squad then get its squad and promote it, this is a squad so promote the squad
+	if squadMemberTable[getObjectId(lastUnit)] ~= nil then
+		local squadMember = squadMemberTable[getObjectId(lastUnit)]
+		local squad = squadTables[squadMember.squadObject]
+		--print("granting xp to squad")
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squad.stringRef, 2000)
+		-- and to all members
+		for squadMemberId,_ in squad.squadMembers do
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squadMemberTable[squadMemberId].stringRef, 2000)
+		end
+	else
+		-- for non squads 
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", SetObjectReference(lastUnit), 2000)
+	end
+		
+	lastUnitToAttack[unitDestroyed.selfId] = nil
+end	
+
+-- after 2s modifier kill it 
+
 -- ############################# R25 Redeemer Rage Generator fix  ###################################
 
 -- Duration set to 6 seconds

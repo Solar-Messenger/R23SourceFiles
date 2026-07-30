@@ -1066,6 +1066,12 @@
 		<EventHandler EventName="OnUnpackingEnd" ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
    	 </EventList>
 
+	  <EventList Name="TerraformingStationFunctions_R24" Inherit="BuildingPowerFunctions">
+  		<EventHandler EventName="OnWeaponUpg01" ScriptFunctionName="MakeSonicEmitterTempImmune" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDamaged" ScriptFunctionName="SonicEmitterDamaged" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUnattackable" ScriptFunctionName="GiveExperiencePoints" DebugSingleStep="false"/>
+   	 </EventList>
+
 	 <!-- r24 reverse move units -->
 	<EventList Name="GenericSquadFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnRallyPoint1" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>		
