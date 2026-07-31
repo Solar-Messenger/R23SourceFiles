@@ -3080,16 +3080,17 @@ end
 
 function GetSonicEmitterAttributes(self)
 
-	local isSonicEmitter = function()  
-		local objectName = getObjectName(%self)
-
-		if objectName == "CD0835A6" then -- gdi sonic emitter
+	local isSonicEmitter = function()
+		local objectName = getObjectName(%self) 
+		local sonicEmitters = {	
+			["CD0835A6"] = true, -- GDITerraformingStation
+			["89DA349"] = true, -- ZOCOMTerraformingStation
+		}
+		if sonicEmitters[objectName] then
 			return true
-		elseif objectName == "89DA349" then -- zocom sonic emitter
-			return false
 		end
 
-		return nil
+		return false
 	end
 
 	local ObjID = getObjectId(self)
@@ -3126,21 +3127,24 @@ function MakeSonicEmitterTempImmune(self)
 	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
 
 	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT), only for Sonic Emitters.
-	if sonic.sonicEmitterType ~= nil then
+	if sonic.sonicEmitterType then
 		-- if the sonic emitter has been sold off
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 19) then
 			-- spawn gdi/zocom rifleman suicided squad 
 			--print("spawning a rifleman squad as structure was sold")
-			if sonic.sonicEmitterType then 
+			if strfind(getObjectName(self), "CD0835A6") ~= nil then 
 				ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingSuicideWeapon")
 			else
 				-- zocom sonic emitter
+				print("zocom sonic")
 				ObjectCreateAndFireTempWeapon(self, "GenericZOCOMBuildingSuicideWeapon")
 			end
 		end
 		--spawn gdi/zocom rifleman partial squad 
 		--print("spawning a rifleman squad as structure was destroyed")
 		--ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingDestructionWeapon")
+	else 
+		-- shatterer else branch
 	end
 
 	if not ObjectTestModelCondition(self, "FIRING_A") then kill(self) end
