@@ -3104,7 +3104,7 @@ function TimerHasExpired(self)
 	print("timer expired")
 	for objId,_ in timeSinceSpawning do
 		-- 1.5s
-		if (curFrame - timeSinceSpawning[objId].frameSinceSwitching) >= 21 then
+		if (curFrame - timeSinceSpawning[objId].frameSinceSwitching) >= 22 then
 			print("killing unit")
 			ExecuteAction("NAMED_KILL", timeSinceSpawning[objId].selfRef)
 		end
@@ -3113,12 +3113,12 @@ end
 
 function MakeSonicEmitterTempImmune(self)
 	print("!")
-	if not ObjectTestModelCondition(self, "FIRING_A") then kill(self) end
 	-- doesnt fire weapon on itself when empd
 	local sonic = GetObjectsThatSwitchedSides(self)
 	sonic.selfRef = self
 	sonic.frameSinceSwitching = GetFrame()
 	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
+	if not ObjectTestModelCondition(self, "FIRING_A") then kill(self) end
 	--print("second life!")
 	-- this doesnt work after switching teams
 	--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_4", 3, 100)
@@ -3147,6 +3147,7 @@ function SonicEmitterDamaged(self, other)
 		-- print("USER 6")
 		-- sonic emitter receives this event dispatched by the damager, should work with stealth units as the killer wouldnt have restealthed by then
 		-- enemies dispatch this event to the sonic emitter to find out if any of them killed it 
+		-- if unit is shatterer/zone shatterer award xp
 		ObjectBroadcastEventToEnemies(other, "IsItAnEnemyEvent", 99999) 
 		MakeSonicEmitterTempImmune(self)
 	end
@@ -3168,6 +3169,9 @@ function GiveExperiencePoints(self)
 	local lastUnit = unitDestroyed.lastUnit
 	local sonic = tostring(ObjectDescription(self))
 	local attacker = tostring(ObjectDescription(lastUnit))
+	local _,xpRewardMultiplier = GetRankOfObject(self)
+	local xpReward = 1500*xpRewardMultiplier
+	-- WriteToFile("xpReward.txt",  "XP rewarded to attacker: " .. tostring(xpReward) .. "\n")
 	--print(sonic .. " attacker: " .. attacker)
 	-- give 2000 xp to the unit that killed this
 
@@ -3176,14 +3180,14 @@ function GiveExperiencePoints(self)
 		local squadMember = squadMemberTable[getObjectId(lastUnit)]
 		local squad = squadTables[squadMember.squadObject]
 		--print("granting xp to squad")
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squad.stringRef, 1500)
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squad.stringRef, xpReward)
 		-- and to all members
 		for squadMemberId,_ in squad.squadMembers do
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squadMemberTable[squadMemberId].stringRef, 1500)
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squadMemberTable[squadMemberId].stringRef, xpReward)
 		end
 	else
 		-- for non squads 
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", SetObjectReference(lastUnit), 1500)
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", SetObjectReference(lastUnit), xpReward)
 	end
 end	
 
@@ -3193,9 +3197,6 @@ function SonicOndeath(self)
 	lastUnitToAttack[GetLastUnitToAttack(self).selfId] = nil
 	timeSinceSpawning[getObjectId(self)] = nil
 end
-
--- after 2s modifier kill it 
-
 
 -- ############################# R25 Redeemer Rage Generator fix  ###################################
 
@@ -3353,23 +3354,28 @@ end
 
 -- ############################# R25 Helper Functions ###################################
 
+-- first returned value is the experience level, second is the xp reward multplier 
 function GetRankOfObject(unitRef) 
 	local squadLevel = 1
+	local xpMultiplier = 1
 	if EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_VETERAN") then
 		-- apply veteran level 
 		squadLevel = 2
+		xpMultiplier = 1.3 -- 1.3 when veteran
 	end
 
 	if EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_ELITE") then
 		-- apply elite level 
 		squadLevel = 3
+		xpMultiplier = 1.6 -- 1.6 when elite 
 	end
 
 	if EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_HEROIC") then
 		-- apply heroic level 
 		squadLevel = 4
+		xpMultiplier = 2 -- 2 when heroic
 	end
-	return squadLevel
+	return squadLevel, xpMultiplier
 end
 
 -- ############################# R25 Hammerhead Garrison fix ###################################
@@ -3428,8 +3434,8 @@ function GarrisonedInHammerhead(self)
 	local squadLeader = squadMemberTable[squad.squadLeader]
 	GrantUpgradesToLeader(squad)
 
-	local squadLevel = GetRankOfObject(squad.stringRef) 
-	local leaderLevel = GetRankOfObject(squadLeader.stringRef) 
+	local squadLevel,_ = GetRankOfObject(squad.stringRef) 
+	local leaderLevel,_ = GetRankOfObject(squadLeader.stringRef) 
 
 	--WriteToFile("leader rank hh.txt",  "Current leader rank: " .. tostring(leaderLevel) .. "\n" .. "squadLevel: " .. tostring(squadLevel) .. "\n" .. "-------------------" .. "\n")
 
@@ -3465,8 +3471,8 @@ function GarrisonedInHammerheadEnd(self)
 	end
 	-- if banner carrier has higher rank than members, promote members to rank of banner carrier 
 	local firstMember = squadMemberTable[next(squad.squadMembers)]
-	local memberLevel = GetRankOfObject(firstMember.stringRef) 
-	local squadLevel = GetRankOfObject(squad.stringRef) 
+	local memberLevel,_ = GetRankOfObject(firstMember.stringRef) 
+	local squadLevel,_ = GetRankOfObject(squad.stringRef) 
 	-- i need to reimplement the 2 way experience check again (isLeader) - Banner carriers dont inherit the veterancy when spawned inside of hammerheads 	
 	--WriteToFile("leader rank.txt",  "Current leader rank: " .. tostring(GetRankOfObject(squadMemberTable[squad.squadLeader].stringRef)) .. "\n" .. "squadLevel: " .. tostring(squadLevel) .. "\n" .. "-------------------" .. "\n")
 	-- 0 -> LT (<), if horde members are ranked lower than the squad 

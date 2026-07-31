@@ -4,9 +4,10 @@
 	<AttributeModifier
 		id="Modifier_KillTheSonic"
 		Category="NONE"
-		Duration="3s"
-		ObjectStatusToSet=""
+		Duration="1.5s"
+		ObjectStatusToSet="NO_ATTACK UNATTACKABLE"
 		ModelConditionsSet="USER_4">
+		<Modifier Type="INVULNERABLE" Value="100%"/>
 		<Modifier Type="RESIST_EMP" Value="100%"/>
 	</AttributeModifier>
 
