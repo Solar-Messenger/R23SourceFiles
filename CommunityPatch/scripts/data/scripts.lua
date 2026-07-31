@@ -3100,7 +3100,7 @@ function GetSonicEmitterAttributes(self)
 		damagedFlag = false,
 		sonicEmitterType = isSonicEmitter(), --true if its a gdi sonic emitter else false if its a zocom one. if neither then this value is nil
 		initialSetFrame = GetFrame(),
-		selfRef = self,
+		selfRef = self
 	}
 	return sonicEmitterTable[ObjID]
 end
@@ -3112,7 +3112,7 @@ function TimerHasExpired(self)
 	for objId,_ in sonicEmitterTable do
 		-- 1.5s
 		--WriteToFile("frame compare.txt",  "curFrame: " .. tostring(curFrame) .. " " .. "initialSetFrame: " .. tostring(sonicEmitterTable[objId].initialSetFrame) .. "\n")
-		if (curFrame - sonicEmitterTable[objId].initialSetFrame) >= 22 then
+		if (curFrame - sonicEmitterTable[objId].initialSetFrame) >= 22 and sonicEmitterTable[objId].damagedFlag then
 			--print("killing unit")
 			ExecuteAction("NAMED_KILL", sonicEmitterTable[objId].selfRef)
 		end
@@ -3122,6 +3122,7 @@ end
 function MakeSonicEmitterTempImmune(self)
 	-- doesnt fire weapon on itself when empd
 	local sonic = GetSonicEmitterAttributes(self)
+	sonic.initialSetFrame = GetFrame()
 	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
 
 	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT), only for Sonic Emitters.
@@ -3181,7 +3182,7 @@ end
 -- self is sonic emiter, other is the unit that could be the killer 
 function DetermineIfEnemyKilledMe(self, other)
 	local sonic = GetSonicEmitterAttributes(self)
-	if sonic.lastUnit == other then
+	if sonic.lastUnit == other and sonic.damagedFlag then
 		sonic.dontResolveEvent = true
 		print("enemy found")
 		GiveExperiencePoints(self)
