@@ -3113,6 +3113,10 @@ function MakeSonicEmitterTempImmune(self)
 	--print("!")
 	-- doesnt fire weapon on itself when empd
 	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
+	--if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 22) then kill(self) return end
+
+	if not ObjectTestModelCondition(self, "FIRING_A") then kill(self) return end
+
 	--print("second life!")
 	-- this doesnt work after switching teams
 	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_4", 1.5, 100)
@@ -3120,16 +3124,14 @@ function MakeSonicEmitterTempImmune(self)
 
 	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT) -- 
 
-	-- make it inaudible while on the neutral team , causes audio clipping
-	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 52, 1)
 
-	-- does no danage !
+	-- DOES NO DAMAGE ---------------------------
 	--ExecuteAction("UNIT_SET_TEAM", self, "/team")	
 	--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "INVISIBLE_STEALTH", 9999, 100)
-
-	local sonic = GetObjectsThatSwitchedSides(self)
-	sonic.selfRef = self
-	sonic.frameSinceSwitching = GetFrame()
+	-- local sonic = GetObjectsThatSwitchedSides(self)
+	-- sonic.selfRef = self
+	-- sonic.frameSinceSwitching = GetFrame()
+	----------------------------------------------
 
 	-- spawn an object with a 2s lifespan that on end goes through the timeSinceSpawning to determine if the frame diff of any is 2s or more (30/15)
 	--GiveExperiencePoints(self)
