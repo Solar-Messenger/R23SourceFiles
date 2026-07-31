@@ -3133,14 +3133,16 @@ function MakeSonicEmitterTempImmune(self)
 	sonic.frameSinceSwitching = GetFrame()
 	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
 
-	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT) -- 
-	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 19) then
-		-- spawn gdi/zocom rifleman suicided squad 
-		--print("spawning a rifleman squad as structure was sold")
-		ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingSuicideWeapon")
-	else
-		-- spawn gdi/zocom rifleman partial squad 
-		ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingDestructionWeapon")
+	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT), only for Sonic Emitters.
+	if sonic.isSonicEmitter then
+		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 19) then
+			-- spawn gdi/zocom rifleman suicided squad 
+			--print("spawning a rifleman squad as structure was sold")
+			ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingSuicideWeapon")
+		else
+			-- spawn gdi/zocom rifleman partial squad 
+			ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingDestructionWeapon")
+		end
 	end
 
 	if not ObjectTestModelCondition(self, "FIRING_A") then kill(self) end
