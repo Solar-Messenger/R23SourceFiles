@@ -1068,7 +1068,7 @@
    	 </EventList>
 
 	  <EventList Name="TerraformingStationFunctions_R24" Inherit="BaseScriptFunctions">
-  		<EventHandler EventName="OnRider1" ScriptFunctionName="MakeSonicEmitterTempImmune" DebugSingleStep="false"/>
+  		<!--<EventHandler EventName="OnRider1" ScriptFunctionName="MakeSonicEmitterTempImmune" DebugSingleStep="false"/>-->
 		<EventHandler EventName="OnDamaged" ScriptFunctionName="SonicEmitterDamaged" DebugSingleStep="false"/>
 		<!--<EventHandler EventName="OnUnattackable" ScriptFunctionName="GiveExperiencePoints" DebugSingleStep="false"/>-->
 		<EventHandler EventName="IsItAnEnemyEvent" ScriptFunctionName="DetermineIfEnemyKilledMe" DebugSingleStep="false"/>

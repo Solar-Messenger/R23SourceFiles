@@ -3101,7 +3101,7 @@ end
 
 function TimerHasExpired(self)
 	local curFrame = GetFrame()
-	print("timer expired")
+	--print("timer expired")
 	for objId,_ in timeSinceSpawning do
 		-- 1.5s
 		if (curFrame - timeSinceSpawning[objId].frameSinceSwitching) >= 22 then
@@ -3112,7 +3112,6 @@ function TimerHasExpired(self)
 end
 
 function MakeSonicEmitterTempImmune(self)
-	print("!")
 	-- doesnt fire weapon on itself when empd
 	local sonic = GetObjectsThatSwitchedSides(self)
 	sonic.selfRef = self
@@ -3120,7 +3119,14 @@ function MakeSonicEmitterTempImmune(self)
 	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
 
 	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT) -- 
-
+	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 19) then
+		-- spawn gdi/zocom rifleman suicided squad 
+		print("spawning a rifleman squad as structure was sold")
+		ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingSuicideWeapon")
+	else
+		-- spawn gdi/zocom rifleman partial squad 
+		ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingDestructionWeapon")
+	end
 
 	if not ObjectTestModelCondition(self, "FIRING_A") then kill(self) end
 	--print("second life!")
@@ -3194,7 +3200,7 @@ end
 
 --clean up 
 function SonicOndeath(self)
-	print("cleaning up") -- this might need to be more advanced as empd units dont relinquish the emp status
+	--print("cleaning up") -- this might need to be more advanced as empd units dont relinquish the emp status
 	lastUnitToAttack[GetLastUnitToAttack(self).selfId] = nil
 	timeSinceSpawning[getObjectId(self)] = nil
 end
