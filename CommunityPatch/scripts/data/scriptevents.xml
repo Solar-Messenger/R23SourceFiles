@@ -1073,7 +1073,7 @@
 		<!--<EventHandler EventName="OnUnattackable" ScriptFunctionName="GiveExperiencePoints" DebugSingleStep="false"/>-->
 		<EventHandler EventName="IsItAnEnemyEvent" ScriptFunctionName="DetermineIfEnemyKilledMe" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed" ScriptFunctionName="SonicOndeath" DebugSingleStep="false"/>
-		<EventHandler EventName="OnUser5End" ScriptFunctionName="KillSonic" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser4End" ScriptFunctionName="kill" DebugSingleStep="false"/>
    	 </EventList>
 
 	  <EventList Name="SonicTimeFunctions_R24" Inherit="BaseScriptFunctions">

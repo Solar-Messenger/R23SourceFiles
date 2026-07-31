@@ -3115,15 +3115,18 @@ function MakeSonicEmitterTempImmune(self)
 	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
 	--print("second life!")
 	-- this doesnt work after switching teams
-	--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_4", 3, 100)
+	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_4", 1.5, 100)
 	-- cant kill this easily after 3s
 
 	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT) -- 
 
-	-- make it inaudible while on the neutral team
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 52, 1)
-	ExecuteAction("UNIT_SET_TEAM", self, "/team")	
-	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "INVISIBLE_STEALTH", 9999, 100)
+	-- make it inaudible while on the neutral team , causes audio clipping
+	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 52, 1)
+
+	-- does no danage !
+	--ExecuteAction("UNIT_SET_TEAM", self, "/team")	
+	--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "INVISIBLE_STEALTH", 9999, 100)
+
 	local sonic = GetObjectsThatSwitchedSides(self)
 	sonic.selfRef = self
 	sonic.frameSinceSwitching = GetFrame()
