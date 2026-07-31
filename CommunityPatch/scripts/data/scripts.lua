@@ -3078,13 +3078,28 @@ function KillSonic(self)
 	print("user_4 has expired!")
 end
 
-function GetLastUnitToAttack(self)
+function GetSonicEmitterAttributes(self)
+
+	local isSonicEmitter = function()
+		local objectName = getObjectName(%self) 
+		local sonicEmitters = {	
+			["CD0835A6"] = true, -- GDITerraformingStation
+			["89DA349"] = true, -- ZOCOMTerraformingStation
+		}
+
+		if sonicEmitters[objectName] then
+			return true
+		end
+		return false
+	end
+
 	local ObjID = getObjectId(self)
 	lastUnitToAttack[ObjID] = lastUnitToAttack[ObjID] or {
 		lastUnit = nil,
 		selfId = ObjID,
 		dontResolveEvent = false,
-		damagedFlag = false
+		damagedFlag = false,
+		isSonicEmitter = isSonicEmitter()
 	}
 	return lastUnitToAttack[ObjID]
 end
@@ -3105,7 +3120,7 @@ function TimerHasExpired(self)
 	for objId,_ in timeSinceSpawning do
 		-- 1.5s
 		if (curFrame - timeSinceSpawning[objId].frameSinceSwitching) >= 22 then
-			print("killing unit")
+			--print("killing unit")
 			ExecuteAction("NAMED_KILL", timeSinceSpawning[objId].selfRef)
 		end
 	end
@@ -3121,7 +3136,7 @@ function MakeSonicEmitterTempImmune(self)
 	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT) -- 
 	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 19) then
 		-- spawn gdi/zocom rifleman suicided squad 
-		print("spawning a rifleman squad as structure was sold")
+		--print("spawning a rifleman squad as structure was sold")
 		ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingSuicideWeapon")
 	else
 		-- spawn gdi/zocom rifleman partial squad 
@@ -3146,7 +3161,7 @@ end
 function SonicEmitterDamaged(self, other)
 	-- if other == nil then return end
 	-- assigns the last unit to have attacked this unit here
-	local sonic = GetLastUnitToAttack(self)
+	local sonic = GetSonicEmitterAttributes(self)
 	sonic.lastUnit = other
 	if not sonic.damagedFlag and ObjectTestModelCondition(self, "USER_6") then
 		-- this is safety incase this triggers more than once
@@ -3154,15 +3169,19 @@ function SonicEmitterDamaged(self, other)
 		-- print("USER 6")
 		-- sonic emitter receives this event dispatched by the damager, should work with stealth units as the killer wouldnt have restealthed by then
 		-- enemies dispatch this event to the sonic emitter to find out if any of them killed it 
-		-- if unit is shatterer/zone shatterer award xp
-		ObjectBroadcastEventToEnemies(other, "IsItAnEnemyEvent", 99999) 
+		-- if self is shatterer/zone shatterer award xp
+
+		if not sonic.isSonicEmitter then
+			-- print("is a shatterer or zone shatterer")
+			ObjectBroadcastEventToEnemies(other, "IsItAnEnemyEvent", 99999) 
+		end
 		MakeSonicEmitterTempImmune(self)
 	end
 end
 
 -- self is sonic emiter, other is the unit that could be the killer 
 function DetermineIfEnemyKilledMe(self, other)
-	local sonic = GetLastUnitToAttack(self)
+	local sonic = GetSonicEmitterAttributes(self)
 	if sonic.lastUnit == other then
 		sonic.dontResolveEvent = true
 		print("enemy found")
@@ -3172,7 +3191,7 @@ end
 
 -- triggered by the deploy , this must prevent xp to allied units
 function GiveExperiencePoints(self)
-	local unitDestroyed = GetLastUnitToAttack(self)
+	local unitDestroyed = GetSonicEmitterAttributes(self)
 	local lastUnit = unitDestroyed.lastUnit
 	local sonic = tostring(ObjectDescription(self))
 	local attacker = tostring(ObjectDescription(lastUnit))
@@ -3201,7 +3220,7 @@ end
 --clean up 
 function SonicOndeath(self)
 	--print("cleaning up") -- this might need to be more advanced as empd units dont relinquish the emp status
-	lastUnitToAttack[GetLastUnitToAttack(self).selfId] = nil
+	lastUnitToAttack[GetSonicEmitterAttributes(self).selfId] = nil
 	timeSinceSpawning[getObjectId(self)] = nil
 end
 
@@ -3563,7 +3582,7 @@ end
 
 -- When squad appears at rax
 function OnSquadExitRax_R24(self)	
-	print("squad has finished building")
+	--print("squad has finished building")
 	local objId,squad = GetSquadAttributes(self)
 	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
 	-- squad size is 4 here. 
@@ -3578,7 +3597,7 @@ function OnSquadExitRax_R24(self)
 	-- if the squad can receive a weapon upgrade, apply setRider to true to enable it
 	if squadData.setRider then
 		squad.setRider = true
-		print("This unit can receive a weapon upgrade inside the hammerhead")
+		--print("This unit can receive a weapon upgrade inside the hammerhead")
 	end
 	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
 end
