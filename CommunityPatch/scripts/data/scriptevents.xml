@@ -974,6 +974,7 @@
 		<ScriptedEvent Name="MemberKilledOnBuilt" />
 		<ScriptedEvent Name="PhaseFieldEvent" />
 		<ScriptedEvent Name="RageGeneratorEvent" />
+		<ScriptedEvent Name="IsItAnEnemyEvent" />
     </Events>
     
     <EventList Name="BaseScriptFunctions">
@@ -1069,7 +1070,14 @@
 	  <EventList Name="TerraformingStationFunctions_R24" Inherit="BaseScriptFunctions">
   		<EventHandler EventName="OnRider1" ScriptFunctionName="MakeSonicEmitterTempImmune" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDamaged" ScriptFunctionName="SonicEmitterDamaged" DebugSingleStep="false"/>
-		<EventHandler EventName="OnUnattackable" ScriptFunctionName="GiveExperiencePoints" DebugSingleStep="false"/>
+		<!--<EventHandler EventName="OnUnattackable" ScriptFunctionName="GiveExperiencePoints" DebugSingleStep="false"/>-->
+		<EventHandler EventName="IsItAnEnemyEvent" ScriptFunctionName="DetermineIfEnemyKilledMe" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="SonicOndeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser5End" ScriptFunctionName="KillSonic" DebugSingleStep="false"/>
+   	 </EventList>
+
+	  <EventList Name="SonicTimeFunctions_R24" Inherit="BaseScriptFunctions">
+  		<EventHandler EventName="OnDestroyed" ScriptFunctionName="TimerHasExpired" DebugSingleStep="false"/>
    	 </EventList>
 
 	 <!-- r24 reverse move units -->

@@ -3071,38 +3071,92 @@ function OnSquadDestroyed_103(self)
 
 end
 
-function LowHealthFunction(self)
-	print("!!!!")
-end
-
 lastUnitToAttack = {}
+timeSinceSpawning = {}
+
+function KillSonic(self)
+	print("user_4 has expired!")
+end
 
 function GetLastUnitToAttack(self)
 	local ObjID = getObjectId(self)
 	lastUnitToAttack[ObjID] = lastUnitToAttack[ObjID] or {
 		lastUnit = nil,
-		selfId = ObjID
+		selfId = ObjID,
+		dontResolveEvent = false,
+		damagedFlag = false
 	}
 	return lastUnitToAttack[ObjID]
 end
 
+
+function GetObjectsThatSwitchedSides(self)
+	local ObjID = getObjectId(self)
+	timeSinceSpawning[ObjID] = timeSinceSpawning[ObjID] or {
+		frameSinceSwitching = nil,
+		selfRef = self
+	}
+	return timeSinceSpawning[ObjID]
+end
+
+function TimerHasExpired(self)
+	local curFrame = GetFrame()
+	for objId,_ in timeSinceSpawning do
+		if (curFrame - timeSinceSpawning[objId].frameSinceSwitching) >= 45 then
+			print("killing unit")
+			ExecuteAction("NAMED_KILL", timeSinceSpawning[objId].selfRef)
+		end
+	end
+end
+
 function MakeSonicEmitterTempImmune(self)
-	print("!")
+	--print("!")
 	-- doesnt fire weapon on itself when empd
 	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
 	--print("second life!")
+	-- this doesnt work after switching teams
+	--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_4", 3, 100)
+	-- cant kill this easily after 3s
+
+	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT) -- 
+
+	-- make it inaudible while on the neutral team
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 52, 1)
 	ExecuteAction("UNIT_SET_TEAM", self, "/team")	
-	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 15, 1)
 	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "INVISIBLE_STEALTH", 9999, 100)
-	GiveExperiencePoints(self)
+	local sonic = GetObjectsThatSwitchedSides(self)
+	sonic.selfRef = self
+	sonic.frameSinceSwitching = GetFrame()
+
+	-- spawn an object with a 2s lifespan that on end goes through the timeSinceSpawning to determine if the frame diff of any is 2s or more (30/15)
+	--GiveExperiencePoints(self)
 end
 
+-- objet that damaged this dispatches an event to the sonic emitter 
 function SonicEmitterDamaged(self, other)
-	if ObjectTestModelCondition(self, "USER_6") then
-		print("USER 6")
-		MakeSonicEmitterTempImmune(self)
+	if other == nil then return end
+	-- assigns the last unit to have attacked this unit here
+	local sonic = GetLastUnitToAttack(self)
+	sonic.lastUnit = other
+	if not sonic.damagedFlag and ObjectTestModelCondition(self, "USER_6") then
+		-- this is safety incase this triggers more than once
+		sonic.damagedFlag = true
+		-- print("USER 6")
+		-- sonic emitter receives this event dispatched by the damager, should work with stealth units as the killer wouldnt have restealthed by then
+		-- enemies dispatch this event to the sonic emitter to find out if any of them killed it 
+		ObjectBroadcastEventToEnemies(other, "IsItAnEnemyEvent", 99999) 
 	end
-	GetLastUnitToAttack(self).lastUnit = other
+end
+
+-- self is sonic emiter, other is the unit that could be the killer 
+function DetermineIfEnemyKilledMe(self, other)
+	local sonic = GetLastUnitToAttack(self)
+	if sonic.lastUnit == other then
+		sonic.dontResolveEvent = true
+		print("enemy found")
+		MakeSonicEmitterTempImmune(self)
+		GiveExperiencePoints(self)
+	end
 end
 
 -- triggered by the deploy , this must prevent xp to allied units
@@ -3111,26 +3165,31 @@ function GiveExperiencePoints(self)
 	local lastUnit = unitDestroyed.lastUnit
 	local sonic = tostring(ObjectDescription(self))
 	local attacker = tostring(ObjectDescription(lastUnit))
-	print (sonic .. " attacker: " .. attacker)
+	--print(sonic .. " attacker: " .. attacker)
 	-- give 2000 xp to the unit that killed this
 
-	-- if unit is an infantry squad then get its squad and promote it, this is a squad so promote the squad
+	-- if unit is an infantry squad then get its squad and promote it, this is a squad so promote the squad, this should only work on enemy units
 	if squadMemberTable[getObjectId(lastUnit)] ~= nil then
 		local squadMember = squadMemberTable[getObjectId(lastUnit)]
 		local squad = squadTables[squadMember.squadObject]
-		print("granting xp to squad")
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squad.stringRef, 2000)
+		--print("granting xp to squad")
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squad.stringRef, 1500)
 		-- and to all members
 		for squadMemberId,_ in squad.squadMembers do
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squadMemberTable[squadMemberId].stringRef, 2000)
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squadMemberTable[squadMemberId].stringRef, 1500)
 		end
 	else
 		-- for non squads 
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", SetObjectReference(lastUnit), 2000)
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", SetObjectReference(lastUnit), 1500)
 	end
-		
-	lastUnitToAttack[unitDestroyed.selfId] = nil
 end	
+
+--clean up 
+function SonicOndeath(self)
+	print("cleaning up") -- this might need to be more advanced as empd units dont relinquish the emp status
+	lastUnitToAttack[GetLastUnitToAttack(self).selfId] = nil
+	timeSinceSpawning[getObjectId(self)] = nil
+end
 
 -- after 2s modifier kill it 
 
