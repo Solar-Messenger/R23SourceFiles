@@ -3175,7 +3175,7 @@ function SonicEmitterDamaged(self, other)
 		-- enemies dispatch this event to the sonic emitter to find out if any of them killed it 
 
 		-- if self is shatterer/zone shatterer award xp
-		if sonic.sonicEmitterType == nil then
+		if not sonic.sonicEmitterType then
 			-- print("is a shatterer or zone shatterer")
 			ObjectBroadcastEventToEnemies(other, "IsItAnEnemyEvent", 99999) 
 		end
