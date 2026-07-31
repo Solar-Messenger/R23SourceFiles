@@ -3071,8 +3071,8 @@ function OnSquadDestroyed_103(self)
 
 end
 
-lastUnitToAttack = {}
-timeSinceSpawning = {}
+sonicEmitterTable = {}
+--timeSinceSpawning = {}
 
 function KillSonic(self)
 	print("user_4 has expired!")
@@ -3094,42 +3094,34 @@ function GetSonicEmitterAttributes(self)
 	end
 
 	local ObjID = getObjectId(self)
-	lastUnitToAttack[ObjID] = lastUnitToAttack[ObjID] or {
+	sonicEmitterTable[ObjID] = sonicEmitterTable[ObjID] or {
 		lastUnit = nil,
 		selfId = ObjID,
 		dontResolveEvent = false,
 		damagedFlag = false,
-		isSonicEmitter = isSonicEmitter()
-	}
-	return lastUnitToAttack[ObjID]
-end
-
-
-function GetObjectsThatSwitchedSides(self)
-	local ObjID = getObjectId(self)
-	timeSinceSpawning[ObjID] = timeSinceSpawning[ObjID] or {
+		isSonicEmitter = isSonicEmitter(),
 		frameSinceSwitching = nil,
 		selfRef = self
 	}
-	return timeSinceSpawning[ObjID]
+	return sonicEmitterTable[ObjID]
 end
+
 
 function TimerHasExpired(self)
 	local curFrame = GetFrame()
 	--print("timer expired")
-	for objId,_ in timeSinceSpawning do
+	for objId,_ in sonicEmitterTable do
 		-- 1.5s
-		if (curFrame - timeSinceSpawning[objId].frameSinceSwitching) >= 22 then
+		if (curFrame - sonicEmitterTable[objId].frameSinceSwitching) >= 22 then
 			--print("killing unit")
-			ExecuteAction("NAMED_KILL", timeSinceSpawning[objId].selfRef)
+			ExecuteAction("NAMED_KILL", sonicEmitterTable[objId].selfRef)
 		end
 	end
 end
 
 function MakeSonicEmitterTempImmune(self)
 	-- doesnt fire weapon on itself when empd
-	local sonic = GetObjectsThatSwitchedSides(self)
-	sonic.selfRef = self
+	local sonic = GetSonicEmitterAttributes(self)
 	sonic.frameSinceSwitching = GetFrame()
 	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
 
@@ -3140,8 +3132,9 @@ function MakeSonicEmitterTempImmune(self)
 			--print("spawning a rifleman squad as structure was sold")
 			ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingSuicideWeapon")
 		else
-			-- spawn gdi/zocom rifleman partial squad 
-			ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingDestructionWeapon")
+			--spawn gdi/zocom rifleman partial squad 
+			--print("spawning a rifleman squad as structure was destroyed")
+			--ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingDestructionWeapon")
 		end
 	end
 
@@ -3222,7 +3215,7 @@ end
 --clean up 
 function SonicOndeath(self)
 	--print("cleaning up") -- this might need to be more advanced as empd units dont relinquish the emp status
-	lastUnitToAttack[GetSonicEmitterAttributes(self).selfId] = nil
+	sonicEmitterTable[GetSonicEmitterAttributes(self).selfId] = nil
 	timeSinceSpawning[getObjectId(self)] = nil
 end
 
