@@ -3101,8 +3101,10 @@ end
 
 function TimerHasExpired(self)
 	local curFrame = GetFrame()
+	print("timer expired")
 	for objId,_ in timeSinceSpawning do
-		if (curFrame - timeSinceSpawning[objId].frameSinceSwitching) >= 45 then
+		-- 1.5s
+		if (curFrame - timeSinceSpawning[objId].frameSinceSwitching) >= 21 then
 			print("killing unit")
 			ExecuteAction("NAMED_KILL", timeSinceSpawning[objId].selfRef)
 		end
@@ -3110,28 +3112,24 @@ function TimerHasExpired(self)
 end
 
 function MakeSonicEmitterTempImmune(self)
-	--print("!")
+	print("!")
+	if not ObjectTestModelCondition(self, "FIRING_A") then kill(self) end
 	-- doesnt fire weapon on itself when empd
+	local sonic = GetObjectsThatSwitchedSides(self)
+	sonic.selfRef = self
+	sonic.frameSinceSwitching = GetFrame()
 	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
-	--if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 22) then kill(self) return end
-
-	if not ObjectTestModelCondition(self, "FIRING_A") then kill(self) return end
-
 	--print("second life!")
 	-- this doesnt work after switching teams
-	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_4", 1.5, 100)
+	--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_4", 3, 100)
 	-- cant kill this easily after 3s
 
 	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT) -- 
 
-
-	-- DOES NO DAMAGE ---------------------------
+	-- make it inaudible while on the neutral team
+	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 52, 1)
 	--ExecuteAction("UNIT_SET_TEAM", self, "/team")	
 	--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "INVISIBLE_STEALTH", 9999, 100)
-	-- local sonic = GetObjectsThatSwitchedSides(self)
-	-- sonic.selfRef = self
-	-- sonic.frameSinceSwitching = GetFrame()
-	----------------------------------------------
 
 	-- spawn an object with a 2s lifespan that on end goes through the timeSinceSpawning to determine if the frame diff of any is 2s or more (30/15)
 	--GiveExperiencePoints(self)
@@ -3139,7 +3137,7 @@ end
 
 -- objet that damaged this dispatches an event to the sonic emitter 
 function SonicEmitterDamaged(self, other)
-	if other == nil then return end
+	-- if other == nil then return end
 	-- assigns the last unit to have attacked this unit here
 	local sonic = GetLastUnitToAttack(self)
 	sonic.lastUnit = other
@@ -3150,6 +3148,7 @@ function SonicEmitterDamaged(self, other)
 		-- sonic emitter receives this event dispatched by the damager, should work with stealth units as the killer wouldnt have restealthed by then
 		-- enemies dispatch this event to the sonic emitter to find out if any of them killed it 
 		ObjectBroadcastEventToEnemies(other, "IsItAnEnemyEvent", 99999) 
+		MakeSonicEmitterTempImmune(self)
 	end
 end
 
@@ -3159,7 +3158,6 @@ function DetermineIfEnemyKilledMe(self, other)
 	if sonic.lastUnit == other then
 		sonic.dontResolveEvent = true
 		print("enemy found")
-		MakeSonicEmitterTempImmune(self)
 		GiveExperiencePoints(self)
 	end
 end
@@ -3197,6 +3195,7 @@ function SonicOndeath(self)
 end
 
 -- after 2s modifier kill it 
+
 
 -- ############################# R25 Redeemer Rage Generator fix  ###################################
 

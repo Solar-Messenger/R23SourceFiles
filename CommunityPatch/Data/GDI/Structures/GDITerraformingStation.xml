@@ -337,17 +337,14 @@
 					DeathTypes="ALL" />
 				<SpawnTemplate>GDITerraformingStationIonStormKiller</SpawnTemplate>
 			</SpawnBehavior>
-			<!--
+	
 			<SlowDeath
 				id="ModuleTag_Death"
 				SinkDelay="3.0s"
 				SinkRate="4.0"
 				DestructionDelay="8.0s">
-				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
-				<DieMuxData
-					DeathTypes="ALL" />
 			</SlowDeath>
-		-->
+
 			<FXListBehavior
 				id="ModuleTag_FXList">
 				<DieMuxData
@@ -358,10 +355,6 @@
 				<Event
 					Index="onTransitionToReallyDamaged"
 					FX="FX_BuildDamaged_Small" />
-					<!--
-				<Event
-					Index="onTransitionToRubble"
-					FX="FX_BuildRubble_Small" /> -->
 			</FXListBehavior>
 	
 			<AttributeModifierUpgrade

@@ -2,13 +2,14 @@
 <AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<GameObject
 		id="GDITerraformingStationRubble"
-		Side="Neutral"
+		Side="GDI"
 		EditorSorting="MISC_MAN_MADE"
-		KindOf="IMMOBILE NO_COLLIDE UNATTACKABLE NOT_AUTOACQUIRABLE"
+		KindOf="IMMOBILE NO_COLLIDE UNATTACKABLE NOT_AUTOACQUIRABLE CAN_CAST_REFLECTIONS"
 		EditorName="GDITerraformingStationRubble">
-		<DisplayName>PropName</DisplayName>
+		<DisplayName>GDITerraformingStationRubble</DisplayName>
 		<ArmorSet
-			Armor="NoArmor" />
+			Armor="GDITerraformingStationArmor"
+			DamageFX="FactionStructureDamageFX" />
 		<Draws>
 			<ScriptedModelDraw
 				id="ModuleTag_Draw"
@@ -96,11 +97,38 @@
 				id="ModuleTag_LifetimeUpdate"
 				MinLifetime="0s"
 				MaxLifetime="0s" />
+				<!--
 			<DestroyDie
 				id="ModuleTag_DestroyDie">
 				<DieMuxData
 					DeathTypes="ALL" />
 			</DestroyDie>
+		-->
+			<SlowDeath
+				id="ModuleTag_Death"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+			</SlowDeath>
+
+			<FXListBehavior
+				id="ModuleTag_FXList">
+				<DieMuxData
+					DeathTypes="ALL" />
+				<Event
+					Index="onTransitionToDamaged"
+					FX="FX_BuildDamaged_Small" />
+				<Event
+					Index="onTransitionToReallyDamaged"
+					FX="FX_BuildDamaged_Small" />
+				<Event
+					Index="onTransitionToRubble"
+					FX="FX_BuildRubble_Small" />
+			</FXListBehavior>
+			<CreateObjectDie xmlns="uri:ea.com:eala:asset"
+				id="ModuleTag_CreateOccupiedSuicide">
+				<DieMuxData DeathTypes="SUICIDED" />
+			</CreateObjectDie>
 		</Behaviors>
 		<Body>
 			<ActiveBody
@@ -109,12 +137,66 @@
 				InitialHealth="100.0" />
 		</Body>
 		<Geometry
-			IsSmall="true">
-			<Shape
-				Type="CYLINDER"
-				MajorRadius="15.0"
-				Height="10.0">			
+			IsSmall="false">
+			<Shape 
+				Type= "BOX"
+				MajorRadius = "18.3775"
+				MinorRadius = "18.3773"
+				Height = "4.70465" >
+				<Offset
+					x = "0.0"
+					y = "0.0"
+					z = "0.0" />
 			</Shape>
+			<Shape 
+				Type= "BOX"
+				MajorRadius = "8.74401"
+				MinorRadius = "12.3495"
+				Height = "41.2188" >
+				<Offset
+					x = "0.0"
+					y = "0.0"
+					z = "0.0" />
+			</Shape>
+			<Shape 
+				Type= "BOX"
+				MajorRadius = "9.44857"
+				MinorRadius = "4.62317"
+				Height = "9.20792" >
+				<Offset
+					x = "15.7154"
+					y = "3.33786e-006"
+					z = "25.5002" />
+			</Shape>
+			<ContactPoint>
+				<Pos x= "-7.28801" y = "-5.06412" z = "0.0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos x= "8.86416" y = "-5.06412" z = "37.4835" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos x= "8.86416" y = "11.088" z = "0.0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos x= "-7.28801" y = "11.0881" z = "37.4835" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos x= "-7.28801" y = "-5.06412" z = "37.4835" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos x= "8.86416" y = "-5.06412" z = "0.0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos x= "8.86416" y = "11.0881" z = "37.4835" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos x= "-7.28801" y = "11.088" z = "0.0" />
+			</ContactPoint>
 		</Geometry>
+		<ShadowInfo
+			Type="VOLUME" />
+		<VisionInfo
+			VisionRange="375"
+			ShroudClearingRange="500" />
 	</GameObject>
 </AssetDeclaration>
