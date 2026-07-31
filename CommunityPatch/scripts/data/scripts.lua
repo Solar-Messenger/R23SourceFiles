@@ -3118,21 +3118,22 @@ function MakeSonicEmitterTempImmune(self)
 	sonic.selfRef = self
 	sonic.frameSinceSwitching = GetFrame()
 	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
-	if not ObjectTestModelCondition(self, "FIRING_A") then kill(self) end
-	--print("second life!")
-	-- this doesnt work after switching teams
-	--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_4", 3, 100)
-	-- cant kill this easily after 3s
 
 	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT) -- 
 
+
+	if not ObjectTestModelCondition(self, "FIRING_A") then kill(self) end
+	--print("second life!")
+
+	-- this doesnt work after switching teams
+	-- ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_4", 3, 100)
 	-- make it inaudible while on the neutral team
-	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 52, 1)
-	--ExecuteAction("UNIT_SET_TEAM", self, "/team")	
-	--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "INVISIBLE_STEALTH", 9999, 100)
+	-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 52, 1)
+	-- ExecuteAction("UNIT_SET_TEAM", self, "/team")	
+	-- ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "INVISIBLE_STEALTH", 9999, 100)
 
 	-- spawn an object with a 2s lifespan that on end goes through the timeSinceSpawning to determine if the frame diff of any is 2s or more (30/15)
-	--GiveExperiencePoints(self)
+	-- GiveExperiencePoints(self)
 end
 
 -- objet that damaged this dispatches an event to the sonic emitter 

@@ -18,13 +18,17 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT">
 					<Model
-						Name="W3DContainer:GBTeraSta_D3SN" />
+						Name="" />
 				</ModelConditionState>		
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE">
 					<Model
 						Name="W3DContainer:GBTeraSta_D3SN" />
+					<ParticleSysBone
+                        BoneName="NONE"
+                        FXParticleSystemTemplate="Des_Small"
+                        FollowBone="false" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -97,38 +101,16 @@
 				id="ModuleTag_LifetimeUpdate"
 				MinLifetime="0s"
 				MaxLifetime="0s" />
-				<!--
-			<DestroyDie
-				id="ModuleTag_DestroyDie">
-				<DieMuxData
-					DeathTypes="ALL" />
-			</DestroyDie>
-		-->
+		
 			<SlowDeath
 				id="ModuleTag_Death"
 				SinkDelay="3.0s"
 				SinkRate="4.0"
 				DestructionDelay="8.0s">
-			</SlowDeath>
-
-			<FXListBehavior
-				id="ModuleTag_FXList">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
 				<DieMuxData
 					DeathTypes="ALL" />
-				<Event
-					Index="onTransitionToDamaged"
-					FX="FX_BuildDamaged_Small" />
-				<Event
-					Index="onTransitionToReallyDamaged"
-					FX="FX_BuildDamaged_Small" />
-				<Event
-					Index="onTransitionToRubble"
-					FX="FX_BuildRubble_Small" />
-			</FXListBehavior>
-			<CreateObjectDie xmlns="uri:ea.com:eala:asset"
-				id="ModuleTag_CreateOccupiedSuicide">
-				<DieMuxData DeathTypes="SUICIDED" />
-			</CreateObjectDie>
+			</SlowDeath>
 		</Behaviors>
 		<Body>
 			<ActiveBody

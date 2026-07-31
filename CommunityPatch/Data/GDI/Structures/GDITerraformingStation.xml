@@ -346,6 +346,9 @@
 				SinkDelay="3.0s"
 				SinkRate="4.0"
 				DestructionDelay="8.0s">
+				<Sound Type="INITIAL" List="" />
+				<DieMuxData
+					DeathTypes="ALL" />
 			</SlowDeath>
 
 			<FXListBehavior

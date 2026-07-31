@@ -5,9 +5,7 @@
 		id="OCL_DestroyedSonicEmitter">
 		<CreateObject
 			Options="USE_CREATORS_HEALTH_AS_BASE PRESERVE_LAYER"
-			Disposition="RELATIVE_ANGLE"
-			MinHealth="0"
-			MaxHealth="0">
+			Disposition="RELATIVE_ANGLE">
 			<CreateObject>GDITerraformingStationRubble</CreateObject>
 		</CreateObject>
 		<CreateObject
