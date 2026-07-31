@@ -3199,7 +3199,7 @@ end
 
 -- ############################# R25 Redeemer Rage Generator fix  ###################################
 
--- Duration set to 6 seconds
+-- Duration set to 6 seconds, this might not work
 function SetRageGeneratorState(self)
 	-- on -EMOTION_DISSIDENT then allow player commands again
 	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "EMOTION_DISSIDENT", 6, 100)

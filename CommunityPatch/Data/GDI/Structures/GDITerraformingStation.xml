@@ -58,24 +58,24 @@
 						TurretID="1" />
 				</ModelConditionState>
 				<!-- BUILD UP -->
-				<ModelConditionState
+				 <ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_6 STRUCTURE_UNPACKING">
 					<Model
 						Name="" />
-				</ModelConditionState>			
+				</ModelConditionState>				
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="STRUCTURE_UNPACKING">
 					<Model
 						Name="W3DContainer:GBTeraSta_ASN" />
-				</ModelConditionState>		
+				</ModelConditionState>				
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_6 RUBBLE">
 					<Model
-						Name="" />
-				</ModelConditionState>					
+						Name="W3DContainer:GBTeraSta_D3SN2" />
+				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE">
@@ -86,8 +86,8 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_6 REALLYDAMAGED">
 					<Model
-						Name="" />
-				</ModelConditionState>			
+						Name="W3DContainer:GBTeraSta_D2SN2" />
+				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
@@ -98,8 +98,8 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_6 DAMAGED">
 					<Model
-						Name="" />
-				</ModelConditionState>			
+						Name="W3DContainer:GBTeraSta_SKN2" />
+				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DAMAGED">
@@ -109,12 +109,15 @@
 						Original="GBTeraformStation"
 						New="GBTeraformStation_D" />
 				</ModelConditionState>
+				<!-- USER_6 -->
+
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_6">
 					<Model
-						Name="" />
-				</ModelConditionState>			
+						Name="W3DContainer:GBTeraSta_SKN2" />
+				</ModelConditionState>
+
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT">
 				</AnimationState>
