@@ -3080,17 +3080,16 @@ end
 
 function GetSonicEmitterAttributes(self)
 
-	local isSonicEmitter = function()
-		local objectName = getObjectName(%self) 
-		local sonicEmitters = {	
-			["CD0835A6"] = true, -- GDITerraformingStation
-			["89DA349"] = true, -- ZOCOMTerraformingStation
-		}
+	local isSonicEmitter = function()  
+		local objectName = getObjectName(%self)
 
-		if sonicEmitters[objectName] then
+		if objectName == "CD0835A6" then -- gdi sonic emitter
 			return true
+		elseif objectName == "89DA349" then -- zocom sonic emitter
+			return false
 		end
-		return false
+
+		return nil
 	end
 
 	local ObjID = getObjectId(self)
@@ -3099,9 +3098,9 @@ function GetSonicEmitterAttributes(self)
 		selfId = ObjID,
 		dontResolveEvent = false,
 		damagedFlag = false,
-		isSonicEmitter = isSonicEmitter(),
-		frameSinceSwitching = nil,
-		selfRef = self
+		sonicEmitterType = isSonicEmitter(), --true if its a gdi sonic emitter else false if its a zocom one. if neither then this value is nil
+		initialSetFrame = GetFrame(),
+		selfRef = self,
 	}
 	return sonicEmitterTable[ObjID]
 end
@@ -3112,7 +3111,8 @@ function TimerHasExpired(self)
 	--print("timer expired")
 	for objId,_ in sonicEmitterTable do
 		-- 1.5s
-		if (curFrame - sonicEmitterTable[objId].frameSinceSwitching) >= 22 then
+		--WriteToFile("frame compare.txt",  "curFrame: " .. tostring(curFrame) .. " " .. "initialSetFrame: " .. tostring(sonicEmitterTable[objId].initialSetFrame) .. "\n")
+		if (curFrame - sonicEmitterTable[objId].initialSetFrame) >= 22 then
 			--print("killing unit")
 			ExecuteAction("NAMED_KILL", sonicEmitterTable[objId].selfRef)
 		end
@@ -3122,20 +3122,24 @@ end
 function MakeSonicEmitterTempImmune(self)
 	-- doesnt fire weapon on itself when empd
 	local sonic = GetSonicEmitterAttributes(self)
-	sonic.frameSinceSwitching = GetFrame()
 	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
 
 	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT), only for Sonic Emitters.
-	if sonic.isSonicEmitter then
+	if sonic.sonicEmitterType ~= nil then
+		-- if the sonic emitter has been sold off
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 19) then
 			-- spawn gdi/zocom rifleman suicided squad 
 			--print("spawning a rifleman squad as structure was sold")
-			ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingSuicideWeapon")
-		else
-			--spawn gdi/zocom rifleman partial squad 
-			--print("spawning a rifleman squad as structure was destroyed")
-			--ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingDestructionWeapon")
+			if sonic.sonicEmitterType then 
+				ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingSuicideWeapon")
+			else
+				-- zocom sonic emitter
+				ObjectCreateAndFireTempWeapon(self, "GenericZOCOMBuildingSuicideWeapon")
+			end
 		end
+		--spawn gdi/zocom rifleman partial squad 
+		--print("spawning a rifleman squad as structure was destroyed")
+		--ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingDestructionWeapon")
 	end
 
 	if not ObjectTestModelCondition(self, "FIRING_A") then kill(self) end
@@ -3164,9 +3168,9 @@ function SonicEmitterDamaged(self, other)
 		-- print("USER 6")
 		-- sonic emitter receives this event dispatched by the damager, should work with stealth units as the killer wouldnt have restealthed by then
 		-- enemies dispatch this event to the sonic emitter to find out if any of them killed it 
-		-- if self is shatterer/zone shatterer award xp
 
-		if not sonic.isSonicEmitter then
+		-- if self is shatterer/zone shatterer award xp
+		if sonic.sonicEmitterType == nil then
 			-- print("is a shatterer or zone shatterer")
 			ObjectBroadcastEventToEnemies(other, "IsItAnEnemyEvent", 99999) 
 		end
@@ -3214,9 +3218,8 @@ end
 
 --clean up 
 function SonicOndeath(self)
-	--print("cleaning up") -- this might need to be more advanced as empd units dont relinquish the emp status
+	print("cleaning up") -- this might need to be more advanced as empd units dont relinquish the emp status
 	sonicEmitterTable[GetSonicEmitterAttributes(self).selfId] = nil
-	timeSinceSpawning[getObjectId(self)] = nil
 end
 
 -- ############################# R25 Redeemer Rage Generator fix  ###################################

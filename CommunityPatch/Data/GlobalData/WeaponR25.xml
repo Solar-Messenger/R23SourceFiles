@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
-	<!-- for spawning the squad -->
+	<!-- for spawning the squad 
 
 	<WeaponTemplate
 		id="GenericGDIBuildingDestructionWeapon"
@@ -15,7 +15,7 @@
 		<Nuggets>
 			<WeaponOCLNugget WeaponOCL="OCL_GenericGDIBuildingDestruction" />
 		</Nuggets>
-	</WeaponTemplate>
+	</WeaponTemplate>-->
 
 	<WeaponTemplate
 		id="GenericGDIBuildingSuicideWeapon"
@@ -28,6 +28,20 @@
 			MaxSeconds="0.1s" />
 		<Nuggets>
 			<WeaponOCLNugget WeaponOCL="OCL_GenericGDIBuildingSuicide" />
+		</Nuggets>
+	</WeaponTemplate>
+
+	<WeaponTemplate
+		id="GenericZOCOMBuildingSuicideWeapon"
+		Name="GenericZOCOMBuildingSuicideWeapon"
+		RadiusDamageAffects="ALLIES"
+		AttackRange="50000.0"
+		>
+		<FiringDuration
+			MinSeconds="0.1s"
+			MaxSeconds="0.1s" />
+		<Nuggets>
+			<WeaponOCLNugget WeaponOCL="OCL_GenericZOCOMBuildingSuicide" />
 		</Nuggets>
 	</WeaponTemplate>
 
