@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<!-- deploy a destroyed sonic emitter -->
+
+	<WeaponTemplate
+		id="SpawnDestroyedSonicEmitter"
+		Name="SpawnDestroyedSonicEmitter"
+		RadiusDamageAffects="ALLIES"
+		AttackRange="50000.0"
+		>
+		<!-- FireSound="ALI_PhaseGenerator_Begin" no worky -->
+		<!-- FireFX="FX_ALI_PhaseGenerator_Begin" no worky -->
+		<FiringDuration
+			MinSeconds="0.1s"
+			MaxSeconds="0.1s" />
+		<Nuggets>
+			<WeaponOCLNugget WeaponOCL="OCL_DestroyedSonicEmitter" />
+		</Nuggets>
+	</WeaponTemplate>
+
 	<!-- supersonic airstrike fix-->
 
 	<WeaponTemplate

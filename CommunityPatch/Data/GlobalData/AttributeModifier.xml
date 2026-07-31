@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<AttributeModifier
+		id="Modifier_KillTheSonic"
+		Category="NONE"
+		Duration="3s"
+		ObjectStatusToSet=""
+		ModelConditionsSet="USER_4">
+		<Modifier Type="RESIST_EMP" Value="100%"/>
+	</AttributeModifier>
+
 	 <AttributeModifier
 		id="Modifier_Speed0"
 		Category="NONE">

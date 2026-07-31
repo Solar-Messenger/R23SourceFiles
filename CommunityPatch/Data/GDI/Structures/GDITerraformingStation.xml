@@ -60,10 +60,22 @@
 				<!-- BUILD UP -->
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 STRUCTURE_UNPACKING">
+					<Model
+						Name="" />
+				</ModelConditionState>			
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="STRUCTURE_UNPACKING">
 					<Model
 						Name="W3DContainer:GBTeraSta_ASN" />
-				</ModelConditionState>				
+				</ModelConditionState>		
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 RUBBLE">
+					<Model
+						Name="" />
+				</ModelConditionState>					
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE">
@@ -294,14 +306,15 @@
 
 			<StatusBitsUpgrade
 				id="ModuleTag_DeployUpgrade"
-				StatusToSet="WEAPON_UPGRADED_01">
+				StatusToSet="RIDER1">
 				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
 			</StatusBitsUpgrade>
+	
 			<StatusBitsUpgrade
 				id="ModuleTag_DeployUpgrade2"
 				StatusToSet="UNATTACKABLE">
 				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
-			</StatusBitsUpgrade>
+			</StatusBitsUpgrade> 
 			<LinearDamageUpdate
 				id="ModuleData_LinearDamageUpdate"
 				StartDistanceOffset="50"
@@ -347,7 +360,13 @@
 					Index="onTransitionToRubble"
 					FX="FX_BuildRubble_Small" />
 			</FXListBehavior>
-
+	
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeSonicEmitter"
+				AttributeModifier="Modifier_KillTheSonic">
+				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
+			</AttributeModifierUpgrade>
+	
 			<ModelConditionUpgrade
 				id="ModuleTag_DeployFlags"
 				AddConditionFlags="USER_6" >

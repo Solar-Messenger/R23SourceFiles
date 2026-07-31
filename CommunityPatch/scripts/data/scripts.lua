@@ -3071,6 +3071,10 @@ function OnSquadDestroyed_103(self)
 
 end
 
+function LowHealthFunction(self)
+	print("!!!!")
+end
+
 lastUnitToAttack = {}
 
 function GetLastUnitToAttack(self)
@@ -3083,17 +3087,25 @@ function GetLastUnitToAttack(self)
 end
 
 function MakeSonicEmitterTempImmune(self)
+	print("!")
+	-- doesnt fire weapon on itself when empd
+	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
 	--print("second life!")
 	ExecuteAction("UNIT_SET_TEAM", self, "/team")	
 	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 15, 1)
 	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "INVISIBLE_STEALTH", 9999, 100)
+	GiveExperiencePoints(self)
 end
 
 function SonicEmitterDamaged(self, other)
+	if ObjectTestModelCondition(self, "USER_6") then
+		print("USER 6")
+		MakeSonicEmitterTempImmune(self)
+	end
 	GetLastUnitToAttack(self).lastUnit = other
 end
 
--- triggered by the deploy 
+-- triggered by the deploy , this must prevent xp to allied units
 function GiveExperiencePoints(self)
 	local unitDestroyed = GetLastUnitToAttack(self)
 	local lastUnit = unitDestroyed.lastUnit
@@ -3101,13 +3113,12 @@ function GiveExperiencePoints(self)
 	local attacker = tostring(ObjectDescription(lastUnit))
 	print (sonic .. " attacker: " .. attacker)
 	-- give 2000 xp to the unit that killed this
-	ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", SetObjectReference(lastUnit), 2000)
 
 	-- if unit is an infantry squad then get its squad and promote it, this is a squad so promote the squad
 	if squadMemberTable[getObjectId(lastUnit)] ~= nil then
 		local squadMember = squadMemberTable[getObjectId(lastUnit)]
 		local squad = squadTables[squadMember.squadObject]
-		--print("granting xp to squad")
+		print("granting xp to squad")
 		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squad.stringRef, 2000)
 		-- and to all members
 		for squadMemberId,_ in squad.squadMembers do

@@ -1066,8 +1066,8 @@
 		<EventHandler EventName="OnUnpackingEnd" ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
    	 </EventList>
 
-	  <EventList Name="TerraformingStationFunctions_R24" Inherit="BuildingPowerFunctions">
-  		<EventHandler EventName="OnWeaponUpg01" ScriptFunctionName="MakeSonicEmitterTempImmune" DebugSingleStep="false"/>
+	  <EventList Name="TerraformingStationFunctions_R24" Inherit="BaseScriptFunctions">
+  		<EventHandler EventName="OnRider1" ScriptFunctionName="MakeSonicEmitterTempImmune" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDamaged" ScriptFunctionName="SonicEmitterDamaged" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUnattackable" ScriptFunctionName="GiveExperiencePoints" DebugSingleStep="false"/>
    	 </EventList>

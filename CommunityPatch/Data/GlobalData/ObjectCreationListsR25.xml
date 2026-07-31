@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<ObjectCreationList
+		id="OCL_DestroyedSonicEmitter">
+		<CreateObject
+			Options="USE_CREATORS_HEALTH_AS_BASE PRESERVE_LAYER"
+			Disposition="RELATIVE_ANGLE"
+			MinHealth="0"
+			MaxHealth="0">
+			<CreateObject>GDITerraformingStationRubble</CreateObject>
+		</CreateObject>
+	</ObjectCreationList>
+
 	<!-- used for phase fix-->
 	<ObjectCreationList
 		id="OCL_PhaseDummy">
