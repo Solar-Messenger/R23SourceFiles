@@ -12,7 +12,7 @@
 		id="Modifier_KillTheSonic"
 		Category="NONE"
 		Duration="1.5s"
-		ObjectStatusToSet="NO_ATTACK UNATTACKABLE IMMOBILE"
+		ObjectStatusToSet="NO_ATTACK UNATTACKABLE IMMOBILE UNSELECTABLE"
 		ModelConditionsSet="USER_4">
 		<Modifier Type="INVULNERABLE" Value="100%"/>
 		<Modifier Type="RESIST_EMP" Value="100%"/>

@@ -3097,7 +3097,6 @@ function GetSonicEmitterAttributes(self)
 	sonicEmitterTable[ObjID] = sonicEmitterTable[ObjID] or {
 		lastUnit = nil,
 		selfId = ObjID,
-		dontResolveEvent = false,
 		damagedFlag = false,
 		sonicEmitterType = isSonicEmitter(), --true if its a gdi sonic emitter else false if its a zocom one. if neither then this value is nil
 		initialSetFrame = GetFrame(),
@@ -3164,10 +3163,10 @@ end
 -- objet that damaged this dispatches an event to the sonic emitter 
 function SonicEmitterDamaged(self, other)
 	-- if other == nil then return end
-	-- assigns the last unit to have attacked this unit here
 	local sonic = GetSonicEmitterAttributes(self)
-	sonic.lastUnit = other
 	if not sonic.damagedFlag and ObjectTestModelCondition(self, "USER_6") then
+		-- assigns the last unit to have attacked this unit here
+		sonic.lastUnit = other
 		-- this is safety incase this triggers more than once
 		sonic.damagedFlag = true
 		 print("USER 6")
@@ -3187,7 +3186,6 @@ end
 function DetermineIfEnemyKilledMe(self, other)
 	local sonic = GetSonicEmitterAttributes(self)
 	if sonic.lastUnit == other and sonic.damagedFlag then
-		sonic.dontResolveEvent = true
 		print("enemy found")
 		GiveExperiencePoints(self)
 	end
@@ -3201,7 +3199,7 @@ function GiveExperiencePoints(self)
 	local attacker = tostring(ObjectDescription(lastUnit))
 	local _,xpRewardMultiplier = GetRankOfObject(self)
 	local xpReward = 1500*xpRewardMultiplier
-	-- WriteToFile("xpReward.txt",  "XP rewarded to attacker: " .. tostring(xpReward) .. "\n")
+	--WriteToFile("xpReward.txt",  "XP rewarded to attacker: " .. tostring(xpReward) .. "\n")
 	--print(sonic .. " attacker: " .. attacker)
 	-- give 2000 xp to the unit that killed this
 
@@ -3211,6 +3209,7 @@ function GiveExperiencePoints(self)
 		local squad = squadTables[squadMember.squadObject]
 		--print("granting xp to squad")
 		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squad.stringRef, xpReward)
+		--WriteToFile("xpsquad.txt",  "squad object: " .. tostring(squad) .. "\n")
 		-- and to all members
 		for squadMemberId,_ in squad.squadMembers do
 			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squadMemberTable[squadMemberId].stringRef, xpReward)
