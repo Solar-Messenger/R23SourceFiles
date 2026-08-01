@@ -297,6 +297,10 @@
 				Active="True"
 				UsedForHealthBox="True" />
 		</Geometry>
+		 <EvaEvents
+            EvaEventDieOwner="UnitLost"
+			EvaEventSecondDamageFarFromFirstScanRange="600"
+			EvaEventSecondDamageFarFromFirstTimeoutMS="31000" />
 		<ShadowInfo
 			Type="VOLUME" />
 		<VisionInfo

@@ -45,6 +45,22 @@
 		</Nuggets>
 	</WeaponTemplate>
 
+	<!-- deploy a destroyed shatterer -->
+
+	<WeaponTemplate
+		id="SpawnDestroyedSonicTank"
+		Name="SpawnDestroyedSonicTank"
+		RadiusDamageAffects="ALLIES"
+		AttackRange="50000.0"
+		>
+		<FiringDuration
+			MinSeconds="0.1s"
+			MaxSeconds="0.1s" />
+		<Nuggets>
+			<WeaponOCLNugget WeaponOCL="OCL_DestroyedSonicTank" />
+		</Nuggets>
+	</WeaponTemplate>
+
 	<!-- deploy a destroyed zone shatterer -->
 
 	<WeaponTemplate

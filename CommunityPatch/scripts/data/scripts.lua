@@ -3142,8 +3142,13 @@ function MakeSonicEmitterTempImmune(self)
 		--print("spawning a rifleman squad as structure was destroyed")
 		--ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingDestructionWeapon")
 	else 
-		-- zone shatterer else branch
-		ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedImprovedSonicTank")
+		if strfind(getObjectName(self), "AE73138F") ~= nil then
+			-- spawn zone shatterer rubble
+			ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedImprovedSonicTank")
+		else
+			-- spawn gdi shatterer rubble
+			ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicTank")
+		end
 	end
 
 	if not (ObjectTestModelCondition(self, "FIRING_A") or ObjectTestModelCondition(self, "USER_3")) then kill(self) end

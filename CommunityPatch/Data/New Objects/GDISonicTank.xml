@@ -67,6 +67,12 @@
                         Name="W3DContainer:GUSHATTERER_FP" />
                 </ModelConditionState>
                 <ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 REALLYDAMAGED">
+					<Model
+						Name="" />
+				</ModelConditionState>
+                <ModelConditionState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="REALLYDAMAGED">
                     <Model
@@ -88,11 +94,23 @@
                         FollowBone="true" />
                 </ModelConditionState>
                 <ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DYING">
+					<Model
+						Name="" />
+				</ModelConditionState>
+                <ModelConditionState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="DYING">
                     <Model
                         Name="" />
                 </ModelConditionState>
+                <ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6">
+					<Model
+						Name="" />
+				</ModelConditionState>
                 <AnimationState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="DYING"
@@ -185,6 +203,12 @@
                         Name="" />
                 </ModelConditionState>
                 <ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DYING">
+					<Model
+						Name="" />
+				</ModelConditionState>
+                <ModelConditionState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="DYING">
                     <Model
@@ -203,11 +227,23 @@
                         FollowBone="true" />
                 </ModelConditionState>
                 <ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 PASSENGER">
+					<Model
+						Name="" />
+				</ModelConditionState>
+                <ModelConditionState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="PASSENGER">
                     <Model
                         Name="" />
                 </ModelConditionState>
+                <ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_1 USER_6 AFFECTED_BY_EMP">
+					<Model
+						Name="" />
+				</ModelConditionState>
                 <ModelConditionState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="USER_1 AFFECTED_BY_EMP">
@@ -222,6 +258,12 @@
                         FXParticleSystemTemplate=""
                         FollowBone="true" />
                 </ModelConditionState>
+                <ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6">
+					<Model
+						Name="" />
+				</ModelConditionState>
                 <ModelConditionState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="USER_1">
@@ -407,16 +449,8 @@
                     DeathTypesForbidden="TOPPLED" />
                 <Sound
                     Type="INITIAL"
-                    List="GDI_Generic_VoiceDieMS" />
+                    List="" />
             </SlowDeath>
-            <FXListBehavior
-                id="ModuleTag_FXList">
-                <DieMuxData
-                    DeathTypes="ALL" />
-                <Event
-                    Index="onDeath"
-                    FX="FX_GDIMammothExplode" />
-            </FXListBehavior>
             <!--<SubObjectsUpgrade
                 id="ModuleTag_ShowRail"
                 ShowSubObjects="UGRAIL_01">
@@ -427,6 +461,22 @@
                 StatusToSet="WEAPON_UPGRADED_01">
                 <TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
             </StatusBitsUpgrade>-->
+            <AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeSonicEmitter"
+				AttributeModifier="Modifier_KillTheSonic">
+				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
+			</AttributeModifierUpgrade>
+	
+			<ModelConditionUpgrade
+				id="ModuleTag_DeployFlags"
+				AddConditionFlags="USER_6" >
+				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
+			</ModelConditionUpgrade>
+            <StatusBitsUpgrade
+				id="ModuleTag_UnattackableUpgrade"
+				StatusToSet="UNATTACKABLE">
+				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
+			</StatusBitsUpgrade> 
             <CreateAndEnterObjectSpecialPower
                 id="ModuleTag_CallForTransport"
                 SpecialPowerTemplate="SpecialPowerCallForTransportGDI"
@@ -486,7 +536,7 @@
             <AIUpdate
                 id="ModuleTag_AI"
                 AutoAcquireEnemiesWhenIdle="YES"
-                AILuaEventsList="GDIPredatorFunctions_R24">
+                AILuaEventsList="GDISonicTankFunctions_R24">
                 <UnitAITargetChooserData
                     CanPickDynamicTargets="false"
                     SympathyRange="100.0" />
@@ -495,6 +545,8 @@
         <Body>
             <ActiveBody
                 id="ModuleTag_Body"
+                SecondChanceUpgrade="Upgrade_SonicEmitterDelayedDestruction"
+				SecondChanceHeal="1"
                 MaxHealth="3400" />
         </Body>
         <Geometry
@@ -547,7 +599,6 @@
                 AudioType="soundMoveStart" />
         </AudioArraySound>
         <EvaEvents
-            EvaEventDieOwner="UnitLost"
             EvaEventProductionStarted="UnitConstructionStarted"
             EvaEventDamagedOwner="UnitUnderAttack"
             EvaEventDamagedFromShroudedSourceOwner="UnitUnderAttackFromShroudedUnit"

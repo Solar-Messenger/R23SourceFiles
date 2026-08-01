@@ -2,6 +2,20 @@
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
 	<ObjectCreationList
+		id="OCL_DestroyedSonicTank">
+		<CreateObject
+			Options="USE_CREATORS_HEALTH_AS_BASE PRESERVE_LAYER"
+			Disposition="RELATIVE_ANGLE">
+			<CreateObject>GDISonicTankRubble</CreateObject>
+		</CreateObject>
+		<CreateObject
+			Options="IGNORE_ALL_OBJECTS"
+			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND">
+			<CreateObject>KillSonicObjectTimer</CreateObject>
+		</CreateObject> 
+	</ObjectCreationList>
+
+	<ObjectCreationList
 		id="OCL_DestroyedImprovedSonicTank">
 		<CreateObject
 			Options="USE_CREATORS_HEALTH_AS_BASE PRESERVE_LAYER"
