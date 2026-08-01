@@ -3071,9 +3071,178 @@ function OnSquadDestroyed_103(self)
 
 end
 
+sonicEmitterTable = {}
+--timeSinceSpawning = {}
+
+function KillSonic(self)
+	print("user_4 has expired!")
+end
+
+function GetSonicEmitterAttributes(self)
+
+	local isSonicEmitter = function()
+		local objectName = getObjectName(%self) 
+		local sonicEmitters = {	
+			["CD0835A6"] = true, -- GDITerraformingStation
+			["89DA349"] = true, -- ZOCOMTerraformingStation
+		}
+		if sonicEmitters[objectName] then
+			return true
+		end
+
+		return false
+	end
+
+	local ObjID = getObjectId(self)
+	sonicEmitterTable[ObjID] = sonicEmitterTable[ObjID] or {
+		lastUnit = nil,
+		selfId = ObjID,
+		damagedFlag = false,
+		sonicEmitterType = isSonicEmitter(), --true if its a gdi sonic emitter else false if its a zocom one. if neither then this value is nil
+		initialSetFrame = GetFrame(),
+		selfRef = self,
+		hasGivenXP = false
+	}
+	return sonicEmitterTable[ObjID]
+end
+
+
+function TimerHasExpired(self)
+	local curFrame = GetFrame()
+	--print("timer expired")
+	for objId,_ in sonicEmitterTable do
+		-- 1.5s
+		--WriteToFile("frame compare.txt",  "curFrame: " .. tostring(curFrame) .. " " .. "initialSetFrame: " .. tostring(sonicEmitterTable[objId].initialSetFrame) .. "\n")
+		if (curFrame - sonicEmitterTable[objId].initialSetFrame) >= 22 and sonicEmitterTable[objId].damagedFlag then
+			--print("killing unit")
+			ExecuteAction("NAMED_KILL", sonicEmitterTable[objId].selfRef)
+		end
+	end
+end
+
+function MakeSonicEmitterTempImmune(self)
+	-- doesnt fire weapon on itself when empd
+	local sonic = GetSonicEmitterAttributes(self)
+	sonic.initialSetFrame = GetFrame()
+	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT), only for Sonic Emitters.
+	if sonic.sonicEmitterType then
+		ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
+		-- if the sonic emitter has been sold off
+		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 19) then
+			-- spawn gdi/zocom rifleman suicided squad 
+			--print("spawning a rifleman squad as structure was sold")
+			if strfind(getObjectName(self), "CD0835A6") ~= nil then 
+				ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingSuicideWeapon")
+			else
+				-- zocom sonic emitter
+				print("zocom sonic")
+				ObjectCreateAndFireTempWeapon(self, "GenericZOCOMBuildingSuicideWeapon")
+			end
+		end
+		--spawn gdi/zocom rifleman partial squad 
+		--print("spawning a rifleman squad as structure was destroyed")
+		--ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingDestructionWeapon")
+	else 
+		if strfind(getObjectName(self), "AE73138F") ~= nil then
+			-- spawn zone shatterer rubble
+			ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedImprovedSonicTank")
+		else
+			-- spawn gdi shatterer rubble
+			ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicTank")
+		end
+	end
+
+	if not (ObjectTestModelCondition(self, "FIRING_A") or ObjectTestModelCondition(self, "USER_3")) then kill(self) end
+	--print("second life!")
+
+	-- this doesnt work after switching teams
+	-- ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_4", 3, 100)
+	-- make it inaudible while on the neutral team
+	-- ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 52, 1)
+	-- ExecuteAction("UNIT_SET_TEAM", self, "/team")	
+	-- ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "INVISIBLE_STEALTH", 9999, 100)
+
+	-- spawn an object with a 2s lifespan that on end goes through the timeSinceSpawning to determine if the frame diff of any is 2s or more (30/15)
+	-- GiveExperiencePoints(self)
+end
+
+-- objet that damaged this dispatches an event to the sonic emitter 
+function SonicEmitterDamaged(self, other)
+	-- if other == nil then return end
+	local sonic = GetSonicEmitterAttributes(self)
+	if not sonic.damagedFlag and ObjectTestModelCondition(self, "USER_6") then
+		-- assigns the last unit to have attacked this unit here
+		sonic.lastUnit = other
+		-- this is safety incase this triggers more than once
+		sonic.damagedFlag = true
+		 print("USER 6")
+		-- sonic emitter receives this event dispatched by the damager, should work with stealth units as the killer wouldnt have restealthed by then
+		-- enemies dispatch this event to the sonic emitter to find out if any of them killed it 
+
+		-- if self is shatterer/zone shatterer award xp
+		if not sonic.sonicEmitterType then
+			-- print("is a shatterer or zone shatterer")
+			ObjectBroadcastEventToEnemies(other, "IsItAnEnemyEvent", 99999) 
+		end
+		MakeSonicEmitterTempImmune(self)
+	end
+end
+
+-- self is sonic emiter, other is the unit that could be the killer 
+function DetermineIfEnemyKilledMe(self, other)
+	local sonic = GetSonicEmitterAttributes(self)
+	if sonic.lastUnit == other and sonic.damagedFlag and not sonic.hasGivenXP then
+		print("enemy found")
+		GiveExperiencePoints(self)
+	end
+end
+
+-- triggered by the deploy , this must prevent xp to allied units
+function GiveExperiencePoints(self)
+	local sonic = GetSonicEmitterAttributes(self)
+	local lastUnit = sonic.lastUnit
+	local sonic = tostring(ObjectDescription(self))
+	local attacker = tostring(ObjectDescription(lastUnit))
+	local _,xpRewardMultiplier = GetRankOfObject(self)
+	local xpReward = 1500*xpRewardMultiplier
+	--WriteToFile("xpReward.txt",  "XP rewarded to attacker: " .. tostring(xpReward) .. "\n")
+	--print(sonic .. " attacker: " .. attacker)
+	-- give 2000 xp to the unit that killed this
+
+	-- if unit is an infantry squad then get its squad and promote it, this is a squad so promote the squad, this should only work on enemy units
+	if squadMemberTable[getObjectId(lastUnit)] ~= nil then
+		local squadMember = squadMemberTable[getObjectId(lastUnit)]
+		local squad = squadTables[squadMember.squadObject]
+		--print("granting xp to squad")
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squad.stringRef, xpReward)
+		--WriteToFile("xpsquad.txt",  "squad object: " .. tostring(squad) .. "\n")
+		-- and to all members
+		for squadMemberId,_ in squad.squadMembers do
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squadMemberTable[squadMemberId].stringRef, xpReward)
+		end
+	else
+		-- for non squads 
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", SetObjectReference(lastUnit), xpReward)
+	end
+
+	sonic.hasGivenXP = true
+end	
+
+--clean up 
+function SonicOndeath(self)
+	--print("cleaning up") -- this might need to be more advanced as empd units dont relinquish the emp status
+	sonicEmitterTable[GetSonicEmitterAttributes(self).selfId] = nil
+end
+
+-- wrapper for shatterers/zone shatterers to clear sonicEmitterTable and reverse move table 
+function ShattererOndeath(self)
+	sonicEmitterTable[GetSonicEmitterAttributes(self).selfId] = nil
+	GroupUnitOnDeath(self)
+end
+
 -- ############################# R25 Redeemer Rage Generator fix  ###################################
 
--- Duration set to 6 seconds
+-- Duration set to 6 seconds, this might not work
 function SetRageGeneratorState(self)
 	-- on -EMOTION_DISSIDENT then allow player commands again
 	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "EMOTION_DISSIDENT", 6, 100)
@@ -3227,23 +3396,28 @@ end
 
 -- ############################# R25 Helper Functions ###################################
 
+-- first returned value is the experience level, second is the xp reward multplier 
 function GetRankOfObject(unitRef) 
 	local squadLevel = 1
+	local xpMultiplier = 1
 	if EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_VETERAN") then
 		-- apply veteran level 
 		squadLevel = 2
+		xpMultiplier = 1.3 -- 1.3 when veteran
 	end
 
 	if EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_ELITE") then
 		-- apply elite level 
 		squadLevel = 3
+		xpMultiplier = 1.6 -- 1.6 when elite 
 	end
 
 	if EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_HEROIC") then
 		-- apply heroic level 
 		squadLevel = 4
+		xpMultiplier = 2 -- 2 when heroic
 	end
-	return squadLevel
+	return squadLevel, xpMultiplier
 end
 
 -- ############################# R25 Hammerhead Garrison fix ###################################
@@ -3302,8 +3476,8 @@ function GarrisonedInHammerhead(self)
 	local squadLeader = squadMemberTable[squad.squadLeader]
 	GrantUpgradesToLeader(squad)
 
-	local squadLevel = GetRankOfObject(squad.stringRef) 
-	local leaderLevel = GetRankOfObject(squadLeader.stringRef) 
+	local squadLevel,_ = GetRankOfObject(squad.stringRef) 
+	local leaderLevel,_ = GetRankOfObject(squadLeader.stringRef) 
 
 	--WriteToFile("leader rank hh.txt",  "Current leader rank: " .. tostring(leaderLevel) .. "\n" .. "squadLevel: " .. tostring(squadLevel) .. "\n" .. "-------------------" .. "\n")
 
@@ -3339,8 +3513,8 @@ function GarrisonedInHammerheadEnd(self)
 	end
 	-- if banner carrier has higher rank than members, promote members to rank of banner carrier 
 	local firstMember = squadMemberTable[next(squad.squadMembers)]
-	local memberLevel = GetRankOfObject(firstMember.stringRef) 
-	local squadLevel = GetRankOfObject(squad.stringRef) 
+	local memberLevel,_ = GetRankOfObject(firstMember.stringRef) 
+	local squadLevel,_ = GetRankOfObject(squad.stringRef) 
 	-- i need to reimplement the 2 way experience check again (isLeader) - Banner carriers dont inherit the veterancy when spawned inside of hammerheads 	
 	--WriteToFile("leader rank.txt",  "Current leader rank: " .. tostring(GetRankOfObject(squadMemberTable[squad.squadLeader].stringRef)) .. "\n" .. "squadLevel: " .. tostring(squadLevel) .. "\n" .. "-------------------" .. "\n")
 	-- 0 -> LT (<), if horde members are ranked lower than the squad 
@@ -3424,7 +3598,7 @@ end
 
 -- When squad appears at rax
 function OnSquadExitRax_R24(self)	
-	print("squad has finished building")
+	--print("squad has finished building")
 	local objId,squad = GetSquadAttributes(self)
 	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
 	-- squad size is 4 here. 
@@ -3439,7 +3613,7 @@ function OnSquadExitRax_R24(self)
 	-- if the squad can receive a weapon upgrade, apply setRider to true to enable it
 	if squadData.setRider then
 		squad.setRider = true
-		print("This unit can receive a weapon upgrade inside the hammerhead")
+		--print("This unit can receive a weapon upgrade inside the hammerhead")
 	end
 	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
 end

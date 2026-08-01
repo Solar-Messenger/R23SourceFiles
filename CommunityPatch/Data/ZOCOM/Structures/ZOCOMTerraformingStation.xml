@@ -5,11 +5,11 @@
 	<Includes>
 	</Includes>
 	<GameObject
-		id="GDITerraformingStation"
+		id="ZOCOMTerraformingStation"
 		inheritFrom="BaseStructure"
 		SelectPortrait="Portrait_GDISonicEmitter"
 		ButtonImage="Portrait_GDISonicEmitter"
-		Side="GDI"
+		Side="ZOCOM"
 		EditorSorting="STRUCTURE"
 		TransportSlotCount="1"
 		BuildCost="2000"
@@ -20,7 +20,7 @@
 		RadarPriority="STRUCTURE"
 		ProductionQueueType="OTHER_STRUCTURE"
 		BuildPlacementTypeFlag="OTHER_STRUCTURE"
-		EditorName="GDITerraformingStation"
+		EditorName="ZOCOMterraformingStation"
 		WeaponCategory="CANNON"
 		TypeDescription="Type:GDITerraformingStation"
 		Description="Desc:GDITerraformingStation"
@@ -30,7 +30,7 @@
 		<DisplayName
 			xai:joinAction="Replace" xmlns:xai="uri:ea.com:eala:asset:instance">Name:GDITerraformingStation</DisplayName>
 		<GameDependency>
-			<RequiredObject>GDIArmory</RequiredObject>
+			<RequiredObject>ZOCOMArmory</RequiredObject>
 		</GameDependency>
 		<ArmorSet
 			Armor="GDITerraformingStationArmor"
