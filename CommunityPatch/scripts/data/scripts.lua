@@ -3100,7 +3100,8 @@ function GetSonicEmitterAttributes(self)
 		damagedFlag = false,
 		sonicEmitterType = isSonicEmitter(), --true if its a gdi sonic emitter else false if its a zocom one. if neither then this value is nil
 		initialSetFrame = GetFrame(),
-		selfRef = self
+		selfRef = self,
+		hasGivenXP = false
 	}
 	return sonicEmitterTable[ObjID]
 end
@@ -3190,7 +3191,7 @@ end
 -- self is sonic emiter, other is the unit that could be the killer 
 function DetermineIfEnemyKilledMe(self, other)
 	local sonic = GetSonicEmitterAttributes(self)
-	if sonic.lastUnit == other and sonic.damagedFlag then
+	if sonic.lastUnit == other and sonic.damagedFlag and not sonic.hasGivenXP then
 		print("enemy found")
 		GiveExperiencePoints(self)
 	end
@@ -3198,8 +3199,8 @@ end
 
 -- triggered by the deploy , this must prevent xp to allied units
 function GiveExperiencePoints(self)
-	local unitDestroyed = GetSonicEmitterAttributes(self)
-	local lastUnit = unitDestroyed.lastUnit
+	local sonic = GetSonicEmitterAttributes(self)
+	local lastUnit = sonic.lastUnit
 	local sonic = tostring(ObjectDescription(self))
 	local attacker = tostring(ObjectDescription(lastUnit))
 	local _,xpRewardMultiplier = GetRankOfObject(self)
@@ -3223,12 +3224,20 @@ function GiveExperiencePoints(self)
 		-- for non squads 
 		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", SetObjectReference(lastUnit), xpReward)
 	end
+
+	sonic.hasGivenXP = true
 end	
 
 --clean up 
 function SonicOndeath(self)
 	--print("cleaning up") -- this might need to be more advanced as empd units dont relinquish the emp status
 	sonicEmitterTable[GetSonicEmitterAttributes(self).selfId] = nil
+end
+
+-- wrapper for shatterers/zone shatterers to clear sonicEmitterTable and reverse move table 
+function ShattererOndeath(self)
+	sonicEmitterTable[GetSonicEmitterAttributes(self).selfId] = nil
+	GroupUnitOnDeath(self)
 end
 
 -- ############################# R25 Redeemer Rage Generator fix  ###################################
