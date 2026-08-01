@@ -84,6 +84,24 @@
 		Type="OBJECT"
 	/>
 
+	<!-- needed for zone raider rockets to not shoot the ground within a hammerhead -->
+
+	<UpgradeTemplate id="Upgrade_SquadMemberRocket1"
+		Type="OBJECT"
+	/>
+
+	<UpgradeTemplate id="Upgrade_SquadMemberRocket2"
+		Type="OBJECT"
+	/>
+
+	<UpgradeTemplate id="Upgrade_SquadMemberRocket3"
+		Type="OBJECT"
+	/>
+
+	<UpgradeTemplate id="Upgrade_SquadMemberRocket4"
+		Type="OBJECT"
+	/>
+
 	<!--
 	<UpgradeTemplate id="Upgrade_EngineerArmor"
 		Type="OBJECT"

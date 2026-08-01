@@ -607,7 +607,7 @@
                     <Weapon
 						Ordering="SECONDARY_WEAPON"
 						Template="ZoneRaiderRocketPods"
-                        Upgrade="Upgrade_SquadMember1" />
+                        Upgrade="Upgrade_SquadMemberRocket1" />
 					<TurretSettings
 						TurretTurnRate="180"
 						TurretPitchRate="40"
@@ -632,7 +632,7 @@
                     <Weapon
 						Ordering="SECONDARY_WEAPON"
 						Template="ZoneRaiderRocketPods"
-                        Upgrade="Upgrade_SquadMember2" />
+                        Upgrade="Upgrade_SquadMemberRocket2" />
 					<TurretSettings
 						TurretTurnRate="180"
 						TurretPitchRate="40"
@@ -657,7 +657,7 @@
                     <Weapon
 						Ordering="SECONDARY_WEAPON"
 						Template="ZoneRaiderRocketPods"
-                        Upgrade="Upgrade_SquadMember3" />
+                        Upgrade="Upgrade_SquadMemberRocket3" />
 					<TurretSettings
 						TurretTurnRate="180"
 						TurretPitchRate="40"
@@ -682,7 +682,7 @@
                     <Weapon
 						Ordering="SECONDARY_WEAPON"
 						Template="ZoneRaiderRocketPods"
-                        Upgrade="Upgrade_SquadMember4" />
+                        Upgrade="Upgrade_SquadMemberRocket4" />
 					<TurretSettings
 						TurretTurnRate="180"
 						TurretPitchRate="40"

@@ -1933,7 +1933,7 @@
 		AntiMask="ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY">
 		<Nuggets>
 			<DamageNugget
-				Damage="140.0"
+				Damage="120.0"
 				Radius="10.0"
 				DamageTaperOff="0"
 				DamageType="ROCKET"

@@ -3335,28 +3335,28 @@ end
 -- setRider defines if a squad has a weapon upgrade within the hammerhead (WEAPON_UPGRADED_01)
 squadSizeTable = {
 	-- vGDI
-	["5D5E5931"] = {size = 4, setRider = true}, -- GDIZoneTrooperSquad
-	["BD0F31E6"] = {size = 4, setRider = true}, -- GDIZoneTrooperSquad_Veteran
-	["9096966E"] = {size = 6, setRider = true}, -- GDIRifleSoldierSquad
-	["42896060"] = {size = 4, setRider = false}, -- GDIGrenadeSoldierSquad
-	["EF1252DB"] = {size = 2, setRider = false}, -- GDIMissileSoldierSquad
+	["5D5E5931"] = {size = 4, setRider = true, needsRocketix = false}, -- GDIZoneTrooperSquad
+	["BD0F31E6"] = {size = 4, setRider = true, needsRocketix = false}, -- GDIZoneTrooperSquad_Veteran
+	["9096966E"] = {size = 6, setRider = true, needsRocketix = false}, -- GDIRifleSoldierSquad
+	["42896060"] = {size = 4, setRider = false, needsRocketix = false}, -- GDIGrenadeSoldierSquad
+	["EF1252DB"] = {size = 2, setRider = false, needsRocketix = false}, -- GDIMissileSoldierSquad
 	-- vScrin
-	["2B9428D0"] = {size = 5, setRider = false}, -- AlienRazorDroneSquad
-	["240FB1"] = {size = 5, setRider = false}, -- Traveler59RazorDroneSquad
+	["2B9428D0"] = {size = 5, setRider = false, needsRocketix = false}, -- AlienRazorDroneSquad
+	["240FB1"] = {size = 5, setRider = false, needsRocketix = false}, -- Traveler59RazorDroneSquad
 
-	["32EA13B3"] = {size = 3, setRider = false}, -- AlienStalkerSquad
-	["72A9F5D5"] = {size = 3, setRider = false}, -- Traveler59StalkerSquad
-	["7F2D0EF5"] = {size = 3, setRider = false}, -- Reaper17StalkerSquad
+	["32EA13B3"] = {size = 3, setRider = false, needsRocketix = false}, -- AlienStalkerSquad
+	["72A9F5D5"] = {size = 3, setRider = false, needsRocketix = false}, -- Traveler59StalkerSquad
+	["7F2D0EF5"] = {size = 3, setRider = false, needsRocketix = false}, -- Reaper17StalkerSquad
 
-	["6495F509"] = {size = 3, setRider = false}, -- AlienShockTrooperSquad
-	["4803957E"] = {size = 3, setRider = false}, -- Traveler59ShockTrooperSquad
-	["40241AC3"] = {size = 3, setRider = false}, -- Reaper17ShockTrooperSquad
+	["6495F509"] = {size = 3, setRider = false, needsRocketix = false}, -- AlienShockTrooperSquad
+	["4803957E"] = {size = 3, setRider = false, needsRocketix = false}, -- Traveler59ShockTrooperSquad
+	["40241AC3"] = {size = 3, setRider = false, needsRocketix = false}, -- Reaper17ShockTrooperSquad
 
-	["C46CECA2"] = {size = 5, setRider = false}, -- Traveler59CultistSquad
+	["C46CECA2"] = {size = 5, setRider = false, needsRocketix = false}, -- Traveler59CultistSquad
 
 	-- ZOCOM
-	["D213112"] = {size = 4, setRider = true}, -- ZOCOMZoneRaiderSquad
-	["8A6E8182"] = {size = 4, setRider = true} -- ZOCOMZoneRaiderSquad_Veteran
+	["D213112"] = {size = 4, setRider = true, needsRocketix = true}, -- ZOCOMZoneRaiderSquad
+	["8A6E8182"] = {size = 4, setRider = true, needsRocketix = true} -- ZOCOMZoneRaiderSquad_Veteran
 	
 }
 
@@ -3667,9 +3667,14 @@ function GrantUpgradesToLeader(squad)
 	-- check if WEAPON_UPGRADED_01 is current status to assign the appropriate upgrade (this is for AP Ammo and Scanner Packs)
 	local upgradeString = EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef , 124) and "Upgrade_SquadMemberEnhanced" or "Upgrade_SquadMember"
 	--print(upgradeString)
+	local isZoneRaiderSquad = squadSizeTable[getObjectName(squad.selfRef)].needsRocketix
 	for i = 1, squadSize, 1 do
 		local upgradeString = upgradeString .. i
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, upgradeString) then ObjectGrantUpgrade(squadLeader.selfRef, upgradeString) end
+		-- for zone raider rockets 
+		if isZoneRaiderSquad then
+			if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMemberRocket" .. i) then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMemberRocket" .. i) end
+		end
 		--print("applying upgrade: " .. upgradeString)
 	end
 end

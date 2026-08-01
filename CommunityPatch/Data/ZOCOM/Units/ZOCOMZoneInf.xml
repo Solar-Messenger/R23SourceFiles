@@ -1642,16 +1642,6 @@
 						Upgrade=""
 						ObjectStatus="RIDER1 WEAPON_UPGRADED_01"
 						IsPlayerUpgradePermanent="False" />	
-					<!-- RIDERLESS status given by RGA -->
-					<Weapon
-						Ordering="PRIMARY_WEAPON"
-						Template="ZoneRaiderSonicRifleFake"
-						ObjectStatus="RIDER1 RIDERLESS" />
-
-					<Weapon
-						Ordering="PRIMARY_WEAPON"
-						Template="ZoneRaiderSonicRifleFakeEnhanced"
-						ObjectStatus="RIDER1 WEAPON_UPGRADED_01 RIDERLESS" />
 				</WeaponSlotHardpoint>
 
 				<!-- ROCKET PODS -->
@@ -1664,6 +1654,7 @@
 					<Weapon
 						Ordering="SECONDARY_WEAPON"
 						Template="ZoneRaiderRocketPods" />
+					<!-- RIDER1 is enabled when garrisoned in hammerheads -->
 					<Weapon
 						Ordering="SECONDARY_WEAPON"
 						ObjectStatus="RIDER1"
