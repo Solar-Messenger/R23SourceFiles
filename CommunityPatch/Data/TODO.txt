@@ -24,3 +24,5 @@ Done
 - Fixed an issue causing supersonic airstrike to not deal damage to aircraft on uneven terrain.
 - Fixed an issue causing Firehawk Stratofighter boosters to disappear while climbing hills.
 - Fixed an issue that causes Sonic Emitters and Shatterers to have their weapon shot cancelled as theyre destroyed.
+- Fixed a bug causing Firehawks to not bomb sometimes when a player issued force fire command happens.
+- Nerfed Zone Raider AA damage from 140 to 120.

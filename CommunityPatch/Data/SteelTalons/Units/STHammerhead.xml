@@ -1799,7 +1799,7 @@
 				CanPathThroughUnitsWhileDocking="True"
 				CanPathThroughUnitsWhileHarvesting="True"
 				FlyOffMap="REVERSE_DIRECTION"
-				DelayAFterLoadingOrUnloading="0.5s"
+				DelayAFterLoadingOrUnloading="0.25s"
 				FlyOffMapOnUnload="False"
 	AILuaEventsList="GDIHammerheadFunctions_R24">
 				<UnitAITargetChooserData
