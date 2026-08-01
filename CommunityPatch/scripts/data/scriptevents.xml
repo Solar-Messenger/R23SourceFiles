@@ -1068,16 +1068,21 @@
    	 </EventList>
 
 	  <EventList Name="TerraformingStationFunctions_R24" Inherit="BaseScriptFunctions">
-  		<!--<EventHandler EventName="OnRider1" ScriptFunctionName="MakeSonicEmitterTempImmune" DebugSingleStep="false"/>-->
 		<EventHandler EventName="OnDamaged" ScriptFunctionName="SonicEmitterDamaged" DebugSingleStep="false"/>
-		<!--<EventHandler EventName="OnUnattackable" ScriptFunctionName="GiveExperiencePoints" DebugSingleStep="false"/>-->
 		<EventHandler EventName="IsItAnEnemyEvent" ScriptFunctionName="DetermineIfEnemyKilledMe" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed" ScriptFunctionName="SonicOndeath" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser4End" ScriptFunctionName="kill" DebugSingleStep="false"/>
    	 </EventList>
 
-	  <EventList Name="SonicTimeFunctions_R24" Inherit="BaseScriptFunctions">
+	 <EventList Name="SonicTimeFunctions_R24" Inherit="BaseScriptFunctions">
   		<EventHandler EventName="OnDestroyed" ScriptFunctionName="TimerHasExpired" DebugSingleStep="false"/>
+   	 </EventList>
+
+	 <EventList Name="GDISonicTankFunctions_R24" Inherit="BaseScriptFunctions">
+  		<EventHandler EventName="OnDamaged" ScriptFunctionName="SonicEmitterDamaged" DebugSingleStep="false"/>
+		<EventHandler EventName="IsItAnEnemyEvent" ScriptFunctionName="DetermineIfEnemyKilledMe" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="SonicOndeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser4End" ScriptFunctionName="kill" DebugSingleStep="false"/>
    	 </EventList>
 
 	 <!-- r24 reverse move units -->

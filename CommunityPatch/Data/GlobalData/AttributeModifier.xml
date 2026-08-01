@@ -2,10 +2,17 @@
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
 	<AttributeModifier
+		id="Modifier_SetStunnedStates"
+		Category="NONE"
+		Duration="6s"
+		ModelConditionsSet="AFFECTED_BY_EMP USER_3">
+	</AttributeModifier>
+
+	<AttributeModifier
 		id="Modifier_KillTheSonic"
 		Category="NONE"
 		Duration="1.5s"
-		ObjectStatusToSet="NO_ATTACK UNATTACKABLE"
+		ObjectStatusToSet="NO_ATTACK UNATTACKABLE IMMOBILE"
 		ModelConditionsSet="USER_4">
 		<Modifier Type="INVULNERABLE" Value="100%"/>
 		<Modifier Type="RESIST_EMP" Value="100%"/>

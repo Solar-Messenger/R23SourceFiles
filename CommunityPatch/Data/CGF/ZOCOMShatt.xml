@@ -187,6 +187,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 REALLYDAMAGED">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
 					PortraitImage=""
 					ButtonImage=""
@@ -221,6 +227,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DYING">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING"
 					PortraitImage=""
 					ButtonImage=""
@@ -228,6 +240,12 @@
 					<Model
 						Name=""
 						ExtraMesh="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6">
+					<Model
+						Name="" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -565,6 +583,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DYING">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING"
 					PortraitImage=""
 					ButtonImage=""
@@ -596,6 +620,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 PASSENGER">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="PASSENGER"
 					PortraitImage=""
 					ButtonImage=""
@@ -603,6 +633,12 @@
 					<Model
 						Name=""
 						ExtraMesh="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 USER_1 AFFECTED_BY_EMP">
+					<Model
+						Name="" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -627,6 +663,12 @@
 						FollowBone="True"
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6">
+					<Model
+						Name="" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -1015,14 +1057,14 @@
 				SpecialPowerTemplate="SpecialPower_FireOverloadBeamSelfStunWeapon"
 				AntiCategory=""
 				AntiFX=""
-				AttributeModifier=""
+				AttributeModifier="Modifier_SetStunnedStates"
 				AttributeModifierRange="0"
 				AttributeModifierFX=""
 				WeatherDuration="0"
 				InitiateFX=""
 				TriggerFX=""
-				SetModelCondition="AFFECTED_BY_EMP"
-				SetModelConditionTime="6s"
+				SetModelCondition=""
+				SetModelConditionTime="0s"
 				GiveLevels="0"
 				ChangeWeather="NORMAL"
 				OnTriggerRechargeSpecialPower=""
@@ -1031,7 +1073,7 @@
 				UpdateModuleStartsAttack="True"
 				StartsPaused="False"
 				ReEnableAntiCategory="False"
-				AttributeModifierAffectsSelf="False"
+				AttributeModifierAffectsSelf="True"
 				AttributeModifierWeatherBased="False"
 				TargetEnemy="False"
 				TargetAllSides="False"
@@ -1185,7 +1227,7 @@
 				Fade="False">
 				<OCL
 					Type="INITIAL">
-					<OCL>OCL_SteelTalonsSteelShattererDebris</OCL>
+					<OCL></OCL>
 				</OCL>
 				<Sound
 					Type="INITIAL"
@@ -1199,25 +1241,6 @@
 					DeathTypes="ALL"
 					DeathTypesForbidden="TOPPLED" />
 			</SlowDeath>
-			<FXListBehavior
-				id="C74C39D8">
-				<DieMuxData
-					ExemptStatus=""
-					RequiredStatus=""
-					DamageAmountRequired="-1"
-					MinKillerAngle="0.9999999d"
-					MaxKillerAngle="-0.9999999d"
-					DeathTypes="ALL"
-					DeathTypesForbidden="" />
-				<Event
-					Index="onDeath"
-					FX="FX_GDIMammothExplode"
-					MinThreshold="0"
-					MaxThreshold="0"
-					Direction="Default"
-					OrientToObject="True"
-					ForceUseDoFXObj="False" />
-			</FXListBehavior>
 			<!--<SubObjectsUpgrade
 				id="0D4DFDE8"
 				RequiresAllTriggers="False"
@@ -1246,6 +1269,22 @@
 				ApplyToContained="False">
 				<TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
 			</StatusBitsUpgrade>-->
+			<StatusBitsUpgrade
+				id="ModuleTag_UnattackableUpgrade"
+				StatusToSet="UNATTACKABLE">
+				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
+			</StatusBitsUpgrade> 
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeSonicEmitter"
+				AttributeModifier="Modifier_KillTheSonic">
+				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
+			</AttributeModifierUpgrade>
+	
+			<ModelConditionUpgrade
+				id="ModuleTag_DeployFlags"
+				AddConditionFlags="USER_6" >
+				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
+			</ModelConditionUpgrade>
 			<CreateAndEnterObjectSpecialPower
 				id="6D44A823"
 				SpecialPowerTemplate="SpecialPowerCallForTransportZOCOM"
@@ -1425,7 +1464,7 @@
 				AutoAcquireEnemiesWhenIdle="YES"
 				StopChaseDistance="500"
 				HoldGroundCloseRangeDistance="0"
-				AILuaEventsList="GDIPredatorFunctions_R24"
+				AILuaEventsList="GDISonicTankFunctions_R24"
 				MinCowerTime="0s"
 				MaxCowerTime="0s"
 				RampageTime="0s"
@@ -1470,8 +1509,8 @@
 				ReallyDamagedAttributeModifier=""
 				CheerRadius="200"
 				BurningDeathFX=""
-				SecondChanceUpgrade=""
-				SecondChanceHeal="0"
+				SecondChanceUpgrade="Upgrade_SonicEmitterDelayedDestruction"
+				SecondChanceHeal="1"
 				UseDefaultDamageSettings="True"
 				RemoveUpgradesOnDeath="False"
 				BurningDeathBehavior="False" />

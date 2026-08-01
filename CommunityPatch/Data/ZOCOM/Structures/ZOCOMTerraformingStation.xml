@@ -308,13 +308,7 @@
 			</WeaponSetUpdate>
 
 			<StatusBitsUpgrade
-				id="ModuleTag_DeployUpgrade"
-				StatusToSet="RIDER1">
-				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
-			</StatusBitsUpgrade>
-	
-			<StatusBitsUpgrade
-				id="ModuleTag_DeployUpgrade2"
+				id="ModuleTag_UnattackableUpgrade"
 				StatusToSet="UNATTACKABLE">
 				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
 			</StatusBitsUpgrade> 

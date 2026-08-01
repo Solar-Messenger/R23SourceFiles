@@ -3124,10 +3124,9 @@ function MakeSonicEmitterTempImmune(self)
 	-- doesnt fire weapon on itself when empd
 	local sonic = GetSonicEmitterAttributes(self)
 	sonic.initialSetFrame = GetFrame()
-	ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
-
 	-- SPAWN OCL RIFLEMEN HERE (IF SOLD OR NOT), only for Sonic Emitters.
 	if sonic.sonicEmitterType then
+		ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
 		-- if the sonic emitter has been sold off
 		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 19) then
 			-- spawn gdi/zocom rifleman suicided squad 
@@ -3144,10 +3143,11 @@ function MakeSonicEmitterTempImmune(self)
 		--print("spawning a rifleman squad as structure was destroyed")
 		--ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingDestructionWeapon")
 	else 
-		-- shatterer else branch
+		-- zone shatterer else branch
+		ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedImprovedSonicTank")
 	end
 
-	if not ObjectTestModelCondition(self, "FIRING_A") then kill(self) end
+	if not (ObjectTestModelCondition(self, "FIRING_A") or ObjectTestModelCondition(self, "USER_3")) then kill(self) end
 	--print("second life!")
 
 	-- this doesnt work after switching teams
@@ -3170,7 +3170,7 @@ function SonicEmitterDamaged(self, other)
 	if not sonic.damagedFlag and ObjectTestModelCondition(self, "USER_6") then
 		-- this is safety incase this triggers more than once
 		sonic.damagedFlag = true
-		-- print("USER 6")
+		 print("USER 6")
 		-- sonic emitter receives this event dispatched by the damager, should work with stealth units as the killer wouldnt have restealthed by then
 		-- enemies dispatch this event to the sonic emitter to find out if any of them killed it 
 
@@ -3223,7 +3223,7 @@ end
 
 --clean up 
 function SonicOndeath(self)
-	print("cleaning up") -- this might need to be more advanced as empd units dont relinquish the emp status
+	--print("cleaning up") -- this might need to be more advanced as empd units dont relinquish the emp status
 	sonicEmitterTable[GetSonicEmitterAttributes(self).selfId] = nil
 end
 
