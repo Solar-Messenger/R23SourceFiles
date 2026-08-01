@@ -3336,6 +3336,7 @@ end
 squadSizeTable = {
 	-- vGDI
 	["5D5E5931"] = {size = 4, setRider = true}, -- GDIZoneTrooperSquad
+	["BD0F31E6"] = {size = 4, setRider = true}, -- GDIZoneTrooperSquad_Veteran
 	["9096966E"] = {size = 6, setRider = true}, -- GDIRifleSoldierSquad
 	["42896060"] = {size = 4, setRider = false}, -- GDIGrenadeSoldierSquad
 	["EF1252DB"] = {size = 2, setRider = false}, -- GDIMissileSoldierSquad
@@ -3351,13 +3352,18 @@ squadSizeTable = {
 	["4803957E"] = {size = 3, setRider = false}, -- Traveler59ShockTrooperSquad
 	["40241AC3"] = {size = 3, setRider = false}, -- Reaper17ShockTrooperSquad
 
-	["C46CECA2"] = {size = 5, setRider = false} -- Traveler59CultistSquad
+	["C46CECA2"] = {size = 5, setRider = false}, -- Traveler59CultistSquad
 
+	-- ZOCOM
+	["D213112"] = {size = 4, setRider = true}, -- ZOCOMZoneRaiderSquad
+	["8A6E8182"] = {size = 4, setRider = true} -- ZOCOMZoneRaiderSquad_Veteran
+	
 }
 
 -- if a unit has a function that hides subobjects oncreated, add it here.
 onCreatedTable = {
 	["B821E76D"] = {onCreated = OnGDIZoneTrooperCreated}, -- GDIZoneTrooper
+	["9036C4A9"] = {onCreated = OnGDIZoneTrooperCreated}, -- ZOCOMZoneRaider
 	["66CC48AB"] = {onCreated = OnGDIGrenadeSoldierCreated}, -- GDIGrenadeSoldier
 	["CB613C1D"] = {onCreated = OnStalkerCreated}, -- AlienStalker
 	["A7EFC673"] = {onCreated = OnStalkerCreated}, -- Reaper17Stalker
@@ -3467,7 +3473,7 @@ applyHordeXPFix = true
 
 -- enables the squad leader
 function GarrisonedInHammerhead(self)
-	--print("the squad has entered the hammerhead!")
+	print("the squad has entered the hammerhead!")
 	-- toggle the squadLeader on here via upgrade
 	local objId,squad = GetSquadAttributes(self)
 	-- dpes not rank up automatically inside a hammerhead sadly.
@@ -3501,7 +3507,7 @@ end
 
 -- removes squad leader and applies its rankups if any to the horde members.
 function GarrisonedInHammerheadEnd(self)
-	--print("the squad has exited the hammerhead!")
+	print("the squad has exited the hammerhead!")
 	-- this disables the fake weapon for the regular members
 	local _,squad = GetSquadAttributes(self)
 	-- instead of status i could just use upgrades instead

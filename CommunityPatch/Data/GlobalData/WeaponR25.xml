@@ -75,15 +75,15 @@
 	</WeaponTemplate>
 
 	<WeaponTemplate
-		id="GDIFirehawkHardpointsUpgradeBombMainLoad"
-		Name="GDIFirehawkHardpointsUpgradeBombMainLoad"
+		id="GDIFirehawkBombMainLoad"
+		Name="GDIFirehawkBombMainLoad"
 		ScatterRadius = "1.0"
 		HitPercentage="0%"
 		AttackRange="200.0"
 		WeaponSpeed="180"
 		WeaponRecoil="20d"
 		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
-		ClipSize="3"
+		ClipSize="2"
 		FireSound="AudioEvent:GDI_FireHawk_BombFire"
 		ProjectileCollidesWith  = "ALLIES ENEMIES NEUTRAL STRUCTURES WALLS"
 		AntiMask="ANTI_GROUND ANTI_STRUCTURE"
@@ -91,10 +91,10 @@
 		CanFireWhileMoving="true"
 		AcceptableAimDelta="20d"
 		AutoReloadsClip="RETURN_TO_BASE"
-		SingleAmmoReloadedNotFullSound="AudioEvent:GDI_FireHawk_AmmoLoadOne"
-		ClipReloadedSound="AudioEvent:GDI_FireHawk_AmmoReloaded"
+		SingleAmmoReloadedNotFullSound="GDI_FireHawk_AmmoLoadOne"
+		ClipReloadedSound="GDI_FireHawk_AmmoReloaded"
 		ReAcquireDetailType="PRE_FIRE"
-		RequiredFiringObjectStatus="WEAPON_UPGRADED_03"
+		RequiredFiringObjectStatus="WEAPON_UPGRADED_02"
  		>
 		<FiringDuration
 			MinSeconds="0.4s"

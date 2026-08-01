@@ -1439,7 +1439,7 @@
 				PassengersTestCollisionHeight="-1000"
 				NumberOfExitPaths="1"
 				DoorOpenTime="1"
-				ObjectStatusOfContained="CAN_ATTACK UNSELECTABLE ENCLOSED"
+				ObjectStatusOfContained="CAN_ATTACK UNSELECTABLE ENCLOSED RIDER4"
 				ModifierRequiredTime="100"
 				KillIfEmptyTime="0s"
 				ModelConditionsWhenNotEmpty=""
@@ -1899,7 +1899,7 @@
 				FlyOffMap="REVERSE_DIRECTION"
 				DelayAFterLoadingOrUnloading="0.5s"
 				FlyOffMapOnUnload="False"
-	AILuaEventsList="ZOCOMHammerheadFunctions_R24">
+	AILuaEventsList="GDIHammerheadFunctions_R24">
 				<UnitAITargetChooserData
 					IdleScanDelay="0.8s"
 					ReacquireDelay="5s"

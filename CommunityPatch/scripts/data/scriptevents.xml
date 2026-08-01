@@ -1718,9 +1718,6 @@
 		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
 	</EventList>
 
-	<EventList Name="SteelTalonsHammerheadFunctions_R24" Inherit="SelectionGroupFunctions_R24">
-	</EventList>
-
 	<EventList Name="SteelTalonsTitanFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnTitanCreated_103" DebugSingleStep="false"/>
 	</EventList>
@@ -1736,9 +1733,6 @@
 
 	<EventList Name="TripodFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
-	</EventList>
-
-	<EventList Name="ZOCOMHammerheadFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 	</EventList>
 
 	<EventList Name="ZOCOMOrcaFunctions_R24" Inherit="SelectionGroupFunctions_R24">

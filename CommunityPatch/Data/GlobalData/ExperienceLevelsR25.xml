@@ -1,6 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+		<!-- zone raiders -->
+
+		<ExperienceLevelTemplate
+		id="ZOCOMZoneRaiderSquadExperienceLevel_1"
+		RequiredExperience="1"
+		ExperienceAward="312"
+		Rank="1">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Target>ZOCOMZoneRaiderSquad_Veteran</Target>
+		<Target>ZOCOMZoneRaiderSquad</Target>
+		<Target>ZOCOMZoneRaider</Target>
+		<Target>ZOCOMZoneRaiderGarrisoned</Target>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="ZOCOMZoneRaiderSquadExperienceLevel_2"
+		Prerequisite="ZOCOMZoneRaiderSquadExperienceLevel_1"
+		RequiredExperience="3750"
+		ExperienceAward="405"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="2">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_01" />
+		<Target>ZOCOMZoneRaiderSquad_Veteran</Target>
+		<Target>ZOCOMZoneRaiderSquad</Target>
+		<Target>ZOCOMZoneRaider</Target>
+		<Target>ZOCOMZoneRaiderGarrisoned</Target>
+		<AttributeModifier>Unit_Veteran</AttributeModifier>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="ZOCOMZoneRaiderSquadExperienceLevel_3"
+		Prerequisite="ZOCOMZoneRaiderSquadExperienceLevel_2"
+		RequiredExperience="7500"
+		ExperienceAward="500"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="3">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_02" />
+		<Target>ZOCOMZoneRaiderSquad_Veteran</Target>
+		<Target>ZOCOMZoneRaiderSquad</Target>
+		<Target>ZOCOMZoneRaider</Target>
+		<Target>ZOCOMZoneRaiderGarrisoned</Target>
+		<AttributeModifier>Unit_Elite</AttributeModifier>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="ZOCOMZoneRaiderSquadExperienceLevel_4"
+		Prerequisite="ZOCOMZoneRaiderSquadExperienceLevel_3"
+		RequiredExperience="11250"
+		ExperienceAward="624"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="4">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_03" />
+		<Target>ZOCOMZoneRaiderSquad_Veteran</Target>
+		<Target>ZOCOMZoneRaiderSquad</Target>
+		<Target>ZOCOMZoneRaider</Target>
+		<Target>ZOCOMZoneRaiderGarrisoned</Target>
+		<AttributeModifier>Unit_Heroic</AttributeModifier>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+
 		<!-- shatterers no longer reward experience as its handled in lua -->
 
 		<ExperienceLevelTemplate
