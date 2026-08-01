@@ -1,6 +1,118 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<!-- firehawk bomb fix -->
+
+	<WeaponTemplate
+		  id="FireHawkBombWarhead"
+		  Name="FireHawkBombWarhead"
+		  ProjectileCollidesWith  = "ENEMIES NEUTRAL STRUCTURES WALLS"
+		  RadiusDamageAffects="ENEMIES NEUTRALS"
+		  FireFX="FX_GDIBombHit"			  
+		  AntiMask="ANTI_GROUND ANTI_STRUCTURE">
+		<Nuggets>
+			<DamageContainedNugget
+				MaxUnitsToDamage="100"
+				Damage="999999"
+				DelayTimeSeconds="0.0s"
+				DamageType="GRENADE"
+				DeathType="EXPLODED">
+				<DamageObjectFilter
+					Rule="NONE"
+					Include="INFANTRY" />
+			</DamageContainedNugget>
+
+			<DamageNugget
+				Damage="1500.0"
+				Radius="25.0"
+				DelayTimeSeconds="0.0s"
+				DamageType="GRENADE"
+				DeathType="NORMAL" />
+			<MetaImpactNugget
+				ShockWaveAmount="90.0"
+				ShockWaveRadius="100.0"
+				ShockWaveZMult="1.50" />
+		</Nuggets>
+	</WeaponTemplate>	
+
+	<WeaponTemplate
+		id="GDIFirehawkHardpointsUpgradeBombMainLoad"
+		Name="GDIFirehawkHardpointsUpgradeBombMainLoad"
+		ScatterRadius = "1.0"
+		HitPercentage="0%"
+		AttackRange="200.0"
+		WeaponSpeed="180"
+		WeaponRecoil="20d"
+		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
+		ClipSize="3"
+		FireSound="AudioEvent:GDI_FireHawk_BombFire"
+		ProjectileCollidesWith  = "ALLIES ENEMIES NEUTRAL STRUCTURES WALLS"
+		AntiMask="ANTI_GROUND ANTI_STRUCTURE"
+		DisableScatterForTargetsOnWall="true"
+		CanFireWhileMoving="true"
+		AcceptableAimDelta="20d"
+		AutoReloadsClip="RETURN_TO_BASE"
+		SingleAmmoReloadedNotFullSound="AudioEvent:GDI_FireHawk_AmmoLoadOne"
+		ClipReloadedSound="AudioEvent:GDI_FireHawk_AmmoReloaded"
+		ReAcquireDetailType="PRE_FIRE"
+		RequiredFiringObjectStatus="WEAPON_UPGRADED_03"
+ 		>
+		<FiringDuration
+			MinSeconds="0.4s"
+			MaxSeconds="0.4s" />
+		<ClipReloadTime
+			MinSeconds="10s"
+			MaxSeconds="10s" />
+		<Nuggets>
+			<ProjectileNugget
+				WarheadTemplate="FireHawkBombWarhead"
+				ProjectileTemplate="GDIFirehawkBombProjectile">
+				<VeterancyProjectiles
+					VeterancyLevel="HEROIC"
+					ProjectileTemplate="GDIFirehawkBombProjectile_Veteran"/>
+			</ProjectileNugget>
+		</Nuggets>
+	</WeaponTemplate>
+
+	<WeaponTemplate
+		id="GDIFirehawkHardpointsUpgradeBombMainLoad"
+		Name="GDIFirehawkHardpointsUpgradeBombMainLoad"
+		ScatterRadius = "1.0"
+		HitPercentage="0%"
+		AttackRange="200.0"
+		WeaponSpeed="180"
+		WeaponRecoil="20d"
+		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
+		ClipSize="3"
+		FireSound="AudioEvent:GDI_FireHawk_BombFire"
+		ProjectileCollidesWith  = "ALLIES ENEMIES NEUTRAL STRUCTURES WALLS"
+		AntiMask="ANTI_GROUND ANTI_STRUCTURE"
+		DisableScatterForTargetsOnWall="true"
+		CanFireWhileMoving="true"
+		AcceptableAimDelta="20d"
+		AutoReloadsClip="RETURN_TO_BASE"
+		SingleAmmoReloadedNotFullSound="AudioEvent:GDI_FireHawk_AmmoLoadOne"
+		ClipReloadedSound="AudioEvent:GDI_FireHawk_AmmoReloaded"
+		ReAcquireDetailType="PRE_FIRE"
+		RequiredFiringObjectStatus="WEAPON_UPGRADED_03"
+ 		>
+		<FiringDuration
+			MinSeconds="0.4s"
+			MaxSeconds="0.4s" />
+		<ClipReloadTime
+			MinSeconds="10s"
+			MaxSeconds="10s" />
+		<Nuggets>
+			<ProjectileNugget
+				WarheadTemplate="FireHawkBombWarhead"
+				ProjectileTemplate="GDIFirehawkBombProjectile">
+				<VeterancyProjectiles
+					VeterancyLevel="HEROIC"
+					ProjectileTemplate="GDIFirehawkBombProjectile_Veteran"/>
+			</ProjectileNugget>
+		</Nuggets>
+	</WeaponTemplate>
+
 	<!-- for spawning the squad 
 
 	<WeaponTemplate

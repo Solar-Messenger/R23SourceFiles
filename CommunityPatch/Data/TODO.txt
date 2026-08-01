@@ -2,8 +2,8 @@ TODO:
 - Implement Garrisoned banner carrier for all GDI units 
 - Implement Garrisoned banner carrier for all ZOCOM units 
 - Implement Garrisoned banner carrier for all SteelTalons units 
-- Implement the free infantry exploit fix to all squads in the game
-- Fix an issue causing Tiberium Vibration Scan, Power Signature Scan to be disabled when another support power is used, t2 structure is powered down or sold.
+- Implement Garrisoned banner carrier for the Mutant Marauder squad.
+- Implement the free infantry exploit fix to all squads in the game (requires missing missile soldier game object)
 
 Done
 - Implemented V35 vision fix for all GDI factions
@@ -23,6 +23,4 @@ Done
 - Nerfed MaximumAimDelta of the gunwalker, shardwalker weapon from 25d to 15d.
 - Fixed an issue causing supersonic airstrike to not deal damage to aircraft on uneven terrain.
 - Fixed an issue causing Firehawk Stratofighter boosters to disappear while climbing hills.
-
-Probably too much of a nerf for Reaper-17
-- Make tripods not spawn with shields when captured back.
+- Fixed an issue that causes Sonic Emitters and Shatterers to have their weapon shot cancelled as theyre destroyed.
