@@ -1245,6 +1245,12 @@
 				AttributeModifier="AttributeModifier_AlienPhaseField">
 				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
 			</AttributeModifierUpgrade>
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 
 		</Behaviors>
 		<AI>
@@ -2673,6 +2679,12 @@
 				id="ModuleTag_AttributeModifierUpgradePhaseField"
 				AttributeModifier="AttributeModifier_AlienPhaseField">
 				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
 			</AttributeModifierUpgrade>
 
 

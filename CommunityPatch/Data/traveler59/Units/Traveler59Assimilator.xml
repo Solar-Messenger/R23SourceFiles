@@ -399,6 +399,13 @@
 				StartAbilityRange="30.0"
 				Options="DO_CAPTURE_FX"/>
 
+
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<AIUpdate

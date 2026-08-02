@@ -270,6 +270,13 @@
                 <DieMuxData DeathTypes="ALL" />
                 <Event Index="onBecomingTemporaryOwner" FX="FX_MasterMindLinkFX" />
             </FXListBehavior>
+
+        	<!-- raged -->
+        	<AttributeModifierUpgrade
+        		id="ModuleTag_AttributeModifierUpgradeRageGen"
+        		AttributeModifier="AttributeModifier_RageGenerator">
+        		<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+        	</AttributeModifierUpgrade>
         </Behaviors>
         <AI>
             <AIUpdate id="0x12FA48BA" AutoAcquireEnemiesWhenIdle="YES"

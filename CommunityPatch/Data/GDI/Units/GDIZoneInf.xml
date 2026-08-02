@@ -1591,6 +1591,13 @@
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_ZoneTrooperAutoInjectors</TriggeredBy>
 			</AudioLoopUpgrade>
+
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<AIUpdate
@@ -2889,6 +2896,13 @@
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_ZoneTrooperAutoInjectors</TriggeredBy>
 			</AudioLoopUpgrade>
+
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<!-- explore combined chldren and share xp with them -->
@@ -4174,6 +4188,13 @@
 				StartRechargeOnExit="False"
 				GoIdleInStartPreparation="True"
 				FaceTarget="True" />
+
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<HordeAIUpdate
@@ -5438,6 +5459,13 @@
 				UpgradeToGrant="Upgrade_CallSupportUpgrade"
 				ExemptStatus=""
 				GiveOnBuildComplete="False" />
+
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<HordeAIUpdate

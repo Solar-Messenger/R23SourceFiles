@@ -843,6 +843,12 @@
 				AttributeModifier="AttributeModifier_AlienPhaseField">
 				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
 			</AttributeModifierUpgrade>
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 
 
 
@@ -1902,6 +1908,12 @@
 				AttributeModifier="AttributeModifier_AlienPhaseField">
 				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
 			</AttributeModifierUpgrade>
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 
 			<ModelConditionUpgrade
 				id="081018FB"
@@ -2958,6 +2970,12 @@
 				id="ModuleTag_AttributeModifierUpgradePhaseField"
 				AttributeModifier="AttributeModifier_AlienPhaseField">
 				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
 			</AttributeModifierUpgrade>
 
 			<ModelConditionUpgrade

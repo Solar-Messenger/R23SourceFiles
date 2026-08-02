@@ -572,6 +572,13 @@
 				CommandButtonName="Command_FireTiberiumAgitation"
 				SpecialPowerAIType="SPECIAL_POWER_CAPTURE_BUILDING" /-->
 			<!--End Tiberium Agitation-->			
+
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<AIUpdate

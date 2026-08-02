@@ -927,6 +927,12 @@
 				AttributeModifier="AttributeModifier_AlienPhaseField">
 				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
 			</AttributeModifierUpgrade>
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 
 			<AudioLoopUpgrade
 				id="A5FBD0CB"
@@ -2342,6 +2348,12 @@
 				id="ModuleTag_AttributeModifierUpgradePhaseField"
 				AttributeModifier="AttributeModifier_AlienPhaseField">
 				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+			</AttributeModifierUpgrade>
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
 			</AttributeModifierUpgrade>
 
 			<AudioLoopUpgrade

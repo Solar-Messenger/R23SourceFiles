@@ -274,6 +274,13 @@
 			<AudioLoopUpgrade id="NOD_BlackDisciples_Upgrade" SoundToPlay="AudioEvent:NOD_BlackDisciples_Upgrade">
 				<TriggeredBy>Upgrade_BlackHandBlackDisciplesUpgrade</TriggeredBy>
 			</AudioLoopUpgrade>
+
+      		<!-- raged -->
+      		<AttributeModifierUpgrade
+      			id="ModuleTag_AttributeModifierUpgradeRageGen"
+      			AttributeModifier="AttributeModifier_RageGenerator">
+      			<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+      		</AttributeModifierUpgrade>
       	</Behaviors>
 		<AI>
 			<HordeAIUpdate

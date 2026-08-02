@@ -1327,6 +1327,13 @@
 			<AudioLoopUpgrade id="Generic_Infantry_Upgrade" SoundToPlay="AudioEvent:Generic_Infantry_Upgrade"> 
 				<TriggeredBy>Upgrade_GDICompositeArmor</TriggeredBy> 
 			</AudioLoopUpgrade> 
+
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<AIUpdate

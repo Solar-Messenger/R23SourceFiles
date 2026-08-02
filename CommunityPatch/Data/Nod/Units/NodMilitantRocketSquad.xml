@@ -703,6 +703,13 @@
 				SoundToPlay="AudioEvent:NOD_Confessor_Upgrade">
 				<TriggeredBy>Upgrade_NODConfessorUpgrade</TriggeredBy>
 			</AudioLoopUpgrade>
+
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<HordeAIUpdate

@@ -626,6 +626,13 @@
 			<AudioLoopUpgrade id="ALI_AdvancedArticulators_Upgrade" SoundToPlay="AudioEvent:ALI_AdvancedArticulators_Upgrade"> 
 				<TriggeredBy>Upgrade_Traveler59AdvancedArticulators</TriggeredBy> 
 			</AudioLoopUpgrade> 
+
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<AIUpdate

@@ -1615,6 +1615,13 @@
 				KillAfterMS="0">
 				<TriggeredBy>Upgrade_MarkedOfKaneCyberneticLegs</TriggeredBy>
 			</AudioLoopUpgrade>
+
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<AIUpdate
