@@ -412,4 +412,78 @@
 		</Nuggets>
 	</WeaponTemplate>
 
+	<!-- hammerhead garrison fake weapons (missile squad / grenadier squad) -->
+
+	<WeaponTemplate
+		id="GDIMissileSoldierMissileLauncherFake"
+		Name="GDIMissileSoldierMissileLauncherFake"
+		AttackRange="350.0"
+		WeaponSpeed="999999.0"
+		FireSound=""
+		FireFX=""
+		FireVeteranFX=""
+		ForbiddenFiringObjectStatus="USER_PARALYZED"
+		AcceptableAimDelta="20d"
+		PreAttackType="PER_SHOT"
+		ReAcquireDetailType="PRE_FIRE"
+		ClipSize="1"
+		AntiMask="ANTI_GROUND ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY"
+		CanFireWhileMoving="false"
+		>
+		<PreAttackDelay
+			MinSeconds=".2s"
+			MaxSeconds=".2s" />
+		<FiringDuration
+			MinSeconds="2.8s"
+			MaxSeconds="3.0s" />
+		<ClipReloadTime
+				MinSeconds="99999s"
+				MaxSeconds="99999s" />
+		<Nuggets>
+			<DamageNugget
+				Damage="1.0"
+				Radius="0.0"
+				DelayTimeSeconds="0.0s"
+				DamageType="ROCKET"
+				DamageFXType="GDI_MISSILE"
+				DeathType="NORMAL">
+			<DamageScalarDetails Scalar= "0%" />
+			</DamageNugget>
+		</Nuggets>
+	</WeaponTemplate>
+
+	<WeaponTemplate
+		id="GDIGrenadeSoldierGrenadeFake"
+		Name="GDIGrenadeSoldierGrenadeFake"
+		AttackRange="260.0"
+		WeaponSpeed="999999.0"
+		FireSound=""
+		AcceptableAimDelta="20d"
+		PreAttackType="PER_SHOT"
+		ClipSize="1"
+		AutoReloadsClip="AUTO"
+		CanFireWhileMoving="true"
+		>
+		<PreAttackDelay
+			MinSeconds="0.4s"
+			MaxSeconds="0.4s" />
+		<FiringDuration
+			MinSeconds="0.70s"
+			MaxSeconds="0.70s" />
+		<ClipReloadTime
+				MinSeconds="99999s"
+				MaxSeconds="99999s" />
+		<Nuggets>
+			<DamageNugget
+				Damage="1.0"
+				Radius="0.0"
+				DelayTimeSeconds="0.0s"
+				DamageType="GRENADE"
+				DamageFXType="GDI_GRENADE"
+				DeathType="NORMAL">
+			<DamageScalarDetails Scalar= "0%" />
+			</DamageNugget>
+		</Nuggets>
+	</WeaponTemplate>
+
 </AssetDeclaration>

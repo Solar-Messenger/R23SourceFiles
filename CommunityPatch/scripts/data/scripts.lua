@@ -3412,7 +3412,7 @@ squadSizeTable = {
 	["5D5E5931"] = {size = 4, setRider = true, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_"}, -- GDIZoneTrooperSquad
 	["BD0F31E6"] = {size = 4, setRider = true, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_"}, -- GDIZoneTrooperSquad_Veteran
 	["9096966E"] = {size = 6, setRider = true, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_"}, -- GDIRifleSoldierSquad
-	["F90AE74"] = {size = 6, setRider = true, needsRocketFix = false, experienceLvlString = "GDIGrenadeSoldierSquadExperienceLevel_"}, -- GDIRifleSoldierSquad_Veteran
+	["F90AE74"] = {size = 6, setRider = false, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_"}, -- GDIRifleSoldierSquad_Veteran
 	["42896060"] = {size = 4, setRider = false, needsRocketFix = false, experienceLvlString = "GDIGrenadeSoldierSquadExperienceLevel_"}, -- GDIGrenadeSoldierSquad
 	["EF1252DB"] = {size = 2, setRider = false, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_"}, -- GDIMissileSoldierSquad
 	["96C215F3"] = {size = 2, setRider = false, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_"}, -- GDIMissileSoldierSquad_Veteran
@@ -3639,7 +3639,7 @@ function GarrisonedInHammerhead(self)
 
 	-- this enables the fake weapon for the regular members
 	for squadMemberId,_ in squad.squadMembers do
-		-- grant RIDER1 status to either the riflemen squad or zone trooper squad 
+		-- grant RIDER1 status to every squad member to deny them from attacking while inside the hammerhead
 		if squad.setRider then
 			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 41, 1)
 		end

@@ -1708,6 +1708,7 @@
 		<Target>GDIMissileSoldierSquad_Veteran</Target>
 		<Target>GDIMissileSoldierSquad</Target>
 		<Target>GDIMissileSoldier</Target>
+		<Target>GDIMissileSoldierGarrisoned</Target>
 		<Decal
 			Texture="decal_G_level1"
 			Texture2="decal_Good_CO"
@@ -1736,6 +1737,7 @@
 		<Target>GDIMissileSoldierSquad_Veteran</Target>
 		<Target>GDIMissileSoldierSquad</Target>
 		<Target>GDIMissileSoldier</Target>
+		<Target>GDIMissileSoldierGarrisoned</Target>
 		<AttributeModifier>Unit_Veteran</AttributeModifier>
 		<Decal
 			Texture="decal_G_level1"
@@ -1765,6 +1767,7 @@
 		<Target>GDIMissileSoldierSquad_Veteran</Target>
 		<Target>GDIMissileSoldierSquad</Target>
 		<Target>GDIMissileSoldier</Target>
+		<Target>GDIMissileSoldierGarrisoned</Target>
 		<AttributeModifier>Unit_Elite</AttributeModifier>
 		<Decal
 			Texture="decal_G_level1"
@@ -1794,6 +1797,7 @@
 		<Target>GDIMissileSoldierSquad_Veteran</Target>
 		<Target>GDIMissileSoldierSquad</Target>
 		<Target>GDIMissileSoldier</Target>
+		<Target>GDIMissileSoldierGarrisoned</Target>
 		<AttributeModifier>Unit_Heroic</AttributeModifier>
 		<Decal
 			Texture="decal_G_level1"
