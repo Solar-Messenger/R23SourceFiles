@@ -29,6 +29,7 @@
 		<Include type="all" source="DATA:Neutral/Debris/gdiorcadebris_06.xml" />		
 		<Include type="all" source="DATA:Neutral/Units/mutantmarauder.xml" />
 		<Include type="all" source="DATA:Neutral/Units/MutantMarauderSquad.xml" />
+		<Include type="all" source="DATA:Neutral/Units/MutantMarauderGarrisoned.xml" />
 		<Include type="all" source="DATA:Neutral/Structures/DefensiveTower.xml" />
 		<Include type="all" source="DATA:Neutral/Structures/CDMTower.xml" />
 		<Include type="all" source="DATA:Neutral/Debris/nodflametankdebris_01.xml" />

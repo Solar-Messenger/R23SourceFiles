@@ -486,4 +486,35 @@
 		</Nuggets>
 	</WeaponTemplate>
 
+	<WeaponTemplate
+		id="MutantMarauderRifleFake"
+		Name="MutantMarauderRifleFake"
+		AttackRange="300.0"
+		WeaponSpeed="999999.0"
+		FireSoundPerClip=""
+		FireFX=""
+		FireVeteranFX=""
+		ForbiddenFiringObjectStatus="USER_PARALYZED"
+		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
+		ClipSize="3"
+		AntiMask="ANTI_GROUND"
+		AcceptableAimDelta="10d"
+		CanFireWhileMoving="true"
+		>
+		<ClipReloadTime
+				MinSeconds="99999s"
+				MaxSeconds="99999s" />
+		<Nuggets>
+			<DamageNugget
+				Damage="1.0"
+				Radius="0.0"
+				DelayTimeSeconds="0.0s"
+				DamageType="GUN"
+				DamageFXType="GDI_MACHINEGUN"
+				DeathType="NORMAL">
+			<DamageScalarDetails Scalar= "0%" />
+			</DamageNugget>
+		</Nuggets>
+	</WeaponTemplate>
+
 </AssetDeclaration>

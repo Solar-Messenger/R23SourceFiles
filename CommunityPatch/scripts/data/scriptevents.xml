@@ -1513,6 +1513,20 @@
 		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
+	<EventList Name="ZOCOMMissileSoldierFunctions_R24" Inherit="HordeMemberFunctions_R24">
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="SteelTalonsMissileSoldierFunctions_R24" Inherit="HordeMemberFunctions_R24">
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
+	</EventList>
+
 	<EventList Name="GDIMissileSoldierFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>

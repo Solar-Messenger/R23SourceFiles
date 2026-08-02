@@ -3406,90 +3406,89 @@ end
 -- ############################# R25 Squad/Member Data ###################################
 
 -- this defines squad sizes and if a squad has a hammerhead garrison banner carrier.
--- setRider defines if a squad has a weapon upgrade within the hammerhead (WEAPON_UPGRADED_01)
 squadSizeTable = {
 	-- vGDI
-	["5D5E5931"] = {size = 4, setRider = true, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_"}, -- GDIZoneTrooperSquad
-	["BD0F31E6"] = {size = 4, setRider = true, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_"}, -- GDIZoneTrooperSquad_Veteran
-	["9096966E"] = {size = 6, setRider = true, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_"}, -- GDIRifleSoldierSquad
-	["F90AE74"] = {size = 6, setRider = false, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_"}, -- GDIRifleSoldierSquad_Veteran
-	["42896060"] = {size = 4, setRider = false, needsRocketFix = false, experienceLvlString = "GDIGrenadeSoldierSquadExperienceLevel_"}, -- GDIGrenadeSoldierSquad
-	["EF1252DB"] = {size = 2, setRider = false, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_"}, -- GDIMissileSoldierSquad
-	["96C215F3"] = {size = 2, setRider = false, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_"}, -- GDIMissileSoldierSquad_Veteran
-	["BCB36A05"] = {size = 2, setRider = false, needsRocketFix = false}, -- GDISniperSquad
-	["CF21C755"] = {size = 2, setRider = false, needsRocketFix = false}, -- GDISniperSquad_Veteran
+	["5D5E5931"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_"}, -- GDIZoneTrooperSquad
+	["BD0F31E6"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_"}, -- GDIZoneTrooperSquad_Veteran
+	["9096966E"] = {size = 6, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_"}, -- GDIRifleSoldierSquad
+	["F90AE74"] = {size = 6, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_"}, -- GDIRifleSoldierSquad_Veteran
+	["42896060"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIGrenadeSoldierSquadExperienceLevel_"}, -- GDIGrenadeSoldierSquad
+	["EF1252DB"] = {size = 2, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_"}, -- GDIMissileSoldierSquad
+	["96C215F3"] = {size = 2, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_"}, -- GDIMissileSoldierSquad_Veteran
+	["BCB36A05"] = {size = 2, needsRocketFix = false}, -- GDISniperSquad
+	["CF21C755"] = {size = 2, needsRocketFix = false}, -- GDISniperSquad_Veteran
 	-- vScrin
-	["2B9428D0"] = {size = 5, setRider = false, needsRocketFix = false}, -- AlienRazorDroneSquad
-	["240FB1"] = {size = 5, setRider = false, needsRocketFix = false}, -- Traveler59RazorDroneSquad
+	["2B9428D0"] = {size = 5, needsRocketFix = false}, -- AlienRazorDroneSquad
+	["240FB1"] = {size = 5, needsRocketFix = false}, -- Traveler59RazorDroneSquad
 
-	["32EA13B3"] = {size = 3, setRider = false, needsRocketFix = false}, -- AlienStalkerSquad
-	["72A9F5D5"] = {size = 3, setRider = false, needsRocketFix = false}, -- Traveler59StalkerSquad
-	["7F2D0EF5"] = {size = 3, setRider = false, needsRocketFix = false}, -- Reaper17StalkerSquad
+	["32EA13B3"] = {size = 3, needsRocketFix = false}, -- AlienStalkerSquad
+	["72A9F5D5"] = {size = 3, needsRocketFix = false}, -- Traveler59StalkerSquad
+	["7F2D0EF5"] = {size = 3, needsRocketFix = false}, -- Reaper17StalkerSquad
 
-	["6495F509"] = {size = 3, setRider = true, needsRocketFix = false}, -- AlienShockTrooperSquad
-	["990D8832"] = {size = 3, setRider = true, needsRocketFix = false}, -- AlienShockTrooperSquad_Veteran
-	["4803957E"] = {size = 3, setRider = true, needsRocketFix = false}, -- Traveler59ShockTrooperSquad
-	["9676826C"] = {size = 3, setRider = true, needsRocketFix = false}, -- Traveler59ShockTrooperSquad_Veteran
-	["40241AC3"] = {size = 3, setRider = true, needsRocketFix = false}, -- Reaper17ShockTrooperSquad
-	["34BC82E3"] = {size = 0, setRider = true, needsRocketFix = false}, -- Reaper17ShockTrooperSquad_Veteran
+	["6495F509"] = {size = 3, needsRocketFix = false}, -- AlienShockTrooperSquad
+	["990D8832"] = {size = 3, needsRocketFix = false}, -- AlienShockTrooperSquad_Veteran
+	["4803957E"] = {size = 3, needsRocketFix = false}, -- Traveler59ShockTrooperSquad
+	["9676826C"] = {size = 3, needsRocketFix = false}, -- Traveler59ShockTrooperSquad_Veteran
+	["40241AC3"] = {size = 3, needsRocketFix = false}, -- Reaper17ShockTrooperSquad
+	["34BC82E3"] = {size = 0, needsRocketFix = false}, -- Reaper17ShockTrooperSquad_Veteran
 
-	["C46CECA2"] = {size = 5, setRider = false, needsRocketFix = false}, -- Traveler59CultistSquad
+	["C46CECA2"] = {size = 5, needsRocketFix = false}, -- Traveler59CultistSquad
 
 	-- Reaper17
-	["8EEE4A0A"] = {size = 5, setRider = false, needsRocketFix = false}, -- Reaper17RazorDroneSquad
+	["8EEE4A0A"] = {size = 5, needsRocketFix = false}, -- Reaper17RazorDroneSquad
 
 	-- ZOCOM
-	["D213112"] = {size = 4, setRider = true, needsRocketFix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_"}, -- ZOCOMZoneRaiderSquad
-	["8A6E8182"] = {size = 4, setRider = true, needsRocketFix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_"}, -- ZOCOMZoneRaiderSquad_Veteran
-	["AC645E3"] = {size = 6, setRider = true, needsRocketFix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_"}, -- ZOCOMRifleSoldierSquad
-	["A457A93"] = {size = 6, setRider = true, needsRocketFix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_"}, -- ZOCOMRifleSoldierSquad_Veteran
-	["C43CF79F"] = {size = 4, setRider = false, needsRocketFix = false, experienceLvlString = "ZOCOMGrenadeSoldierSquadExperienceLevel_"}, -- ZOCOMGrenadeSoldierSquad
-	["17A153BA"] = {size = 2, setRider = false, needsRocketFix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_"}, -- ZOCOMMissileSoldierSquad
-	["B0C5EE48"] = {size = 2, setRider = false, needsRocketFix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_"}, -- ZOCOMMissileSoldierSquad_Veteran
-	["B724E036"] = {size = 2, setRider = false, needsRocketFix = false}, -- ZOCOMSniperSquad
-	["5CE43D31"] = {size = 2, setRider = false, needsRocketFix = false}, -- ZOCOMSniperSquad_Veteran
+	["D213112"] = {size = 4, needsRocketFix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_"}, -- ZOCOMZoneRaiderSquad
+	["8A6E8182"] = {size = 4, needsRocketFix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_"}, -- ZOCOMZoneRaiderSquad_Veteran
+	["AC645E3"] = {size = 6, needsRocketFix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_"}, -- ZOCOMRifleSoldierSquad
+	["A457A93"] = {size = 6, needsRocketFix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_"}, -- ZOCOMRifleSoldierSquad_Veteran
+	["C43CF79F"] = {size = 4, needsRocketFix = false, experienceLvlString = "ZOCOMGrenadeSoldierSquadExperienceLevel_"}, -- ZOCOMGrenadeSoldierSquad
+	["17A153BA"] = {size = 2, needsRocketFix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_"}, -- ZOCOMMissileSoldierSquad
+	["B0C5EE48"] = {size = 2, needsRocketFix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_"}, -- ZOCOMMissileSoldierSquad_Veteran
+	["B724E036"] = {size = 2, needsRocketFix = false}, -- ZOCOMSniperSquad
+	["5CE43D31"] = {size = 2, needsRocketFix = false}, -- ZOCOMSniperSquad_Veteran
 
 	-- SteelTalons
-	["CF35F1B4"] = {size = 6, setRider = true, needsRocketFix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_"}, -- SteelTalonsRifleSoldierSquad
-	["B1D77E97"] = {size = 6, setRider = true, needsRocketFix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_"}, -- SteelTalonsRifleSoldierSquad_Veteran
-	["FC6A915"] = {size = 4, setRider = false, needsRocketFix = false, experienceLvlString = "SteelTalonsGrenadeSoldierSquadExperienceLevel_"}, -- SteelTalonsGrenadeSoldierSquad
-	["EA23C76F"] = {size = 2, setRider = false, needsRocketFix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_"}, -- SteelTalonsMissileSoldierSquad
-	["4D8388BF"] = {size = 2, setRider = false, needsRocketFix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_"}, -- SteelTalonsMissileSoldierSquad_Veteran
-	["C674C01"] = {size = 2, setRider = false, needsRocketFix = false}, -- SteelTalonsSniperSquad
+	["CF35F1B4"] = {size = 6, needsRocketFix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_"}, -- SteelTalonsRifleSoldierSquad
+	["B1D77E97"] = {size = 6, needsRocketFix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_"}, -- SteelTalonsRifleSoldierSquad_Veteran
+	["FC6A915"] = {size = 4, needsRocketFix = false, experienceLvlString = "SteelTalonsGrenadeSoldierSquadExperienceLevel_"}, -- SteelTalonsGrenadeSoldierSquad
+	["EA23C76F"] = {size = 2, needsRocketFix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_"}, -- SteelTalonsMissileSoldierSquad
+	["4D8388BF"] = {size = 2, needsRocketFix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_"}, -- SteelTalonsMissileSoldierSquad_Veteran
+	["C674C01"] = {size = 2, needsRocketFix = false}, -- SteelTalonsSniperSquad
 
 	-- vNod
-	["BC36257A"] = {size = 9, setRider = false, needsRocketFix = false}, -- NODMilitantSquad
-	["89C45844"] = {size = 2, setRider = false, needsRocketFix = false}, -- NODMilitantRocketSquad
-	["A81E7801"] = {size = 2, setRider = false, needsRocketFix = false}, -- NodRocketMilitantSquad
-	["BE7C389D"] = {size = 5, setRider = false, needsRocketFix = false}, -- NodFanaticSquad
-	["128ABF1"] = {size = 6, setRider = false, needsRocketFix = false}, -- NODBlackHandSquad
-	["A6E10008"] = {size = 4, setRider = false, needsRocketFix = false}, -- NODShadowSquad
-	["8B148736"] = {size = 4, setRider = false, needsRocketFix = false}, -- NODShadowSquad_Veteran
-	["346EDC73"] = {size = 3, setRider = false, needsRocketFix = false}, -- NODCyborgInfantrySquad
-	["77A93742"] = {size = 6, setRider = false, needsRocketFix = false}, -- NODTibTrooperSquad
+	["BC36257A"] = {size = 9, needsRocketFix = false}, -- NODMilitantSquad
+	["89C45844"] = {size = 2, needsRocketFix = false}, -- NODMilitantRocketSquad
+	["A81E7801"] = {size = 2, needsRocketFix = false}, -- NodRocketMilitantSquad
+	["BE7C389D"] = {size = 5, needsRocketFix = false}, -- NodFanaticSquad
+	["128ABF1"] = {size = 6, needsRocketFix = false}, -- NODBlackHandSquad
+	["A6E10008"] = {size = 4, needsRocketFix = false}, -- NODShadowSquad
+	["8B148736"] = {size = 4, needsRocketFix = false}, -- NODShadowSquad_Veteran
+	["346EDC73"] = {size = 3, needsRocketFix = false}, -- NODCyborgInfantrySquad
+	["77A93742"] = {size = 6, needsRocketFix = false}, -- NODTibTrooperSquad
 
 	-- BlackHand
-	["C390AF55"] = {size = 9, setRider = false, needsRocketFix = false}, -- BlackHandMilitantSquad
-	["C3011861"] = {size = 2, setRider = false, needsRocketFix = false}, -- BlackHandMilitantRocketSquad
-	["8E0F9C9"] = {size = 5, setRider = false, needsRocketFix = false}, -- BlackHandFanaticSquad
-	["FDEF5E7"] = {size = 6, setRider = false, needsRocketFix = false}, -- BlackHandConfessorSquad
-	["5F44F92F"] = {size = 6, setRider = false, needsRocketFix = false}, -- BlackHandBlackHandSquad
-	["8552C4D4"] = {size = 4, setRider = false, needsRocketFix = false}, -- BlackHandShadowSquad
-	["28218CBE"] = {size = 4, setRider = false, needsRocketFix = false}, -- BlackHandShadowSquad_Veteran
+	["C390AF55"] = {size = 9, needsRocketFix = false}, -- BlackHandMilitantSquad
+	["C3011861"] = {size = 2, needsRocketFix = false}, -- BlackHandMilitantRocketSquad
+	["8E0F9C9"] = {size = 5, needsRocketFix = false}, -- BlackHandFanaticSquad
+	["FDEF5E7"] = {size = 6, needsRocketFix = false}, -- BlackHandConfessorSquad
+	["5F44F92F"] = {size = 6, needsRocketFix = false}, -- BlackHandBlackHandSquad
+	["8552C4D4"] = {size = 4, needsRocketFix = false}, -- BlackHandShadowSquad
+	["28218CBE"] = {size = 4, needsRocketFix = false}, -- BlackHandShadowSquad_Veteran
 
 	-- MarkedOfKane
-	["4A595ED7"] = {size = 9, setRider = false, needsRocketFix = false}, -- MarkedOfKaneMilitantSquad
-	["20126F6"] = {size = 2, setRider = false, needsRocketFix = false}, -- MarkedOfKaneMilitantRocketSquad
-	["6093B1BE"] = {size = 5, setRider = false, needsRocketFix = false}, -- MarkedOfKaneFanaticSquad
-	["6AEA240A"] = {size = 4, setRider = false, needsRocketFix = false}, -- MarkedOfKaneShadowSquad
-	["BE0BBE08"] = {size = 4, setRider = false, needsRocketFix = false}, -- MarkedOfKaneShadowSquad_Veteran
-	["D5BE6F6C"] = {size = 3, setRider = false, needsRocketFix = false}, -- MOKCyborgInfantrySquad
-	["B27DDF67"] = {size = 3, setRider = false, needsRocketFix = false}, -- MarkedOfKaneImprovedCyborgInfantrySquad
-	["E6E24EF7"] = {size = 6, setRider = false, needsRocketFix = false}, -- MarkedOfKaneTibTrooperSquad
-	["8274FA0E"] = {size = 6, setRider = false, needsRocketFix = false}, -- MarkedOfKaneTiberiumTrooperSquad
+	["4A595ED7"] = {size = 9, needsRocketFix = false}, -- MarkedOfKaneMilitantSquad
+	["20126F6"] = {size = 2, needsRocketFix = false}, -- MarkedOfKaneMilitantRocketSquad
+	["6093B1BE"] = {size = 5, needsRocketFix = false}, -- MarkedOfKaneFanaticSquad
+	["6AEA240A"] = {size = 4, needsRocketFix = false}, -- MarkedOfKaneShadowSquad
+	["BE0BBE08"] = {size = 4, needsRocketFix = false}, -- MarkedOfKaneShadowSquad_Veteran
+	["D5BE6F6C"] = {size = 3, needsRocketFix = false}, -- MOKCyborgInfantrySquad
+	["B27DDF67"] = {size = 3, needsRocketFix = false}, -- MarkedOfKaneImprovedCyborgInfantrySquad
+	["E6E24EF7"] = {size = 6, needsRocketFix = false}, -- MarkedOfKaneTibTrooperSquad
+	["8274FA0E"] = {size = 6, needsRocketFix = false}, -- MarkedOfKaneTiberiumTrooperSquad
 
 	-- Mutant
-	["1AF4B91"] = {size = 6, setRider = false, needsRocketFix = false} -- MutantMarauderSquad
+	["1AF4B91"] = {size = 6, needsRocketFix = false, experienceLvlString = "MutantMarauderSquadExperienceLevel_"} -- MutantMarauderSquad
 
 }
 
@@ -3640,9 +3639,7 @@ function GarrisonedInHammerhead(self)
 	-- this enables the fake weapon for the regular members
 	for squadMemberId,_ in squad.squadMembers do
 		-- grant RIDER1 status to every squad member to deny them from attacking while inside the hammerhead
-		if squad.setRider then
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 41, 1)
-		end
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 41, 1)
 	end
 end
 
@@ -3654,9 +3651,7 @@ function GarrisonedInHammerheadEnd(self)
 	-- instead of status i could just use upgrades instead
 	for squadMemberId,_ in squad.squadMembers do
 		-- remove RIDER1 status to either the riflemen squad or zone trooper squad 
-		if squad.setRider then
-			ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 41, 0)
-		end
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 41, 0)
 	end
 	-- if banner carrier has higher rank than members, promote members to rank of banner carrier 
 	local firstMember = squadMemberTable[next(squad.squadMembers)]
@@ -3704,8 +3699,7 @@ function GetSquadAttributes(self)
 		spawnedSize = 0,
 		lastPromotedRank = 1,
 		lastPromotedFrame = 0,
-		unitsLostOnSpawn = {}, -- units lost while coming out of the barracks
-		setRider = false
+		unitsLostOnSpawn = {} -- units lost while coming out of the barracks
 	}
 	return objId, squadTables[objId]
 end
@@ -3757,12 +3751,6 @@ function OnSquadExitRax_R24(self)
 	squad.spawnedSize = squadSize
 
 	if isSquadExploit(squad) then return end
-
-	-- if the squad can receive a weapon upgrade, apply setRider to true to enable it
-	if squadData.setRider then
-		squad.setRider = true
-		--print("This unit can receive a weapon upgrade inside the hammerhead")
-	end
 	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
 end
 

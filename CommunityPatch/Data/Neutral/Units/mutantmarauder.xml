@@ -1407,6 +1407,14 @@
 						Upgrade=""
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
+
+					<!-- RIDER1 is enabled when garrisoned in hammerheads -->
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="MutantMarauderRifleFake"
+						Upgrade=""
+						ObjectStatus="RIDER1"
+						IsPlayerUpgradePermanent="False" />
 				</WeaponSlotHardpoint>
 			</WeaponSetUpdate>
 			<FindCoverBehavior

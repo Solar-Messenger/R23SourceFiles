@@ -651,6 +651,14 @@
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
 						Template="GDIMissileSoldierMissileLauncher" />
+
+					<!-- RIDER1 is enabled when garrisoned in hammerheads -->
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="GDIMissileSoldierMissileLauncherFake"
+						Upgrade=""
+						ObjectStatus="RIDER1"
+						IsPlayerUpgradePermanent="False" />
 				</WeaponSlotHardpoint>
 			</WeaponSetUpdate>
 			<Physics
@@ -700,7 +708,8 @@
 		<AI>
 			<AIUpdate
 				id="ModuleTag_AI"
-				AutoAcquireEnemiesWhenIdle="YES">
+				AutoAcquireEnemiesWhenIdle="YES"
+				AILuaEventsList="SteelTalonsMissileSoldierFunctions_R24">
 				<UnitAITargetChooserData
 					SympathyRange="100.0" />
 			</AIUpdate>

@@ -868,4 +868,446 @@
 			MaxSelectedUnits="40"/>
 	</ExperienceLevelTemplate>
 
+	<!-- subfaction hammerhead garrison squads (sourced from vanilla, garrisoned targets added) -->
+
+
+	<!-- subfaction hammerhead garrison squads (sourced from vanilla, garrisoned targets added) -->
+
+		<ExperienceLevelTemplate
+			id="SteelTalonsRifleSoldierSquadExperienceLevel_1"
+			RequiredExperience="1"
+			ExperienceAward="50"
+			Rank="1">
+			<LevelUpTintColor
+				r="1.0"
+				g="1.0"
+				b="1.0" />
+			<Target>SteelTalonsRifleSoldierSquad_Veteran</Target>
+			<Target>SteelTalonsRifleSoldierSquad</Target>
+			<Target>SteelTalonsRifleSoldier</Target>
+			<Target>SteelTalonsRifleSoldierGarrisoned</Target>
+			<Decal
+				Texture="decal_G_level1"
+				Texture2="decal_Good_CO" 
+				Style="MERGE_DECAL"
+				OpacityMin="80"
+				OpacityMax="100"
+				MinRadius="50"
+				MaxRadius="200"
+				MaxSelectedUnits="40"/>
+		</ExperienceLevelTemplate>
+		<ExperienceLevelTemplate
+			id="SteelTalonsRifleSoldierSquadExperienceLevel_2"
+			Prerequisite="SteelTalonsRifleSoldierSquadExperienceLevel_1"
+			RequiredExperience="900"
+			ExperienceAward="66"
+			ModelConditionState="SPECIAL_CHEERING"
+			Rank="2">
+			<LevelUpTintColor
+				r="1.0"
+				g="1.0"
+				b="1.0" />
+			<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+			<LevelUpFxList
+				FxList="FX_GDILevelUp_01" />
+			<Target>SteelTalonsRifleSoldierSquad_Veteran</Target>
+			<Target>SteelTalonsRifleSoldierSquad</Target>
+			<Target>SteelTalonsRifleSoldier</Target>
+			<Target>SteelTalonsRifleSoldierGarrisoned</Target>
+			<AttributeModifier>Unit_Veteran</AttributeModifier>
+			<Decal
+				Texture="decal_G_level1"
+				Texture2="decal_Good_CO" 
+				Style="MERGE_DECAL"
+				OpacityMin="80"
+				OpacityMax="100"
+				MinRadius="50"
+				MaxRadius="200"
+				MaxSelectedUnits="40"/>
+		</ExperienceLevelTemplate>
+		<ExperienceLevelTemplate
+			id="SteelTalonsRifleSoldierSquadExperienceLevel_3"
+			Prerequisite="SteelTalonsRifleSoldierSquadExperienceLevel_2"
+			RequiredExperience="1800"
+			ExperienceAward="84"
+			ModelConditionState="SPECIAL_CHEERING"
+			Rank="3">
+			<LevelUpTintColor
+				r="1.0"
+				g="1.0"
+				b="1.0" />
+			<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+			<LevelUpFxList
+				FxList="FX_GDILevelUp_02" />
+			<Target>SteelTalonsRifleSoldierSquad_Veteran</Target>
+			<Target>SteelTalonsRifleSoldierSquad</Target>
+			<Target>SteelTalonsRifleSoldier</Target>
+			<Target>SteelTalonsRifleSoldierGarrisoned</Target>
+			<AttributeModifier>Unit_Elite</AttributeModifier>
+			<Decal
+				Texture="decal_G_level1"
+				Texture2="decal_Good_CO" 
+				Style="MERGE_DECAL"
+				OpacityMin="80"
+				OpacityMax="100"
+				MinRadius="50"
+				MaxRadius="200"
+				MaxSelectedUnits="40"/>
+		</ExperienceLevelTemplate>
+		<ExperienceLevelTemplate
+			id="SteelTalonsRifleSoldierSquadExperienceLevel_4"
+			Prerequisite="SteelTalonsRifleSoldierSquadExperienceLevel_3"
+			RequiredExperience="2700"
+			ExperienceAward="100"
+			ModelConditionState="SPECIAL_CHEERING"
+			Rank="4">
+			<LevelUpTintColor
+				r="1.0"
+				g="1.0"
+				b="1.0" />
+			<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+			<LevelUpFxList
+				FxList="FX_GDILevelUp_03" />
+			<Target>SteelTalonsRifleSoldierSquad_Veteran</Target>
+			<Target>SteelTalonsRifleSoldierSquad</Target>
+			<Target>SteelTalonsRifleSoldier</Target>
+			<Target>SteelTalonsRifleSoldierGarrisoned</Target>
+			<AttributeModifier>Unit_Heroic</AttributeModifier>
+			<Decal
+				Texture="decal_G_level1"
+				Texture2="decal_Good_CO" 
+				Style="MERGE_DECAL"
+				OpacityMin="80"
+				OpacityMax="100"
+				MinRadius="50"
+				MaxRadius="200"
+				MaxSelectedUnits="40"/>
+		</ExperienceLevelTemplate>
+
+	<ExperienceLevelTemplate
+		id="SteelTalonsGrenadeSoldierSquadExperienceLevel_1"
+		RequiredExperience="1"
+		ExperienceAward="200"
+		Rank="1">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Target>SteelTalonsGrenadeSoldierSquad</Target>
+		<Target>SteelTalonsGrenadeSoldier</Target>
+		<Target>SteelTalonsGrenadeSoldierGarrisoned</Target>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="SteelTalonsGrenadeSoldierSquadExperienceLevel_2"
+		Prerequisite="SteelTalonsGrenadeSoldierSquadExperienceLevel_1"
+		RequiredExperience="2400"
+		ExperienceAward="260"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="2">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_01" />
+		<Target>SteelTalonsGrenadeSoldierSquad</Target>
+		<Target>SteelTalonsGrenadeSoldier</Target>
+		<Target>SteelTalonsGrenadeSoldierGarrisoned</Target>
+		<AttributeModifier>Unit_Veteran</AttributeModifier>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="SteelTalonsGrenadeSoldierSquadExperienceLevel_3"
+		Prerequisite="SteelTalonsGrenadeSoldierSquadExperienceLevel_2"
+		RequiredExperience="4800"
+		ExperienceAward="320"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="3">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_02" />
+		<Target>SteelTalonsGrenadeSoldierSquad</Target>
+		<Target>SteelTalonsGrenadeSoldier</Target>
+		<Target>SteelTalonsGrenadeSoldierGarrisoned</Target>
+		<AttributeModifier>Unit_Elite</AttributeModifier>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="SteelTalonsGrenadeSoldierSquadExperienceLevel_4"
+		Prerequisite="SteelTalonsGrenadeSoldierSquadExperienceLevel_3"
+		RequiredExperience="7200"
+		ExperienceAward="400"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="4">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_03" />
+		<Target>SteelTalonsGrenadeSoldierSquad</Target>
+		<Target>SteelTalonsGrenadeSoldier</Target>
+		<Target>SteelTalonsGrenadeSoldierGarrisoned</Target>
+		<AttributeModifier>Unit_Heroic</AttributeModifier>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+
+		<ExperienceLevelTemplate
+			id="SteelTalonsMissileSoldierSquadExperienceLevel_1"
+			RequiredExperience="1"
+			ExperienceAward="200"
+			Rank="1">
+			<LevelUpTintColor
+				r="1.0"
+				g="1.0"
+				b="1.0" />
+			<Target>SteelTalonsMissileSoldierSquad_Veteran</Target>
+			<Target>SteelTalonsMissileSoldierSquad</Target>
+			<Target>SteelTalonsMissileSoldier</Target>
+			<Target>SteelTalonsMissileSoldierGarrisoned</Target>
+			<Decal
+				Texture="decal_G_level1"
+				Texture2="decal_Good_CO" 
+				Style="MERGE_DECAL"
+				OpacityMin="80"
+				OpacityMax="100"
+				MinRadius="50"
+				MaxRadius="200"
+				MaxSelectedUnits="40"/>
+		</ExperienceLevelTemplate>
+		<ExperienceLevelTemplate
+			id="SteelTalonsMissileSoldierSquadExperienceLevel_2"
+			Prerequisite="SteelTalonsMissileSoldierSquadExperienceLevel_1"
+			RequiredExperience="1200"
+			ExperienceAward="260"
+			ModelConditionState="SPECIAL_CHEERING"
+			Rank="2">
+			<LevelUpTintColor
+				r="1.0"
+				g="1.0"
+				b="1.0" />
+			<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+			<LevelUpFxList
+				FxList="FX_GDILevelUp_01" />
+			<Target>SteelTalonsMissileSoldierSquad_Veteran</Target>
+			<Target>SteelTalonsMissileSoldierSquad</Target>
+			<Target>SteelTalonsMissileSoldier</Target>
+			<Target>SteelTalonsMissileSoldierGarrisoned</Target>
+			<AttributeModifier>Unit_Veteran</AttributeModifier>
+			<Decal
+				Texture="decal_G_level1"
+				Texture2="decal_Good_CO" 
+				Style="MERGE_DECAL"
+				OpacityMin="80"
+				OpacityMax="100"
+				MinRadius="50"
+				MaxRadius="200"
+				MaxSelectedUnits="40"/>
+		</ExperienceLevelTemplate>
+		<ExperienceLevelTemplate
+			id="SteelTalonsMissileSoldierSquadExperienceLevel_3"
+			Prerequisite="SteelTalonsMissileSoldierSquadExperienceLevel_2"
+			RequiredExperience="2400"
+			ExperienceAward="320"
+			ModelConditionState="SPECIAL_CHEERING"
+			Rank="3">
+			<LevelUpTintColor
+				r="1.0"
+				g="1.0"
+				b="1.0" />
+			<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+			<LevelUpFxList
+				FxList="FX_GDILevelUp_02" />
+			<Target>SteelTalonsMissileSoldierSquad_Veteran</Target>
+			<Target>SteelTalonsMissileSoldierSquad</Target>
+			<Target>SteelTalonsMissileSoldier</Target>
+			<Target>SteelTalonsMissileSoldierGarrisoned</Target>
+			<AttributeModifier>Unit_Elite</AttributeModifier>
+			<Decal
+				Texture="decal_G_level1"
+				Texture2="decal_Good_CO" 
+				Style="MERGE_DECAL"
+				OpacityMin="80"
+				OpacityMax="100"
+				MinRadius="50"
+				MaxRadius="200"
+				MaxSelectedUnits="40"/>
+		</ExperienceLevelTemplate>
+		<ExperienceLevelTemplate
+			id="SteelTalonsMissileSoldierSquadExperienceLevel_4"
+			Prerequisite="SteelTalonsMissileSoldierSquadExperienceLevel_3"
+			RequiredExperience="3600"
+			ExperienceAward="400"
+			ModelConditionState="SPECIAL_CHEERING"
+			Rank="4">
+			<LevelUpTintColor
+				r="1.0"
+				g="1.0"
+				b="1.0" />
+			<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+			<LevelUpFxList
+				FxList="FX_GDILevelUp_03" />
+			<Target>SteelTalonsMissileSoldierSquad_Veteran</Target>
+			<Target>SteelTalonsMissileSoldierSquad</Target>
+			<Target>SteelTalonsMissileSoldier</Target>
+			<Target>SteelTalonsMissileSoldierGarrisoned</Target>
+			<AttributeModifier>Unit_Heroic</AttributeModifier>
+			<Decal
+				Texture="decal_G_level1"
+				Texture2="decal_Good_CO" 
+				Style="MERGE_DECAL"
+				OpacityMin="80"
+				OpacityMax="100"
+				MinRadius="50"
+				MaxRadius="200"
+				MaxSelectedUnits="40"/>
+		</ExperienceLevelTemplate>
+
+<ExperienceLevelTemplate
+		id="ZOCOMGrenadeSoldierSquadExperienceLevel_1"
+		RequiredExperience="1"
+		ExperienceAward="200"
+		Rank="1">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Target>ZOCOMGrenadeSoldierSquad</Target>
+		<Target>ZOCOMGrenadeSoldier</Target>
+		<Target>ZOCOMGrenadeSoldierGarrisoned</Target>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="ZOCOMGrenadeSoldierSquadExperienceLevel_2"
+		Prerequisite="ZOCOMGrenadeSoldierSquadExperienceLevel_1"
+		RequiredExperience="2400"
+		ExperienceAward="260"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="2">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_01" />
+		<Target>ZOCOMGrenadeSoldierSquad</Target>
+		<Target>ZOCOMGrenadeSoldier</Target>
+		<Target>ZOCOMGrenadeSoldierGarrisoned</Target>
+		<AttributeModifier>Unit_Veteran</AttributeModifier>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="ZOCOMGrenadeSoldierSquadExperienceLevel_3"
+		Prerequisite="ZOCOMGrenadeSoldierSquadExperienceLevel_2"
+		RequiredExperience="4800"
+		ExperienceAward="320"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="3">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_02" />
+		<Target>ZOCOMGrenadeSoldierSquad</Target>
+		<Target>ZOCOMGrenadeSoldier</Target>
+		<Target>ZOCOMGrenadeSoldierGarrisoned</Target>
+		<AttributeModifier>Unit_Elite</AttributeModifier>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="ZOCOMGrenadeSoldierSquadExperienceLevel_4"
+		Prerequisite="ZOCOMGrenadeSoldierSquadExperienceLevel_3"
+		RequiredExperience="7200"
+		ExperienceAward="400"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="4">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_03" />
+		<Target>ZOCOMGrenadeSoldierSquad</Target>
+		<Target>ZOCOMGrenadeSoldier</Target>
+		<Target>ZOCOMGrenadeSoldierGarrisoned</Target>
+		<AttributeModifier>Unit_Heroic</AttributeModifier>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO" 
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+
+
 </AssetDeclaration>

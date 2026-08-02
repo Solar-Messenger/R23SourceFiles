@@ -743,99 +743,26 @@
 				StartRechargeOnExit="False"
 				GoIdleInStartPreparation="True"
 				FaceTarget="True" />
+			<BannerCarrierUpgrade
+				id="ModuleTag_BannerCarrierUpgrade"
+				Permanent="False">
+				<TriggeredBy>Upgrade_BannerCarrierUpgrade</TriggeredBy>
+			</BannerCarrierUpgrade>
+			<!-- toggle on-off with upgrade -->
 			<HordeContain
-				id="3473F0C6"
-				ContainMax="0"
-				EnterSound=""
-				ExitSound=""
-				DamagePercentToUnits="0%"
-				PassengersTestCollisionHeight="-1000"
-				NumberOfExitPaths="1"
-				DoorOpenTime="1"
-				ObjectStatusOfContained=""
-				ModifierRequiredTime="100"
-				KillIfEmptyTime="0s"
-				ModelConditionsWhenNotEmpty=""
-				PassengersInTurret="False"
-				AllowOwnPlayerInsideOverride="False"
-				AllowAlliesInside="True"
-				AllowEnemiesInside="True"
-				AllowNeutralInside="True"
-				ShowPips="False"
-				CollidePickup="True"
-				EjectPassengersOnDeath="True"
-				KillPassengersOnDeath="False"
-				HasObjectStatusOfContainedEntry="True"
-				Enabled="True"
-				Slots="6"
-				ExitPitchRate="0"
-				HealthRegenPercentPerSec="0"
-				ExitDelay="0"
-				TypeOneForWeaponSet=""
-				TypeTwoForWeaponSet=""
-				TypeOneForWeaponState=""
-				TypeTwoForWeaponState=""
-				TypeThreeForWeaponState=""
-				GrabWeapon=""
-				ConditionForEntry="INVALID"
-				ThrowOutPassengersDelay="0"
-				ThrowOutPassengersLandingWarhead=""
-				EnterFadeTime="0"
-				ExitFadeTime="0"
-				ReleaseSnappyness="0.7"
-				ScatterNearbyOnExit="True"
-				OrientLikeContainerOnExit="False"
-				DestroyRidersWhoAreNotFreeToExit="False"
-				ForceOrientationContainer="True"
-				CanGrabStructure="False"
-				FireGrabWeaponOnVictim="True"
-				ShouldThrowOutPassengers="False"
-				FadePassengerOnEnter="False"
-				FadePassengerOnExit="False"
-				FadeReverse="False"
-				ExtendedExitContainerChecks="False"
-				Formation="MAIN"
-				AlternateFormation=""
-				ForcedLocomotorSet="NORMAL"
-				MeleeAttackLeashDistance="1"
-				GeometryFrontAngleRadians="0"
+				id="ModuleTag_HordeContain"
 				FrontAngle="4.7123"
-				FlankedDelaySeconds="2"
-				FlankedDurationSeconds="5"
-				MinimumHordeSize="0"
-				BackupMinDelayTime="0s"
-				BackupMaxDelayTime="0s"
-				BackupMinDistance="0"
-				BackupMaxDistance="0"
-				BackupPercentage="0"
-				RadiusCowerOverride="0"
-				VisionOverrideRear="0"
-				VisionOverrideSide="0"
-				ForbiddenCoverStatus=""
-				UseSlowHordeMovement="True"
-				SpawnBannerCarrierImmediately="False"
-				BannerCarrierByUpgradeOnly="False"
-				DestroyHordeOnBannerDeath="False"
-				ExitBannerCarrierWithHorde="False"
-				FollowTheLeader="False">
+				FlankedDelaySeconds="2.0"
+				ShowPips="false"
+				Formation="MAIN"
+				Slots="6"
+				ObjectStatusOfContained=""
+				BannerCarrierByUpgradeOnly="true"
+				ConditionForEntry="INVALID">
 				<PassengerFilter
 					Rule="NONE"
-					Relationship=""
-					Alignment="NONE"
-					Include="INFANTRY"
-					Exclude=""
-					StatusBitFlags=""
-					RejectStatusBitFlags=""
-					AcceptModelCondition=""
-					RejectModelCondition="" />
-				<DieMuxData
-					ExemptStatus=""
-					RequiredStatus=""
-					DamageAmountRequired="-1"
-					MinKillerAngle="0.9999999d"
-					MaxKillerAngle="-0.9999999d"
-					DeathTypes=""
-					DeathTypesForbidden="" />
+					Include="INFANTRY" />
+				<DieMuxData />
 				<InitialPayload
 					Name="SteelTalonsRifleSoldier"
 					Count="6" />
@@ -884,6 +811,14 @@
 				</RankInfo>
 				<RankToReleaseWhenAttacking>1</RankToReleaseWhenAttacking>
 				<RankToReleaseWhenAttacking>2</RankToReleaseWhenAttacking>
+				<BannerCarrierPosition>
+					<UnitType>SteelTalonsRifleSoldierGarrisoned</UnitType>
+					<Pos
+						x="0"
+						y="0" />
+				</BannerCarrierPosition>
+				<!-- for apcs etc that cant fire over buildings-->
+				<BannerCarriersAllowed>SteelTalonsRifleSoldierGarrisoned</BannerCarriersAllowed>
 			</HordeContain>
 
 			<!-- raged -->
