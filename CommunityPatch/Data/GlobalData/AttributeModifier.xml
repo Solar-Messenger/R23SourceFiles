@@ -2,6 +2,12 @@
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
 	<AttributeModifier
+		id="AttributeModifier_RageGenerator"
+		Category="NONE"
+		ModelConditionsSet="EMOTION_DISSIDENT" >
+	</AttributeModifier>
+
+	<AttributeModifier
 		id="Modifier_SetStunnedStates"
 		Category="NONE"
 		Duration="6s"

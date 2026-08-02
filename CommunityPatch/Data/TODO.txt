@@ -16,7 +16,7 @@ Done
 - Buff rifle squad damage vs disintegrators by 10%.
 - Buff Hammerhead landing time when picking up, dropping off infantry delay after loading/unloading reduced from 1s to 0.5s.
 - Fix Traveler Engine mesh on Devastator Warships when inside Ion Storms.
-- Fixed Rage Generator model state extended beyond the intended 6 seconds on units affected by EMP -> ensure every unit has the event list for being raged besides aircraft.
+- Fixed Rage Generator model state extended beyond the intended 6 seconds on units affected by EMP -> ensure every unit has the event list for being raged besides aircraft (infantry should have it as the confessor grenades use the same model state)
 - Make it so units affected by rage generator cannot be controlled by players throughout the duration. -> ensure every unit has the event list for being raged besides aircraft.
 - Reduce Avatar hp to 9500 to speed up repair speed, compensate via armor buffs. 
 - Tweak stasis shield so units on the edge are paralyzed.

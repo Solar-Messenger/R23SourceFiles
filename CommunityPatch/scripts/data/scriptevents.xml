@@ -1118,7 +1118,7 @@
 		<!-- check if the horde contains a banner carrier after being healed in the armory -->
 		<EventHandler EventName="OnRider3End"	ScriptFunctionName="BannerCarrierExistsCheck" DebugSingleStep="false"/>
 		<!-- For rage status -->
-		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
@@ -1129,6 +1129,10 @@
 
 	<EventList Name="PhaseDummyFunctions_R24" Inherit="BaseScriptFunctions">
 	    <EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhaseModifier" DebugSingleStep="false"/>
+	</EventList>
+
+	<EventList Name="RageDummyFunctions_R24" Inherit="BaseScriptFunctions">
+	    <EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemoveRageModifier" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="SelectionGroupFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1142,7 +1146,7 @@
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
 		<!-- For rage status -->
-		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
@@ -1171,7 +1175,7 @@
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
 		<!-- For rage status -->
-		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 		<!-- test event, force firing the ground
@@ -1223,7 +1227,7 @@
 		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
 		<!-- For rage status -->
-		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
@@ -1264,7 +1268,7 @@
 		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
 		<!-- For rage status -->
-		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
@@ -1337,7 +1341,7 @@
 		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
 		<!-- For rage status -->
-		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
@@ -1363,6 +1367,7 @@
 
 	<EventList Name="AlienSeekerTankFunctions_R24" Inherit="GenericReverseMoveVehicleFunctions_R24">
 		<EventHandler EventName="OnCreated"	ScriptFunctionName="OnAlienSeekerTankCreated" DebugSingleStep="false"/>
+
 	</EventList>
 
 	<EventList Name="GDIMammothFunctions_R24" Inherit="GenericReverseMoveVehicleFunctions_R24">
@@ -1392,7 +1397,7 @@
 		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 		<!-- For rage status -->
-		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
@@ -1411,7 +1416,7 @@
 
 	<EventList Name="GenericRagedFunctions_R24" Inherit="BaseScriptFunctions">
 		<!-- For rage status -->
-		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="SetRageGeneratorState" DebugSingleStep="false"/>
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
@@ -1534,7 +1539,8 @@
 	<EventList Name="Reaper17CustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
+		<!-- this needs to be a wrapper that removes both RemovePhasedUnitEntry and RemoveRagedUnitEntry -->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedUnitEntry" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="Traveler59BlinkMastermindFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1550,7 +1556,7 @@
 	<EventList Name="Traveler59CustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedUnitEntry" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="ZOCOMCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1590,20 +1596,20 @@
 	<EventList Name="AlienMechapedeFunctions_R24" Inherit="BaseScriptFunctions">
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedUnitEntry" DebugSingleStep="false"/>
 	<EventHandler EventName="OnCreated" ScriptFunctionName="OnAlienMechapedeCreated" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienMillipedeHeadFunctions_R24" Inherit="BaseScriptFunctions">
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedUnitEntry" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienCustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedUnitEntry" DebugSingleStep="false"/>
 	</EventList>
 
 	<!-- end of infantry -->
@@ -1812,7 +1818,7 @@
 	<EventList Name="AlienMCVUnpackingEventsList" Inherit="BaseScriptFunctions">
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedUnitEntry" DebugSingleStep="false"/>
 		<EventHandler EventName="OnCreated" ScriptFunctionName="onCreatedAlienMCVUnpacking" DebugSingleStep="false"/>
 	</EventList>
 
@@ -2108,7 +2114,7 @@
 	<EventList Name="NODShadowSquadBeaconFunctions" Inherit="BaseScriptFunctions">
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="PhasedUnitOnDeath" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedUnitEntry" DebugSingleStep="false"/>
 		<EventHandler EventName="OnCreated"		ScriptFunctionName="OnNODShadowSquadBeaconCreated" DebugSingleStep="false"/>
 	</EventList>
 	

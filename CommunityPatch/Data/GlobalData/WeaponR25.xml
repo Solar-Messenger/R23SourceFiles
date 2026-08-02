@@ -374,8 +374,8 @@
 
 	<!-- rage generator LuaEventNugget change -->
 	<WeaponTemplate
-		id="NODWarmechRageGenerator"
-		Name="NODWarmechRageGenerator"
+		id="NODWarmechRageGeneratorTrigger"
+		Name="NODWarmechRageGeneratorTrigger"
 		RadiusDamageAffects="ENEMIES NEUTRALS"
 		FireFX="FX_NODRedeemerRageGenerator">
 		<Nuggets>
@@ -387,29 +387,28 @@
 				DamageFXType="NOD_HALLUCINE"
 				DeathType="EXPLODED" >
 			</DamageNugget>
-			<!--
-			<AttributeModifierNugget
-				PartitionFilterTestType="SPHERE"
-				AttributeModifierName="AttributeModifier_Hallucinate"
-				Radius="500" >
-				<SpecialObjectFilter
-					Rule="ANY"
-					Include="INFANTRY VEHICLE"
-					Exclude="AIRCRAFT" />
-			</AttributeModifierNugget>
-			-->
+		<WeaponOCLNugget WeaponOCL="OCL_RageDummy" />
+		</Nuggets>
+	</WeaponTemplate>
+
+	<WeaponTemplate
+		id="NODWarmechRageGenerator"
+		Name="NODWarmechRageGenerator"
+		RadiusDamageAffects="ENEMIES NEUTRALS"
+		>
+		<Nuggets>
+		<!-- spawn a dummy that fires a weapon on created 	-->
 
 			<LuaEventNugget
-			Radius="500.0"
-			EventName="RageGeneratorEvent"
-			SendToEnemies="true"
-		>
-			<SpecialObjectFilter
-					Rule="ANY"
-					Include="INFANTRY VEHICLE"
-					Exclude="AIRCRAFT" />
-		</LuaEventNugget>
-
+				Radius="500.0"
+				EventName="RageGeneratorEvent"
+				SendToEnemies="true"
+			>
+				<SpecialObjectFilter
+						Rule="ANY"
+						Include="INFANTRY VEHICLE"
+						Exclude="AIRCRAFT" />
+			</LuaEventNugget>
 		</Nuggets>
 	</WeaponTemplate>
 

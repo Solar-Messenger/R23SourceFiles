@@ -52,6 +52,16 @@
 			<CreateObject>PhaseDummy</CreateObject>
 		</CreateObject>
 	</ObjectCreationList>
+
+	<!-- used for rage fix-->
+	<ObjectCreationList
+		id="OCL_RageDummy">
+		<CreateObject
+			Options="IGNORE_ALL_OBJECTS"
+			Disposition="ON_GROUND_ALIGNED CLAMP_TO_GROUND">
+			<CreateObject>RageDummy</CreateObject>
+		</CreateObject>
+	</ObjectCreationList>
 	
 
 	<!-- temp model state added for GDI faction units that were acquired from sold off, destroyed structures -->

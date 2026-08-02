@@ -3182,7 +3182,7 @@
 				StartRechargeOnExit="False"
 				GoIdleInStartPreparation="True"
 				FaceTarget="False"
-				SpecialWeapon="NODWarmechRageGenerator"
+				SpecialWeapon="NODWarmechRageGeneratorTrigger"
 				WhichSpecialWeapon="1"
 				BusyForDuration="1s"
 				WeaponSlotID="10"
@@ -3859,4 +3859,3 @@
 			CrushAllies="False" />
 	</GameObject>
 </AssetDeclaration>
-

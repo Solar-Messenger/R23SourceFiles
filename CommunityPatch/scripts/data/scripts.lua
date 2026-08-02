@@ -2031,6 +2031,7 @@ end
 function GroupUnitOnDeath(self)
 	-- phase fix: forget this unit if it died while phased
 	RemovePhasedUnitEntry(self)
+	RemoveRagedUnitEntry(self)
 	local a,unitReversing = GetUnitReversingData(self)
 	local groupId = unitReversing and unitReversing.groupId
 
@@ -3072,11 +3073,6 @@ function OnSquadDestroyed_103(self)
 end
 
 sonicEmitterTable = {}
---timeSinceSpawning = {}
-
-function KillSonic(self)
-	print("user_4 has expired!")
-end
 
 function GetSonicEmitterAttributes(self)
 
@@ -3242,10 +3238,80 @@ end
 
 -- ############################# R25 Redeemer Rage Generator fix  ###################################
 
--- Duration set to 6 seconds, this might not work
-function SetRageGeneratorState(self)
-	-- on -EMOTION_DISSIDENT then allow player commands again
-	ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "EMOTION_DISSIDENT", 6, 100)
+-- stores all the phased units on the map, and checks if the times phased counter 
+ragedUnits = {}
+
+function GetragedUnitProperties(self) 
+	local objId = getObjectId(self)
+	ragedUnits[objId] = ragedUnits[objId] or {
+		timesRaged = 0,
+		stringRef = SetObjectReference(self),
+		selfRef = self, 
+		dummyObjects = {}
+	}
+	return objId, ragedUnits[objId]
+end
+
+-- maybe the dummy object could dispatch the lua event that way there will be a relationship between the dummy object and objects raged. when the dummy expires it should decrement the timesRaged property of the units it established a relationship with.
+-- here other is a reference to the dummy object, self is this raged unit.
+-- now also used for raged units
+function GrantRageModifier(self, other)
+	-- set raged unit or raged unit
+	
+	local _,ragedUnit = GetragedUnitProperties(self) 
+
+	--ExecuteAction("NAMED_FLASH_WHITE", self, 3)
+	--ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "REALLYDAMAGED", 6, 100)
+
+	-- this unit was raged by this specific dummy object, add it to a subtable and increment the timesRaged counter.
+	local dummyObjectId = getObjectId(other)
+	if ragedUnit.dummyObjects[dummyObjectId] == nil then
+		ragedUnit.dummyObjects[dummyObjectId] = true
+		ragedUnit.timesRaged = ragedUnit.timesRaged + 1
+	end
+	-- grant upgrade to enable attributemodifierupgrade module for rage field
+	if not EvaluateCondition("UNIT_HAS_UPGRADE",ragedUnit.stringRef, "Upgrade_RageGenerator") then ObjectGrantUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator") end
+end
+
+-- triggered after 35s by dummy object, its id is already stored by the raged units and can reliably decrement the timesRaged counter for each unit that this object originally raged.
+-- triggered onDestroyed of the dummy.
+function RemoveRageModifier(self)
+	-- print("dummy destroyed")
+	-- subtract from timesRaged for units whoses dummyObject is 
+	local objId = getObjectId(self)
+	local unitsToRemove = {}
+	for ragedUnitId,ragedUnit in ragedUnits do
+		-- check if this unit was raged by this expired dummy object and if it was, decrement the timesRaged counter.
+		if ragedUnit.dummyObjects[objId] ~= nil then
+			ragedUnit.timesRaged = ragedUnit.timesRaged - 1
+			ragedUnit.dummyObjects[objId] = nil
+		end
+		-- check whether the units raged counter has reached 0 and if it has , remove the raged upgrade
+		if ragedUnit.timesRaged <= 0 then
+			--print("rage has ended!")
+			if EvaluateCondition("UNIT_HAS_UPGRADE",ragedUnit.stringRef, "Upgrade_RageGenerator") then ObjectRemoveUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator") end
+			--ExecuteAction("NAMED_FLASH_WHITE", ragedUnit.selfRef, 3)
+			-- use the table key here, it gets the object id of the raged unit
+			tinsert(unitsToRemove, ragedUnitId)
+		end
+	end
+
+	-- clean up to avoid desyncs
+	for i = 1, getn(unitsToRemove) do
+		local unit = unitsToRemove[i]
+		clearSubTables(ragedUnits[unit].dummyObjects)
+		ragedUnits[unit] = nil
+	end
+end
+
+-- removes a units entry from the raged units table. called when a raged unit dies so that
+-- expired dummy objects dont evaluate conditions or remove upgrades on dead references.
+function RemoveRagedUnitEntry(self)
+	local objId = getObjectId(self)
+	if ragedUnits[objId] ~= nil then
+		clearSubTables(ragedUnits[objId].dummyObjects)
+		ragedUnits[objId] = nil
+	end
 end
 
 -- ############################# R25 Phase fix  ###################################
@@ -3322,11 +3388,6 @@ function RemovePhasedUnitEntry(self)
 		clearSubTables(phasedUnits[objId].dummyObjects)
 		phasedUnits[objId] = nil
 	end
-end
-
--- onDestroyed handler for phaseable units whose event lists dont route death through GroupUnitOnDeath.
-function PhasedUnitOnDeath(self)
-	RemovePhasedUnitEntry(self)
 end
 
 -- ############################# R25 Squad/Member Data ###################################

@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="us-ascii" ?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
+
+	<LocomotorTemplate
+		id="BasicHelicopterTaxiLocomotor"
+		Name="BasicHelicopterTaxiLocomotor"
+		Surfaces="GROUND" 
+		TurnTimeSeconds="1.0s" 
+		TurnTimeDamagedSeconds="1.5s" 
+		AccelerationSeconds="0.25s"
+		BrakingSeconds="0.25s"
+		MinTurnSpeed="0%" 
+		BehaviorZ="FLOATING_Z"	
+		Appearance="HOVER" 	
+		/>
+
 		
 		<LocomotorTemplate
 		id="GDIMCVLocomotorUnpacking"

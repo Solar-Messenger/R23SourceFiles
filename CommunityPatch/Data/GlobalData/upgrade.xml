@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<!-- rage generator upgrade -->
+	<UpgradeTemplate id="Upgrade_RageGenerator"
+		Type="OBJECT"
+	/>
+
 	<UpgradeTemplate id="Upgrade_SonicEmitterDelayedDestruction"
 		Type="OBJECT"
 	/>
