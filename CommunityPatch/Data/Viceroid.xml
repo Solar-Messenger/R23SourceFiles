@@ -524,6 +524,7 @@
 		<AI>
 			<WanderAIUpdate
 				id="92D32A8E"
+				AILuaEventsList="GenericRagedFunctions_R24"
 				AutoAcquireEnemiesWhenIdle="YES"
 				StopChaseDistance="500"
 				HoldGroundCloseRangeDistance="0"

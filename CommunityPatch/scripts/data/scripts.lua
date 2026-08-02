@@ -3390,6 +3390,13 @@ function RemovePhasedUnitEntry(self)
 	end
 end
 
+-- wrapper for units that have both the phase field and rage generator attribute modifier
+-- modules. bound to OnDestroyed so both tables forget the unit when it dies.
+function RemovePhasedAndRagedUnitEntry(self)
+	RemovePhasedUnitEntry(self)
+	RemoveRagedUnitEntry(self)
+end
+
 -- ############################# R25 Squad/Member Data ###################################
 
 -- this defines squad sizes and if a squad has a hammerhead garrison banner carrier.
@@ -3748,6 +3755,7 @@ function SquadHasBeenUpgraded(self)
 end
 
 function OnSquadDestroyed_R24(self)
+	RemoveRagedUnitEntry(self)
 	--print("squad killed")
 	local objId = getObjectId(self)
 	-- clean up squad here
@@ -3756,6 +3764,7 @@ end
 
 -- when a member dies clear it up here, Triggered by +DESTROYED
 function OnMemberDestroyed_R24(self)
+	RemoveRagedUnitEntry(self)
 	local objId,squadMember = GetSquadMemberAttributes(self)
 	-- was the unit moving to rally point while it was destroyed?
 	--print("member killed!")
