@@ -3072,6 +3072,8 @@ function OnSquadDestroyed_103(self)
 
 end
 
+-- ############################# R25 Sonic bug fix  ###################################
+
 sonicEmitterTable = {}
 
 function GetSonicEmitterAttributes(self)
@@ -3238,7 +3240,7 @@ end
 
 -- ############################# R25 Redeemer Rage Generator fix  ###################################
 
--- stores all the phased units on the map, and checks if the times phased counter 
+-- stores all the raged units on the map, and checks if the times raged counter 
 ragedUnits = {}
 
 function GetragedUnitProperties(self) 
@@ -3403,13 +3405,13 @@ end
 -- setRider defines if a squad has a weapon upgrade within the hammerhead (WEAPON_UPGRADED_01)
 squadSizeTable = {
 	-- vGDI
-	["5D5E5931"] = {size = 4, setRider = true, needsRocketix = false}, -- GDIZoneTrooperSquad
-	["BD0F31E6"] = {size = 4, setRider = true, needsRocketix = false}, -- GDIZoneTrooperSquad_Veteran
-	["9096966E"] = {size = 6, setRider = true, needsRocketix = false}, -- GDIRifleSoldierSquad
-	["F90AE74"] = {size = 6, setRider = true, needsRocketix = false}, -- GDIRifleSoldierSquad_Veteran
-	["42896060"] = {size = 4, setRider = false, needsRocketix = false}, -- GDIGrenadeSoldierSquad
-	["EF1252DB"] = {size = 2, setRider = false, needsRocketix = false}, -- GDIMissileSoldierSquad
-	["96C215F3"] = {size = 2, setRider = false, needsRocketix = false}, -- GDIMissileSoldierSquad_Veteran
+	["5D5E5931"] = {size = 4, setRider = true, needsRocketix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_"}, -- GDIZoneTrooperSquad
+	["BD0F31E6"] = {size = 4, setRider = true, needsRocketix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_"}, -- GDIZoneTrooperSquad_Veteran
+	["9096966E"] = {size = 6, setRider = true, needsRocketix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_"}, -- GDIRifleSoldierSquad
+	["F90AE74"] = {size = 6, setRider = true, needsRocketix = false, experienceLvlString = "GDIGrenadeSoldierSquadExperienceLevel_"}, -- GDIRifleSoldierSquad_Veteran
+	["42896060"] = {size = 4, setRider = false, needsRocketix = false, experienceLvlString = "GDIGrenadeSoldierSquadExperienceLevel_"}, -- GDIGrenadeSoldierSquad
+	["EF1252DB"] = {size = 2, setRider = false, needsRocketix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_"}, -- GDIMissileSoldierSquad
+	["96C215F3"] = {size = 2, setRider = false, needsRocketix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_"}, -- GDIMissileSoldierSquad_Veteran
 	["BCB36A05"] = {size = 2, setRider = false, needsRocketix = false}, -- GDISniperSquad
 	["CF21C755"] = {size = 2, setRider = false, needsRocketix = false}, -- GDISniperSquad_Veteran
 	-- vScrin
@@ -3433,25 +3435,23 @@ squadSizeTable = {
 	["8EEE4A0A"] = {size = 5, setRider = false, needsRocketix = false}, -- Reaper17RazorDroneSquad
 
 	-- ZOCOM
-	["D213112"] = {size = 4, setRider = true, needsRocketix = true}, -- ZOCOMZoneRaiderSquad
-	["8A6E8182"] = {size = 4, setRider = true, needsRocketix = true}, -- ZOCOMZoneRaiderSquad_Veteran
-	["AC645E3"] = {size = 6, setRider = true, needsRocketix = false}, -- ZOCOMRifleSoldierSquad
-	["A457A93"] = {size = 6, setRider = true, needsRocketix = false}, -- ZOCOMRifleSoldierSquad_Veteran
-	["C43CF79F"] = {size = 4, setRider = false, needsRocketix = false}, -- ZOCOMGrenadeSoldierSquad
-	["17A153BA"] = {size = 2, setRider = false, needsRocketix = false}, -- ZOCOMMissileSoldierSquad
-	["B0C5EE48"] = {size = 2, setRider = false, needsRocketix = false}, -- ZOCOMMissileSoldierSquad_Veteran
+	["D213112"] = {size = 4, setRider = true, needsRocketix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_"}, -- ZOCOMZoneRaiderSquad
+	["8A6E8182"] = {size = 4, setRider = true, needsRocketix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_"}, -- ZOCOMZoneRaiderSquad_Veteran
+	["AC645E3"] = {size = 6, setRider = true, needsRocketix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_"}, -- ZOCOMRifleSoldierSquad
+	["A457A93"] = {size = 6, setRider = true, needsRocketix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_"}, -- ZOCOMRifleSoldierSquad_Veteran
+	["C43CF79F"] = {size = 4, setRider = false, needsRocketix = false, experienceLvlString = "ZOCOMGrenadeSoldierSquadExperienceLevel_"}, -- ZOCOMGrenadeSoldierSquad
+	["17A153BA"] = {size = 2, setRider = false, needsRocketix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_"}, -- ZOCOMMissileSoldierSquad
+	["B0C5EE48"] = {size = 2, setRider = false, needsRocketix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_"}, -- ZOCOMMissileSoldierSquad_Veteran
 	["B724E036"] = {size = 2, setRider = false, needsRocketix = false}, -- ZOCOMSniperSquad
 	["5CE43D31"] = {size = 2, setRider = false, needsRocketix = false}, -- ZOCOMSniperSquad_Veteran
 
 	-- SteelTalons
-	["CF35F1B4"] = {size = 6, setRider = true, needsRocketix = false}, -- SteelTalonsRifleSoldierSquad
-	["B1D77E97"] = {size = 6, setRider = true, needsRocketix = false}, -- SteelTalonsRifleSoldierSquad_Veteran
-	["FC6A915"] = {size = 4, setRider = false, needsRocketix = false}, -- SteelTalonsGrenadeSoldierSquad
-	["EA23C76F"] = {size = 2, setRider = false, needsRocketix = false}, -- SteelTalonsMissileSoldierSquad
-	["4D8388BF"] = {size = 2, setRider = false, needsRocketix = false}, -- SteelTalonsMissileSoldierSquad_Veteran
+	["CF35F1B4"] = {size = 6, setRider = true, needsRocketix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_"}, -- SteelTalonsRifleSoldierSquad
+	["B1D77E97"] = {size = 6, setRider = true, needsRocketix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_"}, -- SteelTalonsRifleSoldierSquad_Veteran
+	["FC6A915"] = {size = 4, setRider = false, needsRocketix = false, experienceLvlString = "SteelTalonsGrenadeSoldierSquadExperienceLevel_"}, -- SteelTalonsGrenadeSoldierSquad
+	["EA23C76F"] = {size = 2, setRider = false, needsRocketix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_"}, -- SteelTalonsMissileSoldierSquad
+	["4D8388BF"] = {size = 2, setRider = false, needsRocketix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_"}, -- SteelTalonsMissileSoldierSquad_Veteran
 	["C674C01"] = {size = 2, setRider = false, needsRocketix = false}, -- SteelTalonsSniperSquad
-	["7E8CB87C"] = {size = 4, setRider = true, needsRocketix = false}, -- SteelTalonsZoneTrooperSquad
-	["813A73C9"] = {size = 4, setRider = true, needsRocketix = false}, -- SteelTalonsZoneTrooperSquad_Veteran
 
 	-- vNod
 	["BC36257A"] = {size = 9, setRider = false, needsRocketix = false}, -- NODMilitantSquad
@@ -3619,14 +3619,15 @@ function GarrisonedInHammerhead(self)
 	GrantUpgradesToLeader(squad)
 
 	local squadLevel,_ = GetRankOfObject(squad.stringRef) 
+	local squadLevelString = squadSizeTable[getObjectName(squad.selfRef)].experienceLvlString .. tostring(squadLevel)
 	local leaderLevel,_ = GetRankOfObject(squadLeader.stringRef) 
 
-	--WriteToFile("leader rank hh.txt",  "Current leader rank: " .. tostring(leaderLevel) .. "\n" .. "squadLevel: " .. tostring(squadLevel) .. "\n" .. "-------------------" .. "\n")
+	--WriteToFile("leader rank hh.txt",  "Current leader rank: " .. tostring(leaderLevel) .. "\n" .. "squadLevel: " .. tostring(squadLevelString) .. "\n" .. "-------------------" .. "\n")
 
 	-- rank up leader here if its below the squad level
 	if applyHordeXPFix and leaderLevel < squadLevel then
 		-- if desync then its probably because of the prerequisites 
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, tostring("GDIZoneTrooperSquadExperienceLevel_" .. squadLevel))
+		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, squadLevelString)
 		squadLeader.timesPromotedWithLua = (squadLevel-leaderLevel)
 		-- apply xp modifier to this unit 
 		ApplyXPModifier(squadLeader) 
@@ -3657,15 +3658,16 @@ function GarrisonedInHammerheadEnd(self)
 	local firstMember = squadMemberTable[next(squad.squadMembers)]
 	local memberLevel,_ = GetRankOfObject(firstMember.stringRef) 
 	local squadLevel,_ = GetRankOfObject(squad.stringRef) 
+	local squadLevelString = squadSizeTable[getObjectName(squad.selfRef)].experienceLvlString .. tostring(squadLevel)
 	-- i need to reimplement the 2 way experience check again (isLeader) - Banner carriers dont inherit the veterancy when spawned inside of hammerheads 	
-	--WriteToFile("leader rank.txt",  "Current leader rank: " .. tostring(GetRankOfObject(squadMemberTable[squad.squadLeader].stringRef)) .. "\n" .. "squadLevel: " .. tostring(squadLevel) .. "\n" .. "-------------------" .. "\n")
+	--WriteToFile("leader rank.txt",  "Current leader rank: " .. tostring(GetRankOfObject(squadMemberTable[squad.squadLeader].stringRef)) .. "\n" .. "squadLevel: " .. tostring(squadLevelString) .. "\n" .. "-------------------" .. "\n")
 	-- 0 -> LT (<), if horde members are ranked lower than the squad 
 	if applyHordeXPFix and EvaluateCondition("UNIT_COMPARE_RANK", firstMember.stringRef, 0, squadLevel) then
 		-- print("promoting")
 		-- leader check
 		for objId,_ in squad.squadMembers do
 			-- if desync then its probably because of the prerequisites 
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, tostring("GDIZoneTrooperSquadExperienceLevel_" .. squadLevel))
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, squadLevelString)
 			squadMemberTable[objId].timesPromotedWithLua = (squadLevel-memberLevel)
 			-- apply xp modifier to this unit 
 			ApplyXPModifier(squadMemberTable[objId]) 
@@ -3798,7 +3800,7 @@ function GrantUpgradesToLeader(squad)
 	local squadLeader = squadMemberTable[squad.squadLeader] or nil
 	--if removeUpgrade then print(tostring(squadLeader)) end
 	if squadLeader == nil then return end
-	-- WriteToFile("data.txt",  "squadSize: " .. tostring(squadSize) .. " squadLeader: " .. tostring(squadLeader) .. "\n")
+	 WriteToFile("data.txt",  "squadSize: " .. tostring(squadSize) .. " squadLeader: " .. tostring(squadLeader) .. "\n")
 
 	-- check if WEAPON_UPGRADED_01 is current status to assign the appropriate upgrade (this is for AP Ammo and Scanner Packs)
 	local upgradeString = EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef , 124) and "Upgrade_SquadMemberEnhanced" or "Upgrade_SquadMember"
@@ -3811,7 +3813,7 @@ function GrantUpgradesToLeader(squad)
 		if isZoneRaiderSquad then
 			if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMemberRocket" .. i) then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMemberRocket" .. i) end
 		end
-		--print("applying upgrade: " .. upgradeString)
+		print("applying upgrade: " .. upgradeString)
 	end
 end
 
