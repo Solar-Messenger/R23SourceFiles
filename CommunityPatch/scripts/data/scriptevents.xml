@@ -1149,12 +1149,6 @@
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
-		<!-- phase field event -->
-		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<!-- For rage status -->
-		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GenericReverseMoveVehicleFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1434,10 +1428,18 @@
 	</EventList>
 
 	<EventList Name="AlienBuzzersFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 	
 	<EventList Name="AlienMastermindFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 		<EventHandler EventName="OnSlaughtered"	ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="BlackHandConfessorFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1485,9 +1487,17 @@
 	</EventList>
 
 	<EventList Name="GDICommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="BlackHandCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIGrenadeSoldierFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1557,6 +1567,10 @@
 	</EventList>
 
 	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneFanaticFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1600,6 +1614,10 @@
 	</EventList>
 
 	<EventList Name="NODCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NODConfessorFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1666,6 +1684,10 @@
 
 	<EventList Name="Traveler59BlinkMastermindFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 		<EventHandler EventName="OnSlaughtered"	ScriptFunctionName="GroupUnitOnDeath" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="Traveler59CultistFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1689,6 +1711,10 @@
 	</EventList>
 
 	<EventList Name="ZOCOMCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="ZOCOMRifleSoldierFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1796,9 +1822,21 @@
 
 	<EventList Name="AlienEradicatorHexapodFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnAlienHexapodCreated" DebugSingleStep="false"/>
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienExplorerFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienMCVFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1813,11 +1851,23 @@
 	</EventList>
 
 	<EventList Name="BlackHandAttackBikeFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="BlackHandCustomWarmechFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnBlackHandCustomWarmechCreated" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="BlackHandMCVFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1834,6 +1884,12 @@
 	<EventList Name="GDIJuggernaughtFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnGDIJuggernaughtCreated" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIOrcaFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1853,9 +1909,21 @@
 
 	<EventList Name="GDIWolverineFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnWolverineCreated" DebugSingleStep="false"/>
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneAttackBikeFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneMCVFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1865,11 +1933,23 @@
 	</EventList>
 
 	<EventList Name="NODAttackBikeFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NODAvatarFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnNODAvatarCreated" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NODMCVFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1877,6 +1957,12 @@
 
 	<EventList Name="NODMetaUnitFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnNODMetaUnitCreated" DebugSingleStep="false"/>
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NODVenomFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1887,6 +1973,12 @@
 	</EventList>
 
 	<EventList Name="Reaper17ExplorerFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="Reaper17MCVFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1895,13 +1987,31 @@
 	<EventList Name="ReaperTripodFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnReaperTripodCreated" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="SteelTalonsTitanFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnTitanCreated_103" DebugSingleStep="false"/>
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="Traveler59ExplorerFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="Traveler59MCVFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1912,6 +2022,12 @@
 
 	<EventList Name="TripodFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="ZOCOMOrcaFunctions_R24" Inherit="SelectionGroupFunctions_R24">
