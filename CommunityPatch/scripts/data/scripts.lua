@@ -3199,8 +3199,8 @@ end
 function GiveExperiencePoints(self)
 	local sonic = GetSonicEmitterAttributes(self)
 	local lastUnit = sonic.lastUnit
-	local sonic = tostring(ObjectDescription(self))
-	local attacker = tostring(ObjectDescription(lastUnit))
+	--local sonicDesc = tostring(ObjectDescription(self))
+	--local attacker = tostring(ObjectDescription(lastUnit))
 	local _,xpRewardMultiplier = GetRankOfObject(self)
 	local xpReward = 1500*xpRewardMultiplier
 	--WriteToFile("xpReward.txt",  "XP rewarded to attacker: " .. tostring(xpReward) .. "\n")
@@ -3217,6 +3217,10 @@ function GiveExperiencePoints(self)
 		-- and to all members
 		for squadMemberId,_ in squad.squadMembers do
 			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squadMemberTable[squadMemberId].stringRef, xpReward)
+		end
+		-- the banner carrier is not part of squadMembers, award it separately
+		if squad.squadLeader ~= nil and squadMemberTable[squad.squadLeader] ~= nil then
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squadMemberTable[squad.squadLeader].stringRef, xpReward)
 		end
 	else
 		-- for non squads 
