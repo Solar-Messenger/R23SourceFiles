@@ -3406,8 +3406,12 @@ squadSizeTable = {
 	["5D5E5931"] = {size = 4, setRider = true, needsRocketix = false}, -- GDIZoneTrooperSquad
 	["BD0F31E6"] = {size = 4, setRider = true, needsRocketix = false}, -- GDIZoneTrooperSquad_Veteran
 	["9096966E"] = {size = 6, setRider = true, needsRocketix = false}, -- GDIRifleSoldierSquad
+	["F90AE74"] = {size = 6, setRider = true, needsRocketix = false}, -- GDIRifleSoldierSquad_Veteran
 	["42896060"] = {size = 4, setRider = false, needsRocketix = false}, -- GDIGrenadeSoldierSquad
 	["EF1252DB"] = {size = 2, setRider = false, needsRocketix = false}, -- GDIMissileSoldierSquad
+	["96C215F3"] = {size = 2, setRider = false, needsRocketix = false}, -- GDIMissileSoldierSquad_Veteran
+	["BCB36A05"] = {size = 2, setRider = false, needsRocketix = false}, -- GDISniperSquad
+	["CF21C755"] = {size = 2, setRider = false, needsRocketix = false}, -- GDISniperSquad_Veteran
 	-- vScrin
 	["2B9428D0"] = {size = 5, setRider = false, needsRocketix = false}, -- AlienRazorDroneSquad
 	["240FB1"] = {size = 5, setRider = false, needsRocketix = false}, -- Traveler59RazorDroneSquad
@@ -3416,26 +3420,90 @@ squadSizeTable = {
 	["72A9F5D5"] = {size = 3, setRider = false, needsRocketix = false}, -- Traveler59StalkerSquad
 	["7F2D0EF5"] = {size = 3, setRider = false, needsRocketix = false}, -- Reaper17StalkerSquad
 
-	["6495F509"] = {size = 3, setRider = false, needsRocketix = false}, -- AlienShockTrooperSquad
-	["4803957E"] = {size = 3, setRider = false, needsRocketix = false}, -- Traveler59ShockTrooperSquad
-	["40241AC3"] = {size = 3, setRider = false, needsRocketix = false}, -- Reaper17ShockTrooperSquad
+	["6495F509"] = {size = 3, setRider = true, needsRocketix = false}, -- AlienShockTrooperSquad
+	["990D8832"] = {size = 3, setRider = true, needsRocketix = false}, -- AlienShockTrooperSquad_Veteran
+	["4803957E"] = {size = 3, setRider = true, needsRocketix = false}, -- Traveler59ShockTrooperSquad
+	["9676826C"] = {size = 3, setRider = true, needsRocketix = false}, -- Traveler59ShockTrooperSquad_Veteran
+	["40241AC3"] = {size = 3, setRider = true, needsRocketix = false}, -- Reaper17ShockTrooperSquad
+	["34BC82E3"] = {size = 0, setRider = true, needsRocketix = false}, -- Reaper17ShockTrooperSquad_Veteran
 
 	["C46CECA2"] = {size = 5, setRider = false, needsRocketix = false}, -- Traveler59CultistSquad
 
+	-- Reaper17
+	["8EEE4A0A"] = {size = 5, setRider = false, needsRocketix = false}, -- Reaper17RazorDroneSquad
+
 	-- ZOCOM
 	["D213112"] = {size = 4, setRider = true, needsRocketix = true}, -- ZOCOMZoneRaiderSquad
-	["8A6E8182"] = {size = 4, setRider = true, needsRocketix = true} -- ZOCOMZoneRaiderSquad_Veteran
-	
+	["8A6E8182"] = {size = 4, setRider = true, needsRocketix = true}, -- ZOCOMZoneRaiderSquad_Veteran
+	["AC645E3"] = {size = 6, setRider = true, needsRocketix = false}, -- ZOCOMRifleSoldierSquad
+	["A457A93"] = {size = 6, setRider = true, needsRocketix = false}, -- ZOCOMRifleSoldierSquad_Veteran
+	["C43CF79F"] = {size = 4, setRider = false, needsRocketix = false}, -- ZOCOMGrenadeSoldierSquad
+	["17A153BA"] = {size = 2, setRider = false, needsRocketix = false}, -- ZOCOMMissileSoldierSquad
+	["B0C5EE48"] = {size = 2, setRider = false, needsRocketix = false}, -- ZOCOMMissileSoldierSquad_Veteran
+	["B724E036"] = {size = 2, setRider = false, needsRocketix = false}, -- ZOCOMSniperSquad
+	["5CE43D31"] = {size = 2, setRider = false, needsRocketix = false}, -- ZOCOMSniperSquad_Veteran
+
+	-- SteelTalons
+	["CF35F1B4"] = {size = 6, setRider = true, needsRocketix = false}, -- SteelTalonsRifleSoldierSquad
+	["B1D77E97"] = {size = 6, setRider = true, needsRocketix = false}, -- SteelTalonsRifleSoldierSquad_Veteran
+	["FC6A915"] = {size = 4, setRider = false, needsRocketix = false}, -- SteelTalonsGrenadeSoldierSquad
+	["EA23C76F"] = {size = 2, setRider = false, needsRocketix = false}, -- SteelTalonsMissileSoldierSquad
+	["4D8388BF"] = {size = 2, setRider = false, needsRocketix = false}, -- SteelTalonsMissileSoldierSquad_Veteran
+	["C674C01"] = {size = 2, setRider = false, needsRocketix = false}, -- SteelTalonsSniperSquad
+	["7E8CB87C"] = {size = 4, setRider = true, needsRocketix = false}, -- SteelTalonsZoneTrooperSquad
+	["813A73C9"] = {size = 4, setRider = true, needsRocketix = false}, -- SteelTalonsZoneTrooperSquad_Veteran
+
+	-- vNod
+	["BC36257A"] = {size = 9, setRider = false, needsRocketix = false}, -- NODMilitantSquad
+	["89C45844"] = {size = 2, setRider = false, needsRocketix = false}, -- NODMilitantRocketSquad
+	["A81E7801"] = {size = 2, setRider = false, needsRocketix = false}, -- NodRocketMilitantSquad
+	["BE7C389D"] = {size = 5, setRider = false, needsRocketix = false}, -- NodFanaticSquad
+	["128ABF1"] = {size = 6, setRider = false, needsRocketix = false}, -- NODBlackHandSquad
+	["A6E10008"] = {size = 4, setRider = false, needsRocketix = false}, -- NODShadowSquad
+	["8B148736"] = {size = 4, setRider = false, needsRocketix = false}, -- NODShadowSquad_Veteran
+	["346EDC73"] = {size = 3, setRider = false, needsRocketix = false}, -- NODCyborgInfantrySquad
+	["77A93742"] = {size = 6, setRider = false, needsRocketix = false}, -- NODTibTrooperSquad
+
+	-- BlackHand
+	["C390AF55"] = {size = 9, setRider = false, needsRocketix = false}, -- BlackHandMilitantSquad
+	["C3011861"] = {size = 2, setRider = false, needsRocketix = false}, -- BlackHandMilitantRocketSquad
+	["8E0F9C9"] = {size = 5, setRider = false, needsRocketix = false}, -- BlackHandFanaticSquad
+	["FDEF5E7"] = {size = 6, setRider = false, needsRocketix = false}, -- BlackHandConfessorSquad
+	["5F44F92F"] = {size = 6, setRider = false, needsRocketix = false}, -- BlackHandBlackHandSquad
+	["8552C4D4"] = {size = 4, setRider = false, needsRocketix = false}, -- BlackHandShadowSquad
+	["28218CBE"] = {size = 4, setRider = false, needsRocketix = false}, -- BlackHandShadowSquad_Veteran
+
+	-- MarkedOfKane
+	["4A595ED7"] = {size = 9, setRider = false, needsRocketix = false}, -- MarkedOfKaneMilitantSquad
+	["20126F6"] = {size = 2, setRider = false, needsRocketix = false}, -- MarkedOfKaneMilitantRocketSquad
+	["6093B1BE"] = {size = 5, setRider = false, needsRocketix = false}, -- MarkedOfKaneFanaticSquad
+	["6AEA240A"] = {size = 4, setRider = false, needsRocketix = false}, -- MarkedOfKaneShadowSquad
+	["BE0BBE08"] = {size = 4, setRider = false, needsRocketix = false}, -- MarkedOfKaneShadowSquad_Veteran
+	["D5BE6F6C"] = {size = 3, setRider = false, needsRocketix = false}, -- MOKCyborgInfantrySquad
+	["B27DDF67"] = {size = 3, setRider = false, needsRocketix = false}, -- MarkedOfKaneImprovedCyborgInfantrySquad
+	["E6E24EF7"] = {size = 6, setRider = false, needsRocketix = false}, -- MarkedOfKaneTibTrooperSquad
+	["8274FA0E"] = {size = 6, setRider = false, needsRocketix = false}, -- MarkedOfKaneTiberiumTrooperSquad
+
+	-- Mutant
+	["1AF4B91"] = {size = 6, setRider = false, needsRocketix = false} -- MutantMarauderSquad
+
 }
 
 -- if a unit has a function that hides subobjects oncreated, add it here.
 onCreatedTable = {
 	["B821E76D"] = {onCreated = OnGDIZoneTrooperCreated}, -- GDIZoneTrooper
 	["9036C4A9"] = {onCreated = OnGDIZoneTrooperCreated}, -- ZOCOMZoneRaider
+	["E1621F5A"] = {onCreated = OnGDIZoneTrooperCreated}, -- SteelTalonsZoneTrooper
 	["66CC48AB"] = {onCreated = OnGDIGrenadeSoldierCreated}, -- GDIGrenadeSoldier
+	["E623C6F4"] = {onCreated = OnGDIGrenadeSoldierCreated}, -- ZOCOMGrenadeSoldier
+	["345FEEE0"] = {onCreated = OnGDIGrenadeSoldierCreated}, -- SteelTalonsGrenadeSoldier
 	["CB613C1D"] = {onCreated = OnStalkerCreated}, -- AlienStalker
 	["A7EFC673"] = {onCreated = OnStalkerCreated}, -- Reaper17Stalker
-	["55C9FDB4"] = {onCreated = OnStalkerCreated} -- Traveler59Stalker
+	["55C9FDB4"] = {onCreated = OnStalkerCreated}, -- Traveler59Stalker
+	["9CA5C031"] = {onCreated = OnCyborgCreated_R21g}, -- NodCyborg
+	["2D0AF7A8"] = {onCreated = OnCyborgCreated_R21g}, -- Awakened
+	["E2513B94"] = {onCreated = OnImprovedCyborgCreated_103}, -- Enlightened
+	["D5967D44"] = {onCreated = OnConfessorCreated_103} -- BlackHandConfessor
 }
 
 -- if a unit has hammerhead garrison support, add it here.
@@ -3649,7 +3717,7 @@ function GetSquadMemberAttributes(self)
 end
 
 -- self is the squad member, broadcasting events to horde members doesnt pass the reference of the horde object
--- string is the reference to the sqaud
+-- string is the reference to the squad
 function GetSquadSize(self, string) 
 	local squad = squadTables[string] 
 	--ExecuteAction("NAMED_FLASH_WHITE", self, 3)

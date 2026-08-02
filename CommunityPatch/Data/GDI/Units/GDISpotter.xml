@@ -566,7 +566,7 @@
 		<AI>
 			<AIUpdate
 				id="ModuleTag_AI"
-				AILuaEventsList="GenericRagedFunctions_R24"
+				AILuaEventsList="RagedHordeMemberFunctions_R24"
 				AutoAcquireEnemiesWhenIdle="YES">
 				<UnitAITargetChooserData
 					SympathyRange="100.0" />

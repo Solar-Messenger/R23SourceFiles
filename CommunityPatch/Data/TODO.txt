@@ -3,7 +3,9 @@ TODO:
 - Implement Garrisoned banner carrier for all ZOCOM units 
 - Implement Garrisoned banner carrier for all SteelTalons units 
 - Implement Garrisoned banner carrier for the Mutant Marauder squad.
-- Implement the free infantry exploit fix to all squads in the game (requires missing missile soldier game object)
+- Implement the free infantry exploit fix to all squads in the game (only missing missile soldier game object)
+
+
 
 Done
 - Implemented V35 vision fix for all GDI factions
