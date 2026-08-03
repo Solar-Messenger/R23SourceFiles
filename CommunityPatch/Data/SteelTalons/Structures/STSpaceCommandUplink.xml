@@ -383,7 +383,7 @@
 				CommandButtonName="Command_SpaceCommandGDIShockwave"
 				SpecialPowerAIType="SPECIAL_POWER_ENEMY_TYPE_KILLER_STRUCTURES"
 				SpecialPowerRadius="99999"
-				ReinforceDistance="1300"
+				ReinforceDistance="1500"
 				UnitKindOf="VEHICLE"
 				EnemyUnitExclude="AIRCRAFT CIVILIAN_BUILDING HUSK"
 				RandomizeTargetLocation="False" />

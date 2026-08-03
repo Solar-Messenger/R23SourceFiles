@@ -862,8 +862,9 @@
 				id="ModuleTag_ZOCOMCommandPostCallBloodhoundAI"
 				CommandButtonName="Command_CommandPostCallZOCOMBloodhound"
 				ReinforceDistance="99999"
-				SpecialPowerRadius="1000"
+				SpecialPowerRadius="1500"
 				SpecialPowerAIType="SPECIAL_POWER_REINFORCEMENT"
+				MaxFrequency="2700"
 				RandomizeTargetLocation="False"
 			/>
 				

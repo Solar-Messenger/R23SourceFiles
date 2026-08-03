@@ -805,14 +805,13 @@
 					AcceptModelCondition=""
 					RejectModelCondition="" />
 			</OCLSpecialPower>
-			<!--Retired to direct preference to bloodhounds-->
-			<!--<AISpecialPowerUpdate
+			<AISpecialPowerUpdate
 				id="4303908E"
 				CommandButtonName="Command_CommandPostCallHunterKiller"
 				SecondaryCommandButtonName=""
 				SpecialPowerAIType="SPECIAL_POWER_REINFORCEMENT"
-				SpecialPowerRadius="300"
-				ReinforceDistance="400"
+				SpecialPowerRadius="1500"
+				ReinforceDistance="99999"
 				SpellMakesAStructure=""
 				SpecificUnit=""
 				UnitKindOf=""
@@ -822,8 +821,8 @@
 				EnemyUnitExclude=""
 				MinimumCutoff="0"
 				UpdateTime="1s"
-				MaxFrequency="0"
-				RandomizeTargetLocation="False" />-->
+				MaxFrequency="9000"
+				RandomizeTargetLocation="False" />
 			<ProductionUpdate
 				id="749674DE"
 				MaxQueueEntries="99"

@@ -2323,7 +2323,7 @@
 				AllyUnitExclude=""
 				EnemyUnitInclude=""
 				EnemyUnitExclude=""
-				MinimumCutoff="200"
+				MinimumCutoff="100"
 				UpdateTime="1s"
 				MaxFrequency="0"
 				RandomizeTargetLocation="False" />
