@@ -936,14 +936,14 @@
 					AcceptModelCondition=""
 					RejectModelCondition="" />
 			</OCLSpecialPower>
-			<AISpecialPowerUpdate
+			<!--<AISpecialPowerUpdate
 				id="ModuleTag_AIRailgunAccelerators"
 				CommandButtonName="Command_SpecialPowerRailgunAccelerator"
 				SpecialPowerAIType="SPECIAL_POWER_AOE_BUFF"
 				SpecialPowerRadius="99999"
 				UnitKindOf="VEHICLE"
 				AllyUnitExclude="INFANTRY AIRCRAFT"
-				RandomizeTargetLocation="False"/>
+				RandomizeTargetLocation="False"/>-->
 			<SubObjectsUpgrade
 				id="B21534E9"
 				RequiresAllTriggers="False"
