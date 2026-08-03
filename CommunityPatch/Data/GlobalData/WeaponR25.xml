@@ -517,7 +517,7 @@
 		ForbiddenFiringObjectStatus="USER_PARALYZED"
 		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
 		ClipSize="3"
-		AntiMask="ANTI_GROUND"
+		AntiMask="ANTI_GROUND ANTI_AIRBORNE_VEHICLE ANTI_AIRBORNE_INFANTRY"
 		AcceptableAimDelta="10d"
 		CanFireWhileMoving="true"
 		>
