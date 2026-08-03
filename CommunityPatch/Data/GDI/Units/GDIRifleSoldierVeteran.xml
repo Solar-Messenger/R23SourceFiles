@@ -865,6 +865,21 @@
 						Ordering="PRIMARY_WEAPON"
 						Template="GDIRifleSoldierRifleAPAmmo"
 						ObjectStatus="WEAPON_UPGRADED_01" />
+
+					<!-- RIDER1 is enabled when garrisoned in hammerheads -->
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="GDIRifleSoldierRifleFake"
+						Upgrade=""
+						ObjectStatus="RIDER1"
+						IsPlayerUpgradePermanent="False" />
+
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="GDIRifleSoldierRifleFake"
+						Upgrade=""
+						ObjectStatus="RIDER1 WEAPON_UPGRADED_01"
+						IsPlayerUpgradePermanent="False" />
 				</WeaponSlotHardpoint>
 			</WeaponSetUpdate>
 			<Physics
