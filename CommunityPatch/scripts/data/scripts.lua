@@ -3108,12 +3108,22 @@ end
 function TimerHasExpired(self)
 	local curFrame = GetFrame()
 	--print("timer expired")
+	-- collect first, then kill: NAMED_KILL fires OnDestroyed handlers that remove
+	-- entries from sonicEmitterTable, which must not happen mid-iteration
+	local unitsToKill = {}
 	for objId,_ in sonicEmitterTable do
 		-- 1.5s
 		--WriteToFile("frame compare.txt",  "curFrame: " .. tostring(curFrame) .. " " .. "initialSetFrame: " .. tostring(sonicEmitterTable[objId].initialSetFrame) .. "\n")
 		if (curFrame - sonicEmitterTable[objId].initialSetFrame) >= 22 and sonicEmitterTable[objId].damagedFlag then
+			tinsert(unitsToKill, objId)
+		end
+	end
+
+	for i = 1, getn(unitsToKill) do
+		local sonic = sonicEmitterTable[unitsToKill[i]]
+		if sonic ~= nil then
 			--print("killing unit")
-			ExecuteAction("NAMED_KILL", sonicEmitterTable[objId].selfRef)
+			ExecuteAction("NAMED_KILL", sonic.selfRef)
 		end
 	end
 end
@@ -3199,6 +3209,7 @@ end
 function GiveExperiencePoints(self)
 	local sonic = GetSonicEmitterAttributes(self)
 	local lastUnit = sonic.lastUnit
+	if lastUnit == nil then return end
 	--local sonicDesc = tostring(ObjectDescription(self))
 	--local attacker = tostring(ObjectDescription(lastUnit))
 	local _,xpRewardMultiplier = GetRankOfObject(self)
@@ -3211,6 +3222,8 @@ function GiveExperiencePoints(self)
 	if squadMemberTable[getObjectId(lastUnit)] ~= nil then
 		local squadMember = squadMemberTable[getObjectId(lastUnit)]
 		local squad = squadTables[squadMember.squadObject]
+		-- the squad horde object may already be gone while a surviving member landed the kill
+		if squad == nil then return end
 		--print("granting xp to squad")
 		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squad.stringRef, xpReward)
 		--WriteToFile("xpsquad.txt",  "squad object: " .. tostring(squad) .. "\n")
@@ -3621,19 +3634,24 @@ function GarrisonedInHammerhead(self)
 	local squadLeader = squadMemberTable[squad.squadLeader]
 	GrantUpgradesToLeader(squad)
 
-	local squadLevel,_ = GetRankOfObject(squad.stringRef) 
-	local squadLevelString = squadSizeTable[getObjectName(squad.selfRef)].experienceLvlString .. tostring(squadLevel)
-	local leaderLevel,_ = GetRankOfObject(squadLeader.stringRef) 
+	-- the banner carrier may not have registered yet, and squads without an
+	-- experienceLvlString entry cannot build the level string
+	local squadData = squadSizeTable[getObjectName(squad.selfRef)]
+	if squadLeader ~= nil and squadData ~= nil and squadData.experienceLvlString ~= nil then
+		local squadLevel,_ = GetRankOfObject(squad.stringRef)
+		local squadLevelString = squadData.experienceLvlString .. tostring(squadLevel)
+		local leaderLevel,_ = GetRankOfObject(squadLeader.stringRef)
 
-	--WriteToFile("leader rank hh.txt",  "Current leader rank: " .. tostring(leaderLevel) .. "\n" .. "squadLevel: " .. tostring(squadLevelString) .. "\n" .. "-------------------" .. "\n")
+		--WriteToFile("leader rank hh.txt",  "Current leader rank: " .. tostring(leaderLevel) .. "\n" .. "squadLevel: " .. tostring(squadLevelString) .. "\n" .. "-------------------" .. "\n")
 
-	-- rank up leader here if its below the squad level
-	if applyHordeXPFix and leaderLevel < squadLevel then
-		-- if desync then its probably because of the prerequisites 
-		ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, squadLevelString)
-		squadLeader.timesPromotedWithLua = (squadLevel-leaderLevel)
-		-- apply xp modifier to this unit 
-		ApplyXPModifier(squadLeader) 
+		-- rank up leader here if its below the squad level
+		if applyHordeXPFix and leaderLevel < squadLevel then
+			-- if desync then its probably because of the prerequisites
+			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, squadLevelString)
+			squadLeader.timesPromotedWithLua = (squadLevel-leaderLevel)
+			-- apply xp modifier to this unit
+			ApplyXPModifier(squadLeader)
+		end
 	end
 
 	-- this enables the fake weapon for the regular members
@@ -3653,30 +3671,39 @@ function GarrisonedInHammerheadEnd(self)
 		-- remove RIDER1 status to either the riflemen squad or zone trooper squad 
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", squadMemberTable[squadMemberId].stringRef, 41, 0)
 	end
-	-- if banner carrier has higher rank than members, promote members to rank of banner carrier 
+	-- if banner carrier has higher rank than members, promote members to rank of banner carrier
+	-- all members may have died while garrisoned, and squads without an
+	-- experienceLvlString entry cannot build the level string
 	local firstMember = squadMemberTable[next(squad.squadMembers)]
-	local memberLevel,_ = GetRankOfObject(firstMember.stringRef) 
-	local squadLevel,_ = GetRankOfObject(squad.stringRef) 
-	local squadLevelString = squadSizeTable[getObjectName(squad.selfRef)].experienceLvlString .. tostring(squadLevel)
-	-- i need to reimplement the 2 way experience check again (isLeader) - Banner carriers dont inherit the veterancy when spawned inside of hammerheads 	
-	--WriteToFile("leader rank.txt",  "Current leader rank: " .. tostring(GetRankOfObject(squadMemberTable[squad.squadLeader].stringRef)) .. "\n" .. "squadLevel: " .. tostring(squadLevelString) .. "\n" .. "-------------------" .. "\n")
-	-- 0 -> LT (<), if horde members are ranked lower than the squad 
-	if applyHordeXPFix and EvaluateCondition("UNIT_COMPARE_RANK", firstMember.stringRef, 0, squadLevel) then
-		-- print("promoting")
-		-- leader check
-		for objId,_ in squad.squadMembers do
-			-- if desync then its probably because of the prerequisites 
-			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, squadLevelString)
-			squadMemberTable[objId].timesPromotedWithLua = (squadLevel-memberLevel)
-			-- apply xp modifier to this unit 
-			ApplyXPModifier(squadMemberTable[objId]) 
+	local squadData = squadSizeTable[getObjectName(squad.selfRef)]
+	if firstMember ~= nil and squadData ~= nil and squadData.experienceLvlString ~= nil then
+		local memberLevel,_ = GetRankOfObject(firstMember.stringRef)
+		local squadLevel,_ = GetRankOfObject(squad.stringRef)
+		local squadLevelString = squadData.experienceLvlString .. tostring(squadLevel)
+		-- i need to reimplement the 2 way experience check again (isLeader) - Banner carriers dont inherit the veterancy when spawned inside of hammerheads
+		--WriteToFile("leader rank.txt",  "Current leader rank: " .. tostring(GetRankOfObject(squadMemberTable[squad.squadLeader].stringRef)) .. "\n" .. "squadLevel: " .. tostring(squadLevelString) .. "\n" .. "-------------------" .. "\n")
+		-- 0 -> LT (<), if horde members are ranked lower than the squad
+		if applyHordeXPFix and EvaluateCondition("UNIT_COMPARE_RANK", firstMember.stringRef, 0, squadLevel) then
+			-- print("promoting")
+			-- leader check
+			for objId,_ in squad.squadMembers do
+				-- if desync then its probably because of the prerequisites
+				ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, squadLevelString)
+				squadMemberTable[objId].timesPromotedWithLua = (squadLevel-memberLevel)
+				-- apply xp modifier to this unit
+				ApplyXPModifier(squadMemberTable[objId])
+			end
 		end
 	end
 	-- toggle the squadLeader off here via upgrade
-	-- kill and remove banner carrier 
-	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then 
-		ObjectRemoveUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade") 
-		ExecuteAction("NAMED_KILL", squadMemberTable[squad.squadLeader].selfRef)
+	-- kill and remove banner carrier
+	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then
+		ObjectRemoveUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade")
+		-- the banner carrier may already be dead and cleaned up
+		local squadLeader = squadMemberTable[squad.squadLeader]
+		if squadLeader ~= nil then
+			ExecuteAction("NAMED_KILL", squadLeader.selfRef)
+		end
 		--print("squad leader removed")
 		squad.squadLeader = nil
 	end

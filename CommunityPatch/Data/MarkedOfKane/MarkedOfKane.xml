@@ -45,7 +45,6 @@
 		<Include source="Structures/MOKRef.xml" type="all"/>
 		<Include source="Structures/MoKSecretShrine.xml" type="all"/>
 		<Include source="Structures/markedofkaneoperationscenter.xml" type="all"/> 
-		<Include source="Structures/mokrocketbunkerspawn.xml" type="all"/>
 		<Include source="Structures/MoKLaserCannonHub.xml" type="all"/>
 		<Include source="Structures/MOKRocketBunkerHub.xml" type="all"/>
 		<Include source="Structures/MOKTempleOfNod.xml" type="all"/>
