@@ -2590,7 +2590,7 @@
 			
 		</Nuggets>
 	</WeaponTemplate>
-	
+	<!-- 
 	<WeaponTemplate
 		  id="FireHawkBombWarhead"
 		  Name="FireHawkBombWarhead"
@@ -2642,7 +2642,7 @@
 				ShockWaveZMult="1.50" />
 		</Nuggets>
 	</WeaponTemplate>
-	
+-->
 	<WeaponTemplate
 		id="NODFlameTankFlamer"
 		Name="NODFlameTankFlamer"

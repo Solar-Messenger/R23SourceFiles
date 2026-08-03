@@ -6,20 +6,21 @@
 	<WeaponTemplate
 		  id="FireHawkBombWarhead"
 		  Name="FireHawkBombWarhead"
-		  ProjectileCollidesWith  = "ENEMIES NEUTRAL STRUCTURES WALLS"
-		  RadiusDamageAffects="ENEMIES NEUTRALS"
-		  FireFX="FX_GDIBombHit"			  
+		  ProjectileCollidesWith  = "ALLIES ENEMIES NEUTRAL STRUCTURES WALLS"
+		  RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
+		  FireFX="FX_GDIBombHit"
 		  AntiMask="ANTI_GROUND ANTI_STRUCTURE">
 		<Nuggets>
 			<DamageContainedNugget
 				MaxUnitsToDamage="100"
-				Damage="999999"
+				Damage="1500000"
 				DelayTimeSeconds="0.0s"
 				DamageType="GRENADE"
 				DeathType="EXPLODED">
 				<DamageObjectFilter
 					Rule="NONE"
-					Include="INFANTRY" />
+					Include="INFANTRY"
+					Relationship="ENEMIES NEUTRAL" />
 			</DamageContainedNugget>
 
 			<DamageNugget
@@ -27,13 +28,32 @@
 				Radius="25.0"
 				DelayTimeSeconds="0.0s"
 				DamageType="GRENADE"
-				DeathType="NORMAL" />
+				DamageFXType="GDI_BOMB"
+				DeathType="NORMAL">
+				<SpecialObjectFilter 
+					Rule="ALL" 
+					Relationship="ENEMIES NEUTRAL" />
+			</DamageNugget>
+			
+			<DamageNugget
+				Damage="1500.0"
+				Radius="25.0"
+				DelayTimeSeconds="0.0s"
+				DamageType="GRENADE"
+				DamageFXType="GDI_BOMB"
+				DeathType="NORMAL">
+				<SpecialObjectFilter 
+					Rule="NONE" 
+					Include="HUSK"
+					Relationship="ALLIES" />
+			</DamageNugget>
+			
 			<MetaImpactNugget
 				ShockWaveAmount="90.0"
 				ShockWaveRadius="100.0"
 				ShockWaveZMult="1.50" />
 		</Nuggets>
-	</WeaponTemplate>	
+	</WeaponTemplate>
 
 	<WeaponTemplate
 		id="GDIFirehawkHardpointsUpgradeBombMainLoad"

@@ -1356,7 +1356,7 @@
 		<EventHandler EventName="OnCreated"	ScriptFunctionName="OnGDIMARVCreated" DebugSingleStep="false"/>
 	</EventList>
 
-	<EventList Name="MCVFunctions_R24" Inherit="GenericReverseMoveVehicleFunctions_R24">
+	<EventList Name="MCVFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnUnpacking"	ScriptFunctionName="OnMCVUnpacking" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUnpackingEnd"	ScriptFunctionName="OnMCVUnpackingEnd" DebugSingleStep="false"/>
 	</EventList>

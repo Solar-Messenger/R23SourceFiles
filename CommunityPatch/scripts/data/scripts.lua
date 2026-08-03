@@ -3504,7 +3504,7 @@ onCreatedTable = {
 	["A7EFC673"] = {onCreated = OnStalkerCreated}, -- Reaper17Stalker
 	["55C9FDB4"] = {onCreated = OnStalkerCreated}, -- Traveler59Stalker
 	["9CA5C031"] = {onCreated = OnCyborgCreated_R21g}, -- NodCyborg
-	["2D0AF7A8"] = {onCreated = OnCyborgCreated_R21g}, -- Awakened
+	["44F3C1A2"] = {onCreated = OnCyborgCreated_R21g}, -- MOKCyborgInfantry
 	["E2513B94"] = {onCreated = OnImprovedCyborgCreated_103}, -- Enlightened
 	["D5967D44"] = {onCreated = OnConfessorCreated_103} -- BlackHandConfessor
 }
@@ -3758,7 +3758,7 @@ function isSquadExploit(squad)
 	if squad == nil then return end
 	-- compare squad size to the full squad size (obtained via squadSizeTable)
 	-- 5 - 2 = 3 
-	-- WriteToFile("isExploit.txt",  "spawnedSize: " .. tostring(squad.spawnedSize) .. " " .. " " .. tostring(squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLostOnSpawn)) .. "\n")
+	 WriteToFile("isExploit.txt",  "spawnedSize: " .. tostring(squad.spawnedSize) .. " " .. " " .. tostring(squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLostOnSpawn)) .. "\n")
 	local unitsLostSize = getTableSize(squad.unitsLostOnSpawn)
 	
 	local keys = {}

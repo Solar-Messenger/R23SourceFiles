@@ -1600,6 +1600,7 @@
 		<Target>GDIRifleSoldierSquad_Veteran</Target>
 		<Target>GDIRifleSoldierSquad</Target>
 		<Target>GDIRifleSoldier</Target>
+		<Target>GDIRifleSoldierGarrisoned</Target>
 		<Decal
 			Texture="decal_G_level1"
 			Texture2="decal_Good_CO"
@@ -1628,6 +1629,7 @@
 		<Target>GDIRifleSoldierSquad_Veteran</Target>
 		<Target>GDIRifleSoldierSquad</Target>
 		<Target>GDIRifleSoldier</Target>
+		<Target>GDIRifleSoldierGarrisoned</Target>
 		<AttributeModifier>Unit_Veteran</AttributeModifier>
 		<Decal
 			Texture="decal_G_level1"
@@ -1657,6 +1659,7 @@
 		<Target>GDIRifleSoldierSquad_Veteran</Target>
 		<Target>GDIRifleSoldierSquad</Target>
 		<Target>GDIRifleSoldier</Target>
+		<Target>GDIRifleSoldierGarrisoned</Target>
 		<AttributeModifier>Unit_Elite</AttributeModifier>
 		<Decal
 			Texture="decal_G_level1"
@@ -1686,6 +1689,7 @@
 		<Target>GDIRifleSoldierSquad_Veteran</Target>
 		<Target>GDIRifleSoldierSquad</Target>
 		<Target>GDIRifleSoldier</Target>
+		<Target>GDIRifleSoldierGarrisoned</Target>
 		<AttributeModifier>Unit_Heroic</AttributeModifier>
 		<Decal
 			Texture="decal_G_level1"

@@ -53,30 +53,24 @@
 		LateralAccelerationRollFactor="0.0"
 		/>
 
+		<!-- needs to inherit the height properties of the ScrinMCVUNpacking -->
 		<LocomotorTemplate
 		id="ScrinMCVLocomotorUnpacking"
-		Name="ScrinMCVLocomotorUnpacking"
-		Surfaces="GROUND RUBBLE CLIFF WATER DEEP_WATER OBSTACLE CRUSHABLE_OBSTACLE" 
-        TurnTimeSeconds="999999.0s" 
+		Name="AlienMCVUnpackingLocomotor"
+		Surfaces="GROUND"
+		MaxSpeedDamaged="50%"
+		TurnTimeSeconds="999999.0s" 
 		TurnTimeDamagedSeconds="999999.0s" 
-        MaxSpeedDamaged="75%"
-        AccelerationSeconds="0.1s"
-        Lift="120%"
-        LiftDamaged="80%"
-        SlowTurnRadius="0.0" 
-		FastTurnRadius="0.0" 
-        MinTurnSpeed="0%"
-        PreferredHeight="80"
-        AllowMotiveForceWhileAirborne="true"
-        BehaviorZ="SURFACE_RELATIVE_HEIGHT"    
-        Appearance="HOVER"                 
-        AirborneTargetingHeight="30"
-        LocomotorWorksWhenDead="true"           
-        TakeOffAndLandingSpeed="7.5"
-        TakeOffAndLandingSlowDownDelta="25.0"
-        TakeOffAndLandingSlowDownTime=".5s"
-		ClampOrientationToPathTangent="false"
-		/>
+		BrakingSeconds="0.8s"
+		SlowTurnRadius="0.0"
+		FastTurnRadius="0.0"
+		BehaviorZ="SURFACE_RELATIVE_HEIGHT_ALLOW_ZERO_HEIGHT"
+		Appearance="TREADS"
+		UseTerrainSmoothing="true"
+		TakeOffAndLandingSpeed="6.0"
+		TakeOffAndLandingSlowDownDelta="25.0"
+		TakeOffAndLandingSlowDownTime=".5s"
+	/>
 
 		
 		

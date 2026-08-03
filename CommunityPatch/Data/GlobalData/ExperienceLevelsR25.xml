@@ -646,7 +646,7 @@
 			MaxSelectedUnits="40"/>
 	</ExperienceLevelTemplate>
 
-	<!-- rifles -->
+	<!-- rifles 
 
 	<ExperienceLevelTemplate
 		id="GDIRifleSoldierSquadExperienceLevel_1"
@@ -757,7 +757,7 @@
 			MinRadius="50"
 			MaxRadius="200"
 			MaxSelectedUnits="40"/>
-	</ExperienceLevelTemplate>
+	</ExperienceLevelTemplate>-->
 
 	<!-- grenadiers -->
 
