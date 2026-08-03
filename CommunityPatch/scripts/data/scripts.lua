@@ -3758,7 +3758,7 @@ function isSquadExploit(squad)
 	if squad == nil then return end
 	-- compare squad size to the full squad size (obtained via squadSizeTable)
 	-- 5 - 2 = 3 
-	 WriteToFile("isExploit.txt",  "spawnedSize: " .. tostring(squad.spawnedSize) .. " " .. " " .. tostring(squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLostOnSpawn)) .. "\n")
+	-- WriteToFile("isExploit.txt",  "spawnedSize: " .. tostring(squad.spawnedSize) .. " " .. " " .. tostring(squadSizeTable[tostring(getObjectName(squad.selfRef))].size-getTableSize(squad.unitsLostOnSpawn)) .. "\n")
 	local unitsLostSize = getTableSize(squad.unitsLostOnSpawn)
 	
 	local keys = {}
