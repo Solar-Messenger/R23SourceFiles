@@ -4707,6 +4707,11 @@
 				KillWhenRestingOnGround="False"
 				OrientToFlightPath="False"
 				IgnoreTerrainHeight="False" />
+			<BannerCarrierUpgrade
+				id="ModuleTag_BannerCarrierUpgrade"
+				Permanent="False">
+				<TriggeredBy>Upgrade_BannerCarrierUpgrade</TriggeredBy>
+			</BannerCarrierUpgrade>
 			<!-- toggle on-off with upgrade -->
 			<HordeContain
 				id="ModuleTag_HordeContain"
