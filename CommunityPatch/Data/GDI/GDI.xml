@@ -14,6 +14,7 @@
 
 		<Include source="Units/GDISniper.xml" type="all"/>
 		<Include source="Units/GDISpotter.xml" type="all"/>
+		<Include source="Units/GDISniperSquad_Veteran.xml" type="all"/>
 		<Include source="Units/GDIHarvester.xml" type="all"/>
 		<Include source="Structures/GDICrane.xml" type="all"/>
 		<Include source="Units/GDISurveyor.xml" type="all"/>

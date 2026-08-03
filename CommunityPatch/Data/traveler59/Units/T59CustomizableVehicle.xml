@@ -182,7 +182,7 @@
 				ConditionForEntry="INVALID"
 				SpawnBannerCarrierImmediately="true"
 				DestroyHordeOnBannerDeath="true"
-				ExitBannerCarrierWithHorde="true"
+				ExitBannerCarrierWithHorde="True"
 				FollowTheLeader="true">
 				<PassengerFilter
 					Rule="NONE"

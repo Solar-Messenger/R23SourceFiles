@@ -3,6 +3,7 @@
 
 	<Includes>
 		<Include source="Units\ZOCOMMissileSoldier.xml" type="all"/>
+		<Include source="Units\ZOCOMSniperSquad_Veteran.xml" type="all"/>
 		<Include source="Units\ZOCOMMissileSoldierGarrisoned.xml" type="all"/>
 		<Include source="Units\ZOCOMRifleSoldierGarrisoned.xml" type="all"/>
 		<Include source="Units\ZOCOMGrenadeSoldierGarrisoned.xml" type="all"/>

@@ -415,7 +415,7 @@
 				SpawnBannerCarrierImmediately="True"
 				BannerCarrierByUpgradeOnly="False"
 				DestroyHordeOnBannerDeath="False"
-				ExitBannerCarrierWithHorde="False"
+				ExitBannerCarrierWithHorde="True"
 				FollowTheLeader="False">
 				<PassengerFilter
 					Rule="NONE"
@@ -904,6 +904,24 @@
 				id="ModuleTag_AttributeModifierUpgradeRageGen"
 				AttributeModifier="AttributeModifier_RageGenerator">
 				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
+
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierVeteran"
+				AttributeModifier="Unit_Veteran">
+				<TriggeredBy>Upgrade_Veterancy_VETERAN</TriggeredBy>
+			</AttributeModifierUpgrade>
+
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierElite"
+				AttributeModifier="Unit_Elite">
+				<TriggeredBy>Upgrade_Veterancy_ELITE</TriggeredBy>
+			</AttributeModifierUpgrade>
+
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierHeroic"
+				AttributeModifier="Unit_Heroic">
+				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
 			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
@@ -1430,7 +1448,7 @@
 				SpawnBannerCarrierImmediately="True"
 				BannerCarrierByUpgradeOnly="False"
 				DestroyHordeOnBannerDeath="False"
-				ExitBannerCarrierWithHorde="False"
+				ExitBannerCarrierWithHorde="True"
 				FollowTheLeader="False">
 				<PassengerFilter
 					Rule="NONE"
@@ -1920,6 +1938,24 @@
 				AttributeModifier="AttributeModifier_RageGenerator">
 				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
 			</AttributeModifierUpgrade>
+
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierVeteran"
+				AttributeModifier="Unit_Veteran">
+				<TriggeredBy>Upgrade_Veterancy_VETERAN</TriggeredBy>
+			</AttributeModifierUpgrade>
+
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierElite"
+				AttributeModifier="Unit_Elite">
+				<TriggeredBy>Upgrade_Veterancy_ELITE</TriggeredBy>
+			</AttributeModifierUpgrade>
+
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierHeroic"
+				AttributeModifier="Unit_Heroic">
+				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<HordeAIUpdate
@@ -2026,4 +2062,3 @@
 			CrushAllies="False" />
 	</GameObject>
 </AssetDeclaration>	
-
