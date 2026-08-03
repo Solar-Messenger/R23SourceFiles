@@ -2094,7 +2094,7 @@
 		<Target>AlienCustomizableVehicle</Target>
 		<Target>Traveler59CustomizableVehicle</Target>
 		<Target>Reaper17CustomizableVehicle</Target>
-		<AttributeModifier>Unit_Veteran</AttributeModifier>
+		<!--<AttributeModifier>Unit_Veteran</AttributeModifier>-->
 		<Decal
 			Texture="decal_A_level1"
 			Texture2="decal_Alien_CO"
@@ -2123,7 +2123,7 @@
 		<Target>AlienCustomizableVehicle</Target>
 		<Target>Traveler59CustomizableVehicle</Target>
 		<Target>Reaper17CustomizableVehicle</Target>
-		<AttributeModifier>Unit_Elite</AttributeModifier>
+		<!--<AttributeModifier>Unit_Elite</AttributeModifier>-->
 		<Decal
 			Texture="decal_A_level1"
 			Texture2="decal_Alien_CO"
@@ -2152,7 +2152,7 @@
 		<Target>AlienCustomizableVehicle</Target>
 		<Target>Traveler59CustomizableVehicle</Target>
 		<Target>Reaper17CustomizableVehicle</Target>
-		<AttributeModifier>Unit_Heroic</AttributeModifier>
+		<!--<AttributeModifier>Unit_Heroic</AttributeModifier>-->
 		<Decal
 			Texture="decal_A_level1"
 			Texture2="decal_Alien_CO"
