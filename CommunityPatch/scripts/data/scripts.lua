@@ -3133,7 +3133,7 @@ function MakeSonicEmitterTempImmune(self)
 				ObjectCreateAndFireTempWeapon(self, "GenericGDIBuildingSuicideWeapon")
 			else
 				-- zocom sonic emitter
-				print("zocom sonic")
+				--print("zocom sonic")
 				ObjectCreateAndFireTempWeapon(self, "GenericZOCOMBuildingSuicideWeapon")
 			end
 		end
@@ -3173,7 +3173,7 @@ function SonicEmitterDamaged(self, other)
 		sonic.lastUnit = other
 		-- this is safety incase this triggers more than once
 		sonic.damagedFlag = true
-		 print("USER 6")
+		-- print("USER 6")
 		-- sonic emitter receives this event dispatched by the damager, should work with stealth units as the killer wouldnt have restealthed by then
 		-- enemies dispatch this event to the sonic emitter to find out if any of them killed it 
 
@@ -3190,7 +3190,7 @@ end
 function DetermineIfEnemyKilledMe(self, other)
 	local sonic = GetSonicEmitterAttributes(self)
 	if sonic.lastUnit == other and sonic.damagedFlag and not sonic.hasGivenXP then
-		print("enemy found")
+		-- print("enemy found")
 		GiveExperiencePoints(self)
 	end
 end
@@ -3568,7 +3568,7 @@ end
 -- ############################# R25 Hammerhead Garrison fix ###################################
 
 function ApplyXPModifier(tableObj) 
-	print("applying xp modifier")
+	--print("applying xp modifier")
 	local timesPromoted = tableObj.timesPromotedWithLua
 	local upgrades = {
 		["1"] = "Upgrade_200scaler",
@@ -3612,7 +3612,7 @@ applyHordeXPFix = true
 
 -- enables the squad leader
 function GarrisonedInHammerhead(self)
-	print("the squad has entered the hammerhead!")
+	--print("the squad has entered the hammerhead!")
 	-- toggle the squadLeader on here via upgrade
 	local objId,squad = GetSquadAttributes(self)
 	-- dpes not rank up automatically inside a hammerhead sadly.
@@ -3645,7 +3645,7 @@ end
 
 -- removes squad leader and applies its rankups if any to the horde members.
 function GarrisonedInHammerheadEnd(self)
-	print("the squad has exited the hammerhead!")
+	--print("the squad has exited the hammerhead!")
 	-- this disables the fake weapon for the regular members
 	local _,squad = GetSquadAttributes(self)
 	-- instead of status i could just use upgrades instead
@@ -3677,7 +3677,7 @@ function GarrisonedInHammerheadEnd(self)
 	if EvaluateCondition("UNIT_HAS_UPGRADE",squad.stringRef, "Upgrade_BannerCarrierUpgrade") then 
 		ObjectRemoveUpgrade(squad.selfRef, "Upgrade_BannerCarrierUpgrade") 
 		ExecuteAction("NAMED_KILL", squadMemberTable[squad.squadLeader].selfRef)
-		print("squad leader removed")
+		--print("squad leader removed")
 		squad.squadLeader = nil
 	end
 end
@@ -3792,7 +3792,7 @@ function GrantUpgradesToLeader(squad)
 	local squadLeader = squadMemberTable[squad.squadLeader] or nil
 	--if removeUpgrade then print(tostring(squadLeader)) end
 	if squadLeader == nil then return end
-	 WriteToFile("data.txt",  "squadSize: " .. tostring(squadSize) .. " squadLeader: " .. tostring(squadLeader) .. "\n")
+	-- WriteToFile("data.txt",  "squadSize: " .. tostring(squadSize) .. " squadLeader: " .. tostring(squadLeader) .. "\n")
 
 	-- check if WEAPON_UPGRADED_01 is current status to assign the appropriate upgrade (this is for AP Ammo and Scanner Packs)
 	local upgradeString = EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef , 124) and "Upgrade_SquadMemberEnhanced" or "Upgrade_SquadMember"
@@ -3805,7 +3805,7 @@ function GrantUpgradesToLeader(squad)
 		if isZoneRaiderSquad then
 			if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, "Upgrade_SquadMemberRocket" .. i) then ObjectGrantUpgrade(squadLeader.selfRef, "Upgrade_SquadMemberRocket" .. i) end
 		end
-		print("applying upgrade: " .. upgradeString)
+		--print("applying upgrade: " .. upgradeString)
 	end
 end
 
