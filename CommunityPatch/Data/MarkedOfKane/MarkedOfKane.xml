@@ -6,6 +6,7 @@
 		<Include source="Units/markedofkanebeamcannon.xml" type="all"/>
 		<Include source="Units/MoKRedeemer.xml" type="all"/>
 		<Include source="Units/MoKHarvester.xml" type="all"/>
+		<Include source="Structures/markedofkanerocketbunkerspawn.xml" type="all"/>
 		<Include source="Structures/MoKCrane.xml" type="all"/>
 		<Include source="Units/MoKEmissary.xml" type="all"/>
 		<Include source="Units/MarkedofKaneBunkerTruck.xml" type="all"/> 

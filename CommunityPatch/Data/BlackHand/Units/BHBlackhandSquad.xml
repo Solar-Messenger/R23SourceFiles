@@ -788,6 +788,8 @@
 		<EvaEvents
 			EvaEventDamagedOwner="UnitUnderAttack"
 			EvaEventAvailableForProduction="NewConstructionOptions"
+			EvaEventSecondDamageFarFromFirstScanRange="200"
+			EvaEventSecondDamageFarFromFirstTimeoutMS="31000" 
 			EvaEventProductionStarted="UnitConstructionStarted"
 			EvaEventBuildOnHold="BuildOnHold"
 			EvaEventBuildCancelled="BuildCancelled"
@@ -820,5 +822,3 @@
 		<DisplayUpgrade>Upgrade_BlackHandSecretShrinePurifyingFlame</DisplayUpgrade>
 	</GameObject>
 </AssetDeclaration>
-
-
