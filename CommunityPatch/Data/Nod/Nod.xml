@@ -33,6 +33,7 @@
 		<Include source="Structures/NODMiniMCVOutpost.xml" type="all"/>
 		<Include source="Units/NODShadowSquad.xml" type="all"/>
 		<Include source="Units/NODShadowSquad_Veteran.xml" type="all"/>
+		<Include source="Units/NODMilitant.xml" type="all"/>
 		<Include source="Units/NODMilitantSquad.xml" type="all"/>
 		<Include source="Units/nodbeamcannon.xml" type="all"/>
 		<Include source="Units/NODFanaticSquad.xml" type="all"/>

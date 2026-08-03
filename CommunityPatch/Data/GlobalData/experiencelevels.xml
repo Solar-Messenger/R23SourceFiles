@@ -2201,7 +2201,7 @@
 		<LevelUpFxList
 			FxList="FX_AlienLevelUp_01" />
 		<Target>AlienMillipedeBody</Target>
-		<AttributeModifier>Unit_Veteran</AttributeModifier>
+		<!--<AttributeModifier>Unit_Veteran</AttributeModifier>-->
 		<Decal
 			Texture="decal_A_level1"
 			Texture2="decal_Alien_CO"
@@ -2227,7 +2227,7 @@
 		<LevelUpFxList
 			FxList="FX_AlienLevelUp_02" />
 		<Target>AlienMillipedeBody</Target>
-		<AttributeModifier>Unit_Elite</AttributeModifier>
+		<!--<AttributeModifier>Unit_Elite</AttributeModifier>-->
 		<Decal
 			Texture="decal_A_level1"
 			Texture2="decal_Alien_CO"
@@ -2253,7 +2253,7 @@
 		<LevelUpFxList
 			FxList="FX_AlienLevelUp_03" />
 		<Target>AlienMillipedeBody</Target>
-		<AttributeModifier>Unit_Heroic</AttributeModifier>
+		<!--<AttributeModifier>Unit_Heroic</AttributeModifier>-->
 		<Decal
 			Texture="decal_A_level1"
 			Texture2="decal_Alien_CO"
@@ -2263,6 +2263,732 @@
 			MinRadius="75"
 			MaxRadius="200"
 			MaxSelectedUnits="40" />
+	</ExperienceLevelTemplate>
+
+	<!-- banner carrier xp sync overrides: militants, confessors, disciples, snipers.
+	     AttributeModifiers commented out; stat bonuses now come from AttributeModifierUpgrade
+	     modules on the unit objects, triggered by the propagated Upgrade_Veterancy_* upgrades. -->
+
+	<ExperienceLevelTemplate
+		id="NODMilitantSquadExperienceLevel_1"
+		RequiredExperience="1"
+		ExperienceAward="22"
+		Rank="1">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Target>NODMilitantSquad</Target>
+		<Target>NODMilitant</Target>
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="NODMilitantSquadExperienceLevel_2"
+		Prerequisite="NODMilitantSquadExperienceLevel_1"
+		RequiredExperience="600"
+		ExperienceAward="28"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="2">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_01" />
+		<Target>NODMilitantSquad</Target>
+		<Target>NODMilitant</Target>
+		<!--<AttributeModifier>Unit_Veteran</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="NODMilitantSquadExperienceLevel_3"
+		Prerequisite="NODMilitantSquadExperienceLevel_2"
+		RequiredExperience="1200"
+		ExperienceAward="35"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="3">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_02" />
+		<Target>NODMilitantSquad</Target>
+		<Target>NODMilitant</Target>
+		<!--<AttributeModifier>Unit_Elite</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="NODMilitantSquadExperienceLevel_4"
+		Prerequisite="NODMilitantSquadExperienceLevel_3"
+		RequiredExperience="1800"
+		ExperienceAward="44"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="4">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_03" />
+		<Target>NODMilitantSquad</Target>
+		<Target>NODMilitant</Target>
+		<!--<AttributeModifier>Unit_Heroic</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+
+	<ExperienceLevelTemplate
+		id="NODMilitantRocketSquadExperienceLevel_1"
+		RequiredExperience="1"
+		ExperienceAward="200"
+		Rank="1">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Target>NODMilitantRocketSquad</Target>
+		<Target>NODMilitantRocket</Target>
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="NODMilitantRocketSquadExperienceLevel_2"
+		Prerequisite="NODMilitantRocketSquadExperienceLevel_1"
+		RequiredExperience="1200"
+		ExperienceAward="260"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="2">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_01" />
+		<Target>NODMilitantRocketSquad</Target>
+		<Target>NODMilitantRocket</Target>
+		<!--<AttributeModifier>Unit_Veteran</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="NODMilitantRocketSquadExperienceLevel_3"
+		Prerequisite="NODMilitantRocketSquadExperienceLevel_2"
+		RequiredExperience="2400"
+		ExperienceAward="320"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="3">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_02" />
+		<Target>NODMilitantRocketSquad</Target>
+		<Target>NODMilitantRocket</Target>
+		<!--<AttributeModifier>Unit_Elite</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="NODMilitantRocketSquadExperienceLevel_4"
+		Prerequisite="NODMilitantRocketSquadExperienceLevel_3"
+		RequiredExperience="3600"
+		ExperienceAward="400"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="4">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_03" />
+		<Target>NODMilitantRocketSquad</Target>
+		<Target>NODMilitantRocket</Target>
+		<!--<AttributeModifier>Unit_Heroic</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+
+	<ExperienceLevelTemplate
+		id="NODConfessorExperienceLevel_1"
+		RequiredExperience="1"
+		ExperienceAward="8"
+		Rank="1">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Target>NODConfessor</Target>
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="NODConfessorExperienceLevel_2"
+		Prerequisite="NODConfessorExperienceLevel_1"
+		RequiredExperience="300"
+		ExperienceAward="10"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="2">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_01" />
+		<Target>NODConfessor</Target>
+		<!--<AttributeModifier>Unit_Veteran</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="NODConfessorExperienceLevel_3"
+		Prerequisite="NODConfessorExperienceLevel_2"
+		RequiredExperience="600"
+		ExperienceAward="12"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="3">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_02" />
+		<Target>NODConfessor</Target>
+		<!--<AttributeModifier>Unit_Elite</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="NODConfessorExperienceLevel_4"
+		Prerequisite="NODConfessorExperienceLevel_3"
+		RequiredExperience="900"
+		ExperienceAward="16"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="4">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_03" />
+		<Target>NODConfessor</Target>
+		<!--<AttributeModifier>Unit_Heroic</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+
+	<ExperienceLevelTemplate
+		id="BlackHandBlackDiscipleExperienceLevel_1"
+		RequiredExperience="1"
+		ExperienceAward="8"
+		Rank="1">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Target>BlackHandBlackDisciple</Target>
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="BlackHandBlackDiscipleExperienceLevel_2"
+		Prerequisite="BlackHandBlackDiscipleExperienceLevel_1"
+		RequiredExperience="300"
+		ExperienceAward="10"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="2">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_01" />
+		<Target>BlackHandBlackDisciple</Target>
+		<!--<AttributeModifier>Unit_Veteran</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="BlackHandBlackDiscipleExperienceLevel_3"
+		Prerequisite="BlackHandBlackDiscipleExperienceLevel_2"
+		RequiredExperience="600"
+		ExperienceAward="12"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="3">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_02" />
+		<Target>BlackHandBlackDisciple</Target>
+		<!--<AttributeModifier>Unit_Elite</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="BlackHandBlackDiscipleExperienceLevel_4"
+		Prerequisite="BlackHandBlackDiscipleExperienceLevel_3"
+		RequiredExperience="900"
+		ExperienceAward="16"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="4">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_03" />
+		<Target>BlackHandBlackDisciple</Target>
+		<!--<AttributeModifier>Unit_Heroic</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+
+	<ExperienceLevelTemplate
+		id="BlackHandConfessorSquadExperienceLevel_1"
+		RequiredExperience="1"
+		ExperienceAward="150"
+		Rank="1">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Target>BlackHandConfessorSquad</Target>
+		<Target>BlackHandConfessor</Target>
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="BlackHandConfessorSquadExperienceLevel_2"
+		Prerequisite="BlackHandConfessorSquadExperienceLevel_1"
+		RequiredExperience="2700"
+		ExperienceAward="195"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="2">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_01" />
+		<Target>BlackHandConfessorSquad</Target>
+		<Target>BlackHandConfessor</Target>
+		<!--<AttributeModifier>Unit_Veteran</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="BlackHandConfessorSquadExperienceLevel_3"
+		Prerequisite="BlackHandConfessorSquadExperienceLevel_2"
+		RequiredExperience="5400"
+		ExperienceAward="240"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="3">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_02" />
+		<Target>BlackHandConfessorSquad</Target>
+		<Target>BlackHandConfessor</Target>
+		<!--<AttributeModifier>Unit_Elite</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<!-- vanilla id has the extra "Black" - kept so this overrides instead of duplicating -->
+	<ExperienceLevelTemplate
+		id="BlackHandBlackConfessorSquadExperienceLevel_4"
+		Prerequisite="BlackHandConfessorSquadExperienceLevel_3"
+		RequiredExperience="8100"
+		ExperienceAward="300"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="4">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_03" />
+		<Target>BlackHandConfessorSquad</Target>
+		<Target>BlackHandConfessor</Target>
+		<!--<AttributeModifier>Unit_Heroic</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+
+	<ExperienceLevelTemplate
+		id="BlackHandMilitantRocketSquadExperienceLevel_1"
+		RequiredExperience="1"
+		ExperienceAward="200"
+		Rank="1">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Target>BlackHandMilitantRocketSquad</Target>
+		<Target>BlackHandMilitantRocket</Target>
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="BlackHandMilitantRocketSquadExperienceLevel_2"
+		Prerequisite="BlackHandMilitantRocketSquadExperienceLevel_1"
+		RequiredExperience="1200"
+		ExperienceAward="260"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="2">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_01" />
+		<Target>BlackHandMilitantRocketSquad</Target>
+		<Target>BlackHandMilitantRocket</Target>
+		<!--<AttributeModifier>Unit_Veteran</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="BlackHandMilitantRocketSquadExperienceLevel_3"
+		Prerequisite="BlackHandMilitantRocketSquadExperienceLevel_2"
+		RequiredExperience="2400"
+		ExperienceAward="320"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="3">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_02" />
+		<Target>BlackHandMilitantRocketSquad</Target>
+		<Target>BlackHandMilitantRocket</Target>
+		<!--<AttributeModifier>Unit_Elite</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="BlackHandMilitantRocketSquadExperienceLevel_4"
+		Prerequisite="BlackHandMilitantRocketSquadExperienceLevel_3"
+		RequiredExperience="3600"
+		ExperienceAward="400"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="4">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+		<LevelUpFxList
+			FxList="FX_NODLevelUp_03" />
+		<Target>BlackHandMilitantRocketSquad</Target>
+		<Target>BlackHandMilitantRocket</Target>
+		<!--<AttributeModifier>Unit_Heroic</AttributeModifier>-->
+		<Decal
+			Texture="decal_N_level1"
+			Texture2="decal_Nod_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+
+	<ExperienceLevelTemplate
+		id="ZOCOMSniperSquadExperienceLevel_1"
+		RequiredExperience="1"
+		ExperienceAward="500"
+		Rank="1">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Target>ZOCOMSniperSquad_Veteran</Target>
+		<Target>ZOCOMSniperSquad</Target>
+		<Target>ZOCOMSniper</Target>
+		<Target>ZOCOMSpotter</Target>
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="ZOCOMSniperSquadExperienceLevel_2"
+		Prerequisite="ZOCOMSniperSquadExperienceLevel_1"
+		RequiredExperience="3000"
+		ExperienceAward="650"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="2">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_01" />
+		<Target>ZOCOMSniperSquad_Veteran</Target>
+		<Target>ZOCOMSniperSquad</Target>
+		<Target>ZOCOMSniper</Target>
+		<Target>ZOCOMSpotter</Target>
+		<!--<AttributeModifier>Unit_Veteran</AttributeModifier>-->
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="ZOCOMSniperSquadExperienceLevel_3"
+		Prerequisite="ZOCOMSniperSquadExperienceLevel_2"
+		RequiredExperience="6000"
+		ExperienceAward="800"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="3">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_02" />
+		<Target>ZOCOMSniperSquad_Veteran</Target>
+		<Target>ZOCOMSniperSquad</Target>
+		<Target>ZOCOMSniper</Target>
+		<Target>ZOCOMSpotter</Target>
+		<!--<AttributeModifier>Unit_Elite</AttributeModifier>-->
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>
+	<ExperienceLevelTemplate
+		id="ZOCOMSniperSquadExperienceLevel_4"
+		Prerequisite="ZOCOMSniperSquadExperienceLevel_3"
+		RequiredExperience="9000"
+		ExperienceAward="1000"
+		ModelConditionState="SPECIAL_CHEERING"
+		Rank="4">
+		<LevelUpTintColor
+			r="1.0"
+			g="1.0"
+			b="1.0" />
+		<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+		<LevelUpFxList
+			FxList="FX_GDILevelUp_03" />
+		<Target>ZOCOMSniperSquad_Veteran</Target>
+		<Target>ZOCOMSniperSquad</Target>
+		<Target>ZOCOMSniper</Target>
+		<Target>ZOCOMSpotter</Target>
+		<!--<AttributeModifier>Unit_Heroic</AttributeModifier>-->
+		<Decal
+			Texture="decal_G_level1"
+			Texture2="decal_Good_CO"
+			Style="MERGE_DECAL"
+			OpacityMin="80"
+			OpacityMax="100"
+			MinRadius="50"
+			MaxRadius="200"
+			MaxSelectedUnits="40"/>
 	</ExperienceLevelTemplate>
 
 

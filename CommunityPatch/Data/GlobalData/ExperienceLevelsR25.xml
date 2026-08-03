@@ -461,7 +461,7 @@
 		<Target>GDISniperSquad</Target>
 		<Target>GDISniper</Target>
 		<Target>GDISpotter</Target>
-		<AttributeModifier>Unit_Veteran</AttributeModifier>
+		<!--<AttributeModifier>Unit_Veteran</AttributeModifier>-->
 		<Decal
 			Texture="decal_G_level1"
 			Texture2="decal_Good_CO" 
@@ -490,7 +490,7 @@
 		<Target>GDISniperSquad</Target>
 		<Target>GDISniper</Target>
 		<Target>GDISpotter</Target>
-		<AttributeModifier>Unit_Elite</AttributeModifier>
+		<!--<AttributeModifier>Unit_Elite</AttributeModifier>-->
 		<Decal
 			Texture="decal_G_level1"
 			Texture2="decal_Good_CO" 
@@ -519,7 +519,7 @@
 		<Target>GDISniperSquad</Target>
 		<Target>GDISniper</Target>
 		<Target>GDISpotter</Target>
-		<AttributeModifier>Unit_Heroic</AttributeModifier>
+		<!--<AttributeModifier>Unit_Heroic</AttributeModifier>-->
 		<Decal
 			Texture="decal_G_level1"
 			Texture2="decal_Good_CO" 

@@ -470,29 +470,23 @@
 				<TriggeredBy>Upgrade_ProductionVeterancy_HEROIC</TriggeredBy>
 			</LevelUpUpgrade>
 
-			<LevelUpUpgrade
-                id="ModuleTag_LevelUpUpgrade1"
-                LevelCap="2"
-                DoFlash="false"
-                LevelsToGain="1">
-            	<TriggeredBy>Upgrade_Veterancy_VETERAN</TriggeredBy>
-       		 </LevelUpUpgrade> 
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierVeteran"
+				AttributeModifier="Unit_Veteran">
+				<TriggeredBy>Upgrade_Veterancy_VETERAN</TriggeredBy>
+			</AttributeModifierUpgrade>
 
-			 <LevelUpUpgrade
-                id="ModuleTag_LevelUpUpgrade2"
-                LevelCap="3"
-                DoFlash="false"
-                LevelsToGain="2">
-            	<TriggeredBy>Upgrade_Veterancy_ELITE</TriggeredBy>
-       		 </LevelUpUpgrade> 
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierElite"
+				AttributeModifier="Unit_Elite">
+				<TriggeredBy>Upgrade_Veterancy_ELITE</TriggeredBy>
+			</AttributeModifierUpgrade>
 
-			 <LevelUpUpgrade
-                id="ModuleTag_LevelUpUpgrade3"
-                LevelCap="4"
-                DoFlash="false"
-                LevelsToGain="3">
-            	<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
-       		 </LevelUpUpgrade> 
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierHeroic"
+				AttributeModifier="Unit_Heroic">
+				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
+			</AttributeModifierUpgrade>
 
 			<TemporarilyDefectUpdate
 				id="ModuleTag_TemporarilyDefect"

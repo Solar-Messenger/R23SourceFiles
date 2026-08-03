@@ -131,6 +131,24 @@
 				LevelsToGain="3">
 				<TriggeredBy>Upgrade_ProductionVeterancy_HEROIC</TriggeredBy>
 			</LevelUpUpgrade>
+
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierVeteran"
+				AttributeModifier="Unit_Veteran">
+				<TriggeredBy>Upgrade_Veterancy_VETERAN</TriggeredBy>
+			</AttributeModifierUpgrade>
+
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierElite"
+				AttributeModifier="Unit_Elite">
+				<TriggeredBy>Upgrade_Veterancy_ELITE</TriggeredBy>
+			</AttributeModifierUpgrade>
+
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierHeroic"
+				AttributeModifier="Unit_Heroic">
+				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
+			</AttributeModifierUpgrade>
 			<TemporarilyDefectUpdate
 				id="ModuleTag_TemporarilyDefect"
 				DefectionFrameCount="100" />
@@ -154,79 +172,18 @@
 
 			<HordeContain
 				id="ModuleTag_HordeContain"
-				ContainMax="0"
-				EnterSound=""
-				ExitSound=""
-				DamagePercentToUnits="0%"
-				PassengersTestCollisionHeight="-1000"
-				NumberOfExitPaths="1"
-				DoorOpenTime="1"
-				ObjectStatusOfContained=""
-				ModifierRequiredTime="100"
-				KillIfEmptyTime="0s"
-				ModelConditionsWhenNotEmpty=""
-				PassengersInTurret="False"
-				AllowOwnPlayerInsideOverride="False"
-				AllowAlliesInside="True"
-				AllowEnemiesInside="True"
-				AllowNeutralInside="True"
-				ShowPips="False"
-				CollidePickup="True"
-				EjectPassengersOnDeath="True"
-				KillPassengersOnDeath="False"
-				HasObjectStatusOfContainedEntry="True"
-				Enabled="True"
-				Slots="8"
-				ExitPitchRate="0"
-				HealthRegenPercentPerSec="0"
-				ExitDelay="0"
-				TypeOneForWeaponSet=""
-				TypeTwoForWeaponSet=""
-				TypeOneForWeaponState=""
-				TypeTwoForWeaponState=""
-				TypeThreeForWeaponState=""
-				GrabWeapon=""
-				ConditionForEntry="INVALID"
-				ThrowOutPassengersDelay="0"
-				ThrowOutPassengersLandingWarhead=""
-				EnterFadeTime="0"
-				ExitFadeTime="0"
-				ReleaseSnappyness="0.7"
-				ScatterNearbyOnExit="True"
-				OrientLikeContainerOnExit="False"
-				DestroyRidersWhoAreNotFreeToExit="False"
-				ForceOrientationContainer="True"
-				CanGrabStructure="False"
-				FireGrabWeaponOnVictim="True"
-				ShouldThrowOutPassengers="False"
-				FadePassengerOnEnter="False"
-				FadePassengerOnExit="False"
-				FadeReverse="False"
-				ExtendedExitContainerChecks="False"
-				Formation="MAIN"
-				AlternateFormation=""
-				ForcedLocomotorSet="NORMAL"
-				MeleeAttackLeashDistance="1"
-				GeometryFrontAngleRadians="0"
 				FrontAngle="4.7123"
-				FlankedDelaySeconds="2"
-				FlankedDurationSeconds="5"
-				MinimumHordeSize="0"
-				BackupMinDelayTime="0s"
-				BackupMaxDelayTime="0s"
-				BackupMinDistance="0"
-				BackupMaxDistance="0"
-				BackupPercentage="0"
-				RadiusCowerOverride="0"
-				VisionOverrideRear="0"
-				VisionOverrideSide="0"
-				ForbiddenCoverStatus=""
-				UseSlowHordeMovement="True"
-				SpawnBannerCarrierImmediately="True"
-				BannerCarrierByUpgradeOnly="False"
-				DestroyHordeOnBannerDeath="True"
-				ExitBannerCarrierWithHorde="False"
-				FollowTheLeader="True">
+				FlankedDelaySeconds="2.0"
+				ShowPips="false"
+				Formation="MAIN"
+				MeleeAttackLeashDistance="1"
+				Slots="8"
+				ObjectStatusOfContained=""
+				ConditionForEntry="INVALID"
+				SpawnBannerCarrierImmediately="true"
+				DestroyHordeOnBannerDeath="true"
+				ExitBannerCarrierWithHorde="true"
+				FollowTheLeader="true">
 				<PassengerFilter
 					Rule="NONE"
 					Include="VEHICLE" />
@@ -439,4 +396,3 @@
 			/>
 	</GameObject>
 </AssetDeclaration>
-
