@@ -1359,6 +1359,12 @@
 	<EventList Name="MCVFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnUnpacking"	ScriptFunctionName="OnMCVUnpacking" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUnpackingEnd"	ScriptFunctionName="OnMCVUnpackingEnd" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="RigFunctions_R24" Inherit="GenericReverseMoveVehicleFunctions_R24">
