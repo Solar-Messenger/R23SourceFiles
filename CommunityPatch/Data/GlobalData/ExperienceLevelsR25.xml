@@ -132,7 +132,7 @@
 				Style="MERGE_DECAL"
 				OpacityMin="80"
 				OpacityMax="100"
-				MinRadius="50"
+				MinRadius="75"
 				MaxRadius="200"
 				MaxSelectedUnits="40"/>
 		</ExperienceLevelTemplate>
@@ -158,7 +158,7 @@
 				Style="MERGE_DECAL"
 				OpacityMin="80"
 				OpacityMax="100"
-				MinRadius="50"
+				MinRadius="75"
 				MaxRadius="200"
 				MaxSelectedUnits="40"/>
 		</ExperienceLevelTemplate>
@@ -184,7 +184,7 @@
 				Style="MERGE_DECAL"
 				OpacityMin="80"
 				OpacityMax="100"
-				MinRadius="50"
+				MinRadius="75"
 				MaxRadius="200"
 				MaxSelectedUnits="40"/>
 		</ExperienceLevelTemplate>
@@ -210,7 +210,7 @@
 				Style="MERGE_DECAL"
 				OpacityMin="80"
 				OpacityMax="100"
-				MinRadius="50"
+				MinRadius="75"
 				MaxRadius="200"
 				MaxSelectedUnits="40"/>
 		</ExperienceLevelTemplate>	
@@ -231,7 +231,7 @@
 				Style="MERGE_DECAL"
 				OpacityMin="80"
 				OpacityMax="100"
-				MinRadius="50"
+				MinRadius="75"
 				MaxRadius="200"
 				MaxSelectedUnits="40"/>
 		</ExperienceLevelTemplate>
@@ -257,7 +257,7 @@
 				Style="MERGE_DECAL"
 				OpacityMin="80"
 				OpacityMax="100"
-				MinRadius="50"
+				MinRadius="75"
 				MaxRadius="200"
 				MaxSelectedUnits="40"/>
 		</ExperienceLevelTemplate>
@@ -283,7 +283,7 @@
 				Style="MERGE_DECAL"
 				OpacityMin="80"
 				OpacityMax="100"
-				MinRadius="50"
+				MinRadius="75"
 				MaxRadius="200"
 				MaxSelectedUnits="40"/>
 		</ExperienceLevelTemplate>
@@ -309,7 +309,7 @@
 				Style="MERGE_DECAL"
 				OpacityMin="80"
 				OpacityMax="100"
-				MinRadius="50"
+				MinRadius="75"
 				MaxRadius="200"
 				MaxSelectedUnits="40"/>
 		</ExperienceLevelTemplate>			
@@ -331,7 +331,7 @@
 				Style="MERGE_DECAL"
 				OpacityMin="80"
 				OpacityMax="100"
-				MinRadius="50"
+				MinRadius="75"
 				MaxRadius="200"
 				MaxSelectedUnits="40"/>
 		</ExperienceLevelTemplate>
@@ -358,7 +358,7 @@
 				Style="MERGE_DECAL"
 				OpacityMin="80"
 				OpacityMax="100"
-				MinRadius="50"
+				MinRadius="75"
 				MaxRadius="200"
 				MaxSelectedUnits="40"/>
 		</ExperienceLevelTemplate>
@@ -385,7 +385,7 @@
 				Style="MERGE_DECAL"
 				OpacityMin="80"
 				OpacityMax="100"
-				MinRadius="50"
+				MinRadius="75"
 				MaxRadius="200"
 				MaxSelectedUnits="40"/>
 		</ExperienceLevelTemplate>
@@ -412,7 +412,7 @@
 				Style="MERGE_DECAL"
 				OpacityMin="80"
 				OpacityMax="100"
-				MinRadius="50"
+				MinRadius="75"
 				MaxRadius="200"
 				MaxSelectedUnits="40"/>
 		</ExperienceLevelTemplate>		
