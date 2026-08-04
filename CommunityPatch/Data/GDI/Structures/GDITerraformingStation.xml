@@ -223,14 +223,6 @@
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT">
 				</AnimationState>
-					<!-- -->
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 RUBBLE USER_3">
-					<Script>
-						CurDrawableHideSubObject("NEWSKIN")
-					</Script>
-				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_6 RUBBLE FIRING_A">

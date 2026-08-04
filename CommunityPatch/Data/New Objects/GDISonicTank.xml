@@ -286,28 +286,35 @@
                 </AnimationState>
                 <AnimationState
                     ParseCondStateType="PARSE_NORMAL"
-                    ConditionsYes="USER_6 REALLYDAMAGED FIRING_A">
+                    ConditionsYes="DYING FIRING_A USER_6">
                     <Script>
                         CurDrawableHideSubObject("SHATTERER_BODY")
                     </Script>
                 </AnimationState>
                 <AnimationState
                     ParseCondStateType="PARSE_NORMAL"
-                    ConditionsYes="USER_6 DYING USER_3">
+                    ConditionsYes="DYING">
                     <Script>
-                        CurDrawableHideSubObject("R01")
+                        CurDrawableHideSubObject("SHATTERER_BODY")
                     </Script>
                 </AnimationState>
                 <AnimationState
                     ParseCondStateType="PARSE_NORMAL"
-                    ConditionsYes="USER_6 DYING FIRING_A">
+                    ConditionsYes="REALLYDAMAGED FIRING_A USER_6">
                     <Script>
-                        CurDrawableHideSubObject("R01")
+                        CurDrawableHideSubObject("SHATTERER_BODY")
                     </Script>
                 </AnimationState>
                 <AnimationState
                     ParseCondStateType="PARSE_NORMAL"
-                    ConditionsYes="USER_6 FIRING_A">
+                    ConditionsYes="FIRING_A USER_6">
+                    <Script>
+                        CurDrawableHideSubObject("SHATTERER_BODY")
+                    </Script>
+                </AnimationState>
+                 <AnimationState
+                    ParseCondStateType="PARSE_NORMAL"
+                    ConditionsYes="USER_6">
                     <Script>
                         CurDrawableHideSubObject("SHATTERER_BODY")
                     </Script>
@@ -440,7 +447,7 @@
                 DestructionDelay="5s">
                 <OCL
                     Type="INITIAL">
-                    <OCL>OCL_GDIShattererDebris</OCL>
+                    <OCL></OCL>
                 </OCL>
                 <DieMuxData
                     DeathTypes="ALL"
@@ -459,6 +466,11 @@
                 StatusToSet="WEAPON_UPGRADED_01">
                 <TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
             </StatusBitsUpgrade>-->
+            <StatusBitsUpgrade
+				id="ModuleTag_UnattackableUpgrade"
+				StatusToSet="UNATTACKABLE">
+				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
+			</StatusBitsUpgrade> 
             <AttributeModifierUpgrade
 				id="ModuleTag_AttributeModifierUpgradeSonicEmitter"
 				AttributeModifier="Modifier_KillTheSonic">
@@ -470,11 +482,6 @@
 				AddConditionFlags="USER_6" >
 				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
 			</ModelConditionUpgrade>
-            <StatusBitsUpgrade
-				id="ModuleTag_UnattackableUpgrade"
-				StatusToSet="UNATTACKABLE">
-				<TriggeredBy>Upgrade_SonicEmitterDelayedDestruction</TriggeredBy>
-			</StatusBitsUpgrade> 
             <CreateAndEnterObjectSpecialPower
                 id="ModuleTag_CallForTransport"
                 SpecialPowerTemplate="SpecialPowerCallForTransportGDI"
