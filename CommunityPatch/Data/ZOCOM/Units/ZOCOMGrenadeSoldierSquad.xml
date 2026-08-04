@@ -290,6 +290,12 @@
 						Upgrade=""
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
+					<Weapon
+						Ordering="PRIMARY_WEAPON"
+						Template="SquadGrenadeRangefinderEnhanced"
+						Upgrade=""
+						ObjectStatus="RIDER1"
+						IsPlayerUpgradePermanent="False" />
 				</WeaponSlotHardpoint>
 			</WeaponSetUpdate>
 			<StealthDetectorUpdate 
@@ -982,4 +988,3 @@
 		<DisplayUpgrade>Upgrade_ZOCOMFieldSuits</DisplayUpgrade>
 	</GameObject>
 </AssetDeclaration>
-

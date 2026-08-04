@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
+
+	<!-- increased rangefinder range for grenadier squad inside a hh -->
+
+	<WeaponTemplate
+		id="SquadGrenadeRangefinderEnhanced"
+		Name="SquadGrenadeRangefinderEnhanced"
+		AttackRange="220"
+		LeechRangeWeapon="true"
+		AcceptableAimDelta="45d"
+		AntiMask="ANTI_GROUND"
+		CanFireWhileMoving="true"
+		FinishAttackOnceStarted="false"
+ 		>
+		<FiringDuration
+				MinSeconds="1.0s"
+				MaxSeconds="1.0s" />
+	</WeaponTemplate>
+
 	<!-- increased ranged for grenadiers inside of hammerheads-->
 
 	<WeaponTemplate

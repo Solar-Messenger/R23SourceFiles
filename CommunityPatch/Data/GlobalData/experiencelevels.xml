@@ -2674,108 +2674,107 @@
 	</ExperienceLevelTemplate>
 
 	<ExperienceLevelTemplate
-		id="BlackHandConfessorSquadExperienceLevel_1"
-		RequiredExperience="1"
-		ExperienceAward="150"
-		Rank="1">
-		<LevelUpTintColor
-			r="1.0"
-			g="1.0"
-			b="1.0" />
-		<Target>BlackHandConfessorSquad</Target>
-		<Target>BlackHandConfessor</Target>
-		<Decal
-			Texture="decal_N_level1"
-			Texture2="decal_Nod_CO"
-			Style="MERGE_DECAL"
-			OpacityMin="80"
-			OpacityMax="100"
-			MinRadius="50"
-			MaxRadius="200"
-			MaxSelectedUnits="40"/>
-	</ExperienceLevelTemplate>
-	<ExperienceLevelTemplate
-		id="BlackHandConfessorSquadExperienceLevel_2"
-		Prerequisite="BlackHandConfessorSquadExperienceLevel_1"
-		RequiredExperience="2700"
-		ExperienceAward="195"
-		ModelConditionState="SPECIAL_CHEERING"
-		Rank="2">
-		<LevelUpTintColor
-			r="1.0"
-			g="1.0"
-			b="1.0" />
-		<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
-		<LevelUpFxList
-			FxList="FX_NODLevelUp_01" />
-		<Target>BlackHandConfessorSquad</Target>
-		<Target>BlackHandConfessor</Target>
-		<!--<AttributeModifier>Unit_Veteran</AttributeModifier>-->
-		<Decal
-			Texture="decal_N_level1"
-			Texture2="decal_Nod_CO"
-			Style="MERGE_DECAL"
-			OpacityMin="80"
-			OpacityMax="100"
-			MinRadius="50"
-			MaxRadius="200"
-			MaxSelectedUnits="40"/>
-	</ExperienceLevelTemplate>
-	<ExperienceLevelTemplate
-		id="BlackHandConfessorSquadExperienceLevel_3"
-		Prerequisite="BlackHandConfessorSquadExperienceLevel_2"
-		RequiredExperience="5400"
-		ExperienceAward="240"
-		ModelConditionState="SPECIAL_CHEERING"
-		Rank="3">
-		<LevelUpTintColor
-			r="1.0"
-			g="1.0"
-			b="1.0" />
-		<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
-		<LevelUpFxList
-			FxList="FX_NODLevelUp_02" />
-		<Target>BlackHandConfessorSquad</Target>
-		<Target>BlackHandConfessor</Target>
-		<!--<AttributeModifier>Unit_Elite</AttributeModifier>-->
-		<Decal
-			Texture="decal_N_level1"
-			Texture2="decal_Nod_CO"
-			Style="MERGE_DECAL"
-			OpacityMin="80"
-			OpacityMax="100"
-			MinRadius="50"
-			MaxRadius="200"
-			MaxSelectedUnits="40"/>
-	</ExperienceLevelTemplate>
-	<!-- vanilla id has the extra "Black" - kept so this overrides instead of duplicating -->
-	<ExperienceLevelTemplate
-		id="BlackHandBlackConfessorSquadExperienceLevel_4"
-		Prerequisite="BlackHandConfessorSquadExperienceLevel_3"
-		RequiredExperience="8100"
-		ExperienceAward="300"
-		ModelConditionState="SPECIAL_CHEERING"
-		Rank="4">
-		<LevelUpTintColor
-			r="1.0"
-			g="1.0"
-			b="1.0" />
-		<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
-		<LevelUpFxList
-			FxList="FX_NODLevelUp_03" />
-		<Target>BlackHandConfessorSquad</Target>
-		<Target>BlackHandConfessor</Target>
-		<!--<AttributeModifier>Unit_Heroic</AttributeModifier>-->
-		<Decal
-			Texture="decal_N_level1"
-			Texture2="decal_Nod_CO"
-			Style="MERGE_DECAL"
-			OpacityMin="80"
-			OpacityMax="100"
-			MinRadius="50"
-			MaxRadius="200"
-			MaxSelectedUnits="40"/>
-	</ExperienceLevelTemplate>
+			id="BlackHandConfessorSquadExperienceLevel_1"
+			RequiredExperience="1"
+			ExperienceAward="66"
+			Rank="1">
+			<LevelUpTintColor
+				r="1.0"
+				g="1.0"
+				b="1.0" />
+			<Target>BlackHandConfessorSquad</Target>
+			<Target>BlackHandConfessor</Target>
+			<Decal
+				Texture="decal_N_level1"
+				Texture2="decal_Nod_CO" 
+				Style="MERGE_DECAL"
+				OpacityMin="80"
+				OpacityMax="100"
+				MinRadius="50"
+				MaxRadius="200"
+				MaxSelectedUnits="40"/>
+		</ExperienceLevelTemplate>
+		<ExperienceLevelTemplate
+			id="BlackHandConfessorSquadExperienceLevel_2"
+			Prerequisite="BlackHandConfessorSquadExperienceLevel_1"
+			RequiredExperience="1200"
+			ExperienceAward="86"
+			ModelConditionState="SPECIAL_CHEERING"
+			Rank="2">
+			<LevelUpTintColor
+				r="1.0"
+				g="1.0"
+				b="1.0" />
+			<Upgrade>Upgrade_Veterancy_VETERAN</Upgrade>
+			<LevelUpFxList
+				FxList="FX_NODLevelUp_01" />
+			<Target>BlackHandConfessorSquad</Target>
+			<Target>BlackHandConfessor</Target>
+			<!--<AttributeModifier>Unit_Veteran</AttributeModifier>-->
+			<Decal
+				Texture="decal_N_level1"
+				Texture2="decal_Nod_CO" 
+				Style="MERGE_DECAL"
+				OpacityMin="80"
+				OpacityMax="100"
+				MinRadius="50"
+				MaxRadius="200"
+				MaxSelectedUnits="40"/>
+		</ExperienceLevelTemplate>
+		<ExperienceLevelTemplate
+			id="BlackHandConfessorSquadExperienceLevel_3"
+			Prerequisite="BlackHandConfessorSquadExperienceLevel_2"
+			RequiredExperience="2400"
+			ExperienceAward="106"
+			ModelConditionState="SPECIAL_CHEERING"
+			Rank="3">
+			<LevelUpTintColor
+				r="1.0"
+				g="1.0"
+				b="1.0" />
+			<Upgrade>Upgrade_Veterancy_ELITE</Upgrade>
+			<LevelUpFxList
+				FxList="FX_NODLevelUp_02" />
+			<Target>BlackHandConfessorSquad</Target>
+			<Target>BlackHandConfessor</Target>
+			<!--<AttributeModifier>Unit_Elite</AttributeModifier>-->
+			<Decal
+				Texture="decal_N_level1"
+				Texture2="decal_Nod_CO" 
+				Style="MERGE_DECAL"
+				OpacityMin="80"
+				OpacityMax="100"
+				MinRadius="50"
+				MaxRadius="200"
+				MaxSelectedUnits="40"/>
+		</ExperienceLevelTemplate>
+		<ExperienceLevelTemplate
+			id="BlackHandBlackConfessorSquadExperienceLevel_4"
+			Prerequisite="BlackHandConfessorSquadExperienceLevel_3"
+			RequiredExperience="3600"
+			ExperienceAward="133"
+			ModelConditionState="SPECIAL_CHEERING"
+			Rank="4">
+			<LevelUpTintColor
+				r="1.0"
+				g="1.0"
+				b="1.0" />
+			<Upgrade>Upgrade_Veterancy_HEROIC</Upgrade>
+			<LevelUpFxList
+				FxList="FX_NODLevelUp_03" />
+			<Target>BlackHandConfessorSquad</Target>
+			<Target>BlackHandConfessor</Target>
+			<!--<AttributeModifier>Unit_Heroic</AttributeModifier>-->
+			<Decal
+				Texture="decal_N_level1"
+				Texture2="decal_Nod_CO" 
+				Style="MERGE_DECAL"
+				OpacityMin="80"
+				OpacityMax="100"
+				MinRadius="50"
+				MaxRadius="200"
+				MaxSelectedUnits="40"/>
+	</ExperienceLevelTemplate>		
 
 	<ExperienceLevelTemplate
 		id="BlackHandMilitantRocketSquadExperienceLevel_1"
