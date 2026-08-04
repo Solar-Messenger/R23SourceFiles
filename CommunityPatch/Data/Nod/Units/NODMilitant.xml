@@ -724,6 +724,7 @@
 		<AI>
 			<AIUpdate
 				id="ModuleTag_06"
+				AILuaEventsList="NODMilitantRocketFunctions_R24"
 				AutoAcquireEnemiesWhenIdle="YES">
 				<UnitAITargetChooserData
 					SympathyRange="100.0" />

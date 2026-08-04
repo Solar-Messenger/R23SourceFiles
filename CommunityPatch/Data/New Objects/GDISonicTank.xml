@@ -295,14 +295,14 @@
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="USER_6 DYING USER_3">
                     <Script>
-                        CurDrawableHideSubObject("SHATTERER_BODY")
+                        CurDrawableHideSubObject("R01")
                     </Script>
                 </AnimationState>
                 <AnimationState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="USER_6 DYING FIRING_A">
                     <Script>
-                        CurDrawableHideSubObject("SHATTERER_BODY")
+                        CurDrawableHideSubObject("R01")
                     </Script>
                 </AnimationState>
                 <AnimationState
