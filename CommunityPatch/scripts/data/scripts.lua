@@ -3421,53 +3421,53 @@ end
 -- this defines squad sizes and if a squad has a hammerhead garrison banner carrier.
 squadSizeTable = {
 	-- vGDI
-	["5D5E5931"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_"}, -- GDIZoneTrooperSquad
-	["BD0F31E6"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_"}, -- GDIZoneTrooperSquad_Veteran
-	["9096966E"] = {size = 6, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_"}, -- GDIRifleSoldierSquad
-	["F90AE74"] = {size = 6, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_"}, -- GDIRifleSoldierSquad_Veteran
-	["42896060"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIGrenadeSoldierSquadExperienceLevel_"}, -- GDIGrenadeSoldierSquad
-	["EF1252DB"] = {size = 2, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_"}, -- GDIMissileSoldierSquad
-	["96C215F3"] = {size = 2, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_"}, -- GDIMissileSoldierSquad_Veteran
-	["BCB36A05"] = {size = 2, needsRocketFix = false}, -- GDISniperSquad
-	["CF21C755"] = {size = 2, needsRocketFix = false}, -- GDISniperSquad_Veteran
+	["5D5E5931"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_", isAirborne = false, isAirborne = false}, -- GDIZoneTrooperSquad
+	["BD0F31E6"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIZoneTrooperSquadExperienceLevel_", isAirborne = false}, -- GDIZoneTrooperSquad_Veteran
+	["9096966E"] = {size = 6, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_", isAirborne = false}, -- GDIRifleSoldierSquad
+	["F90AE74"] = {size = 6, needsRocketFix = false, experienceLvlString = "GDIRifleSoldierSquadExperienceLevel_", isAirborne = true}, -- GDIRifleSoldierSquad_Veteran
+	["42896060"] = {size = 4, needsRocketFix = false, experienceLvlString = "GDIGrenadeSoldierSquadExperienceLevel_", isAirborne = false}, -- GDIGrenadeSoldierSquad
+	["EF1252DB"] = {size = 2, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_", isAirborne = false}, -- GDIMissileSoldierSquad
+	["96C215F3"] = {size = 2, needsRocketFix = false, experienceLvlString = "GDIMissileSoldierSquadExperienceLevel_", isAirborne = true}, -- GDIMissileSoldierSquad_Veteran
+	["BCB36A05"] = {size = 2, needsRocketFix = false, isAirborne = false}, -- GDISniperSquad
+	["CF21C755"] = {size = 2, needsRocketFix = false, isAirborne = false}, -- GDISniperSquad_Veteran
 	-- vScrin
-	["2B9428D0"] = {size = 5, needsRocketFix = false}, -- AlienRazorDroneSquad
-	["240FB1"] = {size = 5, needsRocketFix = false}, -- Traveler59RazorDroneSquad
+	["2B9428D0"] = {size = 5, needsRocketFix = false, isAirborne = false}, -- AlienRazorDroneSquad
+	["240FB1"] = {size = 5, needsRocketFix = false, isAirborne = false}, -- Traveler59RazorDroneSquad
 
-	["32EA13B3"] = {size = 3, needsRocketFix = false}, -- AlienStalkerSquad
-	["72A9F5D5"] = {size = 3, needsRocketFix = false}, -- Traveler59StalkerSquad
-	["7F2D0EF5"] = {size = 3, needsRocketFix = false}, -- Reaper17StalkerSquad
+	["32EA13B3"] = {size = 3, needsRocketFix = false, isAirborne = false}, -- AlienStalkerSquad
+	["72A9F5D5"] = {size = 3, needsRocketFix = false, isAirborne = false}, -- Traveler59StalkerSquad
+	["7F2D0EF5"] = {size = 3, needsRocketFix = false, isAirborne = false}, -- Reaper17StalkerSquad
 
-	["6495F509"] = {size = 3, needsRocketFix = false}, -- AlienShockTrooperSquad
-	["990D8832"] = {size = 3, needsRocketFix = false}, -- AlienShockTrooperSquad_Veteran
-	["4803957E"] = {size = 3, needsRocketFix = false}, -- Traveler59ShockTrooperSquad
-	["9676826C"] = {size = 3, needsRocketFix = false}, -- Traveler59ShockTrooperSquad_Veteran
-	["40241AC3"] = {size = 3, needsRocketFix = false}, -- Reaper17ShockTrooperSquad
-	["34BC82E3"] = {size = 0, needsRocketFix = false}, -- Reaper17ShockTrooperSquad_Veteran
+	["6495F509"] = {size = 3, needsRocketFix = false, isAirborne = false}, -- AlienShockTrooperSquad
+	["990D8832"] = {size = 3, needsRocketFix = false, isAirborne = false}, -- AlienShockTrooperSquad_Veteran
+	["4803957E"] = {size = 3, needsRocketFix = false, isAirborne = false}, -- Traveler59ShockTrooperSquad
+	["9676826C"] = {size = 3, needsRocketFix = false, isAirborne = false}, -- Traveler59ShockTrooperSquad_Veteran
+	["40241AC3"] = {size = 3, needsRocketFix = false, isAirborne = false}, -- Reaper17ShockTrooperSquad
+	["34BC82E3"] = {size = 0, needsRocketFix = false, isAirborne = false}, -- Reaper17ShockTrooperSquad_Veteran
 
-	["C46CECA2"] = {size = 5, needsRocketFix = false}, -- Traveler59CultistSquad
+	["C46CECA2"] = {size = 5, needsRocketFix = false, isAirborne = false}, -- Traveler59CultistSquad
 
 	-- Reaper17
-	["8EEE4A0A"] = {size = 5, needsRocketFix = false}, -- Reaper17RazorDroneSquad
+	["8EEE4A0A"] = {size = 5, needsRocketFix = false, isAirborne = false}, -- Reaper17RazorDroneSquad
 
 	-- ZOCOM
-	["D213112"] = {size = 4, needsRocketFix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_"}, -- ZOCOMZoneRaiderSquad
-	["8A6E8182"] = {size = 4, needsRocketFix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_"}, -- ZOCOMZoneRaiderSquad_Veteran
-	["AC645E3"] = {size = 6, needsRocketFix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_"}, -- ZOCOMRifleSoldierSquad
-	["A457A93"] = {size = 6, needsRocketFix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_"}, -- ZOCOMRifleSoldierSquad_Veteran
-	["C43CF79F"] = {size = 4, needsRocketFix = false, experienceLvlString = "ZOCOMGrenadeSoldierSquadExperienceLevel_"}, -- ZOCOMGrenadeSoldierSquad
-	["17A153BA"] = {size = 2, needsRocketFix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_"}, -- ZOCOMMissileSoldierSquad
-	["B0C5EE48"] = {size = 2, needsRocketFix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_"}, -- ZOCOMMissileSoldierSquad_Veteran
-	["B724E036"] = {size = 2, needsRocketFix = false}, -- ZOCOMSniperSquad
-	["5CE43D31"] = {size = 2, needsRocketFix = false}, -- ZOCOMSniperSquad_Veteran
+	["D213112"] = {size = 4, needsRocketFix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_", isAirborne = false}, -- ZOCOMZoneRaiderSquad
+	["8A6E8182"] = {size = 4, needsRocketFix = true, experienceLvlString = "ZOCOMZoneRaiderSquadExperienceLevel_", isAirborne = false}, -- ZOCOMZoneRaiderSquad_Veteran
+	["AC645E3"] = {size = 6, needsRocketFix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_", isAirborne = false}, -- ZOCOMRifleSoldierSquad
+	["A457A93"] = {size = 6, needsRocketFix = false, experienceLvlString = "ZOCOMRifleSoldierSquadExperienceLevel_", isAirborne = true}, -- ZOCOMRifleSoldierSquad_Veteran
+	["C43CF79F"] = {size = 4, needsRocketFix = false, experienceLvlString = "ZOCOMGrenadeSoldierSquadExperienceLevel_", isAirborne = false}, -- ZOCOMGrenadeSoldierSquad
+	["17A153BA"] = {size = 2, needsRocketFix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_", isAirborne = false}, -- ZOCOMMissileSoldierSquad
+	["B0C5EE48"] = {size = 2, needsRocketFix = false, experienceLvlString = "ZOCOMMissileSoldierSquadExperienceLevel_", isAirborne = true}, -- ZOCOMMissileSoldierSquad_Veteran
+	["B724E036"] = {size = 2, needsRocketFix = false, isAirborne = false}, -- ZOCOMSniperSquad
+	["5CE43D31"] = {size = 2, needsRocketFix = false, isAirborne = false}, -- ZOCOMSniperSquad_Veteran
 
 	-- SteelTalons
-	["CF35F1B4"] = {size = 6, needsRocketFix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_"}, -- SteelTalonsRifleSoldierSquad
-	["B1D77E97"] = {size = 6, needsRocketFix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_"}, -- SteelTalonsRifleSoldierSquad_Veteran
-	["FC6A915"] = {size = 4, needsRocketFix = false, experienceLvlString = "SteelTalonsGrenadeSoldierSquadExperienceLevel_"}, -- SteelTalonsGrenadeSoldierSquad
-	["EA23C76F"] = {size = 2, needsRocketFix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_"}, -- SteelTalonsMissileSoldierSquad
-	["4D8388BF"] = {size = 2, needsRocketFix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_"}, -- SteelTalonsMissileSoldierSquad_Veteran
-	["C674C01"] = {size = 2, needsRocketFix = false}, -- SteelTalonsSniperSquad
+	["CF35F1B4"] = {size = 6, needsRocketFix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_", isAirborne = false}, -- SteelTalonsRifleSoldierSquad
+	["B1D77E97"] = {size = 6, needsRocketFix = false, experienceLvlString = "SteelTalonsRifleSoldierSquadExperienceLevel_", isAirborne = false}, -- SteelTalonsRifleSoldierSquad_Veteran
+	["FC6A915"] = {size = 4, needsRocketFix = false, experienceLvlString = "SteelTalonsGrenadeSoldierSquadExperienceLevel_", isAirborne = false}, -- SteelTalonsGrenadeSoldierSquad
+	["EA23C76F"] = {size = 2, needsRocketFix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_", isAirborne = false}, -- SteelTalonsMissileSoldierSquad
+	["4D8388BF"] = {size = 2, needsRocketFix = false, experienceLvlString = "SteelTalonsMissileSoldierSquadExperienceLevel_", isAirborne = false}, -- SteelTalonsMissileSoldierSquad_Veteran
+	["C674C01"] = {size = 2, needsRocketFix = false, isAirborne = false}, -- SteelTalonsSniperSquad
 
 	-- vNod
 	["BC36257A"] = {size = 9, needsRocketFix = false}, -- NODMilitantSquad
@@ -3767,7 +3767,7 @@ end
 
 -- When squad appears at rax
 function OnSquadExitRax_R24(self)	
-	--print("squad has finished building")
+	print("squad has finished building")
 	local objId,squad = GetSquadAttributes(self)
 	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
 	-- squad size is 4 here. 
@@ -3777,7 +3777,7 @@ function OnSquadExitRax_R24(self)
 	if squadSize == nil then return end
 	squad.spawnedSize = squadSize
 
-	if isSquadExploit(squad) then return end
+	if not squadData.isAirborne and isSquadExploit(squad) then return end
 	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
 end
 
