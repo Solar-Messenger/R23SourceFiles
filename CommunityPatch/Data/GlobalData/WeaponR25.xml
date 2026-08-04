@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
+	<!-- increased ranged for grenadiers inside of hammerheads-->
+
+	<WeaponTemplate
+		id="GDIGrenadeSoldierGrenadeEnhanced"
+		Name="GDIGrenadeSoldierGrenadeEnhanced"
+		AttackRange="286"
+		WeaponSpeed="230"
+		MinWeaponSpeed="230"
+		MaxWeaponSpeed="250"
+		FireSound="AudioEvent:GDI_Grenadier_GrenadeThrow"
+		AcceptableAimDelta="20d"
+		PreAttackType="PER_SHOT"
+		ClipSize="1"
+		AutoReloadsClip="AUTO"
+		CanFireWhileMoving="true"
+	>
+		<PreAttackDelay
+			MinSeconds="0.4s"
+			MaxSeconds="0.4s" />
+		<FiringDuration
+			MinSeconds="0.70s"
+			MaxSeconds="0.70s" />
+		<ClipReloadTime
+			MinSeconds="0.1s"
+			MaxSeconds="0.4s" />
+		<Nuggets>
+			<ProjectileNugget
+				ProjectileTemplate="GDIGrenadeSoldierGrenadeProjectile"
+				WarheadTemplate="GDIGrenadeSoldierGrenadeWarhead">
+				<VeterancyProjectiles
+					VeterancyLevel="HEROIC"
+					ProjectileTemplate="GDIGrenadeSoldierGrenadeProjectile_Veteran" />
+			</ProjectileNugget>
+			<SuppressionNugget
+				Radius="50.0"
+				Suppression="20"
+				DurationSeconds="7.5s" />
+		</Nuggets>
+		<ScatterRadiusVsType
+			Radius="20.0">
+			<Filter
+				Rule="NONE"
+				Include="INFANTRY" />
+		</ScatterRadiusVsType>
+	</WeaponTemplate>
 
 	<!-- firehawk bomb fix -->
 

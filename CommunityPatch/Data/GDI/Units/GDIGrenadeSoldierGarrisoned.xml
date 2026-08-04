@@ -236,7 +236,7 @@
 						IsPlayerUpgradePermanent="False" />
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="GDIGrenadeSoldierGrenade"
+						Template="GDIGrenadeSoldierGrenadeEnhanced"
 						Upgrade="Upgrade_SquadMember1"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
@@ -263,7 +263,7 @@
 						IsPlayerUpgradePermanent="False" />
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="GDIGrenadeSoldierGrenade"
+						Template="GDIGrenadeSoldierGrenadeEnhanced"
 						Upgrade="Upgrade_SquadMember2"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
@@ -290,7 +290,7 @@
 						IsPlayerUpgradePermanent="False" />
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="GDIGrenadeSoldierGrenade"
+						Template="GDIGrenadeSoldierGrenadeEnhanced"
 						Upgrade="Upgrade_SquadMember3"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
@@ -317,7 +317,7 @@
 						IsPlayerUpgradePermanent="False" />
 					<Weapon
 						Ordering="PRIMARY_WEAPON"
-						Template="GDIGrenadeSoldierGrenade"
+						Template="GDIGrenadeSoldierGrenadeEnhanced"
 						Upgrade="Upgrade_SquadMember4"
 						ObjectStatus=""
 						IsPlayerUpgradePermanent="False" />
