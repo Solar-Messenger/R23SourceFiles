@@ -845,11 +845,11 @@
 					ObjectStatus="CAN_SPOT_FOR_BOMBARD" />
 			</HordeTransportContain>
 			
-			<StatusBitsUpgrade
-				id="ModuleTag_UpgradeWeapon"
-				StatusToClear="UNSELECTABLE">
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeRemoveVision"
+				AttributeModifier="Modifier_RemoveVision">
 				<TriggeredBy>Upgrade_Transporting</TriggeredBy>
-			</StatusBitsUpgrade>				
+			</AttributeModifierUpgrade>			
 			
 		</Behaviors>
 		<AI>
