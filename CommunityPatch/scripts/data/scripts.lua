@@ -55,6 +55,13 @@ playerTable = {"Player_1","Player_2","Player_3","Player_4","Player_5","Player_6"
 "PlyrSteelTalons", "PlyrAlien", "PlyrTraveler59", "PlyrZOCOM", "PlyrMarkedOfKane", "PlyrNeutral", "PlyrReaper17", "Skirmish", "SkirmishAlien", 
 "SkirmishBlackHand", "SkirmishCivilian", "SkirmishCommentator", "SkirmishGDI", "SkirmishMarkedOfKane",
 "SkirmishNeutral", "SkirmishNod", "SkirmishNull", "SkirmishObserver", "SkirmishReaper17","SkirmishSteelTalons", "SkirmishTraveler59", "SkirmishZOCOM", "PlyrCreeps", "PlyrCivilian"}
+-- stores all the raged units on the map, and checks if the times raged counter 
+ragedUnits = {}
+-- stores all the phased units on the map, and checks if the times phased counter 
+phasedUnits = {}
+-- flag to enable/disable a xp workaround
+applyHordeXPFix = true
+hasCheckedForPassengers = false
 
 validTeams = {}
 for i = 1, getn(playerTable) do
@@ -3257,9 +3264,6 @@ end
 
 -- ############################# R25 Redeemer Rage Generator fix  ###################################
 
--- stores all the raged units on the map, and checks if the times raged counter 
-ragedUnits = {}
-
 function GetragedUnitProperties(self) 
 	local objId = getObjectId(self)
 	ragedUnits[objId] = ragedUnits[objId] or {
@@ -3334,9 +3338,6 @@ function RemoveRagedUnitEntry(self)
 end
 
 -- ############################# R25 Phase fix  ###################################
-
--- stores all the phased units on the map, and checks if the times phased counter 
-phasedUnits = {}
 
 function GetPhasedUnitProperties(self) 
 	local objId = getObjectId(self)
@@ -3601,8 +3602,6 @@ function ApplyXPModifier(tableObj)
 	if not EvaluateCondition("UNIT_HAS_UPGRADE",tableObj.stringRef, upgrades[tostring(timesPromoted)]) then ObjectGrantUpgrade(tableObj.selfRef, upgrades[tostring(timesPromoted)]) end
 end
 
-hasCheckedForPassengers = false
-
 function CheckForPassengers(self)
 	if hasCheckedForPassengers then return end
 	local stringRef = SetObjectReference(self)
@@ -3619,9 +3618,6 @@ function CheckForPassengers(self)
 		end
 	end
 end
-
--- flag to enable/disable a xp workaround
-applyHordeXPFix = true
 
 -- enables the squad leader
 function GarrisonedInHammerhead(self)
