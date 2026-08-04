@@ -67,12 +67,6 @@
                         Name="W3DContainer:GUSHATTERER_FP" />
                 </ModelConditionState>
                 <ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 REALLYDAMAGED">
-					<Model
-						Name="" />
-				</ModelConditionState>
-                <ModelConditionState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="REALLYDAMAGED">
                     <Model
@@ -94,23 +88,11 @@
                         FollowBone="true" />
                 </ModelConditionState>
                 <ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DYING">
-					<Model
-						Name="" />
-				</ModelConditionState>
-                <ModelConditionState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="DYING">
                     <Model
                         Name="" />
                 </ModelConditionState>
-                <ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6">
-					<Model
-						Name="" />
-				</ModelConditionState>
                 <AnimationState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="DYING"
@@ -203,12 +185,6 @@
                         Name="" />
                 </ModelConditionState>
                 <ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DYING">
-					<Model
-						Name="" />
-				</ModelConditionState>
-                <ModelConditionState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="DYING">
                     <Model
@@ -227,23 +203,11 @@
                         FollowBone="true" />
                 </ModelConditionState>
                 <ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 PASSENGER">
-					<Model
-						Name="" />
-				</ModelConditionState>
-                <ModelConditionState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="PASSENGER">
                     <Model
                         Name="" />
                 </ModelConditionState>
-                <ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_1 USER_6 AFFECTED_BY_EMP">
-					<Model
-						Name="" />
-				</ModelConditionState>
                 <ModelConditionState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="USER_1 AFFECTED_BY_EMP">
@@ -258,12 +222,6 @@
                         FXParticleSystemTemplate=""
                         FollowBone="true" />
                 </ModelConditionState>
-                <ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6">
-					<Model
-						Name="" />
-				</ModelConditionState>
                 <ModelConditionState
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="USER_1">
@@ -314,6 +272,46 @@
                         FollowBone="true"
                         FXParticleSystemTemplate="AUBuzzerCombineGlow" />
                 </ModelConditionState>
+            </ScriptedModelDraw>
+            <ScriptedModelDraw
+                id="ModuleTag_HideSubObjects"
+                OkToChangeModelColor="true">
+                <ModelConditionState
+                    ParseCondStateType="PARSE_DEFAULT">
+                    <Model
+                        Name="" />
+                </ModelConditionState>
+                <AnimationState
+                    ParseCondStateType="PARSE_DEFAULT">
+                </AnimationState>
+                <AnimationState
+                    ParseCondStateType="PARSE_NORMAL"
+                    ConditionsYes="USER_6 REALLYDAMAGED FIRING_A">
+                    <Script>
+                        CurDrawableHideSubObject("SHATTERER_BODY")
+                    </Script>
+                </AnimationState>
+                <AnimationState
+                    ParseCondStateType="PARSE_NORMAL"
+                    ConditionsYes="USER_6 DYING USER_3">
+                    <Script>
+                        CurDrawableHideSubObject("SHATTERER_BODY")
+                    </Script>
+                </AnimationState>
+                <AnimationState
+                    ParseCondStateType="PARSE_NORMAL"
+                    ConditionsYes="USER_6 DYING FIRING_A">
+                    <Script>
+                        CurDrawableHideSubObject("SHATTERER_BODY")
+                    </Script>
+                </AnimationState>
+                <AnimationState
+                    ParseCondStateType="PARSE_NORMAL"
+                    ConditionsYes="USER_6 FIRING_A">
+                    <Script>
+                        CurDrawableHideSubObject("SHATTERER_BODY")
+                    </Script>
+                </AnimationState>
             </ScriptedModelDraw>
         </Draws>
         <Behaviors>

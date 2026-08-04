@@ -58,35 +58,19 @@
 						TurretID="1" />
 				</ModelConditionState>
 				<!-- BUILD UP -->
-				 <ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 STRUCTURE_UNPACKING">
-					<Model
-						Name="" />
-				</ModelConditionState>				
+		
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="STRUCTURE_UNPACKING">
 					<Model
 						Name="W3DContainer:GBTeraSta_ASN" />
 				</ModelConditionState>				
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 RUBBLE">
-					<Model
-						Name="W3DContainer:GBTeraSta_D3SN2" />
-				</ModelConditionState>
+
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE">
 					<Model
 						Name="W3DContainer:GBTeraSta_D3SN" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 REALLYDAMAGED">
-					<Model
-						Name="W3DContainer:GBTeraSta_D2SN2" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -96,26 +80,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DAMAGED">
-					<Model
-						Name="W3DContainer:GBTeraSta_SKN2" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DAMAGED">
 					<Model
 						Name="W3DContainer:GBTeraSta_SKN" />
 					<Texture
 						Original="GBTeraformStation"
 						New="GBTeraformStation_D" />
-				</ModelConditionState>
-				<!-- USER_6 -->
-
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6">
-					<Model
-						Name="W3DContainer:GBTeraSta_SKN2" />
 				</ModelConditionState>
 
 				<AnimationState
@@ -241,6 +211,56 @@
 						FollowBone="true" />
 				</AnimationState>
 			</ScriptedModelDraw>
+
+			<ScriptedModelDraw
+				id="ModuleTag_HideSubObjects"
+				OkToChangeModelColor="true">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT">
+				</AnimationState>
+					<!-- -->
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 RUBBLE USER_3">
+					<Script>
+						CurDrawableHideSubObject("NEWSKIN")
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 RUBBLE FIRING_A">
+					<Script>
+						CurDrawableHideSubObject("NEWSKIN")
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 REALLYDAMAGED FIRING_A">
+					<Script>
+						CurDrawableHideSubObject("NEWSKIN")
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DAMAGED FIRING_A">
+					<Script>
+						CurDrawableHideSubObject("NEWSKIN")
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 FIRING_A">
+					<Script>
+						CurDrawableHideSubObject("NEWSKIN")
+					</Script>
+				</AnimationState>
+			</ScriptedModelDraw>
+
 			<LaserDraw
 				id="ModuleTag_LaserDraw"
 				UseDistortionShader="false"

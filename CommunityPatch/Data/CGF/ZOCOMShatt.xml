@@ -187,12 +187,6 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 REALLYDAMAGED">
-					<Model
-						Name="" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
 					PortraitImage=""
 					ButtonImage=""
@@ -227,12 +221,6 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DYING">
-					<Model
-						Name="" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING"
 					PortraitImage=""
 					ButtonImage=""
@@ -240,12 +228,6 @@
 					<Model
 						Name=""
 						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6">
-					<Model
-						Name="" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -583,12 +565,6 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DYING">
-					<Model
-						Name="" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING"
 					PortraitImage=""
 					ButtonImage=""
@@ -620,12 +596,6 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 PASSENGER">
-					<Model
-						Name="" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="PASSENGER"
 					PortraitImage=""
 					ButtonImage=""
@@ -633,12 +603,6 @@
 					<Model
 						Name=""
 						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 USER_1 AFFECTED_BY_EMP">
-					<Model
-						Name="" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -666,12 +630,6 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6">
-					<Model
-						Name="" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_1"
 					PortraitImage=""
 					ButtonImage=""
@@ -694,6 +652,50 @@
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
 				</ModelConditionState>
+			</ScriptedModelDraw>
+			<ScriptedModelDraw
+				id="ModuleTag_HideSubObjects"
+				OkToChangeModelColor="true">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT">
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 REALLYDAMAGED FIRING_A">
+					<Script>
+						CurDrawableHideSubObject("SHATTERER_BODY")
+						CurDrawableHideSubObject("STEELSHATTERER_CANNON1")
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DYING USER_3">
+					<Script>
+						CurDrawableHideSubObject("SHATTERER_BODY")
+						CurDrawableHideSubObject("STEELSHATTERER_CANNON1")
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DYING FIRING_A">
+					<Script>
+						CurDrawableHideSubObject("SHATTERER_BODY")
+						CurDrawableHideSubObject("STEELSHATTERER_CANNON1")
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 FIRING_A">
+					<Script>
+						CurDrawableHideSubObject("SHATTERER_BODY")
+						CurDrawableHideSubObject("STEELSHATTERER_CANNON1")
+					</Script>
+				</AnimationState>
 			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
