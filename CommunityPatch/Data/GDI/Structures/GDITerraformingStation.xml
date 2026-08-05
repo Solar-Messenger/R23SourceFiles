@@ -225,28 +225,28 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 RUBBLE FIRING_A">
+					ConditionsYes="USER_6 RUBBLE FIRING_OR_RELOADING_A">
 					<Script>
 						CurDrawableHideSubObject("NEWSKIN")
 					</Script>
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 REALLYDAMAGED FIRING_A">
+					ConditionsYes="USER_6 REALLYDAMAGED FIRING_OR_RELOADING_A">
 					<Script>
 						CurDrawableHideSubObject("NEWSKIN")
 					</Script>
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DAMAGED FIRING_A">
+					ConditionsYes="USER_6 DAMAGED FIRING_OR_RELOADING_A">
 					<Script>
 						CurDrawableHideSubObject("NEWSKIN")
 					</Script>
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 FIRING_A">
+					ConditionsYes="USER_6 FIRING_OR_RELOADING_A">
 					<Script>
 						CurDrawableHideSubObject("NEWSKIN")
 					</Script>

@@ -674,7 +674,7 @@
 				</AnimationState>
                 <AnimationState
                     ParseCondStateType="PARSE_NORMAL"
-                    ConditionsYes="DYING FIRING_A USER_6">
+                    ConditionsYes="DYING FIRING_OR_RELOADING_A USER_6">
                     <Script>
                         CurDrawableHideSubObject("SHATTERER_BODY")
 						CurDrawableHideSubObject("STEELSHATTERER_CANNON1")
@@ -690,7 +690,7 @@
                 </AnimationState>
                 <AnimationState
                     ParseCondStateType="PARSE_NORMAL"
-                    ConditionsYes="REALLYDAMAGED FIRING_A USER_6">
+                    ConditionsYes="REALLYDAMAGED FIRING_OR_RELOADING_A USER_6">
                     <Script>
                         CurDrawableHideSubObject("SHATTERER_BODY")
 						CurDrawableHideSubObject("STEELSHATTERER_CANNON1")
@@ -698,7 +698,7 @@
                 </AnimationState>
                 <AnimationState
                     ParseCondStateType="PARSE_NORMAL"
-                    ConditionsYes="FIRING_A USER_6">
+                    ConditionsYes="FIRING_OR_RELOADING_A USER_6">
                     <Script>
                         CurDrawableHideSubObject("SHATTERER_BODY")
 						CurDrawableHideSubObject("STEELSHATTERER_CANNON1")
