@@ -28,6 +28,7 @@
 		id="Modifier_Speed0"
 		Category="NONE">
 		<Modifier Type="SPEED" Value="0%" />
+		<Modifier Type="CRUSHER_LEVEL" Value="-500%" />
 	</AttributeModifier>
 
 	<AttributeModifier

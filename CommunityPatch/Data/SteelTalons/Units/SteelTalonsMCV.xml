@@ -320,7 +320,7 @@
 			<AttributeModifierUpgrade
 				id="ModuleTag_AttributeModifierSpeed0"
 				AttributeModifier="Modifier_Speed0">
-				<TriggeredBy>Upgrade_MCVNoSpeedUpgrade</TriggeredBy>
+				<TriggeredBy>Upgrade_MCVLocomotorUpgrade</TriggeredBy>
 			</AttributeModifierUpgrade>
 
 			<!-- phase field -->

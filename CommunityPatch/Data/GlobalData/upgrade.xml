@@ -19,10 +19,6 @@
 		Type="OBJECT"
 	/>
 
-	<UpgradeTemplate id="Upgrade_MCVNoSpeedUpgrade"
-		Type="OBJECT"
-	/>
-
 	<UpgradeTemplate id="Upgrade_BannerCarrierUpgrade"
 		Type="OBJECT"
 	/>
