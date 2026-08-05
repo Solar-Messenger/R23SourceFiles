@@ -1380,6 +1380,7 @@
 	<EventList Name="MCVFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnUnpacking"	ScriptFunctionName="OnMCVUnpacking" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUnpackingEnd"	ScriptFunctionName="OnMCVUnpackingEnd" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedAndRagedUnitEntry" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
@@ -1450,8 +1451,6 @@
 	<EventList Name="GenericRagedFunctions_R24" Inherit="BaseScriptFunctions">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemoveRagedUnitEntry" DebugSingleStep="false"/>
 	</EventList>
 
@@ -1459,8 +1458,6 @@
 	<EventList Name="RagedHordeMemberFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienBuzzersFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1481,22 +1478,16 @@
 	<EventList Name="BlackHandConfessorFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="BlackHandFanaticFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="BlackHandMilitantRocketFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="CombatEngineerFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1536,57 +1527,41 @@
 	<EventList Name="GDIGrenadeSoldierFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="ZOCOMMissileSoldierFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="SteelTalonsMissileSoldierFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIMissileSoldierFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIMissileSoldierVeteranFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIRifleSoldierFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIRifleSoldierVeteranFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIZoneTrooperFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="BannerCarrierFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1596,8 +1571,6 @@
 		<EventHandler EventName="OnWeaponUpgradedHH"	ScriptFunctionName="SquadHasBeenUpgraded" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1610,36 +1583,26 @@
 	<EventList Name="MarkedOfKaneFanaticFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneMilitantRocketFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneShadowFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MarkedOfKaneTibTrooperFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="MutantMarauderFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NODCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1652,44 +1615,32 @@
 	<EventList Name="NODConfessorFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NodCyborgFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NODFanaticFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NodImprovedCyborgFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NODMilitantRocketFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 
 	<EventList Name="NODShadowFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="Reaper17CustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1714,8 +1665,6 @@
 	<EventList Name="Traveler59CultistFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="Traveler59CustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1738,51 +1687,37 @@
 	<EventList Name="ZOCOMRifleSoldierFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="ZOCOMRifleSoldierVeteranFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList> 
 
 	<EventList Name="ZOCOMMissileSoldierVeteranFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienStalkerFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienShockTrooperFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<!-- disint members-->
 	<EventList Name="RazorDroneFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="SteelTalonsRifleSoldierFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienMechapedeFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1792,8 +1727,6 @@
 	<EventHandler EventName="OnCreated" ScriptFunctionName="OnAlienMechapedeCreated" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienMillipedeHeadFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1802,8 +1735,6 @@
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedAndRagedUnitEntry" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
-		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienCustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
