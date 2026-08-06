@@ -3179,7 +3179,7 @@ function MakeSonicEmitterTempImmune(self)
 	-- ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "INVISIBLE_STEALTH", 9999, 100)
 
 	-- spawn an object with a 2s lifespan that on end goes through the timeSinceSpawning to determine if the frame diff of any is 2s or more (30/15)
-	-- GiveExperiencePoints(self)
+	-- GiveExperiencePointsToKiller(self)
 end
 
 -- objet that damaged this dispatches an event to the sonic emitter 
@@ -3202,7 +3202,7 @@ function SonicEmitterDamaged(self, other)
 			if not sonic.sonicEmitterType then
 				-- print("is a shatterer or zone shatterer")
 				-- print("awarding shatterer xp award")
-				GiveExperiencePoints(other)
+				GiveExperiencePointsToKiller(self)
 				bountyWeapon = "ShatBounty"
 			end
 			-- only enemy EradicatorHexapods receive this broadcast and rewards each of them.
@@ -3234,13 +3234,13 @@ function DetermineIfEnemyKilledMe(self, other)
 	local sonic = GetSonicEmitterAttributes(self)
 	if sonic.lastUnit == other and sonic.damagedFlag and not sonic.hasGivenXP then
 		-- print("enemy found")
-		-- GiveExperiencePoints(self)
+		-- GiveExperiencePointsToKiller(self)
 		sonic.killedByEnemy = true
 	end
 end
 
 -- triggered by the deploy , this must prevent xp to allied units
-function GiveExperiencePoints(self)
+function GiveExperiencePointsToKiller(self)
 	local sonic = GetSonicEmitterAttributes(self)
 	local lastUnit = sonic.lastUnit
 	if lastUnit == nil then return end
