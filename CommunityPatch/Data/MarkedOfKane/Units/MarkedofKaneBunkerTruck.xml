@@ -1228,7 +1228,14 @@
 				AddTempConditionFlag="TOPPLED"
 				TempConditionTime="0s">
 				<TriggeredBy>Upgrade_DeployNODBunkerTruck</TriggeredBy>
+			</ModelConditionUpgrade>		
+			
+			<ModelConditionUpgrade
+				id="ModuleTag_DeployFlags2"
+				AddConditionFlags="RIDER5" >
+				<TriggeredBy>Upgrade_DeployNODBunkerTruck</TriggeredBy>
 			</ModelConditionUpgrade>
+
 			<CommandSetUpgrade
 				id="BEB4E85C"
 				RequiresAllTriggers="False"
