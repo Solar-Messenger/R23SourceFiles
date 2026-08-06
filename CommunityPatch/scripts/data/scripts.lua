@@ -3201,6 +3201,7 @@ function SonicEmitterDamaged(self, other)
 			local bountyWeapon = "EmitterBounty"
 			if not sonic.sonicEmitterType then
 				-- print("is a shatterer or zone shatterer")
+				-- print("awarding shatterer xp award")
 				GiveExperiencePoints(other)
 				bountyWeapon = "ShatBounty"
 			end
@@ -3217,7 +3218,7 @@ end
 function GetEnemyHexapods(self, other, string)
 	-- determine if its a sonic emitter or shatterer that died and spawn a BountyDummy on other that has destination player of self (OCL DestinationPlayer)
 	-- ExecuteAction("NAMED_FLASH_WHITE", self, 3)
-	if string == nil or other == nil or string == nil then return end
+	if self == nil or other == nil or string == nil then return end
 	for i = 1, getn(playerTable), 1 do
 		if strfind(tostring(ObjectTeamName(self)), "team" .. playerTable[i]) and i <= 8 then
 			-- ej: if its a sonic emitter that the eradicator is getting a bounty for then it will fire the weapon EmitterBounty1 for teamPlayer_1, this permits me to 
