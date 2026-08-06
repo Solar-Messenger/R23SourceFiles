@@ -7,15 +7,11 @@
 		RadarPriority="NOT_ON_RADAR"
 		CommandSet="EmptyCommandSet"
 		IsTrainable="false"
-		KindOf="NO_COLLIDE HIDE_IF_FOGGED IMMOBILE UNATTACKABLE NOT_AUTOACQUIRABLE AIRCRAFT"
+		KindOf="NO_COLLIDE HIDE_IF_FOGGED IMMOBILE UNATTACKABLE NOT_AUTOACQUIRABLE RESIST_EMP"
 		EditorName="RageDummy">
 		<DisplayName>RageDummy</DisplayName>
 		<ArmorSet
 			Armor="NoArmor" />
-		<LocomotorSet
-			Locomotor="FlyingShadowLocomotor"
-			Condition="NORMAL"
-			Speed="0" />
 		<Draws>
 			<ScriptedModelDraw
 				id="ModuleTag_Draw"
@@ -51,30 +47,12 @@
 		<AI>
 			<AIUpdate
 				id="ModuleTag_AI"
-				AILuaEventsList="RageDummyFunctions_R24"
-				AutoAcquireEnemiesWhenIdle="NO">
-				<UnitAITargetChooserData />
-			</AIUpdate>
+				AILuaEventsList="RageDummyFunctions_R24"/>
 		</AI>
 		<Body>
 			<ActiveBody
 				id="ModuleTag_Body"
 				MaxHealth="100.0" />
 		</Body>
-
-		<Geometry
-			IsSmall="true">
-			<Shape
-				Type="CYLINDER"
-				MajorRadius="7.0"
-				Height="13.0">
-			<Offset
-					x="0"
-					y="35"
-					z="0" />
-			</Shape>
-		</Geometry> 
-		<CrusherInfo
-			CrushableLevel="0" />
 	</GameObject>
 </AssetDeclaration>

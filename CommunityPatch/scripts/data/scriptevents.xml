@@ -979,6 +979,7 @@
 		<ScriptedEvent Name="PhaseFieldEvent" />
 		<ScriptedEvent Name="RageGeneratorEvent" />
 		<ScriptedEvent Name="IsItAnEnemyEvent" />
+		<ScriptedEvent Name="EradicatorHexapodEvent" />
     </Events>
     
     <EventList Name="BaseScriptFunctions">
@@ -1754,6 +1755,7 @@
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/>
 		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
+		<EventHandler EventName="EradicatorHexapodEvent" ScriptFunctionName="GetEnemyHexapods" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="AlienExplorerFunctions_R24" Inherit="SelectionGroupFunctions_R24">

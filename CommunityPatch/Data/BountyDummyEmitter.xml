@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<GameObject
-		id="PhaseDummy"
+		id="BountyDummyEmitter"
 		Side="Neutral"
 		EditorSorting="MISC_MAN_MADE"
 		RadarPriority="NOT_ON_RADAR"
 		CommandSet="EmptyCommandSet"
 		IsTrainable="false"
 		KindOf="NO_COLLIDE HIDE_IF_FOGGED IMMOBILE UNATTACKABLE NOT_AUTOACQUIRABLE RESIST_EMP"
-		EditorName="PhaseDummy">
-		<DisplayName>PhaseDummy</DisplayName>
+		EditorName="BountyDummyEmitter">
+		<DisplayName>BountyDummyEmitter</DisplayName>
 		<ArmorSet
 			Armor="NoArmor" />
 		<Draws>
@@ -24,30 +24,26 @@
 			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
-			<!-- onDestroyed fire an Event that reduces the phaseCount by 1 on units who have this associated on phase -->
 			<LifetimeUpdate
 				id="ModuleTag_Lifetime"
-				MinLifetime="35s"
-				MaxLifetime="35s" />
+				MinLifetime="0.2s"
+				MaxLifetime="0.2s" />
 			<DestroyDie
 				id="ModuleTag_DestroyDie">
 				<DieMuxData
 					DeathTypes="ALL" />
 			</DestroyDie>
 
-			<FireWeaponUpdate
-				id="ModuleTag_FireWeaponUpdate">
-				<FireWeaponNugget
-					WeaponName="AlienPhaseFieldWeapon"
-					OneShot="True"
-				/>
-			</FireWeaponUpdate>
+			 <AutoDepositUpdate
+				DepositInterval="0.15s"
+				DepositAmount="200"
+				GiveNoXP="true"/>
 
 		</Behaviors>
 		<AI>
 			<AIUpdate
 				id="ModuleTag_AI"
-				AILuaEventsList="PhaseDummyFunctions_R24" />
+				AILuaEventsList="" />
 		</AI>
 		<Body>
 			<ActiveBody

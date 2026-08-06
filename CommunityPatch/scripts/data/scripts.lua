@@ -3103,9 +3103,10 @@ function GetSonicEmitterAttributes(self)
 		lastUnit = nil,
 		selfId = ObjID,
 		damagedFlag = false,
-		sonicEmitterType = isSonicEmitter(), --true if its a gdi sonic emitter else false if its a zocom one. if neither then this value is nil
+		sonicEmitterType = isSonicEmitter(), -- returns true if its a sonic emitter, else false
 		initialSetFrame = GetFrame(),
 		selfRef = self,
+		killedByEnemy = false,
 		hasGivenXP = false
 	}
 	return sonicEmitterTable[ObjID]
@@ -3193,13 +3194,37 @@ function SonicEmitterDamaged(self, other)
 		-- print("USER 6")
 		-- sonic emitter receives this event dispatched by the damager, should work with stealth units as the killer wouldnt have restealthed by then
 		-- enemies dispatch this event to the sonic emitter to find out if any of them killed it 
-
-		-- if self is shatterer/zone shatterer award xp
-		if not sonic.sonicEmitterType then
-			-- print("is a shatterer or zone shatterer")
-			ObjectBroadcastEventToEnemies(other, "IsItAnEnemyEvent", 99999) 
-		end
+		ObjectBroadcastEventToEnemies(other, "IsItAnEnemyEvent", 99999) 
+		-- this ensures that the Recycler doesnt give enemy hexapods resources if this unit was killed by friendly fire 
+		if sonic.killedByEnemy then
+			-- if self is shatterer/zone shatterer award xp
+			local bountyWeapon = "EmitterBounty"
+			if not sonic.sonicEmitterType then
+				-- print("is a shatterer or zone shatterer")
+				GiveExperiencePoints(other)
+				bountyWeapon = "ShatBounty"
+			end
+			-- only enemy EradicatorHexapods receive this broadcast and rewards each of them.
+			ObjectBroadcastEventToEnemies(self, "EradicatorHexapodEvent", 450, bountyWeapon) 
+		end	
 		MakeSonicEmitterTempImmune(self)
+	end
+end
+
+-- dispatched by EradicatorHexapodEvent, self is the eradicator hexapod and other is the sonic emitter or shatterer that dispatched it.
+-- string is the weapon to fire 
+-- all enemy Eradicator Hexapods in the 450 salvager range are awarded the bounty
+function GetEnemyHexapods(self, other, string)
+	-- determine if its a sonic emitter or shatterer that died and spawn a BountyDummy on other that has destination player of self (OCL DestinationPlayer)
+	-- ExecuteAction("NAMED_FLASH_WHITE", self, 3)
+	if string == nil or other == nil or string == nil then return end
+	for i = 1, getn(playerTable), 1 do
+		if strfind(tostring(ObjectTeamName(self)), "team" .. playerTable[i]) and i <= 8 then
+			-- ej: if its a sonic emitter that the eradicator is getting a bounty for then it will fire the weapon EmitterBounty1 for teamPlayer_1, this permits me to 
+			-- ensure the OCL DestinationPlayer is teamPlayer_1
+			ObjectCreateAndFireTempWeapon(other, string .. i)
+			break
+		end
 	end
 end
 
@@ -3208,7 +3233,8 @@ function DetermineIfEnemyKilledMe(self, other)
 	local sonic = GetSonicEmitterAttributes(self)
 	if sonic.lastUnit == other and sonic.damagedFlag and not sonic.hasGivenXP then
 		-- print("enemy found")
-		GiveExperiencePoints(self)
+		-- GiveExperiencePoints(self)
+		sonic.killedByEnemy = true
 	end
 end
 
