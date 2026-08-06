@@ -175,7 +175,7 @@ CHECKS_DONE_THRESHOLD = 0.90 -- ratio of units that must finish checking before 
 BUG_THRESHOLD_LARGE_GROUP = 0.35 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
 BUG_THRESHOLD_SMALL_GROUP = 0.70 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
-UNITS_STILL_MOVING_THRESHOLD = 0.90 -- ratio of units still moving in a group before coming to a sudden stop
+UNITS_STILL_MOVING_THRESHOLD = 0.80 -- ratio of units still moving in a group before coming to a sudden stop
 
 unitBugDataTable = {
 	-- PARAMETER DOCUMENTATION:
@@ -1423,6 +1423,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local fixUnits = false
 	if not group.fixCancelled then
 		if group.checksDone >= floor(group.expectedChecks*CHECKS_DONE_THRESHOLD) then
+			if GetNumberOfUnitsMoving(group.reverseUnits) <= floor(group.reverseUnitCount * 0.90) then group.fixCancelled = false end
 			--WriteToFile("checksDone.txt", "checks done: " .. tostring(group.checksDone) .. " expected checks: " .. tostring(selectedCount * CHECKS_DONE_THRESHOLD) .. "\n")
 			-- fix units that havent backedUp
 
