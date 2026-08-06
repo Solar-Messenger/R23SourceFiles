@@ -175,7 +175,7 @@ CHECKS_DONE_THRESHOLD = 0.90 -- ratio of units that must finish checking before 
 BUG_THRESHOLD_LARGE_GROUP = 0.35 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
 BUG_THRESHOLD_SMALL_GROUP = 0.70 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
-UNITS_STILL_MOVING_THRESHOLD = 0.60 -- ratio of units still moving in a group before coming to a sudden stop
+UNITS_STILL_MOVING_THRESHOLD = 0.90 -- ratio of units still moving in a group before coming to a sudden stop
 
 unitBugDataTable = {
 	-- PARAMETER DOCUMENTATION:
