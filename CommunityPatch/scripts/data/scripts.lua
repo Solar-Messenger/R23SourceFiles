@@ -175,7 +175,7 @@ CHECKS_DONE_THRESHOLD = 0.90 -- ratio of units that must finish checking before 
 BUG_THRESHOLD_LARGE_GROUP = 0.35 -- bugging ratio threshold for groups > LARGE_GROUP_SIZE
 BUG_THRESHOLD_SMALL_GROUP = 0.70 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
-UNITS_STILL_MOVING_THRESHOLD = 0.75 -- ratio of units still moving before clearing movement flag
+UNITS_STILL_MOVING_THRESHOLD = 0.60 -- ratio of units still moving in a group before coming to a sudden stop
 
 unitBugDataTable = {
 	-- PARAMETER DOCUMENTATION:
@@ -248,11 +248,11 @@ unitBugDataTable = {
 	["51430053"] = { frameCount = 7,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 2, avgFirstTurnRatio = 0.60 }, -- Traveler-59 Gunwalker
 
 	-- GDI UNITS --
-	["D01CFD88"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.45 }, -- GDI APC
-	["7CC56843"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.45 }, -- Steel Talons APC
-	["64BCB106"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.45 }, -- ZOCOM APC
-	["AF462A8F"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.45 }, -- GDI Veteran APC
-	["BD7701CB"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 4, avgFirstTurnRatio = 0.45 }, -- ZOCOM Veteran APC
+	["D01CFD88"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.45 }, -- GDI APC
+	["7CC56843"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.45 }, -- Steel Talons APC
+	["64BCB106"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.45 }, -- ZOCOM APC
+	["AF462A8F"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.45 }, -- GDI Veteran APC
+	["BD7701CB"] = { frameCount = 9,  reallyDamagedDurationMult = 1.0, bugCheckLowerLimit = 3, avgFirstTurnRatio = 0.45 }, -- ZOCOM Veteran APC
 
 	["F714BBD3"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 6, avgFirstTurnRatio = 0.36 }, -- ZOCOM Predator Tank
 	["E6EAD02C"] = { frameCount = 14,  reallyDamagedDurationMult = 1.5, bugCheckLowerLimit = 6, avgFirstTurnRatio = 0.36 }, -- GDI Predator Tank
@@ -1793,7 +1793,7 @@ function AssignRandomAnchor(self)
 			SetUnitAnchor(self, randomUnitId)
 		end
 	end
-	ObjectBroadcastEventToAllies(self, "UnitAnchorEvent", 65)
+	ObjectBroadcastEventToAllies(self, "UnitAnchorEvent", 35)
 end
 
 -- Triggered by +BACKING_UP
@@ -2155,7 +2155,7 @@ function SuddenStopCheck(self)
 	bugDuration = ObjectTestModelCondition(self, "REALLYDAMAGED") and floor(bugDuration*unitBugData.reallyDamagedDurationMult+0.5) or bugDuration
 	local maxFrameDiff = floor(bugDuration * 1.25)
 
-	if GetNumberOfUnitsMoving(group.reverseUnits) >= floor(group.reverseUnitCount * 0.80) and frameDiff <= maxFrameDiff then
+	if GetNumberOfUnitsMoving(group.reverseUnits) >= floor(group.reverseUnitCount * UNITS_STILL_MOVING_THRESHOLD) and frameDiff <= maxFrameDiff then
 		local fixUnit = true
 		local teamTable = isValidTeam(playerTeam) and getglobal(playerTeam) or nil
 
