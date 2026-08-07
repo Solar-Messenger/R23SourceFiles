@@ -3801,7 +3801,7 @@ function OnSquadExitRax_R24(self)
 	if squadSize == nil then return end
 	squad.spawnedSize = squadSize
 
-	if not squadData.isAirborne and isSquadExploit(squad) then return end
+	if not squadData.isAirborne and not ObjectTestModelCondition(self, "USER_10") and isSquadExploit(squad) then return end
 	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
 end
 
