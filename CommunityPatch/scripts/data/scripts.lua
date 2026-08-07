@@ -3203,7 +3203,9 @@ function SonicEmitterDamaged(self, other)
 			if not sonic.sonicEmitterType then
 				-- print("is a shatterer or zone shatterer")
 				-- print("awarding shatterer xp award")
-				GiveExperiencePointsToKiller(self)
+				if not sonic.hasGivenXP then
+					GiveExperiencePointsToKiller(self)
+				end
 				bountyWeapon = "ShatBounty"
 			end
 			-- only enemy EradicatorHexapods receive this broadcast and rewards each of them.
@@ -3233,7 +3235,7 @@ end
 -- self is sonic emiter, other is the unit that could be the killer 
 function DetermineIfEnemyKilledMe(self, other)
 	local sonic = GetSonicEmitterAttributes(self)
-	if sonic.lastUnit == other and sonic.damagedFlag and not sonic.hasGivenXP then
+	if sonic.lastUnit == other and sonic.damagedFlag then
 		-- print("enemy found")
 		-- GiveExperiencePointsToKiller(self)
 		sonic.killedByEnemy = true
