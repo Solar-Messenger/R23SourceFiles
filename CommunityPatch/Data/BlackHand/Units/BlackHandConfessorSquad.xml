@@ -299,6 +299,12 @@
       			AttributeModifier="AttributeModifier_RageGenerator">
       			<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
       		</AttributeModifierUpgrade>
+
+			<ModelConditionUpgrade
+				id="ModuleTag_UpgradeBannerCarrier"
+				AddConditionFlags="USER_2">
+				<TriggeredBy>Upgrade_BlackHandBlackDisciplesUpgrade</TriggeredBy>
+			</ModelConditionUpgrade>
       	</Behaviors>
 		<AI>
 			<HordeAIUpdate
@@ -344,4 +350,3 @@
 			CrusherLevel="0" />
 	</GameObject>
 </AssetDeclaration>
-

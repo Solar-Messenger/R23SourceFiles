@@ -3082,16 +3082,44 @@ end
 
 -- ############################# R25 Infantry Garrison Fix  ###################################
 
+-- Triggered by USER_2
+function DispatchEventToGarrisonLeader(self)
+	local objId,squad = GetSquadAttributes(self)
+	-- if the squad is inside a garrison, this does not work for the first squad to enter a garrison but thats ok since most games a unit will enter one before black disciples/confessors comes online.
+	if ObjectTestModelCondition(self, "INSIDE_GARRISON") then
+		-- print(tostring(ObjectDescription((squadMemberTable[next(squad.squadMembers)].selfRef))))
+		-- find the banner carrier 
+		HordeBroadcastEventToMembers(self, "UpgradeInGarrison", tostring(objId))
+	end	
+end
+
+-- string is the ref to squad that dispatched the event
+function SetToInsideGarrisonState(self, string)
+	local squad = squadTables[string] 
+	squad.confessorDisciple = self
+	if not EvaluateCondition("UNIT_HAS_UPGRADE", SetObjectReference(self), "Upgrade_InGarrison") then ObjectGrantUpgrade(self, "Upgrade_InGarrison") end
+end
+
+function RemoveInsideGarrisonStateOnLeader(self)
+	local _,squad = GetSquadAttributes(self)
+	if squad.confessorDisciple ~= nil then
+		if EvaluateCondition("UNIT_HAS_UPGRADE", SetObjectReference(squad.confessorDisciple), "Upgrade_InGarrison") then ObjectRemoveUpgrade(squad.confessorDisciple, "Upgrade_InGarrison") end
+		squad.confessorDisciple = nil
+	end
+end
+
 function MakeInfantryUnselectable(self)
-	local objectId = getObjectId(self)
-	local objRef = squadMemberTable[objectId] and squadMemberTable[objectId].stringRef or SetObjectReference(self)
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", objRef, 3, 1)
+	local objId = getObjectId(self)
+	-- use the members string ref else in the case of the confessor or black disciple we create one 
+	local stringRef = squadMemberTable[objId] and squadMemberTable[objId].stringRef or SetObjectReference(self)
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", stringRef, 3, 1)
 end
 
 function MakeInfantrySelectable(self)
-	local objectId = getObjectId(self)
-	local objRef = squadMemberTable[objectId] and squadMemberTable[objectId].stringRef or SetObjectReference(self)
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", objRef, 3, 0)
+	local objId = getObjectId(self)
+	-- use the members string ref else in the case of the confessor or black disciple we create one 
+	local stringRef = squadMemberTable[objId] and squadMemberTable[objId].stringRef or SetObjectReference(self)
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", stringRef, 3, 0)
 end
 
 -- ############################# R25 Sonic bug fix  ###################################
@@ -3764,7 +3792,8 @@ function GetSquadAttributes(self)
 		spawnedSize = 0,
 		lastPromotedRank = 1,
 		lastPromotedFrame = 0,
-		unitsLostOnSpawn = {} -- units lost while coming out of the barracks
+		unitsLostOnSpawn = {}, -- units lost while coming out of the barracks
+		confessorDisciple = nil -- on -INSIDE_GARRISON this object also gets the upgrade that grants that removed.
 	}
 	return objId, squadTables[objId]
 end

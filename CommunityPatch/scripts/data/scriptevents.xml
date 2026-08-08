@@ -236,10 +236,6 @@
 			<Conditions>-IS_MOVING_TO_RALLY_POINT</Conditions>
 		</ObjectStatusEvent>
 		
-		<ObjectStatusEvent Name="OnLeavingFactory1">
-			<Conditions>-UNSELECTABLE</Conditions>
-		</ObjectStatusEvent>	
-		
 		<ObjectStatusEvent Name="OnEnclosed">
 			<Conditions>+ENCLOSED</Conditions>
 		</ObjectStatusEvent>	
@@ -988,6 +984,7 @@
 		<ScriptedEvent Name="RageGeneratorEvent" />
 		<ScriptedEvent Name="IsItAnEnemyEvent" />
 		<ScriptedEvent Name="EradicatorHexapodEvent" />
+		<ScriptedEvent Name="UpgradeInGarrison" />
     </Events>
     
     <EventList Name="BaseScriptFunctions">
@@ -1147,6 +1144,23 @@
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 	</EventList>
+
+	<!-- disciple and confessor squad inf -->
+
+	<EventList Name="BlackHandMilitantSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
+		<EventHandler EventName="OnUser2"	ScriptFunctionName="DispatchEventToGarrisonLeader" DebugSingleStep="false"/>
+		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="RemoveInsideGarrisonStateOnLeader" DebugSingleStep="false"/>
+	</EventList>  
+
+	<EventList Name="NodMilitantSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
+		<EventHandler EventName="OnUser2"	ScriptFunctionName="DispatchEventToGarrisonLeader" DebugSingleStep="false"/>
+		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="RemoveInsideGarrisonStateOnLeader" DebugSingleStep="false"/>
+	</EventList> 
+
+	<EventList Name="NodMilitantRocketSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
+		<EventHandler EventName="OnUser2"	ScriptFunctionName="DispatchEventToGarrisonLeader" DebugSingleStep="false"/>
+		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="RemoveInsideGarrisonStateOnLeader" DebugSingleStep="false"/>
+	</EventList> 
 
 	<EventList Name="AirborneSquadFunctions_R24" Inherit="BaseScriptFunctions">
 	    <EventHandler EventName="OnRallyPoint1" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>		
@@ -1445,6 +1459,8 @@
 	<!-- infantry -->
 	<EventList Name="BHConfessorSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
 		<EventHandler EventName="OnCreated"	ScriptFunctionName="OnConfessorSquadCreated_103" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser2"	ScriptFunctionName="DispatchEventToGarrisonLeader" DebugSingleStep="false"/>
+		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="RemoveInsideGarrisonStateOnLeader" DebugSingleStep="false"/>
 	</EventList>  
 
 	<EventList Name="NodImprovedCyborgSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
@@ -1495,6 +1511,8 @@
 	<EventList Name="BlackHandMilitantRocketFunctions_R24" Inherit="HordeMemberFunctions_R24">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser2"	ScriptFunctionName="DispatchEventToGarrisonLeader" DebugSingleStep="false"/>
+		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="RemoveInsideGarrisonStateOnLeader" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="CombatEngineerFunctions_R24" Inherit="BaseScriptFunctions">
@@ -1619,9 +1637,26 @@
 		<EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/>
 	</EventList>
 
-	<EventList Name="NODConfessorFunctions_R24" Inherit="HordeMemberFunctions_R24">
+	<EventList Name="NODConfessorFunctions_R24" Inherit="BaseScriptFunctions">
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemoveRagedUnitEntry" DebugSingleStep="false"/>
+		<!-- a workaround for when the disciple/confessor upgrades while already inside a garrison -->
+		<EventHandler EventName="UpgradeInGarrison"	ScriptFunctionName="SetToInsideGarrisonState" DebugSingleStep="false"/>
+		<!-- when the disciple/confessor enters a garrison -->
+		<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="MakeInfantryUnselectable" DebugSingleStep="false"/>
+		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="MakeInfantrySelectable" DebugSingleStep="false"/> 
+	</EventList>
+
+	<EventList Name="BHDiscipleFunctions_R24" Inherit="BaseScriptFunctions">
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemoveRagedUnitEntry" DebugSingleStep="false"/>
+		<!-- a workaround for when the disciple/confessor upgrades while already inside a garrison -->
+		<EventHandler EventName="UpgradeInGarrison"	ScriptFunctionName="SetToInsideGarrisonState" DebugSingleStep="false"/>
+		<!-- when the disciple/confessor enters a garrison -->
+		<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="MakeInfantryUnselectable" DebugSingleStep="false"/>
+		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="MakeInfantrySelectable" DebugSingleStep="false"/> 
 	</EventList>
 
 	<EventList Name="NodCyborgFunctions_R24" Inherit="HordeMemberFunctions_R24">
@@ -2278,7 +2313,7 @@
 	<!-- All squads must inherit from this -->
 	<EventList Name="GenericSquadFunctions_103" Inherit="BaseScriptFunctions">		
 		<EventHandler EventName="OnLeavingFactory" ScriptFunctionName="OnSquadExitRax_103" DebugSingleStep="false"/>				
-		<EventHandler EventName="OnLeavingFactory1" ScriptFunctionName="OnSquadExitRax1_103" DebugSingleStep="false"/>		
+		<EventHandler EventName="OnUnselectableEnd" ScriptFunctionName="OnSquadExitRax1_103" DebugSingleStep="false"/>		
 		<EventHandler EventName="OnDestroyed" ScriptFunctionName="OnSquadDestroyed_103" DebugSingleStep="false"/>	
 	</EventList>			
 	

@@ -662,6 +662,11 @@
 				StatusToSet="WEAPON_UPGRADED_02">
 				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
 			</StatusBitsUpgrade>
+			<ModelConditionUpgrade
+				id="ModuleTag_UpgradeInGarrison"
+				AddConditionFlags="INSIDE_GARRISON">
+				<TriggeredBy>Upgrade_InGarrison</TriggeredBy>
+			</ModelConditionUpgrade>
 			 <!--<StatusBitsUpgrade
 				id="ModuleTag_UpgradeWeapon"
 				StatusToSet="WEAPON_UPGRADED_01">
@@ -749,4 +754,3 @@
 			ShroudClearingRange="400" />
   </GameObject>
 </AssetDeclaration>
-

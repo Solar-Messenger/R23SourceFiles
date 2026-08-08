@@ -769,6 +769,12 @@
 				AttributeModifier="AttributeModifier_RageGenerator">
 				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
 			</AttributeModifierUpgrade>
+
+			<ModelConditionUpgrade
+				id="ModuleTag_UpgradeBannerCarrier"
+				AddConditionFlags="USER_2">
+				<TriggeredBy>Upgrade_NODConfessorUpgrade</TriggeredBy>
+			</ModelConditionUpgrade>
 		</Behaviors>
 		<AI>
 			<HordeAIUpdate
@@ -776,7 +782,7 @@
 				AutoAcquireEnemiesWhenIdle="YES"
 				StopChaseDistance="500"
 				HoldGroundCloseRangeDistance="0"
-				AILuaEventsList="GenericSquadFunctions_R24"
+				AILuaEventsList="NodMilitantSquadFunctions_R24"
 				MinCowerTime="3s"
 				MaxCowerTime="5s"
 				RampageTime="0s"
@@ -877,4 +883,3 @@
 		<DisplayUpgrade>Upgrade_NODConfessorUpgrade</DisplayUpgrade>
 	</GameObject>
 </AssetDeclaration>
-

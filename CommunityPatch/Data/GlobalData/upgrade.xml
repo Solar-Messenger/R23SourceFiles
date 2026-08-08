@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<UpgradeTemplate id="Upgrade_InGarrison"
+		Type="OBJECT"
+	/>
+
 	<!-- rage generator upgrade -->
 	<UpgradeTemplate id="Upgrade_RageGenerator"
 		Type="OBJECT"

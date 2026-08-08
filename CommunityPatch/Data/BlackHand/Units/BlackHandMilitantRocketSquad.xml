@@ -164,23 +164,6 @@
 			</ModelConditionState>
 			<ModelConditionState
 				ParseCondStateType="PARSE_NORMAL"
-				ConditionsYes="USER_1"
-				PortraitImage=""
-				ButtonImage=""
-				RetainSubObjects="False">
-				<Model
-					Name=""
-					ExtraMesh="False" />
-				<ParticleSysBone
-					BoneName="NONE"
-					FXParticleSystemTemplate="NODTibInfusion"
-					PersistID="0"
-					FollowBone="True"
-					OnlyIfOnWater="False"
-					OnlyIfOnLand="False" />
-			</ModelConditionState>
-			<ModelConditionState
-				ParseCondStateType="PARSE_NORMAL"
 				ConditionsYes="WORLD_BUILDER"
 				PortraitImage=""
 				ButtonImage=""
@@ -374,21 +357,6 @@
 			SetBonusModelConditionOnSpeedBonus="False"
 			SecondaryQueue="False"
 			IgnorePreReqs="False" />
-		<!--<AttributeModifierUpgrade
-			id="3129F082"
-			RequiresAllTriggers="False"
-			RequiresAllConflictingTriggers="False"
-			Permanent="False"
-			WaypointMode="False"
-			WaypointModeTerminal="True"
-			AttributeModifier="AttributeModifier_TiberiumInfusion">
-			<CustomAnimAndDuration
-				AnimState="USER_1"
-				Frames="0"
-				Trigger="0" />
-			<TriggeredBy>Upgrade_TiberiumInfusion</TriggeredBy>
-			<TriggeredBy>Upgrade_MoKTiberiumInfusion</TriggeredBy>
-		</AttributeModifierUpgrade>-->
 		<AimWeapon
 			id="06370EA6"
 			AimLowThreshold="0"
@@ -725,6 +693,12 @@
 			AttributeModifier="AttributeModifier_RageGenerator">
 			<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
 		</AttributeModifierUpgrade>
+
+		<ModelConditionUpgrade
+			id="ModuleTag_UpgradeBannerCarrier"
+			AddConditionFlags="USER_2">
+			<TriggeredBy>Upgrade_BlackHandBlackDisciplesUpgrade</TriggeredBy>
+		</ModelConditionUpgrade>
 	</Behaviors>
 	<AI>
 		<HordeAIUpdate
@@ -732,7 +706,7 @@
 			AutoAcquireEnemiesWhenIdle="YES"
 			StopChaseDistance="500"
 			HoldGroundCloseRangeDistance="0"
-			AILuaEventsList="GenericSquadFunctions_R24"	
+			AILuaEventsList="BlackHandMilitantSquadFunctions_R24"	
 			MinCowerTime="3s"
 			MaxCowerTime="5s"
 			RampageTime="0s"
