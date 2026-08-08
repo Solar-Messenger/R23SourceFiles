@@ -3080,6 +3080,20 @@ function OnSquadDestroyed_103(self)
 
 end
 
+-- ############################# R25 Infantry Garrison Fix  ###################################
+
+function MakeInfantryUnselectable(self)
+	local objectId = getObjectId(self)
+	local objRef = squadMemberTable[objectId] and squadMemberTable[objectId].stringRef or SetObjectReference(self)
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", objRef, 3, 1)
+end
+
+function MakeInfantrySelectable(self)
+	local objectId = getObjectId(self)
+	local objRef = squadMemberTable[objectId] and squadMemberTable[objectId].stringRef or SetObjectReference(self)
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", objRef, 3, 0)
+end
+
 -- ############################# R25 Sonic bug fix  ###################################
 
 sonicEmitterTable = {}
@@ -3794,7 +3808,7 @@ function OnSquadExitRax_R24(self)
 	--print("squad has finished building")
 	local objId,squad = GetSquadAttributes(self)
 	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
-	-- squad size is 4 here. 
+	-- The entire squad size shows up here. 
 	local squadData = squadSizeTable[getObjectName(squad.selfRef)]
 	local squadSize = getTableSize(squad.squadMembers)
 	-- used for hammerhead garrisoned squads that can fire over structures
