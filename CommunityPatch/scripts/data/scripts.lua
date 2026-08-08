@@ -3084,11 +3084,11 @@ end
 
 -- Triggered by USER_2
 function DispatchEventToGarrisonLeader(self)
-	local objId,squad = GetSquadAttributes(self)
 	-- if the squad is inside a garrison, this does not work for the first squad to enter a garrison but thats ok since most games a unit will enter one before black disciples/confessors comes online.
 	if ObjectTestModelCondition(self, "INSIDE_GARRISON") then
 		-- print(tostring(ObjectDescription((squadMemberTable[next(squad.squadMembers)].selfRef))))
 		-- find the banner carrier 
+		local objId,_ = GetSquadAttributes(self)
 		HordeBroadcastEventToMembers(self, "UpgradeInGarrison", tostring(objId))
 	end	
 end
@@ -3112,14 +3112,18 @@ function MakeInfantryUnselectable(self)
 	local objId = getObjectId(self)
 	-- use the members string ref else in the case of the confessor or black disciple we create one 
 	local stringRef = squadMemberTable[objId] and squadMemberTable[objId].stringRef or SetObjectReference(self)
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", stringRef, 3, 1)
+	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", stringRef, 3) then
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", stringRef, 3, 1)
+	end
 end
 
 function MakeInfantrySelectable(self)
 	local objId = getObjectId(self)
 	-- use the members string ref else in the case of the confessor or black disciple we create one 
 	local stringRef = squadMemberTable[objId] and squadMemberTable[objId].stringRef or SetObjectReference(self)
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", stringRef, 3, 0)
+	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", stringRef, 3) then
+		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", stringRef, 3, 0)
+	end
 end
 
 -- ############################# R25 Sonic bug fix  ###################################
