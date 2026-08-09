@@ -1346,7 +1346,6 @@ function UnitNoLongerMoving(self)
 	if unitReversing == nil then return end	
 	if not unitReversing.wasAttackingBeforeReverse then
 		unitReversing.hasComeToAStop = true
-		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 	else
 		unitReversing.wasAttackingBeforeReverse = false
 		--unitReversing.hasComeToAStop = false
@@ -1355,6 +1354,27 @@ function UnitNoLongerMoving(self)
 	
 	-- trick to get units to reverse move with UNIT_GUARD_OBJECT (causes units to reverse when force firing, force attacking)
 	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 48, 1)
+end
+
+function UnitIsFiringWeapon(self)
+	local _,unitReversing = GetUnitReversingData(self)
+	if unitReversing == nil then return end
+	if ObjectTestModelCondition(self, "MOVING") then
+		--unitReversing.wasAttackingBeforeReverse = true
+	else
+		unitReversing.wasAttackingBeforeReverse = false
+		unitReversing.hasComeToAStop = true
+		--ExecuteAction("NAMED_FLASH", self, 2)
+	end
+end
+
+function UnitIsAttacking(self)
+	local _,unitReversing = GetUnitReversingData(self)
+	if unitReversing == nil then return end
+	if not ObjectTestModelCondition(self, "IS_FIRING_WEAPON") then
+		unitReversing.wasAttackingBeforeReverse = true
+		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+	end
 end
 
 function CheckForObjReverseBugging(self, frameDiff)
@@ -1423,7 +1443,6 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local fixUnits = false
 	if not group.fixCancelled then
 		if group.checksDone >= floor(group.expectedChecks*CHECKS_DONE_THRESHOLD) then
-			if GetNumberOfUnitsMoving(group.reverseUnits) <= floor(group.reverseUnitCount * 0.90) then group.fixCancelled = false end
 			--WriteToFile("checksDone.txt", "checks done: " .. tostring(group.checksDone) .. " expected checks: " .. tostring(selectedCount * CHECKS_DONE_THRESHOLD) .. "\n")
 			-- fix units that havent backedUp
 
@@ -1549,12 +1568,6 @@ function currentTurnData(inputTable)
 	end
 	--WriteToFile("sum.txt", "sum: " .. tostring(sum) .. " unitIdCount: " .. tostring(unitIdCount) .. "\n")
 	return sum, unitIdCount
-end
-
-function UnitIsAttacking(self)
-	local _,unitReversing = GetUnitReversingData(self)
-	if unitReversing == nil then return end
-	unitReversing.wasAttackingBeforeReverse = true
 end
 
 function BackingUpFastTurn(self)
@@ -3933,10 +3946,12 @@ function OnMemberDestroyed_R24(self)
 		ObjectBroadcastEventToAllies(self,"MemberKilledOnBuilt", 50)
 	end
 	-- clean up here
+	squadMemberTable[objId] = nil
 	--if squadMember.squadObject == nil then print("squad object is nil") end
 	local squad = squadTables[squadMember.squadObject] 
+	if squad == nil then return end
 	squad.squadMembers[objId] = nil
-	squadMemberTable[objId] = nil
+	
 	-- no more squadMembers just leader remaining check
 	local firstKey = next(squad.squadMembers)
 	if firstKey ~= nil and next(squad.squadMembers, firstKey) == nil then
