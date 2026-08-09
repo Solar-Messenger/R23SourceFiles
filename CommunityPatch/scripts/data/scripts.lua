@@ -3095,6 +3095,7 @@ end
 
 -- string is the ref to squad that dispatched the event
 function SetToInsideGarrisonState(self, string)
+	if ObjectTestModelCondition(self, "INSIDE_GARRISON") then return end
 	local squad = squadTables[string] 
 	squad.confessorDisciple = self
 	if not EvaluateCondition("UNIT_HAS_UPGRADE", SetObjectReference(self), "Upgrade_InGarrison") then ObjectGrantUpgrade(self, "Upgrade_InGarrison") end
@@ -3102,10 +3103,9 @@ end
 
 function RemoveInsideGarrisonStateOnLeader(self)
 	local _,squad = GetSquadAttributes(self)
-	if squad.confessorDisciple ~= nil then
-		if EvaluateCondition("UNIT_HAS_UPGRADE", SetObjectReference(squad.confessorDisciple), "Upgrade_InGarrison") then ObjectRemoveUpgrade(squad.confessorDisciple, "Upgrade_InGarrison") end
-		squad.confessorDisciple = nil
-	end
+	if squad.confessorDisciple == nil then return end
+	if EvaluateCondition("UNIT_HAS_UPGRADE", SetObjectReference(squad.confessorDisciple), "Upgrade_InGarrison") then ObjectRemoveUpgrade(squad.confessorDisciple, "Upgrade_InGarrison") end
+	squad.confessorDisciple = nil
 end
 
 function MakeInfantryUnselectable(self)
