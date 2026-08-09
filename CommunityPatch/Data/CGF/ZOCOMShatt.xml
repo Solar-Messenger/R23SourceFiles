@@ -1222,43 +1222,22 @@
 				KillWhenRestingOnGround="False"
 				OrientToFlightPath="False"
 				IgnoreTerrainHeight="False" />
-			<SlowDeath
-				id="73542D4A"
-				SinkRate="2.5"
-				ProbabilityModifier="10"
-				ModifierBonusPerOverkillPercent="0%"
-				SinkDelay="0.5s"
-				SinkDelayVariance="0s"
-				DestructionDelay="5s"
-				DestructionDelayVariance="0s"
-				DecayBeginTime="0s"
-				FlingForce="0"
-				FlingForceVariance="0"
-				FlingPitch="0d"
-				FlingPitchVariance="0d"
-				DeathFlags=""
-				FadeTime="0s"
-				FadeDelay="0s"
-				DeathTypes=""
-				DeathObjectStatusBits=""
-				ShadowWhenDead="False"
-				Fade="False">
-				<OCL
-					Type="INITIAL">
-					<OCL></OCL>
-				</OCL>
-				<Sound
-					Type="INITIAL"
-					List="" />
-				<DieMuxData
-					ExemptStatus=""
-					RequiredStatus=""
-					DamageAmountRequired="-1"
-					MinKillerAngle="0.9999999d"
-					MaxKillerAngle="-0.9999999d"
-					DeathTypes="ALL"
-					DeathTypesForbidden="TOPPLED" />
-			</SlowDeath>
+			 <SlowDeath
+                id="ModuleTag_Death"
+                SinkDelay="3s"
+				SinkRate="1.0"
+				DestructionDelay="7s">
+                <OCL
+                    Type="INITIAL">
+                    <OCL></OCL>
+                </OCL>
+                <DieMuxData
+                    DeathTypes="ALL"
+                    DeathTypesForbidden="TOPPLED" />
+                <Sound
+                    Type="INITIAL"
+                    List="" />
+            </SlowDeath>
 			<!--<SubObjectsUpgrade
 				id="0D4DFDE8"
 				RequiresAllTriggers="False"

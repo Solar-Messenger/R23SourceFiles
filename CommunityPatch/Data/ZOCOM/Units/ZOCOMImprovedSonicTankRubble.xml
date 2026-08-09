@@ -256,9 +256,9 @@
 		
 			<SlowDeath
 				id="ModuleTag_Death"
-				SinkDelay="0.5s"
-				SinkRate="2.5"
-				DestructionDelay="5s">
+				SinkDelay="3s"
+				SinkRate="1.0"
+				DestructionDelay="7s">
 				<OCL
 					Type="INITIAL">
 					<OCL>OCL_SteelTalonsSteelShattererDebris</OCL>
