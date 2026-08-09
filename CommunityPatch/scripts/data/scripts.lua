@@ -3154,7 +3154,8 @@ function GetSonicEmitterAttributes(self)
 		initialSetFrame = GetFrame(),
 		selfRef = self,
 		killedByEnemy = false,
-		hasGivenXP = false
+		hasGivenXP = false,
+		stringRef = SetObjectReference(self)
 	}
 	return sonicEmitterTable[ObjID]
 end
@@ -3295,7 +3296,7 @@ function GiveExperiencePointsToKiller(self)
 	if lastUnit == nil then return end
 	--local sonicDesc = tostring(ObjectDescription(self))
 	--local attacker = tostring(ObjectDescription(lastUnit))
-	local _,xpRewardMultiplier = GetRankOfObject(self)
+	local _,xpRewardMultiplier = GetRankOfObject(sonic.stringRef)
 	local xpReward = 1500*xpRewardMultiplier
 	--WriteToFile("xpReward.txt",  "XP rewarded to attacker: " .. tostring(xpReward) .. "\n")
 	--print(sonic .. " attacker: " .. attacker)
@@ -3633,23 +3634,20 @@ end
 function GetRankOfObject(unitRef) 
 	local squadLevel = 1
 	local xpMultiplier = 1
-	if EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_VETERAN") then
+	if EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_HEROIC") then
+		-- apply heroic level 
+		squadLevel = 4
+		xpMultiplier = 2 -- 2 when heroic
+	elseif EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_ELITE") then
+		-- apply elite level 
+		squadLevel = 3
+		xpMultiplier = 1.6 -- 1.6 when elite 
+	elseif EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_VETERAN") then
 		-- apply veteran level 
 		squadLevel = 2
 		xpMultiplier = 1.3 -- 1.3 when veteran
 	end
 
-	if EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_ELITE") then
-		-- apply elite level 
-		squadLevel = 3
-		xpMultiplier = 1.6 -- 1.6 when elite 
-	end
-
-	if EvaluateCondition("UNIT_HAS_UPGRADE",unitRef, "Upgrade_Veterancy_HEROIC") then
-		-- apply heroic level 
-		squadLevel = 4
-		xpMultiplier = 2 -- 2 when heroic
-	end
 	return squadLevel, xpMultiplier
 end
 
