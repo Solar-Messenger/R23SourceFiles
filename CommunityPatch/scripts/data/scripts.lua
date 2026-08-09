@@ -1359,9 +1359,7 @@ end
 function UnitIsFiringWeapon(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil then return end
-	if ObjectTestModelCondition(self, "MOVING") then
-		--unitReversing.wasAttackingBeforeReverse = true
-	else
+	if not ObjectTestModelCondition(self, "MOVING") then
 		unitReversing.wasAttackingBeforeReverse = false
 		unitReversing.hasComeToAStop = true
 		--ExecuteAction("NAMED_FLASH", self, 2)
