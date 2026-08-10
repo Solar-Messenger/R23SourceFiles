@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
+	<WeaponTemplate
+		id="TemporalWormholeWeaponTrigger"
+		Name="TemporalWormholeWeaponTrigger"
+		RadiusDamageAffects="ALLIES ENEMIES NEUTRALS"
+		AttackRange="50000.0">
+		<Nuggets>
+			<AttributeModifierNugget
+				Radius="125.0"
+				ForbiddenTargetObjectStatus="IN_STASIS"
+				AttributeModifierName="AttributeModifier_TemporalWormhole">
+			</AttributeModifierNugget>
+			<TintObjectsNugget
+				Radius="125"
+				PreColorTime="0s"
+				SustainedColorTime="1.25s"
+				PostColorTime="0s"
+				Frequency=".3"
+				Amplitude="1">
+				<Color R="-0.0" G="-0.0" B="0.8"/>
+			</TintObjectsNugget>
+		</Nuggets>
+	</WeaponTemplate>
+
 	<!-- increased rangefinder range for grenadier squad inside a hh -->
 
 	<WeaponTemplate
