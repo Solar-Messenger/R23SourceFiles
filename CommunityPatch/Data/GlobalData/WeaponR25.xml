@@ -8,12 +8,12 @@
 		AttackRange="50000.0">
 		<Nuggets>
 			<AttributeModifierNugget
-				Radius="125.0"
+				Radius="150.0"
 				ForbiddenTargetObjectStatus="IN_STASIS"
 				AttributeModifierName="AttributeModifier_TemporalWormhole">
 			</AttributeModifierNugget>
 			<TintObjectsNugget
-				Radius="125"
+				Radius="150"
 				PreColorTime="0s"
 				SustainedColorTime="1.25s"
 				PostColorTime="0s"
