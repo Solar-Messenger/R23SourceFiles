@@ -328,7 +328,11 @@
 		</ModelConditionEvent>		
 		<ModelConditionEvent Name="OnMovingEnd">
 			<Conditions>-MOVING</Conditions>
-		</ModelConditionEvent>				
+		</ModelConditionEvent>	
+		
+		<ModelConditionEvent Name="OnMovingFiringEnd">
+			<Conditions>-ATTACKING -MOVING</Conditions>
+		</ModelConditionEvent>		
 
 		<!-- These are used for modelconditions which are shared globally by most units -->
 		<ModelConditionEvent Name="OnUnused23">
