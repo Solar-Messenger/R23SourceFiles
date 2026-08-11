@@ -176,6 +176,7 @@ BUG_THRESHOLD_LARGE_GROUP = 0.35 -- bugging ratio threshold for groups > LARGE_G
 BUG_THRESHOLD_SMALL_GROUP = 0.70 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.80 -- ratio of units still moving in a group before coming to a sudden stop
+FRAMES_AFTER_COMING_TO_A_STOP = 25 -- number of frames a unit has spent not moving after coming to a stop
 
 unitBugDataTable = {
 	-- PARAMETER DOCUMENTATION:
@@ -1159,6 +1160,7 @@ function GetUnitReversingData(self)
 			hasBeenSelected = false,
 			expectedChecksFlag = false,
 			groupIdAssigned = false,
+			lastFrameMoveEnd = 0,
 			--isBeingFollowed = false,
 			beingFollowedBy = {},
 			isReverseMoveHarvester = checkHarv()
@@ -1192,7 +1194,7 @@ function GetNumberOfUnitsMoving(selectedUnitList)
 	return unitsMoving
 end
 
--- returns the size of a a key/value pair table
+-- returns the size of a a key/value pair tableF
 function getTableSize(t)
 	if t == nil then return 0 end
 	local size = 0
@@ -1207,7 +1209,12 @@ end
 function UnitIsMoving(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil then return end
-	unitReversing.hasComeToAStop = false
+	if GetFrame() - unitReversing.lastFrameMoveEnd >= FRAMES_AFTER_COMING_TO_A_STOP then 
+		unitReversing.hasComeToAStop = true
+		--ExecuteAction("NAMED_FLASH", self, 2)
+	else
+		unitReversing.hasComeToAStop = false
+	end
 end
 
 -- Gets the random key to assign to the unit for anchor purposes.
@@ -1354,9 +1361,9 @@ end
 
 -- checks if most units are moving and if the number returned exceeds the threshold then assign the hasComeToAStop to true
 function UnitNoLongerMoving(self)
-	--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 	local unitId,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil then return end	
+	unitReversing.lastFrameMoveEnd = GetFrame()
 	if not unitReversing.wasAttackingBeforeReverse then
 		unitReversing.hasComeToAStop = true
 		local groupId = unitReversing.groupId
@@ -1440,7 +1447,7 @@ function CheckForObjReverseBugging(self, frameDiff)
 	local selectedCount = group.reverseUnitCount
 	if selectedCount <= 0 then return end
 	--WriteToFile("groupId.txt",  tostring(unitReversing.groupId) .. " group size: " .. tostring(group.unitCount) .. " reverse move unit count: " .. tostring(group.reverseUnitCount) .. "\n")
-	unitReversing.wasAttackingBeforeReverse = false
+	-- unitReversing.wasAttackingBeforeReverse = false
 	-- lowerLimit causes false positives when units are ordered to move at more than screen distance
 	--if frameDiff > bugDuration + upperLimit then frameDiff = bugDuration end
 	local inBugRange = frameDiff >= bugDuration - unitBugData.bugCheckLowerLimit 
@@ -1628,13 +1635,13 @@ end
 function BackingUpFastTurnEnd(self)
     local unitId,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil or unitReversing.groupId == nil then return end
+	local curFrame = GetFrame()
 	-- prevents this from executing when the unit is not moving or has already reverse moved 
 	if unitReversing.hasComeToAStop or unitReversing.hasAlreadyReversed or unitReversing.timesTriggeredFast > TURN_TRIGGER_COUNT then return end
 	-- check if its DOCKING or DOCKING_BEGINNING (to prevent harvesters from checking for bugs while docking)
 	if unitReversing.isReverseMoveHarvester then
 		if ObjectTestModelCondition(self, "DOCKING") or ObjectTestModelCondition(self, "DOCKING_BEGINNING") or ObjectTestModelCondition(self, "DOCKING_ENDING") then return end
 	end
-	local curFrame = GetFrame()
 	local frameDiff = curFrame - unitReversing.firstFrame
 	local playerTeam = tostring(ObjectTeamName(self))
 	local group = GetGroup(playerTeam, unitReversing.groupId)
@@ -1854,9 +1861,7 @@ function BackingUp(self)
 	if unitReversing.isReverseMoveHarvester then
 		if ObjectTestModelCondition(self, "DOCKING") or ObjectTestModelCondition(self, "DOCKING_BEGINNING") or ObjectTestModelCondition(self, "DOCKING_ENDING") then return end
 	end
-    local curFrame = GetFrame()
 	unitReversing.lastMoveWasReverse = true
-
 	--WriteToFile("wasAttackingBeforeReverse.txt",  tostring(unitReversing.wasAttackingBeforeReverse) .. "\n")
 	if EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.stringReference, "Upgrade_ReverseMoveSpeedBuff") then
 		--print("removing upgrade")
@@ -1865,7 +1870,7 @@ function BackingUp(self)
 	if ObjectTestModelCondition(self, "USER_72") then
 		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_72", 0, 100)
 	end
-
+	local curFrame = GetFrame()
 	-- Reset the flags here to ensure we don't carry over bugs from previous moves
 	local resetFlags = function()
 		local unitReversing = %unitReversing
@@ -1880,6 +1885,14 @@ function BackingUp(self)
 		SetUnitAnchor(%self, nil)
 	end
 
+	-- WriteToFile("before after frame.txt",  tostring(unitReversing.unitNotMovingFrames) .. "\n")
+	-- currents its the time difference between when it finished moving and started to back up , probably needs to initialize on -MOVING -FIRING_A
+
+	if unitReversing.hasComeToAStop then
+		unitReversing.hasComeToAStop = false
+		return resetFlags()
+	end
+
 	 -- Check if this is a spam/repeat command (within 1 frame) or a generic new command
 	 -- and if the last reverse move command was not 5 frames before as units can still bug if two successive reverse move commands are issued back to back.
     if (curFrame - unitReversing.lastReverseMoveFrame <= REVERSE_SPAM_FRAME_WINDOW) and not (curFrame - unitReversing.firstFrame <= 4) then
@@ -1887,11 +1900,6 @@ function BackingUp(self)
         unitReversing.hasAlreadyReversed = true
         return resetFlags()
 	end 
-
-	if unitReversing.hasComeToAStop then
-		unitReversing.hasComeToAStop = false
-		return resetFlags()
-	end
 
 	-- Reset the flags here to ensure we don't carry over bugs from previous moves
 	resetFlags()
