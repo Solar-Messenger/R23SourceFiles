@@ -1339,6 +1339,13 @@ function SetUnitAnchor(self, newAnchorId)
 
 end
 
+function RemoveUnitFromGroupFix(self, group, unitId) 
+	local objName = getObjectName(self)
+	if group.unitsToFixByType[objName][unitId] ~= nil then
+		group.unitsToFixByType[objName][unitId] = nil
+	end
+end
+
 -- checks if most units are moving and if the number returned exceeds the threshold then assign the hasComeToAStop to true
 function UnitNoLongerMoving(self)
 	--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
@@ -1346,6 +1353,18 @@ function UnitNoLongerMoving(self)
 	if unitReversing == nil then return end	
 	if not unitReversing.wasAttackingBeforeReverse then
 		unitReversing.hasComeToAStop = true
+		local groupId = unitReversing.groupId
+		if groupId ~= nil then 
+			local group = GetGroup(tostring(ObjectTeamName(self)), groupId)
+			if group ~= nil then
+				RemoveUnitFromGroupFix(self, group, unitId) 
+				RemoveUnitFromGroup(self, group)
+				unitReversing.isReverseMoving = false
+				unitReversing.timesTriggeredFast = 0
+				unitReversing.timesTriggeredNormal = 0
+				unitReversing.fastTurnWas0Frames = false
+			end
+		end
 	else
 		unitReversing.wasAttackingBeforeReverse = false
 		--unitReversing.hasComeToAStop = false
@@ -1357,12 +1376,24 @@ function UnitNoLongerMoving(self)
 end
 
 function UnitIsFiringWeapon(self)
-	local _,unitReversing = GetUnitReversingData(self)
+	local unitId,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil then return end
 	if not ObjectTestModelCondition(self, "MOVING") then
 		unitReversing.wasAttackingBeforeReverse = false
 		unitReversing.hasComeToAStop = true
-		--ExecuteAction("NAMED_FLASH", self, 2)
+		local groupId = unitReversing.groupId
+		if groupId ~= nil then 
+			local group = GetGroup(tostring(ObjectTeamName(self)), groupId)
+			if group ~= nil then
+				RemoveUnitFromGroupFix(self, group, unitId) 
+				RemoveUnitFromGroup(self, group)
+				unitReversing.isReverseMoving = false
+				unitReversing.timesTriggeredFast = 0
+				unitReversing.timesTriggeredNormal = 0
+				unitReversing.fastTurnWas0Frames = false
+			end
+		end
+		ExecuteAction("NAMED_FLASH", self, 2)
 	end
 end
 
@@ -1978,6 +2009,7 @@ end
 
 function CheckExistingGroups(unitReversing, group, groupId)
 	if group == nil or unitReversing == nil then return false end
+	
 	local reverseUnitList = {}
 	if group ~= nil and group.reverseUnits ~= nil then
 		reverseUnitList = group.reverseUnits
@@ -2046,12 +2078,34 @@ function CheckExistingGroups(unitReversing, group, groupId)
 	return false
 end
 
+function RemoveUnitFromGroup(self, group)
+	local a = getObjectId(self)
+	if group.units ~= nil then
+		group.units[a] = nil
+		group.unitCount = getTableSize(group.units)
+	end
+	if group.reverseUnits ~= nil then
+		if group.reverseUnits[a] ~= nil and group.expectedChecks ~= nil and group.expectedChecks > 0 then
+			group.expectedChecks = group.expectedChecks - 1
+		end
+		group.reverseUnits[a] = nil
+		group.reverseUnitCount = getTableSize(group.reverseUnits)
+	end
+	local objName = getObjectName(self)
+	if group.reverseUnitsByType ~= nil and group.reverseUnitsByType[objName] ~= nil then
+		group.reverseUnitsByType[objName][a] = nil
+		if getTableSize(group.reverseUnitsByType[objName]) <= 0 then 
+			group.reverseUnitsByType[objName] = nil
+		end
+	end
+end
+
 -- Clears the unitsReversing table of this unit. If it belongs in a group, remove it.
 function GroupUnitOnDeath(self)
 	-- phase fix: forget this unit if it died while phased
 	RemovePhasedUnitEntry(self)
 	RemoveRagedUnitEntry(self)
-	local a,unitReversing = GetUnitReversingData(self)
+	local _,unitReversing = GetUnitReversingData(self)
 	local groupId = unitReversing and unitReversing.groupId
 
 	-- remove from the group its part of
@@ -2062,24 +2116,7 @@ function GroupUnitOnDeath(self)
 		--local group = unitGroups[groupId] 
 		-- remove this unit from the group snapshot
 		if group ~= nil then
-			if group.units ~= nil then
-				group.units[a] = nil
-				group.unitCount = getTableSize(group.units)
-			end
-			 if group.reverseUnits ~= nil then
-                if group.reverseUnits[a] ~= nil and group.expectedChecks ~= nil and group.expectedChecks > 0 then
-					group.expectedChecks = group.expectedChecks - 1
-                end
-                group.reverseUnits[a] = nil
-                group.reverseUnitCount = getTableSize(group.reverseUnits)
-        	end
-			local objName = getObjectName(self)
-			if group.reverseUnitsByType ~= nil and group.reverseUnitsByType[objName] ~= nil then
-				group.reverseUnitsByType[objName][a] = nil
-				if getTableSize(group.reverseUnitsByType[objName]) <= 0 then 
-					group.reverseUnitsByType[objName] = nil
-				end
-			end
+			RemoveUnitFromGroup(self, group)
 			-- check if theres no units left in the group and if so , clear the global.
 			local groupWasCleared = CheckExistingGroups(unitReversing, group, groupId)
 			if not groupWasCleared and IsGroupEmpty(group) then
@@ -2189,7 +2226,7 @@ end
 -- Triggered by -BACKING_UP, this triggers when multiple reverse move commands.
 -- Removes groupId of this unit and then checks if the global of that group is empty and if it is, removes it.
 function BackingUpEnd(self)
-	local _,unitReversing = GetUnitReversingData(self)
+	local unitId,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil then return end
 	unitReversing.lastReverseMoveFrame =  GetFrame()
 	-- unitGroups[unitReversing.groupId]
@@ -2212,7 +2249,12 @@ function BackingUpEnd(self)
 	SuddenStopCheck(self)
 	unitReversing.groupIdAssigned = false
 	-- groupId is cleared here
-	CheckExistingGroups(unitReversing, GetGroup(playerTeam, groupId), groupId)
+	local group = GetGroup(playerTeam, groupId)
+	if group ~= nil then
+		RemoveUnitFromGroup(self, group)
+		RemoveUnitFromGroupFix(self, group, unitId) 
+		CheckExistingGroups(unitReversing, group, groupId)
+	end
 end
 
 -- USER_72 has ended, remove NO_COLLISIONS and speed buff if this unit has it.
