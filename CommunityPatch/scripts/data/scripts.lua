@@ -1406,7 +1406,7 @@ function UnitIsAttacking(self)
 	if unitReversing == nil then return end
 	--if not ObjectTestModelCondition(self, "IS_FIRING_WEAPON") then
 		unitReversing.wasAttackingBeforeReverse = true
-		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 	--end
 end
 
@@ -2113,7 +2113,7 @@ function GroupUnitOnDeath(self)
 	-- phase fix: forget this unit if it died while phased
 	RemovePhasedUnitEntry(self)
 	RemoveRagedUnitEntry(self)
-	local _,unitReversing = GetUnitReversingData(self)
+	local a,unitReversing = GetUnitReversingData(self)
 	local groupId = unitReversing and unitReversing.groupId
 
 	-- remove from the group its part of
