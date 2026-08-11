@@ -1339,10 +1339,12 @@ function SetUnitAnchor(self, newAnchorId)
 
 end
 
-function RemoveUnitFromGroupFix(self, group, unitId) 
-	local objName = getObjectName(self)
-	if group.unitsToFixByType[objName][unitId] ~= nil then
-		group.unitsToFixByType[objName][unitId] = nil
+-- removes this unit from the table of units to fix of this group
+function RemoveUnitFromGroupFix(self, group, unitId)
+	if group.unitsToFixByType == nil then return end
+	local unitsOfType = group.unitsToFixByType[getObjectName(self)]
+	if unitsOfType ~= nil then
+		unitsOfType[unitId] = nil
 	end
 end
 
@@ -1358,11 +1360,11 @@ function UnitNoLongerMoving(self)
 			local group = GetGroup(tostring(ObjectTeamName(self)), groupId)
 			if group ~= nil then
 				RemoveUnitFromGroupFix(self, group, unitId) 
-				RemoveUnitFromGroup(self, group)
-				unitReversing.isReverseMoving = false
-				unitReversing.timesTriggeredFast = 0
-				unitReversing.timesTriggeredNormal = 0
-				unitReversing.fastTurnWas0Frames = false
+				--RemoveUnitFromGroup(self, group)
+		--		ResetReverseUnitFlags(unitReversing)
+		--		if IsGroupEmpty(group) then
+		--			ClearGroup(tostring(ObjectTeamName(self)), groupId)
+		--		end
 			end
 		end
 	else
@@ -1375,35 +1377,37 @@ function UnitNoLongerMoving(self)
 	--ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitReversing.stringReference, 48, 1)
 end
 
+-- triggered by IS_FIRING_WEAPON object status
 function UnitIsFiringWeapon(self)
 	local unitId,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil then return end
-	if not ObjectTestModelCondition(self, "MOVING") then
+	if not ObjectTestModelCondition(self, "MOVING") and not ObjectTestModelCondition(self, "MOVING_OUT_OF_THE_WAY") then
 		unitReversing.wasAttackingBeforeReverse = false
-		unitReversing.hasComeToAStop = true
+		--unitReversing.hasComeToAStop = true
 		local groupId = unitReversing.groupId
 		if groupId ~= nil then 
 			local group = GetGroup(tostring(ObjectTeamName(self)), groupId)
 			if group ~= nil then
 				RemoveUnitFromGroupFix(self, group, unitId) 
-				RemoveUnitFromGroup(self, group)
-				unitReversing.isReverseMoving = false
-				unitReversing.timesTriggeredFast = 0
-				unitReversing.timesTriggeredNormal = 0
-				unitReversing.fastTurnWas0Frames = false
+				--RemoveUnitFromGroup(self, group)
+				ResetReverseUnitFlags(unitReversing)
+				if IsGroupEmpty(group) then
+					ClearGroup(tostring(ObjectTeamName(self)), groupId)
+				end
 			end
 		end
-		ExecuteAction("NAMED_FLASH", self, 2)
+		--ExecuteAction("NAMED_FLASH", self, 2)
 	end
 end
 
+-- triggered by IS_ATTACKING object status
 function UnitIsAttacking(self)
 	local _,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil then return end
-	if not ObjectTestModelCondition(self, "IS_FIRING_WEAPON") then
+	--if not ObjectTestModelCondition(self, "IS_FIRING_WEAPON") then
 		unitReversing.wasAttackingBeforeReverse = true
-		--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-	end
+		ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+	--end
 end
 
 function CheckForObjReverseBugging(self, frameDiff)
@@ -1836,7 +1840,7 @@ function AssignRandomAnchor(self)
 			SetUnitAnchor(self, randomUnitId)
 		end
 	end
-	ObjectBroadcastEventToAllies(self, "UnitAnchorEvent", 35)
+	ObjectBroadcastEventToAllies(self, "UnitAnchorEvent", 50)
 end
 
 -- Triggered by +BACKING_UP
@@ -2048,20 +2052,7 @@ function CheckExistingGroups(unitReversing, group, groupId)
 			-- WriteToFile("groupUnitList.txt", tostring(unitRef) .. "\n")
 			-- if the id is the same as the id in current index clear it
 			if unitsReversing[unitRef] ~= nil and unitsReversing[unitRef].groupId == groupId and EvaluateCondition("NAMED_NOT_DESTROYED", unitsReversing[unitRef].stringReference) then
-				unitsReversing[unitRef].groupId = nil
-				unitsReversing[unitRef].groupIdAssigned = false
-				unitsReversing[unitRef].expectedChecksFlag = false
-				unitsReversing[unitRef].hasBeenCounted = false
-				unitsReversing[unitRef].timesTriggeredFast = 0
-				unitsReversing[unitRef].timesTriggeredNormal = 0
-				--unitsReversing[unitRef].firstFrame = 0
-				unitsReversing[unitRef].isReverseMoving = false
-				-- clear USER_72 and speed bonuses if this entire group no longer is no reverse moving 
-				if ObjectTestModelCondition(unitsReversing[unitRef].selfReference, "USER_72") then
-					--ExecuteAction("NAMED_FLASH", unitsReversing[unitRef].selfReference, 2)
-					BuggedUnitTimeoutEnd(unitsReversing[unitRef].selfReference)
-				end
-				--ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[unitRef].selfReference, 2)
+				ResetReverseUnitFlags(unitsReversing[unitRef])
 			end
 		end
 		--WriteToFile("cleared list.txt", tostring(unitReversing.groupId) .. " " ..  tostring(unitReversing.groupIdAssigned) .. "\n")
@@ -2070,7 +2061,6 @@ function CheckExistingGroups(unitReversing, group, groupId)
 		local playerTeam = tostring(ObjectTeamName(unitReversing.selfReference))
 		if isValidTeam(playerTeam) then 
 			ClearGroup(playerTeam, groupId)
-			--print("clearing group!")
 		end
 		return true
 	end
@@ -2078,6 +2068,24 @@ function CheckExistingGroups(unitReversing, group, groupId)
 	return false
 end
 
+function ResetReverseUnitFlags(unitRef)
+	unitRef.groupId = nil
+	unitRef.groupIdAssigned = false
+	unitRef.expectedChecksFlag = false
+	unitRef.hasBeenCounted = false
+	unitRef.timesTriggeredFast = 0
+	unitRef.timesTriggeredNormal = 0
+	--unitsReversing[unitRef].firstFrame = 0
+	unitRef.isReverseMoving = false
+	-- clear USER_72 and speed bonuses if this entire group no longer is no reverse moving 
+	-- ExecuteAction("NAMED_FLASH_WHITE", unitsReversing[unitRef].selfReference, 2)
+	if ObjectTestModelCondition(unitRef.selfReference, "USER_72") then
+		--ExecuteAction("NAMED_FLASH", unitRef.selfReference, 2)
+		BuggedUnitTimeoutEnd(unitRef.selfReference)
+	end
+end
+
+-- removes this unit from the group of units its in
 function RemoveUnitFromGroup(self, group)
 	local a = getObjectId(self)
 	if group.units ~= nil then
@@ -2251,9 +2259,9 @@ function BackingUpEnd(self)
 	-- groupId is cleared here
 	local group = GetGroup(playerTeam, groupId)
 	if group ~= nil then
-		RemoveUnitFromGroup(self, group)
 		RemoveUnitFromGroupFix(self, group, unitId) 
 		CheckExistingGroups(unitReversing, group, groupId)
+		--RemoveUnitFromGroup(self, group)
 	end
 end
 
