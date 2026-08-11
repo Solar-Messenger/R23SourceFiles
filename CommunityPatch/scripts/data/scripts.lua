@@ -1342,9 +1342,13 @@ end
 -- removes this unit from the table of units to fix of this group
 function RemoveUnitFromGroupFix(self, group, unitId)
 	if group.unitsToFixByType == nil then return end
-	local unitsOfType = group.unitsToFixByType[getObjectName(self)]
+	local objName = getObjectName(self)
+	local unitsOfType = group.unitsToFixByType[objName]
 	if unitsOfType ~= nil then
 		unitsOfType[unitId] = nil
+		if next(unitsOfType) == nil then
+			group.unitsToFixByType[objName] = nil
+		end
 	end
 end
 
@@ -2124,6 +2128,7 @@ function GroupUnitOnDeath(self)
 		--local group = unitGroups[groupId] 
 		-- remove this unit from the group snapshot
 		if group ~= nil then
+			RemoveUnitFromGroupFix(self, group, a)
 			RemoveUnitFromGroup(self, group)
 			-- check if theres no units left in the group and if so , clear the global.
 			local groupWasCleared = CheckExistingGroups(unitReversing, group, groupId)
