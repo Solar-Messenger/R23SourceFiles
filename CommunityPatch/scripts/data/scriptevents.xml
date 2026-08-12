@@ -1126,9 +1126,6 @@
 		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttacking"	ScriptFunctionName="UnitIsAttacking" DebugSingleStep="false"/>
-		<!--<EventHandler EventName="OnFiringWeapon"	ScriptFunctionName="UnitIsFiringWeapon" DebugSingleStep="false"/>
-		<EventHandler EventName="OnReloadingWeapon"	ScriptFunctionName="UnitIsFiringWeapon" DebugSingleStep="false"/> -->
-		<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsAttackingEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="UnitAnchorEvent"	ScriptFunctionName="OptimizedUnitAnchor" DebugSingleStep="false"/>
 		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
@@ -1228,9 +1225,6 @@
 		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttacking"	ScriptFunctionName="UnitIsAttacking" DebugSingleStep="false"/>
-		<!--<EventHandler EventName="OnFiringWeapon"	ScriptFunctionName="UnitIsFiringWeapon" DebugSingleStep="false"/>
-		<EventHandler EventName="OnReloadingWeapon"	ScriptFunctionName="UnitIsFiringWeapon" DebugSingleStep="false"/> -->
-		<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsAttackingEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="UnitAnchorEvent"	ScriptFunctionName="OptimizedUnitAnchor" DebugSingleStep="false"/>
 		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
@@ -1285,9 +1279,6 @@
 		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttacking"	ScriptFunctionName="UnitIsAttacking" DebugSingleStep="false"/>
-		<!--<EventHandler EventName="OnFiringWeapon"	ScriptFunctionName="UnitIsFiringWeapon" DebugSingleStep="false"/>
-		<EventHandler EventName="OnReloadingWeapon"	ScriptFunctionName="UnitIsFiringWeapon" DebugSingleStep="false"/> -->
-		<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsAttackingEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="UnitAnchorEvent"	ScriptFunctionName="OptimizedUnitAnchor" DebugSingleStep="false"/>
 		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
@@ -1329,9 +1320,6 @@
 		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttacking"	ScriptFunctionName="UnitIsAttacking" DebugSingleStep="false"/>
-		<!--<EventHandler EventName="OnFiringWeapon"	ScriptFunctionName="UnitIsFiringWeapon" DebugSingleStep="false"/>
-		<EventHandler EventName="OnReloadingWeapon"	ScriptFunctionName="UnitIsFiringWeapon" DebugSingleStep="false"/> -->
-		<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsAttackingEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="UnitAnchorEvent"	ScriptFunctionName="OptimizedUnitAnchor" DebugSingleStep="false"/>
 		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
@@ -1405,9 +1393,6 @@
 		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttacking"	ScriptFunctionName="UnitIsAttacking" DebugSingleStep="false"/>	
-		<!--<EventHandler EventName="OnFiringWeapon"	ScriptFunctionName="UnitIsFiringWeapon" DebugSingleStep="false"/>
-		<EventHandler EventName="OnReloadingWeapon"	ScriptFunctionName="UnitIsFiringWeapon" DebugSingleStep="false"/> -->
-		<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsAttackingEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="UnitAnchorEvent"	ScriptFunctionName="OptimizedUnitAnchor" DebugSingleStep="false"/>
 		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
