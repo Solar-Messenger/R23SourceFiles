@@ -261,6 +261,13 @@
 				AttributeModifier="Unit_Heroic">
 				<TriggeredBy>Upgrade_Veterancy_HEROIC</TriggeredBy>
 			</AttributeModifierUpgrade>
+
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<HordeAIUpdate
@@ -269,7 +276,7 @@
 				MaxCowerTime="5.0s"
 				MinCowerTime="3.0s"
 				CanAttackWhileContained="true"
-				AILuaEventsList="GDISniperSquadFunctions">
+				AILuaEventsList="GDISniperSquadFunctions_R24">
 				<UnitAITargetChooserData
 					SympathyRange="100.0" />
 			</HordeAIUpdate>

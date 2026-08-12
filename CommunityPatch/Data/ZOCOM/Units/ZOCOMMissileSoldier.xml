@@ -697,9 +697,16 @@
 				ArmorSetFlag="PLAYER_UPGRADE">
 				<TriggeredBy>Upgrade_ZOCOMFieldSuits</TriggeredBy>
 			</ArmorUpgrade>
-			<AudioLoopUpgrade id="GDI_Armory_TiberiumFieldSuitsUpgrade" SoundToPlay="AudioEvent:GDI_Armory_TiberiumFieldSuitsUpgrade"> 
-				<TriggeredBy>Upgrade_ZOCOMFieldSuits</TriggeredBy> 
-			</AudioLoopUpgrade> 
+			<AudioLoopUpgrade id="GDI_Armory_TiberiumFieldSuitsUpgrade" SoundToPlay="AudioEvent:GDI_Armory_TiberiumFieldSuitsUpgrade">
+				<TriggeredBy>Upgrade_ZOCOMFieldSuits</TriggeredBy>
+			</AudioLoopUpgrade>
+
+			<!-- raged -->
+			<AttributeModifierUpgrade
+				id="ModuleTag_AttributeModifierUpgradeRageGen"
+				AttributeModifier="AttributeModifier_RageGenerator">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+			</AttributeModifierUpgrade>
 		</Behaviors>
 		<AI>
 			<AIUpdate
