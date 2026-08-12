@@ -1234,7 +1234,6 @@
 		<EventHandler EventName="OnUser72End"	ScriptFunctionName="BuggedUnitTimeoutEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
-		<EventHandler EventName="OnIsBrakingEnd"	ScriptFunctionName="UnitHasBraked" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttacking"	ScriptFunctionName="UnitIsAttacking" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsAttackingEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMovingAttackingEnd"	ScriptFunctionName="UnitHasStoppedAttackingAndMoving" DebugSingleStep="false"/>
