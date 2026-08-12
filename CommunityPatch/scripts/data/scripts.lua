@@ -176,7 +176,7 @@ BUG_THRESHOLD_LARGE_GROUP = 0.35 -- bugging ratio threshold for groups > LARGE_G
 BUG_THRESHOLD_SMALL_GROUP = 0.70 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.80 -- ratio of units still moving in a group before coming to a sudden stop
-FRAMES_AFTER_COMING_TO_A_STOP = 30 -- number of frames a unit has spent not moving after coming to a stop
+FRAMES_AFTER_COMING_TO_A_STOP = 50 -- number of frames a unit has spent not moving after coming to a stop
 
 unitBugDataTable = {
 	-- PARAMETER DOCUMENTATION:
@@ -1161,8 +1161,6 @@ function GetUnitReversingData(self)
 			expectedChecksFlag = false,
 			groupIdAssigned = false,
 			lastFrameMoveEnd = 0,
-			ignoreMe = false,
-			unitHasMadeAStop = false,
 			--isBeingFollowed = false,
 			beingFollowedBy = {},
 			isReverseMoveHarvester = checkHarv()
@@ -1213,16 +1211,12 @@ function UnitIsMoving(self)
 	if unitReversing == nil then return end
 	-- is more if lastFrameMoveEnd is less
 	local frameDiff = GetFrame() - unitReversing.lastFrameMoveEnd
-	if frameDiff >= FRAMES_AFTER_COMING_TO_A_STOP and not unitReversing.ignoreMe and unitReversing.unitHasMadeAStop then 
+	-- WriteToFile("frameDiff.txt",  "frameDiff: " .. tostring(frameDiff) .. "\n")
+	-- time since the unit stopped moving and attacking and started to move again
+	if frameDiff >= FRAMES_AFTER_COMING_TO_A_STOP then 
 		unitReversing.hasComeToAStop = true
-		--ExecuteAction("NAMED_FLASH", self, 2)
+		--ExecuteAction("NAMED_FLASH", self, 3)
 	else
-		-- edge case for bug 
-		if frameDiff <= 5 then
-			ExecuteAction("NAMED_FLASH_WHITE", self, 2)
-			-- flag units here for special case 
-			unitReversing.ignoreMe = true
-		end
 		unitReversing.hasComeToAStop = false
 	end
 end
@@ -1369,9 +1363,11 @@ function RemoveUnitFromGroupFix(self, group, unitId)
 	end
 end
 
-function UnitHasBraked(self)
+-- -MOVING -ATTACKING 
+function UnitHasStoppedAttackingAndMoving(self)
 	local unitId,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil then return end	
+	unitReversing.lastFrameMoveEnd = GetFrame()
 	--ExecuteAction("NAMED_FLASH_WHITE", self, 2)
 end
 
@@ -1379,8 +1375,6 @@ end
 function UnitNoLongerMoving(self)
 	local unitId,unitReversing = GetUnitReversingData(self)
 	if unitReversing == nil then return end	
-	unitReversing.lastFrameMoveEnd = GetFrame()
-	unitReversing.unitHasMadeAStop = true
 	if not unitReversing.wasAttackingBeforeReverse then
 		unitReversing.hasComeToAStop = true
 		local groupId = unitReversing.groupId
@@ -1444,7 +1438,7 @@ function UnitIsAttackingEnd(self)
 	--if not ObjectTestModelCondition(self, "IS_FIRING_WEAPON") then
 		unitReversing.wasAttackingBeforeReverse = false
 		-- DO THE SAME FOR ATTACKING_POSITION, STRUCTURE!
-		ExecuteAction("NAMED_FLASH", self, 2)
+		-- ExecuteAction("NAMED_FLASH", self, 2)
 	--end
 end
 
@@ -1931,8 +1925,6 @@ function BackingUp(self)
 	-- Reset the flags here to ensure we don't carry over bugs from previous moves
 	resetFlags()
 	unitReversing.hasAlreadyReversed = false
-	unitReversing.ignoreMe = false
-	unitReversing.unitHasMadeAStop = false
 
 	local groupId = unitReversing.groupId 
 	if groupId ~= nil then
