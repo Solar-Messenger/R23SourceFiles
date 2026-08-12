@@ -766,6 +766,10 @@
 		<ObjectStatusEvent Name="OnRider4End">
 			<Conditions>-RIDER4</Conditions>
 		</ObjectStatusEvent>	
+
+		<ObjectStatusEvent Name="OnIsBrakingEnd">
+			<Conditions>-IS_BRAKING</Conditions>
+		</ObjectStatusEvent>	
 		
 		<ObjectStatusEvent Name="OnUnselectable">
 			<Conditions>+UNSELECTABLE</Conditions>
@@ -1224,7 +1228,9 @@
 		<EventHandler EventName="OnUser72End"	ScriptFunctionName="BuggedUnitTimeoutEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/>
 		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
+		<EventHandler EventName="OnIsBrakingEnd"	ScriptFunctionName="UnitHasBraked" DebugSingleStep="false"/>
 		<EventHandler EventName="OnAttacking"	ScriptFunctionName="UnitIsAttacking" DebugSingleStep="false"/>
+		<EventHandler EventName="OnAttackingEnd"	ScriptFunctionName="UnitIsAttackingEnd" DebugSingleStep="false"/>
 		<EventHandler EventName="UnitAnchorEvent"	ScriptFunctionName="OptimizedUnitAnchor" DebugSingleStep="false"/>
 		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
 		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
