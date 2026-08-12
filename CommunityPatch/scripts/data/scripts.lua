@@ -176,7 +176,7 @@ BUG_THRESHOLD_LARGE_GROUP = 0.35 -- bugging ratio threshold for groups > LARGE_G
 BUG_THRESHOLD_SMALL_GROUP = 0.70 -- bugging ratio threshold for groups <= LARGE_GROUP_SIZE
 LARGE_GROUP_SIZE = 30 -- unit count that switches between small/large threshold
 UNITS_STILL_MOVING_THRESHOLD = 0.80 -- ratio of units still moving in a group before coming to a sudden stop
-FRAMES_AFTER_COMING_TO_A_STOP = 50 -- number of frames a unit has spent not moving after coming to a stop
+FRAMES_AFTER_COMING_TO_A_STOP = 25 -- number of frames a unit has spent not moving after coming to a stop
 
 unitBugDataTable = {
 	-- PARAMETER DOCUMENTATION:
@@ -1658,6 +1658,11 @@ function BackingUpFastTurnEnd(self)
 	if unitReversing == nil or unitReversing.groupId == nil then return end
 	local curFrame = GetFrame()
 	-- prevents this from executing when the unit is not moving or has already reverse moved 
+
+	--if unitReversing.hasComeToAStop then
+	--	ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+	--end
+
 	if unitReversing.hasComeToAStop or unitReversing.hasAlreadyReversed or unitReversing.timesTriggeredFast > TURN_TRIGGER_COUNT then return end
 	-- check if its DOCKING or DOCKING_BEGINNING (to prevent harvesters from checking for bugs while docking)
 	if unitReversing.isReverseMoveHarvester then
@@ -1704,6 +1709,9 @@ end
 -- Triggered by +BACKING_UP -TURN_LEFT and +BACKING_UP -TURN_RIGHT
 function BackingUpTurnEnd(self)
     local _,unitReversing = GetUnitReversingData(self)
+	--if unitReversing.hasComeToAStop then
+	--	ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+	--end
 	if unitReversing == nil or unitReversing.hasComeToAStop or unitReversing.hasAlreadyReversed or unitReversing.timesTriggeredNormal >= TURN_TRIGGER_COUNT then return end
 	-- check if its DOCKING or DOCKING_BEGINNING (to prevent harvesters from checking for bugs while docking)
 	if unitReversing.isReverseMoveHarvester then
@@ -2223,6 +2231,9 @@ function SuddenStopCheck(self)
 	local group = GetGroup(playerTeam, groupId)
 	
 	if group == nil or group.reverseUnits == nil or group.reverseUnitCount == nil then return end
+	--if unitReversing.hasComeToAStop then
+	--	ExecuteAction("NAMED_FLASH_WHITE", self, 2)
+	--end
 	if ObjectTestModelCondition(self, "MOVING") or unitReversing.hasBeenFixed or unitReversing.hasComeToAStop or not unitReversing.lastMoveWasReverse then return end
 	-- check if its DOCKING or DOCKING_BEGINNING (to prevent harvesters from checking for bugs while docking)
 	if unitReversing.isReverseMoveHarvester then
