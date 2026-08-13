@@ -3188,30 +3188,65 @@ end
 
 -- ############################# R25 Infantry Garrison Fix  ###################################
 
--- Triggered by USER_2
+-- Triggered by USER_2, squad fires this when Black Disciples or Confessors is researched
 function DispatchEventToGarrisonLeader(self)
 	-- if the squad is inside a garrison, this does not work for the first squad to enter a garrison but thats ok since most games a unit will enter one before black disciples/confessors comes online.
-	if ObjectTestModelCondition(self, "INSIDE_GARRISON") then
-		-- print(tostring(ObjectDescription((squadMemberTable[next(squad.squadMembers)].selfRef))))
+	-- if its garrisoned in a civilian structure and not a vehicle, foxhole needs to have the ENCLOSED status removed 
+	local objId,squad = GetSquadAttributes(self)
+	if ObjectTestModelCondition(self, "INSIDE_GARRISON") and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 61) then
+		--print(tostring(ObjectDescription((squadMemberTable[next(squad.squadMembers)].selfRef))))
 		-- find the banner carrier 
-		local objId,_ = GetSquadAttributes(self)
 		HordeBroadcastEventToMembers(self, "UpgradeInGarrison", tostring(objId))
 	end	
 end
 
--- string is the ref to squad that dispatched the event
+-- string is the ref to squad that dispatched the event (a squad that has either black disciples or confessors as an upgrade)
 function SetToInsideGarrisonState(self, string)
 	if ObjectTestModelCondition(self, "INSIDE_GARRISON") then return end
 	local squad = squadTables[string] 
 	squad.confessorDisciple = self
+	--print("upgrading Upgrade_InGarrison to disciple or confeessor")
 	if not EvaluateCondition("UNIT_HAS_UPGRADE", SetObjectReference(self), "Upgrade_InGarrison") then ObjectGrantUpgrade(self, "Upgrade_InGarrison") end
 end
 
 function RemoveInsideGarrisonStateOnLeader(self)
 	local _,squad = GetSquadAttributes(self)
+	SetToUnselectableOnGarrisonStructureEnd(self)
 	if squad.confessorDisciple == nil then return end
 	if EvaluateCondition("UNIT_HAS_UPGRADE", SetObjectReference(squad.confessorDisciple), "Upgrade_InGarrison") then ObjectRemoveUpgrade(squad.confessorDisciple, "Upgrade_InGarrison") end
 	squad.confessorDisciple = nil
+end
+
+function SetToUnselectableOnGarrisonStructure(self)
+	-- broadcast to horde members if this squad unit has the ENCLOSED status (only garrisonable units get this status, not civ buildings)
+	local _,squad = GetSquadAttributes(self)
+	-- if the squad is not enclosed broadcast an event
+	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 61) then
+		--print("squad is inside a civ structure")
+		for squadMember,_ in squad.squadMembers do
+			local unitRef = squadMemberTable[squadMember].stringRef
+			-- if the unit is not UNSELECTABLE assign it to UNSELECTABLE
+			if EvaluateCondition("NAMED_NOT_DESTROYED", unitRef) and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitRef, 3) then
+				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitRef, 3, 1)
+			end
+		end	
+	end
+end
+
+function SetToUnselectableOnGarrisonStructureEnd(self)
+	-- broadcast to horde members if this squad unit has the ENCLOSED status (only garrisonable units get this status, not civ buildings)
+	local _,squad = GetSquadAttributes(self)
+	-- if the squad is not enclosed broadcast an event
+	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 61) then
+		--print("squad is inside a civ structure and has just left it")
+		for squadMember,_ in squad.squadMembers do
+			local unitRef = squadMemberTable[squadMember].stringRef
+			-- if the unit is UNSELECTABLE assign it to SELECTABLE again
+			if EvaluateCondition("NAMED_NOT_DESTROYED", unitRef) and EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitRef, 3) then
+				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitRef, 3, 0)
+			end
+		end
+	end
 end
 
 function MakeInfantryUnselectable(self)

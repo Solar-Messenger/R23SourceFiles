@@ -1001,6 +1001,7 @@
 		<ScriptedEvent Name="IsItAnEnemyEvent" />
 		<ScriptedEvent Name="EradicatorHexapodEvent" />
 		<ScriptedEvent Name="UpgradeInGarrison" />
+		<!--<ScriptedEvent Name="GarrisonedInAStructure" />-->
     </Events>
     
     <EventList Name="BaseScriptFunctions">
@@ -1011,8 +1012,9 @@
 		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
-		<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="MakeInfantryUnselectable" DebugSingleStep="false"/>
+		<!--<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="MakeInfantryUnselectable" DebugSingleStep="false"/>
 		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="MakeInfantrySelectable" DebugSingleStep="false"/> 
+		<EventHandler EventName="GarrisonedInAStructure"	ScriptFunctionName="MakeInfantryUnselectable" DebugSingleStep="false"/>-->
 	</EventList>
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">
@@ -1161,22 +1163,67 @@
 		<EventHandler EventName="OnRider3End"	ScriptFunctionName="BannerCarrierExistsCheck" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<!-- on garrison event -->
+		<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="SetToUnselectableOnGarrisonStructure" DebugSingleStep="false"/>
+		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="SetToUnselectableOnGarrisonStructureEnd" DebugSingleStep="false"/>
 	</EventList>
 
 	<!-- disciple and confessor squad inf -->
 
-	<EventList Name="BlackHandMilitantSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
+	<EventList Name="BlackHandMilitantSquadFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnUser2"	ScriptFunctionName="DispatchEventToGarrisonLeader" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRallyPoint1" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>		
+		<!-- event for units obtained from sold off, destroyed structures (triggered by USER_10 model state -->		
+		<EventHandler EventName="OnUser10" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>		
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="OnSquadDestroyed_R24" DebugSingleStep="false"/>	
+		<EventHandler EventName="OnRider4"	ScriptFunctionName="GarrisonedInHammerhead" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRider4End"	ScriptFunctionName="GarrisonedInHammerheadEnd" DebugSingleStep="false"/>
+		<!-- new function to receive from horde members that are killed out of the barracks -->
+		<EventHandler EventName="MemberKilledOnBuilt"	ScriptFunctionName="KilledOutOfBarracks" DebugSingleStep="false"/>
+		<!-- check if the horde contains a banner carrier after being healed in the armory -->
+		<EventHandler EventName="OnRider3End"	ScriptFunctionName="BannerCarrierExistsCheck" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<!-- on garrison event -->
+		<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="SetToUnselectableOnGarrisonStructure" DebugSingleStep="false"/>
 		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="RemoveInsideGarrisonStateOnLeader" DebugSingleStep="false"/>
 	</EventList>  
 
-	<EventList Name="NodMilitantSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
+	<EventList Name="NodMilitantSquadFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnUser2"	ScriptFunctionName="DispatchEventToGarrisonLeader" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRallyPoint1" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>		
+		<!-- event for units obtained from sold off, destroyed structures (triggered by USER_10 model state -->		
+		<EventHandler EventName="OnUser10" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>		
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="OnSquadDestroyed_R24" DebugSingleStep="false"/>	
+		<EventHandler EventName="OnRider4"	ScriptFunctionName="GarrisonedInHammerhead" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRider4End"	ScriptFunctionName="GarrisonedInHammerheadEnd" DebugSingleStep="false"/>
+		<!-- new function to receive from horde members that are killed out of the barracks -->
+		<EventHandler EventName="MemberKilledOnBuilt"	ScriptFunctionName="KilledOutOfBarracks" DebugSingleStep="false"/>
+		<!-- check if the horde contains a banner carrier after being healed in the armory -->
+		<EventHandler EventName="OnRider3End"	ScriptFunctionName="BannerCarrierExistsCheck" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<!-- on garrison event -->
+		<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="SetToUnselectableOnGarrisonStructure" DebugSingleStep="false"/>
 		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="RemoveInsideGarrisonStateOnLeader" DebugSingleStep="false"/>
 	</EventList> 
 
-	<EventList Name="NodMilitantRocketSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
+	<EventList Name="NodMilitantRocketSquadFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnUser2"	ScriptFunctionName="DispatchEventToGarrisonLeader" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRallyPoint1" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>		
+		<!-- event for units obtained from sold off, destroyed structures (triggered by USER_10 model state -->		
+		<EventHandler EventName="OnUser10" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>		
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="OnSquadDestroyed_R24" DebugSingleStep="false"/>	
+		<EventHandler EventName="OnRider4"	ScriptFunctionName="GarrisonedInHammerhead" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRider4End"	ScriptFunctionName="GarrisonedInHammerheadEnd" DebugSingleStep="false"/>
+		<!-- new function to receive from horde members that are killed out of the barracks -->
+		<EventHandler EventName="MemberKilledOnBuilt"	ScriptFunctionName="KilledOutOfBarracks" DebugSingleStep="false"/>
+		<!-- check if the horde contains a banner carrier after being healed in the armory -->
+		<EventHandler EventName="OnRider3End"	ScriptFunctionName="BannerCarrierExistsCheck" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<!-- on garrison event -->
+		<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="SetToUnselectableOnGarrisonStructure" DebugSingleStep="false"/>
 		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="RemoveInsideGarrisonStateOnLeader" DebugSingleStep="false"/>
 	</EventList> 
 
@@ -1483,9 +1530,23 @@
 		<!-- <EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/> -->
 	</EventList>
 	<!-- infantry -->
-	<EventList Name="BHConfessorSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
+	<EventList Name="BHConfessorSquadFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnCreated"	ScriptFunctionName="OnConfessorSquadCreated_103" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUser2"	ScriptFunctionName="DispatchEventToGarrisonLeader" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRallyPoint1" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>		
+		<!-- event for units obtained from sold off, destroyed structures (triggered by USER_10 model state -->		
+		<EventHandler EventName="OnUser10" ScriptFunctionName="OnSquadExitRax_R24" DebugSingleStep="false"/>		
+		<EventHandler EventName="OnDestroyed" ScriptFunctionName="OnSquadDestroyed_R24" DebugSingleStep="false"/>	
+		<EventHandler EventName="OnRider4"	ScriptFunctionName="GarrisonedInHammerhead" DebugSingleStep="false"/>
+		<EventHandler EventName="OnRider4End"	ScriptFunctionName="GarrisonedInHammerheadEnd" DebugSingleStep="false"/>
+		<!-- new function to receive from horde members that are killed out of the barracks -->
+		<EventHandler EventName="MemberKilledOnBuilt"	ScriptFunctionName="KilledOutOfBarracks" DebugSingleStep="false"/>
+		<!-- check if the horde contains a banner carrier after being healed in the armory -->
+		<EventHandler EventName="OnRider3End"	ScriptFunctionName="BannerCarrierExistsCheck" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<!-- on garrison event -->
+		<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="SetToUnselectableOnGarrisonStructure" DebugSingleStep="false"/>
 		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="RemoveInsideGarrisonStateOnLeader" DebugSingleStep="false"/>
 	</EventList>  
 
