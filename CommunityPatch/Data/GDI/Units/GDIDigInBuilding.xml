@@ -394,7 +394,7 @@
 				PassengersTestCollisionHeight="-1000"
 				NumberOfExitPaths="1"
 				DoorOpenTime="1"
-				ObjectStatusOfContained="CAN_ATTACK UNSELECTABLE"
+				ObjectStatusOfContained="CAN_ATTACK UNSELECTABLE ENCLOSED RIDER_IS_PILOT"
 				ModifierRequiredTime="100"
 				KillIfEmptyTime="0s"
 				ModelConditionsWhenNotEmpty=""
