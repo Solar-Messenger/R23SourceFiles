@@ -1240,6 +1240,9 @@
 		<EventHandler EventName="OnRider3End"	ScriptFunctionName="BannerCarrierExistsCheck" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<!-- on garrison event -->
+		<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="SetToUnselectableOnGarrisonStructure" DebugSingleStep="false"/>
+		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="SetToUnselectableOnGarrisonStructureEnd" DebugSingleStep="false"/>
 	</EventList>  
 
 	<EventList Name="NodCyborgSquadFunctions_R24" Inherit="GenericSquadFunctions_R24">
