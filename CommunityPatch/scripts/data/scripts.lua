@@ -3191,9 +3191,9 @@ end
 -- Triggered by USER_2, squad fires this when Black Disciples or Confessors is researched
 function DispatchEventToGarrisonLeader(self)
 	-- if the squad is inside a garrison, this does not work for the first squad to enter a garrison but thats ok since most games a unit will enter one before black disciples/confessors comes online.
-	-- if its garrisoned in a civilian structure or foxhole and not a vehicle. foxhole has RIDER_IS_PILOT unique status which we need to check for here as well.
+	-- if its garrisoned in a civilian structure and not a vehicle, foxhole needs to have the ENCLOSED status removed 
 	local objId,squad = GetSquadAttributes(self)
-	if ObjectTestModelCondition(self, "INSIDE_GARRISON") and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 61) and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 40) then
+	if ObjectTestModelCondition(self, "INSIDE_GARRISON") and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 61) then
 		--print(tostring(ObjectDescription((squadMemberTable[next(squad.squadMembers)].selfRef))))
 		-- find the banner carrier 
 		HordeBroadcastEventToMembers(self, "UpgradeInGarrison", tostring(objId))
@@ -3218,10 +3218,10 @@ function RemoveInsideGarrisonStateOnLeader(self)
 end
 
 function SetToUnselectableOnGarrisonStructure(self)
-	-- Only garrisonable units get this status, not civ buildings, foxholes also have a check -> not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 40)
+	-- broadcast to horde members if this squad unit has the ENCLOSED status (only garrisonable units get this status, not civ buildings)
 	local _,squad = GetSquadAttributes(self)
 	-- if the squad is not enclosed broadcast an event
-	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 61) and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 40) then
+	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 61) then
 		--print("squad is inside a civ structure")
 		for squadMember,_ in squad.squadMembers do
 			local unitRef = squadMemberTable[squadMember].stringRef
@@ -3237,7 +3237,7 @@ function SetToUnselectableOnGarrisonStructureEnd(self)
 	-- broadcast to horde members if this squad unit has the ENCLOSED status (only garrisonable units get this status, not civ buildings)
 	local _,squad = GetSquadAttributes(self)
 	-- if the squad is not enclosed broadcast an event
-	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 61) and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 40) then
+	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 61) then
 		--print("squad is inside a civ structure and has just left it")
 		for squadMember,_ in squad.squadMembers do
 			local unitRef = squadMemberTable[squadMember].stringRef
