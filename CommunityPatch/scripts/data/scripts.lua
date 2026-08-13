@@ -3191,7 +3191,7 @@ end
 -- Triggered by USER_2, squad fires this when Black Disciples or Confessors is researched
 function DispatchEventToGarrisonLeader(self)
 	-- if the squad is inside a garrison, this does not work for the first squad to enter a garrison but thats ok since most games a unit will enter one before black disciples/confessors comes online.
-	-- if its garrisoned in a civilian structure and not a vehicle, foxhole needs to have the ENCLOSED status removed 
+	-- if its garrisoned in a civilian structure and not a vehicle
 	local objId,squad = GetSquadAttributes(self)
 	if ObjectTestModelCondition(self, "INSIDE_GARRISON") and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef, 61) then
 		--print(tostring(ObjectDescription((squadMemberTable[next(squad.squadMembers)].selfRef))))
