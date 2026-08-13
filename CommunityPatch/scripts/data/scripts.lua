@@ -3989,7 +3989,9 @@ function OnSquadExitRax_R24(self, isHealed)
 	if squadSize == nil then return end
 	squad.spawnedSize = squadSize
 	--if isHealed then print("has come out of the armory!") end
-	if not isHealed and not squadData.isAirborne and not ObjectTestModelCondition(self, "USER_10") and isSquadExploit(squad) then return end
+	if not isHealed and not squadData.isAirborne and not ObjectTestModelCondition(self, "USER_10") then 
+		isSquadExploit(squad)  
+	end
 	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
 end
 
@@ -4012,9 +4014,7 @@ function isSquadExploit(squad)
 	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))].size-unitsLostSize then 
 		--print("squad exploit detected!")
 		ExecuteAction("NAMED_DELETE", squad.selfRef)
-		return true
 	end
-	return false
 end
 
 -- horde member killed while leaving barracks -> broadcast an event to squads and decrement the squadSize by 1 
