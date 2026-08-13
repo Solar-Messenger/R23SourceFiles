@@ -3226,7 +3226,7 @@ function SetToUnselectableOnGarrisonStructure(self)
 		for squadMember,_ in squad.squadMembers do
 			local unitRef = squadMemberTable[squadMember].stringRef
 			-- if the unit is not UNSELECTABLE assign it to UNSELECTABLE
-			if EvaluateCondition("NAMED_NOT_DESTROYED", unitRef) and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitRef, 3) then
+			if unitRef ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", unitRef) and not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitRef, 3) then
 				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitRef, 3, 1)
 			end
 		end	
@@ -3242,7 +3242,7 @@ function SetToUnselectableOnGarrisonStructureEnd(self)
 		for squadMember,_ in squad.squadMembers do
 			local unitRef = squadMemberTable[squadMember].stringRef
 			-- if the unit is UNSELECTABLE assign it to SELECTABLE again
-			if EvaluateCondition("NAMED_NOT_DESTROYED", unitRef) and EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitRef, 3) then
+			if unitRef ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", unitRef) and EvaluateCondition("UNIT_HAS_OBJECT_STATUS", unitRef, 3) then
 				ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", unitRef, 3, 0)
 			end
 		end
@@ -3922,6 +3922,8 @@ end
 function BannerCarrierExistsCheck(self)
 	--print("coming out of armory!")
 	HordeBroadcastEventToMembers(self, "KillLeader")
+	-- update squad members
+	OnSquadExitRax_R24(self,true)
 end
 
 function GetSquadAttributes(self)
@@ -3976,7 +3978,7 @@ function GetSquadLeader(self, string)
 end
 
 -- When squad appears at rax
-function OnSquadExitRax_R24(self)	
+function OnSquadExitRax_R24(self, isHealed)	
 	--print("squad has finished building")
 	local objId,squad = GetSquadAttributes(self)
 	HordeBroadcastEventToMembers(self, "SquadEvent", tostring(objId))
@@ -3986,8 +3988,8 @@ function OnSquadExitRax_R24(self)
 	-- used for hammerhead garrisoned squads that can fire over structures
 	if squadSize == nil then return end
 	squad.spawnedSize = squadSize
-
-	if not squadData.isAirborne and not ObjectTestModelCondition(self, "USER_10") and isSquadExploit(squad) then return end
+	--if isHealed then print("has come out of the armory!") end
+	if not isHealed and not squadData.isAirborne and not ObjectTestModelCondition(self, "USER_10") and isSquadExploit(squad) then return end
 	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
 end
 
