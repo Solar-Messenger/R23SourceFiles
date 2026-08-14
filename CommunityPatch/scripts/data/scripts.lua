@@ -3514,7 +3514,7 @@ function GrantRageModifier(self, other)
 	if not EvaluateCondition("UNIT_HAS_UPGRADE",ragedUnit.stringRef, "Upgrade_RageGenerator") then ObjectGrantUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator") end
 end
 
--- triggered after 35s by dummy object, its id is already stored by the raged units and can reliably decrement the timesRaged counter for each unit that this object originally raged.
+-- triggered after 6s by dummy object, its id is already stored by the raged units and can reliably decrement the timesRaged counter for each unit that this object originally raged.
 -- triggered onDestroyed of the dummy.
 function RemoveRageModifier(self)
 	-- print("dummy destroyed")
@@ -3540,7 +3540,6 @@ function RemoveRageModifier(self)
 	-- clean up to avoid desyncs
 	for i = 1, getn(unitsToRemove) do
 		local unit = unitsToRemove[i]
-		clearSubTables(ragedUnits[unit].dummyObjects)
 		ragedUnits[unit] = nil
 	end
 end
@@ -3613,7 +3612,6 @@ function RemovePhaseModifier(self)
 	-- clean up to avoid desyncs
 	for i = 1, getn(unitsToRemove) do
 		local unit = unitsToRemove[i]
-		clearSubTables(phasedUnits[unit].dummyObjects)
 		phasedUnits[unit] = nil
 	end
 end
