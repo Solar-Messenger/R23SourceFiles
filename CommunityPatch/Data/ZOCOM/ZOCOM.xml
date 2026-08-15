@@ -2,6 +2,8 @@
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
 	<Includes>
+		<Include source="Units\ZOCOMSniper.xml" type="all"/>
+		<Include source="Units\ZOCOMSpotter.xml" type="all"/>
 		<Include source="Units\ZOCOMMissileSoldier.xml" type="all"/>
 		<Include source="Units\ZOCOMSniperSquad_Veteran.xml" type="all"/>
 		<Include source="Units\ZOCOMMissileSoldierGarrisoned.xml" type="all"/>

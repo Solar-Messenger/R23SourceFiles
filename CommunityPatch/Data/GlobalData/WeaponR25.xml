@@ -493,6 +493,21 @@
 				DamageFXType="NOD_HALLUCINE"
 				DeathType="EXPLODED" >
 			</DamageNugget>
+
+		<AttributeModifierNugget
+			PartitionFilterTestType="SPHERE"
+			AttributeModifierName="AttributeModifier_Hallucinate"
+			Radius="500" >
+			<SpecialObjectFilter
+				Rule="NONE"
+				Include="INFANTRY">
+				<!-- we handle mechas with the normal way -->
+				<IncludeThing>Reaper17CustomizableVehicle</IncludeThing>
+				<IncludeThing>Traveler59CustomizableVehicle</IncludeThing>
+				<IncludeThing>AlienCustomizableVehicle</IncludeThing>
+			</SpecialObjectFilter>
+		</AttributeModifierNugget>
+
 		<WeaponOCLNugget WeaponOCL="OCL_RageDummy" />
 		</Nuggets>
 	</WeaponTemplate>
@@ -507,13 +522,21 @@
 
 			<LuaEventNugget
 				Radius="500.0"
+				PartitionFilterTestType="SPHERE"
 				EventName="RageGeneratorEvent"
 				SendToEnemies="true"
 			>
 				<SpecialObjectFilter
 						Rule="ANY"
-						Include="INFANTRY VEHICLE"
-						Exclude="AIRCRAFT" />
+						Include="VEHICLE"
+						Exclude="AIRCRAFT INFANTRY HORDE">
+				<!-- we handle mechas with the normal way -->
+				<ExcludeThing>Reaper17CustomizableVehicle</ExcludeThing>
+				<ExcludeThing>Traveler59CustomizableVehicle</ExcludeThing>
+				<ExcludeThing>AlienCustomizableVehicle</ExcludeThing>
+				<ExcludeThing>AlienMillipedeBody</ExcludeThing>
+				<ExcludeThing>AlienMillipedeHead</ExcludeThing>
+				</SpecialObjectFilter>
 			</LuaEventNugget>
 		</Nuggets>
 	</WeaponTemplate>

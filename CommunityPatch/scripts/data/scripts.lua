@@ -3548,7 +3548,7 @@ end
 -- expired dummy objects dont evaluate conditions or remove upgrades on dead references.
 function RemoveRagedUnitEntry(self)
 	local objId = getObjectId(self)
-	if ragedUnits[objId] ~= nil then
+	if ragedUnits[objId] ~= nil and type(ragedUnits[objId].dummyObjects) == "table" then
 		clearSubTables(ragedUnits[objId].dummyObjects)
 		ragedUnits[objId] = nil
 	end
@@ -4054,7 +4054,7 @@ function SquadHasBeenUpgraded(self)
 end
 
 function OnSquadDestroyed_R24(self)
-	RemoveRagedUnitEntry(self)
+	--RemoveRagedUnitEntry(self)
 	--print("squad killed")
 	local objId = getObjectId(self)
 	-- clean up squad here
