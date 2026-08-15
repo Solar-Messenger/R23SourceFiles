@@ -3511,7 +3511,7 @@ function GrantRageModifier(self, other)
 		ragedUnit.timesRaged = ragedUnit.timesRaged + 1
 	end
 	-- grant upgrade to enable attributemodifierupgrade module for rage field
-	if not EvaluateCondition("UNIT_HAS_UPGRADE",ragedUnit.stringRef, "Upgrade_RageGenerator") then ObjectGrantUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator") end
+	ObjectGrantUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator")
 end
 
 -- triggered after 6s by dummy object, its id is already stored by the raged units and can reliably decrement the timesRaged counter for each unit that this object originally raged.
@@ -3530,7 +3530,7 @@ function RemoveRageModifier(self)
 		-- check whether the units raged counter has reached 0 and if it has , remove the raged upgrade
 		if ragedUnit.timesRaged <= 0 then
 			--print("rage has ended!")
-			if EvaluateCondition("UNIT_HAS_UPGRADE",ragedUnit.stringRef, "Upgrade_RageGenerator") then ObjectRemoveUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator") end
+			ObjectRemoveUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator")
 			--ExecuteAction("NAMED_FLASH_WHITE", ragedUnit.selfRef, 3)
 			-- use the table key here, it gets the object id of the raged unit
 			tinsert(unitsToRemove, ragedUnitId)
@@ -3583,7 +3583,7 @@ function GrantPhaseModifier(self, other)
 		phasedUnit.timesPhased = phasedUnit.timesPhased + 1
 	end
 	-- grant upgrade to enable attributemodifierupgrade module for phase field
-	if not EvaluateCondition("UNIT_HAS_UPGRADE",phasedUnit.stringRef, "Upgrade_PhaseField") then ObjectGrantUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField") end
+	ObjectGrantUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField")
 end
 
 -- triggered after 35s by dummy object, its id is already stored by the phased units and can reliably decrement the timesPhased counter for each unit that this object originally phased.
@@ -3603,7 +3603,7 @@ function RemovePhaseModifier(self)
 		-- check whether the units phased counter has reached 0 and if it has , remove the phased upgrade
 		if phasedUnit.timesPhased <= 0 then
 			--print("phase has ended!")
-			if EvaluateCondition("UNIT_HAS_UPGRADE",phasedUnit.stringRef, "Upgrade_PhaseField") then ObjectRemoveUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField") end
+			ObjectRemoveUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField") 
 			-- use the table key here, it gets the object id of the phased unit
 			tinsert(unitsToRemove, phasedUnitId)
 		end
@@ -4063,7 +4063,7 @@ end
 
 -- when a member dies clear it up here, Triggered by +DESTROYED
 function OnMemberDestroyed_R24(self)
-	RemoveRagedUnitEntry(self)
+	--RemoveRagedUnitEntry(self)
 	local objId,squadMember = GetSquadMemberAttributes(self)
 	-- was the unit moving to rally point while it was destroyed?
 	--print("member killed!")
