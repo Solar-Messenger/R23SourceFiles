@@ -3987,7 +3987,8 @@ function OnSquadExitRax_R24(self, isHealed)
 	if squadSize == nil then return end
 	squad.spawnedSize = squadSize
 	--if isHealed then print("has come out of the armory!") end
-	if not isHealed and not squadData.isAirborne and not ObjectTestModelCondition(self, "USER_10") then 
+	if strfind(tostring(ObjectTeamName(self)), "Player_") ~= nil and not isHealed and not squadData.isAirborne and not ObjectTestModelCondition(self, "USER_10") then 
+		--print("checking for squad exploit!")
 		isSquadExploit(squad)  
 	end
 	--WriteToFile("squadSize.txt",  "Current squad size: " .. tostring(squadSize) .. "\n")
