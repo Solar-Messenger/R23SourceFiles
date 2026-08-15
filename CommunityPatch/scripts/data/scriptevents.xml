@@ -1714,12 +1714,6 @@
 	</EventList>
 
 	<EventList Name="Reaper17CustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
-		<!-- phase field event -->
-		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<!-- this needs to be a wrapper that removes both RemovePhasedUnitEntry and RemoveRagedUnitEntry -->
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedAndRagedUnitEntry" DebugSingleStep="false"/>
-		<!-- For rage status
-		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/> -->
 	</EventList>
 
 	<EventList Name="Traveler59BlinkMastermindFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1734,11 +1728,6 @@
 	</EventList>
 
 	<EventList Name="Traveler59CustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
-		<!-- phase field event -->
-		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedAndRagedUnitEntry" DebugSingleStep="false"/>
-		<!-- For rage status
-		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/> -->
 	</EventList>
 
 	<EventList Name="ZOCOMCommandoFunctions_R24" Inherit="SelectionGroupFunctions_R24">
@@ -1778,10 +1767,6 @@
 	</EventList>
 
 	<EventList Name="AlienCustomizableVehicleFunctions_R24" Inherit="BaseScriptFunctions">
-		<!-- phase field event -->
-		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedAndRagedUnitEntry" DebugSingleStep="false"/>
-		<!-- For rage status -->
 	</EventList>
 
 	<!-- end of infantry -->

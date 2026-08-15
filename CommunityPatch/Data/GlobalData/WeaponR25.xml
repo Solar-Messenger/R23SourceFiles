@@ -396,6 +396,20 @@
 			MinSeconds="0.1s"
 			MaxSeconds="0.1s" />
 		<Nuggets>
+			<AttributeModifierNugget
+				Radius="100.0"
+				PartitionFilterTestType="CIRCLE"
+				ForbiddenTargetObjectStatus="IN_STASIS"
+				AttributeModifierName="AttributeModifier_AlienPhaseField">
+				<SpecialObjectFilter
+					Relationship="ALLIES">
+					<IncludeThing>Reaper17CustomizableVehicle</IncludeThing>
+					<IncludeThing>Traveler59CustomizableVehicle</IncludeThing>
+					<IncludeThing>AlienCustomizableVehicle</IncludeThing>
+				</SpecialObjectFilter>
+
+			</AttributeModifierNugget>
+
 			<WeaponOCLNugget WeaponOCL="OCL_PhaseDummy" />
 		</Nuggets>
 	</WeaponTemplate>
@@ -413,12 +427,14 @@
 
 		<LuaEventNugget
 			Radius="100.0"
+			PartitionFilterTestType="CIRCLE"
 			EventName="PhaseFieldEvent"
 			SendToAllies="true"
 		>
 			<SpecialObjectFilter
 					Relationship="ALLIES"
 					Rule="ANY"
+					ForbiddenTargetObjectStatus="IN_STASIS"
 					Exclude="AIRCRAFT INFANTRY"
 					Include="VEHICLE">
 					<!-- MCVs are phaseable, including the scrin family unpacking objects for
@@ -431,6 +447,11 @@
 					<IncludeThing>Traveler59MCV</IncludeThing>
 					<IncludeThing>Traveler59MCVUnpacking</IncludeThing>
 					<ExcludeThing>Viceroid</ExcludeThing>
+					<ExcludeThing>Reaper17CustomizableVehicle</ExcludeThing>
+					<ExcludeThing>Traveler59CustomizableVehicle</ExcludeThing>
+					<ExcludeThing>AlienCustomizableVehicle</ExcludeThing>
+					<ExcludeThing>AlienMillipedeBody</ExcludeThing>
+					<ExcludeThing>AlienMillipedeHead</ExcludeThing>
 				</SpecialObjectFilter>
 		</LuaEventNugget>
 		</Nuggets>
