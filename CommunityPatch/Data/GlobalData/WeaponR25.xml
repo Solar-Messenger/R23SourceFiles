@@ -400,14 +400,14 @@
 				Radius="100.0"
 				PartitionFilterTestType="CIRCLE"
 				ForbiddenTargetObjectStatus="IN_STASIS"
-				AttributeModifierName="AttributeModifier_AlienPhaseField">
+				AttributeModifierName="AttributeModifier_AlienPhaseFieldMechas">
 				<SpecialObjectFilter
+					Rule="NONE"
 					Relationship="ALLIES">
 					<IncludeThing>Reaper17CustomizableVehicle</IncludeThing>
 					<IncludeThing>Traveler59CustomizableVehicle</IncludeThing>
 					<IncludeThing>AlienCustomizableVehicle</IncludeThing>
 				</SpecialObjectFilter>
-
 			</AttributeModifierNugget>
 
 			<WeaponOCLNugget WeaponOCL="OCL_PhaseDummy" />
