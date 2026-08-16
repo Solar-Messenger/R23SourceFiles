@@ -3548,8 +3548,8 @@ end
 -- expired dummy objects dont evaluate conditions or remove upgrades on dead references.
 function RemoveRagedUnitEntry(self)
 	local objId = getObjectId(self)
-	if ragedUnits[objId] ~= nil and type(ragedUnits[objId].dummyObjects) == "table" then
-		clearSubTables(ragedUnits[objId].dummyObjects)
+	if ragedUnits[objId] ~= nil then
+		--clearSubTables(ragedUnits[objId].dummyObjects)
 		ragedUnits[objId] = nil
 	end
 end
@@ -3621,7 +3621,7 @@ end
 function RemovePhasedUnitEntry(self)
 	local objId = getObjectId(self)
 	if phasedUnits[objId] ~= nil then
-		clearSubTables(phasedUnits[objId].dummyObjects)
+		--clearSubTables(phasedUnits[objId].dummyObjects)
 		phasedUnits[objId] = nil
 	end
 end
