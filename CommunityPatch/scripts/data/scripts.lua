@@ -3506,12 +3506,14 @@ function GrantRageModifier(self, other)
 
 	-- this unit was raged by this specific dummy object, add it to a subtable and increment the timesRaged counter.
 	local dummyObjectId = getObjectId(other)
-	if ragedUnit.dummyObjects[dummyObjectId] == nil then
-		ragedUnit.dummyObjects[dummyObjectId] = true
-		ragedUnit.timesRaged = ragedUnit.timesRaged + 1
+	if ragedUnit ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", ragedUnit.stringReference) then
+		if ragedUnit.dummyObjects[dummyObjectId] == nil then
+			ragedUnit.dummyObjects[dummyObjectId] = true
+			ragedUnit.timesRaged = ragedUnit.timesRaged + 1
+		end
+		-- grant upgrade to enable attributemodifierupgrade module for rage field
+		ObjectGrantUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator")
 	end
-	-- grant upgrade to enable attributemodifierupgrade module for rage field
-	ObjectGrantUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator")
 end
 
 -- triggered after 6s by dummy object, its id is already stored by the raged units and can reliably decrement the timesRaged counter for each unit that this object originally raged.
@@ -3522,18 +3524,20 @@ function RemoveRageModifier(self)
 	local objId = getObjectId(self)
 	local unitsToRemove = {}
 	for ragedUnitId,ragedUnit in ragedUnits do
-		-- check if this unit was raged by this expired dummy object and if it was, decrement the timesRaged counter.
-		if ragedUnit.dummyObjects[objId] ~= nil then
-			ragedUnit.timesRaged = ragedUnit.timesRaged - 1
-			ragedUnit.dummyObjects[objId] = nil
-		end
-		-- check whether the units raged counter has reached 0 and if it has , remove the raged upgrade
-		if ragedUnit.timesRaged <= 0 then
-			--print("rage has ended!")
-			ObjectRemoveUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator")
-			--ExecuteAction("NAMED_FLASH_WHITE", ragedUnit.selfRef, 3)
-			-- use the table key here, it gets the object id of the raged unit
-			tinsert(unitsToRemove, ragedUnitId)
+		if ragedUnit ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", ragedUnit.stringReference) then
+			-- check if this unit was raged by this expired dummy object and if it was, decrement the timesRaged counter.
+			if ragedUnit.dummyObjects[objId] ~= nil then
+				ragedUnit.timesRaged = ragedUnit.timesRaged - 1
+				ragedUnit.dummyObjects[objId] = nil
+			end
+			-- check whether the units raged counter has reached 0 and if it has , remove the raged upgrade
+			if ragedUnit.timesRaged <= 0 then
+				--print("rage has ended!")
+				ObjectRemoveUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator")
+				--ExecuteAction("NAMED_FLASH_WHITE", ragedUnit.selfRef, 3)
+				-- use the table key here, it gets the object id of the raged unit
+				tinsert(unitsToRemove, ragedUnitId)
+			end
 		end
 	end
 
