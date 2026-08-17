@@ -2149,10 +2149,8 @@ function RemoveUnitFromGroup(self, group)
 	end
 end
 
--- Clears the unitsReversing table of this unit. If it belongs in a group, remove it.
-function GroupUnitOnDeath(self)
-	local a,unitReversing = GetUnitReversingData(self)
-
+function GroupUnitOnDeathAvatar(self)
+	local _,unitReversing = GetUnitReversingData(self)
 	-- remove phase and rage upgrades if they have them 
 	if EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.stringReference, "Upgrade_PhaseField") then
 		ObjectRemoveUpgrade(self, "Upgrade_PhaseField") 
@@ -2160,8 +2158,14 @@ function GroupUnitOnDeath(self)
 
 	if EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.stringReference, "Upgrade_RageGenerator") then
 		ObjectRemoveUpgrade(self, "Upgrade_RageGenerator") 
-	end		
+	end	
+	
+	GroupUnitOnDeath(self)
+end
 
+-- Clears the unitsReversing table of this unit. If it belongs in a group, remove it.
+function GroupUnitOnDeath(self)
+	local a,unitReversing = GetUnitReversingData(self)
 	local groupId = unitReversing and unitReversing.groupId
 
 	-- remove from the group its part of
