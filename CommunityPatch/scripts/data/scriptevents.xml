@@ -1472,7 +1472,6 @@
 	<EventList Name="MCVFunctions_R24" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnUnpacking"	ScriptFunctionName="OnMCVUnpacking" DebugSingleStep="false"/>
 		<EventHandler EventName="OnUnpackingEnd"	ScriptFunctionName="OnMCVUnpackingEnd" DebugSingleStep="false"/>
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedAndRagedUnitEntry" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 		<!-- <EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/> -->
@@ -2066,7 +2065,6 @@
 	<EventList Name="AlienMCVUnpackingEventsList" Inherit="BaseScriptFunctions">
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedAndRagedUnitEntry" DebugSingleStep="false"/>
 		<EventHandler EventName="OnCreated" ScriptFunctionName="onCreatedAlienMCVUnpacking" DebugSingleStep="false"/>
 		<!-- For rage status -->
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
@@ -2366,7 +2364,6 @@
 	<EventList Name="NODShadowSquadBeaconFunctions" Inherit="BaseScriptFunctions">
 		<!-- phase field event -->
 		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="RemovePhasedUnitEntry" DebugSingleStep="false"/>
 		<EventHandler EventName="OnCreated"		ScriptFunctionName="OnNODShadowSquadBeaconCreated" DebugSingleStep="false"/>
 	</EventList>
 	

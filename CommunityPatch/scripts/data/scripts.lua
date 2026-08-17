@@ -2151,9 +2151,6 @@ end
 
 -- Clears the unitsReversing table of this unit. If it belongs in a group, remove it.
 function GroupUnitOnDeath(self)
-	-- phase fix: forget this unit if it died while phased
-	RemovePhasedUnitEntry(self)
-	RemoveRagedUnitEntry(self)
 	local a,unitReversing = GetUnitReversingData(self)
 	local groupId = unitReversing and unitReversing.groupId
 
@@ -3506,7 +3503,7 @@ function GrantRageModifier(self, other)
 
 	-- this unit was raged by this specific dummy object, add it to a subtable and increment the timesRaged counter.
 	local dummyObjectId = getObjectId(other)
-	if ragedUnit ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", ragedUnit.stringReference) then
+	if ragedUnit ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", ragedUnit.stringRef) then
 		if ragedUnit.dummyObjects[dummyObjectId] == nil then
 			ragedUnit.dummyObjects[dummyObjectId] = true
 			ragedUnit.timesRaged = ragedUnit.timesRaged + 1
@@ -3524,37 +3521,31 @@ function RemoveRageModifier(self)
 	local objId = getObjectId(self)
 	local unitsToRemove = {}
 	for ragedUnitId,ragedUnit in ragedUnits do
-		if ragedUnit ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", ragedUnit.stringReference) then
-			-- check if this unit was raged by this expired dummy object and if it was, decrement the timesRaged counter.
-			if ragedUnit.dummyObjects[objId] ~= nil then
-				ragedUnit.timesRaged = ragedUnit.timesRaged - 1
-				ragedUnit.dummyObjects[objId] = nil
-			end
-			-- check whether the units raged counter has reached 0 and if it has , remove the raged upgrade
-			if ragedUnit.timesRaged <= 0 then
-				--print("rage has ended!")
-				ObjectRemoveUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator")
-				--ExecuteAction("NAMED_FLASH_WHITE", ragedUnit.selfRef, 3)
-				-- use the table key here, it gets the object id of the raged unit
-				tinsert(unitsToRemove, ragedUnitId)
-			end
+		if ragedUnit ~= nil then
+			if EvaluateCondition("NAMED_NOT_DESTROYED", ragedUnit.stringRef) then
+				-- check if this unit was raged by this expired dummy object and if it was, decrement the timesRaged counter.
+				if ragedUnit.dummyObjects[objId] ~= nil then
+					ragedUnit.timesRaged = ragedUnit.timesRaged - 1
+					ragedUnit.dummyObjects[objId] = nil
+				end
+				-- check whether the units raged counter has reached 0 and if it has , remove the raged upgrade
+				if ragedUnit.timesRaged <= 0 then
+					--print("rage has ended!")
+					ObjectRemoveUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator")
+					--ExecuteAction("NAMED_FLASH_WHITE", ragedUnit.selfRef, 3)
+					-- use the table key here, it gets the object id of the raged unit		
+					tinsert(unitsToRemove, ragedUnitId)	
+				end
+			else
+				-- unit is destroyed, adding to unitsToRemove table
+				tinsert(unitsToRemove, ragedUnitId)	
+			end			
 		end
 	end
-
 	-- clean up to avoid desyncs
 	for i = 1, getn(unitsToRemove) do
 		local unit = unitsToRemove[i]
 		ragedUnits[unit] = nil
-	end
-end
-
--- removes a units entry from the raged units table. called when a raged unit dies so that
--- expired dummy objects dont evaluate conditions or remove upgrades on dead references.
-function RemoveRagedUnitEntry(self)
-	local objId = getObjectId(self)
-	if ragedUnits[objId] ~= nil then
-		--clearSubTables(ragedUnits[objId].dummyObjects)
-		ragedUnits[objId] = nil
 	end
 end
 
@@ -3599,42 +3590,32 @@ function RemovePhaseModifier(self)
 	local objId = getObjectId(self)
 	local unitsToRemove = {}
 	for phasedUnitId,phasedUnit in phasedUnits do
-		-- check if this unit was phased by this expired dummy object and if it was, decrement the timesPhased counter.
-		if phasedUnit.dummyObjects[objId] ~= nil then
-			phasedUnit.timesPhased = phasedUnit.timesPhased - 1
-			phasedUnit.dummyObjects[objId] = nil
-		end
-		-- check whether the units phased counter has reached 0 and if it has , remove the phased upgrade
-		if phasedUnit.timesPhased <= 0 then
-			--print("phase has ended!")
-			ObjectRemoveUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField") 
-			-- use the table key here, it gets the object id of the phased unit
-			tinsert(unitsToRemove, phasedUnitId)
+		if phasedUnit ~= nil then
+			if EvaluateCondition("NAMED_NOT_DESTROYED", phasedUnit.stringRef) then
+				-- check if this unit was phased by this expired dummy object and if it was, decrement the timesPhased counter.
+				if phasedUnit.dummyObjects[objId] ~= nil then
+					phasedUnit.timesPhased = phasedUnit.timesPhased - 1
+					phasedUnit.dummyObjects[objId] = nil
+				end
+				-- check whether the units phase counter has reached 0 and if it has , remove the phased upgrade
+				if phasedUnit.timesPhased <= 0 then
+					--print("rage has ended!")
+					ObjectRemoveUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField")
+					-- ExecuteAction("NAMED_FLASH_WHITE", phasedUnit.selfRef, 3)
+					-- use the table key here, it gets the object id of the phased unit		
+					tinsert(unitsToRemove, phasedUnitId)	
+				end
+			else
+				-- unit is destroyed, adding to unitsToRemove table
+				tinsert(unitsToRemove, phasedUnitId)
+			end
 		end
 	end
-
 	-- clean up to avoid desyncs
 	for i = 1, getn(unitsToRemove) do
 		local unit = unitsToRemove[i]
 		phasedUnits[unit] = nil
 	end
-end
-
--- removes a units entry from the phased units table. called when a phased unit dies so that
--- expired dummy objects dont evaluate conditions or remove upgrades on dead references.
-function RemovePhasedUnitEntry(self)
-	local objId = getObjectId(self)
-	if phasedUnits[objId] ~= nil then
-		--clearSubTables(phasedUnits[objId].dummyObjects)
-		phasedUnits[objId] = nil
-	end
-end
-
--- wrapper for units that have both the phase field and rage generator attribute modifier
--- modules. bound to OnDestroyed so both tables forget the unit when it dies.
-function RemovePhasedAndRagedUnitEntry(self)
-	RemovePhasedUnitEntry(self)
-	RemoveRagedUnitEntry(self)
 end
 
 -- ############################# R25 Squad/Member Data ###################################
@@ -4059,7 +4040,6 @@ function SquadHasBeenUpgraded(self)
 end
 
 function OnSquadDestroyed_R24(self)
-	--RemoveRagedUnitEntry(self)
 	--print("squad killed")
 	local objId = getObjectId(self)
 	-- clean up squad here
@@ -4068,7 +4048,6 @@ end
 
 -- when a member dies clear it up here, Triggered by +DESTROYED
 function OnMemberDestroyed_R24(self)
-	--RemoveRagedUnitEntry(self)
 	local objId,squadMember = GetSquadMemberAttributes(self)
 	-- was the unit moving to rally point while it was destroyed?
 	--print("member killed!")
