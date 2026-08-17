@@ -2152,6 +2152,16 @@ end
 -- Clears the unitsReversing table of this unit. If it belongs in a group, remove it.
 function GroupUnitOnDeath(self)
 	local a,unitReversing = GetUnitReversingData(self)
+
+	-- remove phase and rage upgrades if they have them 
+	if EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.stringReference, "Upgrade_PhaseField") then
+		ObjectRemoveUpgrade(self, "Upgrade_PhaseField") 
+	end		
+
+	if EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.stringReference, "Upgrade_RageGenerator") then
+		ObjectRemoveUpgrade(self, "Upgrade_RageGenerator") 
+	end		
+
 	local groupId = unitReversing and unitReversing.groupId
 
 	-- remove from the group its part of
@@ -3509,7 +3519,9 @@ function GrantRageModifier(self, other)
 			ragedUnit.timesRaged = ragedUnit.timesRaged + 1
 		end
 		-- grant upgrade to enable attributemodifierupgrade module for rage field
-		ObjectGrantUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator")
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",ragedUnit.stringRef, "Upgrade_RageGenerator") then
+			ObjectGrantUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator")
+		end
 	end
 end
 
@@ -3531,7 +3543,9 @@ function RemoveRageModifier(self)
 				-- check whether the units raged counter has reached 0 and if it has , remove the raged upgrade
 				if ragedUnit.timesRaged <= 0 then
 					--print("rage has ended!")
-					ObjectRemoveUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator")
+					if EvaluateCondition("UNIT_HAS_UPGRADE",ragedUnit.stringRef, "Upgrade_RageGenerator") then
+						ObjectRemoveUpgrade(ragedUnit.selfRef, "Upgrade_RageGenerator")
+					end
 					--ExecuteAction("NAMED_FLASH_WHITE", ragedUnit.selfRef, 3)
 					-- use the table key here, it gets the object id of the raged unit		
 					tinsert(unitsToRemove, ragedUnitId)	
@@ -3578,7 +3592,9 @@ function GrantPhaseModifier(self, other)
 		phasedUnit.timesPhased = phasedUnit.timesPhased + 1
 	end
 	-- grant upgrade to enable attributemodifierupgrade module for phase field
-	ObjectGrantUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField")
+	if not EvaluateCondition("UNIT_HAS_UPGRADE",phasedUnit.stringRef, "Upgrade_PhaseField") then
+		ObjectGrantUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField")
+	end
 end
 
 -- triggered after 35s by dummy object, its id is already stored by the phased units and can reliably decrement the timesPhased counter for each unit that this object originally phased.
@@ -3600,7 +3616,9 @@ function RemovePhaseModifier(self)
 				-- check whether the units phase counter has reached 0 and if it has , remove the phased upgrade
 				if phasedUnit.timesPhased <= 0 then
 					--print("rage has ended!")
-					ObjectRemoveUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField")
+					if EvaluateCondition("UNIT_HAS_UPGRADE",phasedUnit.stringRef, "Upgrade_PhaseField") then
+						ObjectRemoveUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField")
+					end
 					-- ExecuteAction("NAMED_FLASH_WHITE", phasedUnit.selfRef, 3)
 					-- use the table key here, it gets the object id of the phased unit		
 					tinsert(unitsToRemove, phasedUnitId)	
