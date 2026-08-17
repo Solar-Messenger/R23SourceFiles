@@ -1827,6 +1827,17 @@
 		<!-- <EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/> -->
 		<!-- <EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/> -->
 	</EventList>
+	
+		<EventList Name="NODAvatarFunctions_R24" Inherit="SelectionGroupFunctions_R24">
+		<EventHandler EventName="OnCreated" ScriptFunctionName="OnNODAvatarCreated" DebugSingleStep="false"/>
+		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
+		<!-- phase field event -->
+		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
+		<!-- For rage status -->
+		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
+		<!-- <EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/> -->
+		<!-- <EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/> -->
+	</EventList>
 
 	<EventList Name="BlackHandMCVFunctions_R24" Inherit="SelectionGroupFunctions_R24">
 	</EventList>
@@ -1897,24 +1908,6 @@
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 		<!-- <EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/> -->
 		<!-- <EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/> -->
-	</EventList>
-
-	<EventList Name="NODAvatarFunctions_R24" Inherit="BaseScriptFunctions">
-		<EventHandler EventName="OnCreated" ScriptFunctionName="OnNODAvatarCreated" DebugSingleStep="false"/>
-		<EventHandler EventName="OnUser5" ScriptFunctionName="DelayHuskHide" DebugSingleStep="false"/>
-		<!-- phase field event -->
-		<EventHandler EventName="PhaseFieldEvent"	ScriptFunctionName="GrantPhaseModifier" DebugSingleStep="false"/>
-		<!-- For rage status -->
-		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
-		<!-- <EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/> -->
-		<!-- <EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/> -->
-		<EventHandler EventName="OnDestroyed" ScriptFunctionName="GroupUnitOnDeathAvatar" DebugSingleStep="false"/>
-		<EventHandler EventName="OnSelected"	ScriptFunctionName="AddToUnitSelection" DebugSingleStep="false"/>
-		<EventHandler EventName="OnSelectedEnd"	ScriptFunctionName="RemoveFromUnitSelection" DebugSingleStep="false"/>
-		<EventHandler EventName="MovingOutOfTheWay"	ScriptFunctionName="UnitGettingOutOfTheWay" DebugSingleStep="false"/>
-		<EventHandler EventName="GettingOutOfTheWayEvent"	ScriptFunctionName="GettingOutOfTheWayEvent" DebugSingleStep="false"/>
-		<EventHandler EventName="OnMoving"	ScriptFunctionName="UnitIsMoving" DebugSingleStep="false"/>
-		<EventHandler EventName="OnMovingEnd"	ScriptFunctionName="UnitNoLongerMoving" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NODMCVFunctions_R24" Inherit="SelectionGroupFunctions_R24">

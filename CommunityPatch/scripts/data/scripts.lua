@@ -2149,20 +2149,6 @@ function RemoveUnitFromGroup(self, group)
 	end
 end
 
-function GroupUnitOnDeathAvatar(self)
-	local _,unitReversing = GetUnitReversingData(self)
-	-- remove phase and rage upgrades if they have them 
-	if EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.stringReference, "Upgrade_PhaseField") then
-		ObjectRemoveUpgrade(self, "Upgrade_PhaseField") 
-	end		
-
-	if EvaluateCondition("UNIT_HAS_UPGRADE",unitReversing.stringReference, "Upgrade_RageGenerator") then
-		ObjectRemoveUpgrade(self, "Upgrade_RageGenerator") 
-	end	
-	
-	GroupUnitOnDeath(self)
-end
-
 -- Clears the unitsReversing table of this unit. If it belongs in a group, remove it.
 function GroupUnitOnDeath(self)
 	local a,unitReversing = GetUnitReversingData(self)
@@ -3563,7 +3549,9 @@ function RemoveRageModifier(self)
 	-- clean up to avoid desyncs
 	for i = 1, getn(unitsToRemove) do
 		local unit = unitsToRemove[i]
+		--WriteToFile("ragedUnits.txt",  tostring(ragedUnits[unit]) .. "\n")
 		ragedUnits[unit] = nil
+		
 	end
 end
 

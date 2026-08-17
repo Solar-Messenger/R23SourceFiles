@@ -537,6 +537,16 @@
 				UnHideSubObjectsOnRemove="False">
 				<TriggeredBy>Upgrade_AvatarStealthDetect</TriggeredBy>
 			</SubObjectsUpgrade>
+			<RemoveUpgradeUpgrade
+				id="ModuleTag_CommandSet_RemoveRage">
+				<TriggeredBy>Upgrade_RageGenerator</TriggeredBy>
+				<UpgradeToRemove>Upgrade_RageGenerator</UpgradeToRemove>
+			</RemoveUpgradeUpgrade>
+			<RemoveUpgradeUpgrade
+				id="ModuleTag_CommandSet_RemovePhase">
+				<TriggeredBy>Upgrade_PhaseField</TriggeredBy>
+				<UpgradeToRemove>Upgrade_PhaseField</UpgradeToRemove>
+			</RemoveUpgradeUpgrade>
 			<!--
 			<ModelConditionUpgrade
 				id="081018FB"
