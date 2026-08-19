@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Tags></Tags>
+	<Includes>
+		<Include
+			type="all"
+			source="ART:NODMagneticMine.w3x" />
+	</Includes>
 	<GameObject
-		id="GDIMine"
-		Side="GDI"
+		id="MarkedOfKaneMagneticMine"
+		Side="MarkedOfKane"
 		EditorSorting="MISC_MAN_MADE"
 		OcclusionDelay="0"
 		KindOf="IMMOBILE SHOW_BEHIND_OCCLUDERS MINE STICK_TO_TERRAIN_SLOPE NO_HEAL_ICON IGNORE_FOR_VICTORY"
-		EditorName="GDIMine">
-		<DisplayName>GDIMine</DisplayName>
+		EditorName="MarkedOfKaneMagneticMine">
+		<DisplayName>Mine</DisplayName>
 		<ArmorSet
 			Armor="NoArmor" />
 		<Draws>
@@ -17,16 +23,13 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT">
 					<Model
-						Name="W3DContainer:NODMine" />
-					<Texture
-						Original="NU_Mine"
-						New="GB_Mine" />	
+						Name="W3DContainer:NODMagneticMine" />
 				</ModelConditionState>
 			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
 			<FireWeaponCollide 
-				CollideWeapon="GDIMinefieldMine"
+				CollideWeapon="MagneticMineWeapon"
 				FireOnce="true"
 				Flags="TARGET_MUST_BE_MOVING" 
 				WhereToFire="OWNER_POSITION"/>
@@ -47,10 +50,10 @@
 					DeathTypesForbidden="EXPLODED"/>
 				<Event
 					Index="onDeath"
-					FX="FX_GDIMineXP" />
+					FX="FX_NodMagneticMinesExp_Sound" />
 			</FXListBehavior>
 		</Behaviors>
-		<AI>
+        <AI>
 			<AIUpdate
 				id="ModuleTag_AI"
 				AutoAcquireEnemiesWhenIdle="NO">				
@@ -59,15 +62,14 @@
 		<Body>
 			<ActiveBody
 				id="ModuleTag_Body"
-				MaxHealth="50.0"
-				InitialHealth="50.0" />
+				MaxHealth="50.0" />
 		</Body>
 		<Geometry
 			IsSmall="true">
 			<Shape
 				Type="CYLINDER"
 				MajorRadius="15.0"
-				Height="10.0"></Shape>
+				Height="10.0"/>
 		</Geometry>
 		<VisionInfo
 			VisionRange="10"

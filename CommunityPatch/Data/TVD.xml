@@ -5,7 +5,7 @@
 		Side="NOD"
 		EditorSorting="SYSTEM"
 		CommandSet="EmptyCommandSet"
-		KindOf="NO_COLLIDE IMMOBILE UNATTACKABLE INERT INERT_SHROUD_REVEALER NOT_AUTOACQUIRABLE IGNORE_FOR_VICTORY"
+		KindOf="NO_COLLIDE IMMOBILE UNATTACKABLE INERT_SHROUD_REVEALER NOT_AUTOACQUIRABLE IGNORE_FOR_VICTORY"
 		RadarPriority="STRUCTURE"
 		EditorName="VeinDetonationChunk">
 		<DisplayName>VeinDetonationChunk</DisplayName>
@@ -35,6 +35,12 @@
 				MinFrames = "60"
 				MaxFrames = "60"/>
 		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="ModuleTag_AI"
+				AutoAcquireEnemiesWhenIdle="NO">				
+			</AIUpdate>
+		</AI>
 		<Body>
 			<HighlanderBody
 				id="ModuleTag_02"
@@ -60,7 +66,7 @@
 		Side="NOD"
 		EditorSorting="SYSTEM"
 		CommandSet="EmptyCommandSet"
-		KindOf="NO_COLLIDE IMMOBILE UNATTACKABLE INERT INERT_SHROUD_REVEALER NOT_AUTOACQUIRABLE IGNORE_FOR_VICTORY"
+		KindOf="NO_COLLIDE IMMOBILE UNATTACKABLE INERT_SHROUD_REVEALER NOT_AUTOACQUIRABLE IGNORE_FOR_VICTORY"
 		RadarPriority="STRUCTURE"
 		EditorName="NODVeinDetonationTrigger">
 		<DisplayName>NODVeinDetonationTrigger</DisplayName>
@@ -97,6 +103,12 @@
 				OneShot = "true"/>
 			</FireWeaponUpdate>
 		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="ModuleTag_AI"
+				AutoAcquireEnemiesWhenIdle="NO">				
+			</AIUpdate>
+		</AI>
 		<Body>
 			<ImmortalBody
 				id="ModuleTag_02"
@@ -211,6 +223,12 @@
 				</DataList>
 			</FloodUpdate>
 		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="ModuleTag_AI"
+				AutoAcquireEnemiesWhenIdle="NO">				
+			</AIUpdate>
+		</AI>
 		<Body>
 			<ImmortalBody
 				id="ModuleTag_02"
