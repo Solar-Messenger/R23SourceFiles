@@ -3549,9 +3549,12 @@ function RemoveRageModifier(self)
 	-- clean up to avoid desyncs
 	for i = 1, getn(unitsToRemove) do
 		local unit = unitsToRemove[i]
-		--WriteToFile("ragedUnits.txt",  tostring(ragedUnits[unit]) .. "\n")
-		ragedUnits[unit] = nil
-		
+		-- clear the dummyObjects from these sub tables
+		if ragedUnits[unit] ~= nil then 
+			clearSubTables(ragedUnits[unit].dummyObjects)
+			--WriteToFile("ragedUnits.txt",  tostring(ragedUnits[unit]) .. "\n")
+			ragedUnits[unit] = nil
+		end
 	end
 end
 
@@ -3624,7 +3627,12 @@ function RemovePhaseModifier(self)
 	-- clean up to avoid desyncs
 	for i = 1, getn(unitsToRemove) do
 		local unit = unitsToRemove[i]
-		phasedUnits[unit] = nil
+		-- clear the dummyObjects from these sub tables
+		if phasedUnits[unit] ~= nil then 
+			clearSubTables(phasedUnits[unit].dummyObjects)
+			--WriteToFile("phasedUnits.txt",  tostring(phasedUnits[unit]) .. "\n")
+			phasedUnits[unit] = nil
+		end
 	end
 end
 
