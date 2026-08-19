@@ -53,6 +53,8 @@
 					FX="FX_GDIMineXP" />
 				<!-- <Event Index="onCreate" FX="FX_NOD_BurrowMine_Deploy" /> no worky -->
 			</FXListBehavior>
+		</Behaviors>
+		<AI>
 			<AIUpdate
 				id="ModuleTag_AI"
 				AutoAcquireEnemiesWhenIdle="NO">				
