@@ -3293,11 +3293,23 @@ function GetSonicEmitterAttributes(self)
 		selfRef = self,
 		killedByEnemy = false,
 		hasGivenXP = false,
-		stringRef = SetObjectReference(self)
+		stringRef = SetObjectReference(self),
+		enableNormalDeathMode = false
 	}
 	return sonicEmitterTable[ObjID]
 end
 
+function EnableNormalDeathMode(self)
+	--print("just became a passenger")
+	local sonic = GetSonicEmitterAttributes(self)
+	sonic.enableNormalDeathMode = true
+end
+
+function DisableNormalDeathMode(self)
+	--print("no longer is a passenger")
+	local sonic = GetSonicEmitterAttributes(self)
+	sonic.enableNormalDeathMode = false
+end
 
 function TimerHasExpired(self)
 	local curFrame = GetFrame()
@@ -3347,10 +3359,20 @@ function MakeSonicEmitterTempImmune(self)
 	else 
 		if strfind(getObjectName(self), "AE73138F") ~= nil then
 			-- spawn zone shatterer rubble
-			ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedImprovedSonicTank")
-		else
+			if not sonic.enableNormalDeathMode then
+				ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedImprovedSonicTank")
+			else 
+				-- just the zone shatterer OCL debris from slow death
+				ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedImprovedSonicTankDebris")
+			end
+		else	
+			if not sonic.enableNormalDeathMode then
 			-- spawn gdi shatterer rubble
-			ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicTank")
+				ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicTank")
+			else
+				-- just the gdi shatterer OCL debris from slow death
+				ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicTankDebris")
+			end
 		end
 	end
 
@@ -3473,7 +3495,12 @@ end
 
 -- wrapper for shatterers/zone shatterers to clear sonicEmitterTable and reverse move table 
 function ShattererOndeath(self)
-	sonicEmitterTable[GetSonicEmitterAttributes(self).selfId] = nil
+	local sonic = GetSonicEmitterAttributes(self)
+	if sonic.enableNormalDeathMode then
+		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_7", 9999, 100)
+	end
+
+	sonicEmitterTable[sonic.selfId] = nil
 	GroupUnitOnDeath(self)
 end
 

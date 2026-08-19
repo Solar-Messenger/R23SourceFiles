@@ -279,6 +279,23 @@
 		</Nuggets>
 	</WeaponTemplate>
 
+	<!-- deploy a destroyed shatterer, debris only -->
+
+	<WeaponTemplate
+		id="SpawnDestroyedSonicTankDebris"
+		Name="SpawnDestroyedSonicTankDebris"
+		RadiusDamageAffects="ALLIES"
+		AttackRange="50000.0"
+		>
+		<FiringDuration
+			MinSeconds="0.1s"
+			MaxSeconds="0.1s" />
+		<Nuggets>
+			<WeaponOCLNugget WeaponOCL="OCL_GDIShattererDebris" />
+		</Nuggets>
+	</WeaponTemplate>
+
+
 	<!-- deploy a destroyed zone shatterer -->
 
 	<WeaponTemplate
@@ -292,6 +309,22 @@
 			MaxSeconds="0.1s" />
 		<Nuggets>
 			<WeaponOCLNugget WeaponOCL="OCL_DestroyedImprovedSonicTank" />
+		</Nuggets>
+	</WeaponTemplate>
+
+	<!-- deploy a destroyed zone shatterer, debris only -->
+
+	<WeaponTemplate
+		id="SpawnDestroyedImprovedSonicTankDebris"
+		Name="SpawnDestroyedImprovedSonicTankDebris"
+		RadiusDamageAffects="ALLIES"
+		AttackRange="50000.0"
+		>
+		<FiringDuration
+			MinSeconds="0.1s"
+			MaxSeconds="0.1s" />
+		<Nuggets>
+			<WeaponOCLNugget WeaponOCL="OCL_SteelTalonsSteelShattererDebris" />
 		</Nuggets>
 	</WeaponTemplate>
 

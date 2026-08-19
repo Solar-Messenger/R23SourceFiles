@@ -665,6 +665,14 @@
                     ParseCondStateType="PARSE_DEFAULT">
                 </AnimationState>
 				<AnimationState
+                    ParseCondStateType="PARSE_NORMAL"
+                    ConditionsYes="DYING USER_6 USER_7">
+                    <Script>
+                        CurDrawableShowSubObject("SHATTERER_BODY")
+						CurDrawableShowSubObject("STEELSHATTERER_CANNON1")
+                    </Script>
+                </AnimationState>
+				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING USER_3 USER_6 ">
 					<Script>
@@ -682,7 +690,7 @@
                 </AnimationState>
 				<AnimationState
                     ParseCondStateType="PARSE_NORMAL"
-                    ConditionsYes="DYING">
+                    ConditionsYes="DYING USER_6">
                     <Script>
                         CurDrawableHideSubObject("SHATTERER_BODY")
 						CurDrawableHideSubObject("STEELSHATTERER_CANNON1")

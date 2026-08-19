@@ -286,14 +286,21 @@
                 </AnimationState>
                 <AnimationState
                     ParseCondStateType="PARSE_NORMAL"
+                    ConditionsYes="DYING USER_6 USER_7">
+                    <Script>
+                        CurDrawableShowSubObject("SHATTERER_BODY")
+                    </Script>
+                </AnimationState>
+                <AnimationState
+                    ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="DYING FIRING_OR_RELOADING_A USER_6">
                     <Script>
                         CurDrawableHideSubObject("SHATTERER_BODY")
                     </Script>
                 </AnimationState>
-                <AnimationState
+                 <AnimationState
                     ParseCondStateType="PARSE_NORMAL"
-                    ConditionsYes="DYING">
+                    ConditionsYes="DYING USER_6">
                     <Script>
                         CurDrawableHideSubObject("SHATTERER_BODY")
                     </Script>
@@ -440,7 +447,7 @@
                 LaserId="0" />
             <Physics
                 id="ModuleTag_Physics" />
-            <SlowDeath
+             <SlowDeath
                 id="ModuleTag_Death"
                 SinkDelay="3s"
 				SinkRate="1.0"
@@ -456,11 +463,12 @@
                     Type="INITIAL"
                     List="" />
             </SlowDeath>
-            <!--<SubObjectsUpgrade
-                id="ModuleTag_ShowRail"
-                ShowSubObjects="UGRAIL_01">
-                <TriggeredBy>Upgrade_GDIArmoryRailgunTech</TriggeredBy>
-            </SubObjectsUpgrade>
+            <!--
+           <SubObjectsUpgrade
+                id="ModuleTag_ShowDyingShatterer"
+                ShowSubObjects="SHATTERER_BODY">
+                <TriggeredBy>Upgrade_ShattererV35Kill</TriggeredBy>
+            </SubObjectsUpgrade> 
             <StatusBitsUpgrade
                 id="ModuleTag_UpgradeWeapon"
                 StatusToSet="WEAPON_UPGRADED_01">

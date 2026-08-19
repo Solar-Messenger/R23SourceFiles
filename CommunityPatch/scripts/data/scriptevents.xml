@@ -250,6 +250,13 @@
 		<!-- Used for raged units -->
 		<ModelConditionEvent Name="OnRaged">
 			<Conditions>+EMOTION_DISSIDENT</Conditions>
+		</ModelConditionEvent>	
+		
+		<ModelConditionEvent Name="OnPassenger">
+			<Conditions>+PASSENGER</Conditions>
+		</ModelConditionEvent>	
+		<ModelConditionEvent Name="OnPassengerEnd">
+			<Conditions>-PASSENGER</Conditions>
 		</ModelConditionEvent>		
 		
 		<ModelConditionEvent Name="OnRaged1">
@@ -1147,6 +1154,9 @@
 		<EventHandler EventName="RageGeneratorEvent"	ScriptFunctionName="GrantRageModifier" DebugSingleStep="false"/>
 		<!-- <EventHandler EventName="OnRaged"	ScriptFunctionName="OnUnpackingDisableCommands" DebugSingleStep="false"/> -->
 		<!-- <EventHandler EventName="OnRaged1"	ScriptFunctionName="OnUnpackingDisableCommandsEnd" DebugSingleStep="false"/> -->
+		<!-- workaround for v35 ox-->
+		<EventHandler EventName="OnPassenger"	ScriptFunctionName="EnableNormalDeathMode" DebugSingleStep="false"/>
+		<EventHandler EventName="OnPassengerEnd"	ScriptFunctionName="DisableNormalDeathMode" DebugSingleStep="false"/>
 	</EventList>
 
 	 <!-- r24 reverse move units -->
