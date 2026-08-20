@@ -3578,7 +3578,7 @@ function RemoveRageModifier(self)
 		local unit = unitsToRemove[i]
 		-- clear the dummyObjects from these sub tables
 		if ragedUnits[unit] ~= nil then 
-			clearSubTables(ragedUnits[unit].dummyObjects)
+			--clearSubTables(ragedUnits[unit].dummyObjects)
 			--WriteToFile("ragedUnits.txt",  tostring(ragedUnits[unit]) .. "\n")
 			ragedUnits[unit] = nil
 		end
@@ -3656,7 +3656,7 @@ function RemovePhaseModifier(self)
 		local unit = unitsToRemove[i]
 		-- clear the dummyObjects from these sub tables
 		if phasedUnits[unit] ~= nil then 
-			clearSubTables(phasedUnits[unit].dummyObjects)
+			--clearSubTables(phasedUnits[unit].dummyObjects)
 			--WriteToFile("phasedUnits.txt",  tostring(phasedUnits[unit]) .. "\n")
 			phasedUnits[unit] = nil
 		end
