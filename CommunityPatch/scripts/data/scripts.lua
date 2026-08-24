@@ -3854,7 +3854,10 @@ function ApplyXPModifier(tableObj)
 
 	RemoveXPUpgrades(tableObj)
 	-- APPLY THE APPROPRIATE UPGRADE 
-	if not EvaluateCondition("UNIT_HAS_UPGRADE",tableObj.stringRef, upgrades[tostring(timesPromoted)]) then ObjectGrantUpgrade(tableObj.selfRef, upgrades[tostring(timesPromoted)]) end
+	timesPromoted = tostring(timesPromoted)
+	if upgrades[timesPromoted] then 
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",tableObj.stringRef, upgrades[timesPromoted]) then ObjectGrantUpgrade(tableObj.selfRef, upgrades[timesPromoted]) end
+	end
 end
 
 -- if the squad object promotes then the members and/or leader has officially caught up with the rank of it and therefore we should remove the scaler upgrades. Triggered by LEVELED
