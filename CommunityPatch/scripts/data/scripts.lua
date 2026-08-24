@@ -3188,7 +3188,10 @@ end
 -- ############################# R25 Infantry Garrison Fix  ###################################
 
 function ClearObjectRef(self)
-	objectReferences[getObjectId(self)] = nil
+	local objId = getObjectId(self)
+	if objectReferences[objId] ~= nil then
+		objectReferences[objId] = nil
+	end
 end
 
 -- Triggered by USER_2, squad fires this when Black Disciples or Confessors is researched
