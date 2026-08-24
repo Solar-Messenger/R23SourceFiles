@@ -3712,7 +3712,7 @@ squadSizeTable = {
 	["4803957E"] = {size = 3, needsRocketFix = false, isAirborne = false}, -- Traveler59ShockTrooperSquad
 	["9676826C"] = {size = 3, needsRocketFix = false, isAirborne = false}, -- Traveler59ShockTrooperSquad_Veteran
 	["40241AC3"] = {size = 3, needsRocketFix = false, isAirborne = false}, -- Reaper17ShockTrooperSquad
-	["34BC82E3"] = {size = 0, needsRocketFix = false, isAirborne = false}, -- Reaper17ShockTrooperSquad_Veteran
+	["34BC82E3"] = {size = 3, needsRocketFix = false, isAirborne = false}, -- Reaper17ShockTrooperSquad_Veteran
 
 	["C46CECA2"] = {size = 5, needsRocketFix = false, isAirborne = false}, -- Traveler59CultistSquad
 
@@ -4036,7 +4036,7 @@ function OnSquadExitRax_R24(self, isHealed)
 	local squadData = squadSizeTable[getObjectName(squad.selfRef)]
 	local squadSize = getTableSize(squad.squadMembers)
 	-- used for hammerhead garrisoned squads that can fire over structures
-	if squadSize == nil then return end
+	if squadSize == 0 then return end
 	squad.spawnedSize = squadSize
 	--if isHealed then print("has come out of the armory!") end
 	if strfind(tostring(ObjectTeamName(self)), "Player_") ~= nil and not isHealed and not squadData.isAirborne and not ObjectTestModelCondition(self, "USER_10") then 
@@ -4136,7 +4136,7 @@ function OnMemberDestroyed_R24(self)
 	if firstKey ~= nil and next(squad.squadMembers, firstKey) == nil then
 		-- if the one member remaining is the leader, kill the squad
 		local remainingMember = squadMemberTable[firstKey]
-		if remainingMember.isLeader then
+		if remainingMember ~= nil and remainingMember.isLeader then
 			--print("squad leader is all thats left, deleting the squad.")
 			-- NAMED_KILL to prevent null pointer crashes
 			ExecuteAction("NAMED_KILL", remainingMember.selfRef)
