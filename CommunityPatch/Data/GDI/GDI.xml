@@ -2,6 +2,7 @@
 <AssetDeclaration xmlns="uri:ea.com:eala:asset">
 
 	<Includes>
+		<Include source="Props/GDIShockwaveArtillerySeed.xml" type="all"/>
 		<Include source="Units/GDIMissileSoldier.xml" type="all"/>
 		<Include source="Units/GDIMissileSoldierGarrisoned.xml" type="all"/>
 		<Include source="Units/GDIGrenadeSoldierGarrisoned.xml" type="all"/>

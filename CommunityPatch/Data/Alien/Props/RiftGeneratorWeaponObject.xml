@@ -12,11 +12,15 @@
 		EditorSorting="UNIT"
 		TransportSlotCount="0"
 		IsTrainable="false"
-		KindOf="UNATTACKABLE NOT_AUTOACQUIRABLE INERT_SHROUD_REVEALER RESIST_EMP"
+		KindOf="UNATTACKABLE NOT_AUTOACQUIRABLE INERT_SHROUD_REVEALER RESIST_EMP AIRCRAFT"
 		EditorName="RiftGeneratorWeaponObject">
 		<DisplayName>RiftGeneratorWeaponObject</DisplayName>
 		<ArmorSet
 			Armor="NoArmor" />
+		<LocomotorSet
+			Locomotor="FlyingShadowLocomotor"
+			Condition="NORMAL"
+			Speed="0" />
 		<Draws>
 			<ScriptedModelDraw
 				id="ModuleTag_Draw">
@@ -88,7 +92,12 @@
 			<Shape
 				Type="CYLINDER"
 				MajorRadius="50.0"
-				Height="300.0"></Shape>
+				Height="300.0">
+				<Offset
+					x="0"
+					y="35"
+					z="0" />
+			</Shape>
 		</Geometry>
 		<AudioArraySound>
 			<AudioEntry
