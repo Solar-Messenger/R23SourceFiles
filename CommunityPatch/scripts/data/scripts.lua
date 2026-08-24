@@ -3848,13 +3848,12 @@ function ApplyXPModifier(tableObj)
 	--print("applying xp modifier")
 	local timesPromoted = tableObj.timesPromotedWithLua
 	local upgrades = {
-		["1"] = "Upgrade_200scaler",
-		["2"] = "Upgrade_300scaler"
+		[1] = "Upgrade_200scaler",
+		[2] = "Upgrade_300scaler"
 	}
 
 	RemoveXPUpgrades(tableObj)
 	-- APPLY THE APPROPRIATE UPGRADE 
-	timesPromoted = tostring(timesPromoted)
 	if upgrades[timesPromoted] then 
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",tableObj.stringRef, upgrades[timesPromoted]) then ObjectGrantUpgrade(tableObj.selfRef, upgrades[timesPromoted]) end
 	end
@@ -3867,6 +3866,7 @@ function RemoveXPModifier(self)
 			local leader = squadMemberTable[squad.squadLeader]
 			if leader ~= nil and leader.timesPromotedWithLua > 0 then
 					RemoveXPUpgrades(leader)
+					--print("removed xp modifier from the leader!")
 					leader.timesPromotedWithLua = 0
 			end
 	end
@@ -3874,6 +3874,7 @@ function RemoveXPModifier(self)
 			local member = squadMemberTable[squadMemberId]
 			if member ~= nil and member.timesPromotedWithLua > 0 then
 					RemoveXPUpgrades(member)
+					--print("removed xp modifier from a squad member!")
 					member.timesPromotedWithLua = 0
 			end
 	end
