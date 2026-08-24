@@ -3852,7 +3852,32 @@ function ApplyXPModifier(tableObj)
 		["2"] = "Upgrade_300scaler"
 	}
 
-	-- REMOVE UPGRADEES IF THEY EXIST
+	RemoveXPUpgrades(tableObj)
+	-- APPLY THE APPROPRIATE UPGRADE 
+	if not EvaluateCondition("UNIT_HAS_UPGRADE",tableObj.stringRef, upgrades[tostring(timesPromoted)]) then ObjectGrantUpgrade(tableObj.selfRef, upgrades[tostring(timesPromoted)]) end
+end
+
+-- if the squad object promotes then the members and/or leader has officially caught up with the rank of it and therefore we should remove the scaler upgrades. Triggered by LEVELED
+function RemoveXPModifier(self)
+	local _,squad = GetSquadAttributes(self)
+	if squad.squadLeader ~= nil then
+			local leader = squadMemberTable[squad.squadLeader]
+			if leader ~= nil and leader.timesPromotedWithLua > 0 then
+					RemoveXPUpgrades(leader)
+					leader.timesPromotedWithLua = 0
+			end
+	end
+	for squadMemberId,_ in squad.squadMembers do
+			local member = squadMemberTable[squadMemberId]
+			if member ~= nil and member.timesPromotedWithLua > 0 then
+					RemoveXPUpgrades(member)
+					member.timesPromotedWithLua = 0
+			end
+	end
+end
+
+function RemoveXPUpgrades(tableObj)
+	if tableObj == nil then return end
 	if EvaluateCondition("UNIT_HAS_UPGRADE",tableObj.stringRef, "Upgrade_200scaler") then
 		ObjectRemoveUpgrade(tableObj.selfRef, "Upgrade_200scaler")
 	end
@@ -3860,9 +3885,6 @@ function ApplyXPModifier(tableObj)
 	if EvaluateCondition("UNIT_HAS_UPGRADE",tableObj.stringRef, "Upgrade_300scaler") then
 		ObjectRemoveUpgrade(tableObj.selfRef, "Upgrade_300scaler")
 	end
-
-	-- APPLY THE APPROPRIATE UPGRADE 
-	if not EvaluateCondition("UNIT_HAS_UPGRADE",tableObj.stringRef, upgrades[tostring(timesPromoted)]) then ObjectGrantUpgrade(tableObj.selfRef, upgrades[tostring(timesPromoted)]) end
 end
 
 function CheckForPassengers(self)
@@ -3908,7 +3930,7 @@ function GarrisonedInHammerhead(self)
 			-- if desync then its probably because of the prerequisites
 			ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadLeader.stringRef, squadLevelString)
 			squadLeader.timesPromotedWithLua = (squadLevel-leaderLevel)
-			-- apply xp modifier to this unit
+			-- apply xp modifier to this unit and remove it when it reaches the squad level, if the squad object promotes check if a modifier exists and remove it.
 			ApplyXPModifier(squadLeader)
 		end
 	end
@@ -3949,7 +3971,7 @@ function GarrisonedInHammerheadEnd(self)
 				-- if desync then its probably because of the prerequisites
 				ExecuteAction("UNIT_GIVE_EXPERIENCE_LEVEL", squadMemberTable[objId].stringRef, squadLevelString)
 				squadMemberTable[objId].timesPromotedWithLua = (squadLevel-memberLevel)
-				-- apply xp modifier to this unit
+				-- apply xp modifier to this unit and remove it when it reaches the squad level, if the squad object promotes check if a modifier exists and remove it.
 				ApplyXPModifier(squadMemberTable[objId])
 			end
 		end
