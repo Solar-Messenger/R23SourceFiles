@@ -10,15 +10,11 @@
 		id="NODCatalystSeed"
 		Side="NOD"
 		EditorSorting="MISC_MAN_MADE"
-		KindOf="IMMOBILE NO_COLLIDE UNATTACKABLE NOT_AUTOACQUIRABLE AIRCRAFT"
+		KindOf="IMMOBILE NO_COLLIDE UNATTACKABLE NOT_AUTOACQUIRABLE"
 		EditorName="NODCatalystSeed">
 		<DisplayName>PropName</DisplayName>
 		<ArmorSet
 			Armor="NoArmor" />
-		<LocomotorSet
-			Locomotor="FlyingShadowLocomotor"
-			Condition="NORMAL"
-			Speed="0" />
 		<Draws>
 			<ScriptedModelDraw
 				id="ModuleTag_Draw"
@@ -73,12 +69,7 @@
 			<Shape
 				Type="SPHERE"
 				MajorRadius="1.0"
-				Height="1.0">	
-				<Offset
-					x="0"
-					y="35"
-					z="0" />
-			</Shape>		
+				Height="1.0" />		
 		</Geometry>
 	</GameObject>
 </AssetDeclaration>

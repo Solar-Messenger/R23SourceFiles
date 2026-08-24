@@ -10,17 +10,13 @@
 		id="GDIMjolnirStrikeProjectileStrike"
 		Side="GDI"
 		EditorSorting="SYSTEM"
-		KindOf="HIDE_IF_FOGGED NO_COLLIDE UNATTACKABLE NOT_AUTOACQUIRABLE RESIST_EMP AIRCRAFT"
+		KindOf="HIDE_IF_FOGGED NO_COLLIDE UNATTACKABLE NOT_AUTOACQUIRABLE RESIST_EMP"
 		RadarPriority="UNIT"
 		UnitCategory="AIRCRAFT"
 		EditorName="GDIMjolnirStrikeProjectileStrike">
 		<DisplayName>GDIMjolnirStrikeProjectileStrike</DisplayName>
 		<ArmorSet
 			Armor="ProjectileArmor" />
-		<LocomotorSet
-			Locomotor="FlyingShadowLocomotor"
-			Condition="NORMAL"
-			Speed="0" />
 		<Draws>
 			<ScriptedModelDraw
 				id="ModuleTag_ScriptedModelDraw">
@@ -89,12 +85,7 @@
 			<Shape
 				Type="CYLINDER"
 				MajorRadius="0.8"
-				Height="500">
-			<Offset
-					x="0"
-					y="35"
-					z="0" />
-			</Shape>
+				Height="500" />
 		</Geometry>
 		<AudioArraySound>
 			<AudioEntry Sound="AudioEvent:GDI_ThorsHammer_Incoming" AudioType="soundAmbient" />
