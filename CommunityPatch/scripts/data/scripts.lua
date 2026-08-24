@@ -62,6 +62,8 @@ phasedUnits = {}
 -- flag to enable/disable a xp workaround
 applyHordeXPFix = true
 hasCheckedForPassengers = false
+-- cache objectReferences for units that dont need a table of attributes 
+objectReferences = {}
 
 validTeams = {}
 for i = 1, getn(playerTable) do
@@ -409,7 +411,7 @@ end
 
 -- Set the reference of an object in order to assign object status successfully.
 function SetObjectReference(self)
-	local ObjectStringRef = "object_" .. getObjectId(self) .. tostring(GetFrame()) .. tostring(floor(GetRandomNumber()*99999999))
+	local ObjectStringRef = "object_" .. getObjectId(self) 
 	ExecuteAction("SET_UNIT_REFERENCE", ObjectStringRef, self)
 	return ObjectStringRef
 end
@@ -3185,6 +3187,10 @@ end
 
 -- ############################# R25 Infantry Garrison Fix  ###################################
 
+function ClearObjectRef(self)
+	objectReferences[getObjectId(self)] = nil
+end
+
 -- Triggered by USER_2, squad fires this when Black Disciples or Confessors is researched
 function DispatchEventToGarrisonLeader(self)
 	-- if the squad is inside a garrison, this does not work for the first squad to enter a garrison but thats ok since most games a unit will enter one before black disciples/confessors comes online.
@@ -3203,14 +3209,20 @@ function SetToInsideGarrisonState(self, string)
 	local squad = squadTables[string] 
 	squad.confessorDisciple = self
 	--print("upgrading Upgrade_InGarrison to disciple or confeessor")
-	if not EvaluateCondition("UNIT_HAS_UPGRADE", SetObjectReference(self), "Upgrade_InGarrison") then ObjectGrantUpgrade(self, "Upgrade_InGarrison") end
+	local objId = getObjectId(self)
+	objectReferences[objId] = objectReferences[objId] or SetObjectReference(self)
+	if not EvaluateCondition("UNIT_HAS_UPGRADE", objectReferences[objId], "Upgrade_InGarrison") then ObjectGrantUpgrade(self, "Upgrade_InGarrison") end
 end
 
 function RemoveInsideGarrisonStateOnLeader(self)
 	local _,squad = GetSquadAttributes(self)
 	SetToUnselectableOnGarrisonStructureEnd(self)
 	if squad.confessorDisciple == nil then return end
-	if EvaluateCondition("UNIT_HAS_UPGRADE", SetObjectReference(squad.confessorDisciple), "Upgrade_InGarrison") then ObjectRemoveUpgrade(squad.confessorDisciple, "Upgrade_InGarrison") end
+	local objId = getObjectId(squad.confessorDisciple)
+	objectReferences[objId] = objectReferences[objId] or SetObjectReference(squad.confessorDisciple)
+	if EvaluateCondition("NAMED_NOT_DESTROYED", objectReferences[objId]) then
+		if EvaluateCondition("UNIT_HAS_UPGRADE", objectReferences[objId], "Upgrade_InGarrison") then ObjectRemoveUpgrade(squad.confessorDisciple, "Upgrade_InGarrison") end
+	end
 	squad.confessorDisciple = nil
 end
 
@@ -3246,19 +3258,21 @@ function SetToUnselectableOnGarrisonStructureEnd(self)
 	end
 end
 
-function MakeInfantryUnselectable(self)
+function MakeBannerUnselectable(self)
 	local objId = getObjectId(self)
-	-- use the members string ref else in the case of the confessor or black disciple we create one 
-	local stringRef = squadMemberTable[objId] and squadMemberTable[objId].stringRef or SetObjectReference(self)
+	objectReferences[objId] = objectReferences[objId] or SetObjectReference(self)
+	local stringRef = objectReferences[objId] 
+
 	if not EvaluateCondition("UNIT_HAS_OBJECT_STATUS", stringRef, 3) then
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", stringRef, 3, 1)
 	end
 end
 
-function MakeInfantrySelectable(self)
+function MakeBannerSelectable(self)
 	local objId = getObjectId(self)
-	-- use the members string ref else in the case of the confessor or black disciple we create one 
-	local stringRef = squadMemberTable[objId] and squadMemberTable[objId].stringRef or SetObjectReference(self)
+	objectReferences[objId] = objectReferences[objId] or SetObjectReference(self)
+	local stringRef = objectReferences[objId] 
+
 	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", stringRef, 3) then
 		ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", stringRef, 3, 0)
 	end
@@ -3342,7 +3356,7 @@ function MakeSonicEmitterTempImmune(self)
 	if sonic.sonicEmitterType then
 		ObjectCreateAndFireTempWeapon(self, "SpawnDestroyedSonicEmitter")
 		-- if the sonic emitter has been sold off
-		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 19) then
+		if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", sonic.stringRef, 19) then
 			-- spawn gdi/zocom rifleman suicided squad 
 			--print("spawning a rifleman squad as structure was sold")
 			if strfind(getObjectName(self), "CD0835A6") ~= nil then 
@@ -3454,6 +3468,7 @@ function GiveExperiencePointsToKiller(self)
 	local sonic = GetSonicEmitterAttributes(self)
 	local lastUnit = sonic.lastUnit
 	if lastUnit == nil then return end
+	local lastUnitId = getObjectId(lastUnit)
 	--local sonicDesc = tostring(ObjectDescription(self))
 	--local attacker = tostring(ObjectDescription(lastUnit))
 	local _,xpRewardMultiplier = GetRankOfObject(sonic.stringRef)
@@ -3463,8 +3478,8 @@ function GiveExperiencePointsToKiller(self)
 	-- give 2000 xp to the unit that killed this
 
 	-- if unit is an infantry squad then get its squad and promote it, this is a squad so promote the squad, this should only work on enemy units
-	if squadMemberTable[getObjectId(lastUnit)] ~= nil then
-		local squadMember = squadMemberTable[getObjectId(lastUnit)]
+	if squadMemberTable[lastUnitId] ~= nil then
+		local squadMember = squadMemberTable[lastUnitId]
 		local squad = squadTables[squadMember.squadObject]
 		-- the squad horde object may already be gone while a surviving member landed the kill
 		if squad == nil then return end
@@ -3480,7 +3495,7 @@ function GiveExperiencePointsToKiller(self)
 			ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", squadMemberTable[squad.squadLeader].stringRef, xpReward)
 		end
 	else
-		-- for non squads 
+		-- for non squads , to avoid recreating references for the same unit im going to make the id of the ref the object reference
 		ExecuteAction("UNIT_GIVE_EXPERIENCE_POINTS", SetObjectReference(lastUnit), xpReward)
 	end
 
@@ -3551,12 +3566,13 @@ function RemoveRageModifier(self)
 	local unitsToRemove = {}
 	for ragedUnitId,ragedUnit in ragedUnits do
 		if ragedUnit ~= nil then
+			-- check if this unit was raged by this expired dummy object and if it was, decrement the timesRaged counter.
+			-- now clears dummy object even if destroyed 
+			if ragedUnit.dummyObjects[objId] ~= nil then
+				ragedUnit.timesRaged = ragedUnit.timesRaged - 1
+				ragedUnit.dummyObjects[objId] = nil
+			end
 			if EvaluateCondition("NAMED_NOT_DESTROYED", ragedUnit.stringRef) then
-				-- check if this unit was raged by this expired dummy object and if it was, decrement the timesRaged counter.
-				if ragedUnit.dummyObjects[objId] ~= nil then
-					ragedUnit.timesRaged = ragedUnit.timesRaged - 1
-					ragedUnit.dummyObjects[objId] = nil
-				end
 				-- check whether the units raged counter has reached 0 and if it has , remove the raged upgrade
 				if ragedUnit.timesRaged <= 0 then
 					--print("rage has ended!")
@@ -3609,13 +3625,15 @@ function GrantPhaseModifier(self, other)
 
 	-- this unit was phased by this specific dummy object, add it to a subtable and increment the timesPhased counter.
 	local dummyObjectId = getObjectId(other)
-	if phasedUnit.dummyObjects[dummyObjectId] == nil then
-		phasedUnit.dummyObjects[dummyObjectId] = true
-		phasedUnit.timesPhased = phasedUnit.timesPhased + 1
-	end
-	-- grant upgrade to enable attributemodifierupgrade module for phase field
-	if not EvaluateCondition("UNIT_HAS_UPGRADE",phasedUnit.stringRef, "Upgrade_PhaseField") then
-		ObjectGrantUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField")
+	if phasedUnit ~= nil and EvaluateCondition("NAMED_NOT_DESTROYED", phasedUnit.stringRef) then
+		if phasedUnit.dummyObjects[dummyObjectId] == nil then
+			phasedUnit.dummyObjects[dummyObjectId] = true
+			phasedUnit.timesPhased = phasedUnit.timesPhased + 1
+		end
+		-- grant upgrade to enable attributemodifierupgrade module for phase field
+		if not EvaluateCondition("UNIT_HAS_UPGRADE",phasedUnit.stringRef, "Upgrade_PhaseField") then
+			ObjectGrantUpgrade(phasedUnit.selfRef, "Upgrade_PhaseField")
+		end
 	end
 end
 
@@ -3629,12 +3647,13 @@ function RemovePhaseModifier(self)
 	local unitsToRemove = {}
 	for phasedUnitId,phasedUnit in phasedUnits do
 		if phasedUnit ~= nil then
+			-- check if this unit was phased by this expired dummy object and if it was, decrement the timesPhased counter.
+			-- now clears dummy object even if destroyed 
+			if phasedUnit.dummyObjects[objId] ~= nil then
+				phasedUnit.timesPhased = phasedUnit.timesPhased - 1
+				phasedUnit.dummyObjects[objId] = nil
+			end
 			if EvaluateCondition("NAMED_NOT_DESTROYED", phasedUnit.stringRef) then
-				-- check if this unit was phased by this expired dummy object and if it was, decrement the timesPhased counter.
-				if phasedUnit.dummyObjects[objId] ~= nil then
-					phasedUnit.timesPhased = phasedUnit.timesPhased - 1
-					phasedUnit.dummyObjects[objId] = nil
-				end
 				-- check whether the units phase counter has reached 0 and if it has , remove the phased upgrade
 				if phasedUnit.timesPhased <= 0 then
 					--print("rage has ended!")

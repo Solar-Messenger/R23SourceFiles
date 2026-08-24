@@ -1019,9 +1019,6 @@
 		<EventHandler EventName="SquadEvent"	ScriptFunctionName="GetSquadSize" DebugSingleStep="false"/>
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="OnMemberDestroyed_R24" DebugSingleStep="false"/>
 		<EventHandler EventName="OnCreated" ScriptFunctionName="OnHordeMemberCreated_R24" DebugSingleStep="false"/>
-		<!--<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="MakeInfantryUnselectable" DebugSingleStep="false"/>
-		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="MakeInfantrySelectable" DebugSingleStep="false"/> 
-		<EventHandler EventName="GarrisonedInAStructure"	ScriptFunctionName="MakeInfantryUnselectable" DebugSingleStep="false"/>-->
 	</EventList>
 	
 	<EventList Name="BlueTiberiumFunctions_R23" Inherit="BaseScriptFunctions">
@@ -1691,19 +1688,21 @@
 	</EventList>
 
 	<EventList Name="NODConfessorFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="ClearObjectRef" DebugSingleStep="false"/>
 		<!-- a workaround for when the disciple/confessor upgrades while already inside a garrison -->
 		<EventHandler EventName="UpgradeInGarrison"	ScriptFunctionName="SetToInsideGarrisonState" DebugSingleStep="false"/>
 		<!-- when the disciple/confessor enters a garrison -->
-		<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="MakeInfantryUnselectable" DebugSingleStep="false"/>
-		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="MakeInfantrySelectable" DebugSingleStep="false"/> 
+		<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="MakeBannerUnselectable" DebugSingleStep="false"/>
+		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="MakeBannerSelectable" DebugSingleStep="false"/> 
 	</EventList>
 
 	<EventList Name="BHDiscipleFunctions_R24" Inherit="BaseScriptFunctions">
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="ClearObjectRef" DebugSingleStep="false"/>
 		<!-- a workaround for when the disciple/confessor upgrades while already inside a garrison -->
 		<EventHandler EventName="UpgradeInGarrison"	ScriptFunctionName="SetToInsideGarrisonState" DebugSingleStep="false"/>
 		<!-- when the disciple/confessor enters a garrison -->
-		<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="MakeInfantryUnselectable" DebugSingleStep="false"/>
-		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="MakeInfantrySelectable" DebugSingleStep="false"/> 
+		<EventHandler EventName="OnInsideGarrison"	ScriptFunctionName="MakeBannerUnselectable" DebugSingleStep="false"/>
+		<EventHandler EventName="OnInsideGarrisonEnd"	ScriptFunctionName="MakeBannerSelectable" DebugSingleStep="false"/> 
 	</EventList>
 
 	<EventList Name="NodCyborgFunctions_R24" Inherit="HordeMemberFunctions_R24">
