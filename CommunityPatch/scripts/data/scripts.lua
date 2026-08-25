@@ -4116,7 +4116,8 @@ function GrantUpgradesToLeader(squad)
 	-- check if WEAPON_UPGRADED_01 is current status to assign the appropriate upgrade (this is for AP Ammo and Scanner Packs)
 	local upgradeString = EvaluateCondition("UNIT_HAS_OBJECT_STATUS", squad.stringRef , 124) and "Upgrade_SquadMemberEnhanced" or "Upgrade_SquadMember"
 	--print(upgradeString)
-	local isZoneRaiderSquad = squadSizeTable[getObjectName(squad.selfRef)].needsRocketFix
+	local squadData = squadSizeTable[getObjectName(squad.selfRef)]
+	local isZoneRaiderSquad = squadData and squadData.needsRocketFix
 	for i = 1, squadSize, 1 do
 		local upgradeString = upgradeString .. i
 		if not EvaluateCondition("UNIT_HAS_UPGRADE",squadLeader.stringRef, upgradeString) then ObjectGrantUpgrade(squadLeader.selfRef, upgradeString) end
