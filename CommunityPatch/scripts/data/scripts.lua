@@ -3846,6 +3846,7 @@ end
 
 function ApplyXPModifier(tableObj) 
 	--print("applying xp modifier")
+	if tableObj == nil then return end
 	local timesPromoted = tableObj.timesPromotedWithLua
 	local upgrades = {
 		[1] = "Upgrade_200scaler",
@@ -3920,7 +3921,7 @@ function GarrisonedInHammerhead(self)
 	GrantUpgradesToLeader(squad)
 
 	-- the banner carrier may not have registered yet, and squads without an
-	-- experienceLvlString entry cannot build the level string
+	-- bannerExperienceLvlString entry cannot build the level string
 	local squadData = squadSizeTable[getObjectName(squad.selfRef)]
 	if squadLeader ~= nil and squadData ~= nil and squadData.bannerExperienceLvlString ~= nil then
 		local squadLevel,_ = GetRankOfObject(squad.stringRef)
@@ -4062,7 +4063,7 @@ function OnSquadExitRax_R24(self, isHealed)
 	local squadData = squadSizeTable[getObjectName(squad.selfRef)]
 	local squadSize = getTableSize(squad.squadMembers)
 	-- used for hammerhead garrisoned squads that can fire over structures
-	if squadSize == 0 then return end
+	if squadData == nil or squadSize == 0 then return end
 	squad.spawnedSize = squadSize
 	--if isHealed then print("has come out of the armory!") end
 	if strfind(tostring(ObjectTeamName(self)), "Player_") ~= nil and not isHealed and not squadData.isAirborne and not ObjectTestModelCondition(self, "USER_10") then 
@@ -4081,14 +4082,14 @@ function isSquadExploit(squad)
 	
 	local keys = {}
 	for k,_ in squad.unitsLostOnSpawn do
-		tinsert(keys,k)
+		tinsert(keys, k)
 	end
 
 	for i = 1, getn(keys) do
 		squad.unitsLostOnSpawn[keys[i]] = nil
 	end
 
-	if squad.spawnedSize < squadSizeTable[tostring(getObjectName(squad.selfRef))].size-unitsLostSize then 
+	if squad.spawnedSize < squadSizeTable[getObjectName(squad.selfRef)].size-unitsLostSize then 
 		--print("squad exploit detected!")
 		ExecuteAction("NAMED_DELETE", squad.selfRef)
 	end
@@ -4097,6 +4098,7 @@ end
 -- horde member killed while leaving barracks -> broadcast an event to squads and decrement the squadSize by 1 
 -- self is squad , other is the member that died
 function KilledOutOfBarracks(self, other)
+	if other == nil then return end
 	local _,squad = GetSquadAttributes(self)
 	squad.unitsLostOnSpawn[getObjectId(other)] = true
 end
@@ -4104,6 +4106,7 @@ end
 -- grants as many upgrades to the squadLeader as there are squadMembers (obtained by getTableSize) for enabling weapons
 -- if removeUpgrade is true - check if the default upgrade is true and remove it 
 function GrantUpgradesToLeader(squad)
+	if squad == nil then return end
 	local squadSize = getTableSize(squad.squadMembers)
 	local squadLeader = squadMemberTable[squad.squadLeader] or nil
 	--if removeUpgrade then print(tostring(squadLeader)) end
