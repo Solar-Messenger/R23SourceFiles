@@ -72,7 +72,7 @@
 		ReinvisibilityDelay="4s"
 		WorldMapArmoryUpgradesAllowed="Upgrade_ZoneRaiderScannerPack Upgrade_ZoneRaiderAutoInjectors"
 		CaptureTime="0s"
-		BuildCost="313"
+		BuildCost="0"
 		RefundValue="0"
 		ThreatValue="0"
 		MaxSimultaneousOfType="0"
