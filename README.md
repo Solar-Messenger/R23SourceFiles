@@ -5,7 +5,7 @@ In the future, I’m open to sharing, but I want to avoid situations where my wo
 This cannot be compiled as a standalone mod as it does not contain all of the 1.02+ files, only the ones I have modified or added over the years.
 
 <p align="center">
-  <img src="./images/R25.png" alt="R25">
+  <img src="./CommunityPatch/images/R25.png" alt="R25">
 </p>
 
 # R25 - R25h Changelog
@@ -54,7 +54,7 @@ This cannot be compiled as a standalone mod as it does not contain all of the 1.
 
 ## Gameplay Changes
 
-* Hammerhead Garrisons Video Link  - Infantry garrisoned inside Hammerheads can now fire over structures.  
+* Hammerhead Garrisons [Video Link](https://youtu.be/zH8fEGT6w1k) - Infantry garrisoned inside Hammerheads can now fire over structures.  
 Applies to：
     * Zone Troopers
     * Zone Raiders
