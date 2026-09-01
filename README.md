@@ -5,7 +5,7 @@ In the future, I’m open to sharing, but I want to avoid situations where my wo
 This cannot be compiled as a standalone mod as it does not contain all of the 1.02+ files, only the ones I have modified or added over the years.
 
 <p align="center">
-  <img src="./CommunityPatch/images/R25.png" style="width: 75%;" alt="R25">
+  <img src="./CommunityPatch/images/R25.png" style="width: 50%;" alt="R25">
 </p>
 
 # R25 - R25h Changelog
