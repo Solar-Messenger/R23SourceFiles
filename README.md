@@ -1,9 +1,76 @@
 # 1.02+ XML files
-Due to the amount of time and effort I’ve invested in R24, I’m asking that other patches do not use or incorporate my work for the next few months. I’d like the focus to remain on 1.02+ during this period.
+Due to the amount of time and effort I’ve invested in R25, I’m asking that other patches do not use or incorporate my work for the next few months. I’d like the focus to remain on 1.02+ during this period.
 In the future, I’m open to sharing, but I want to avoid situations where my work is reused immediately after release. Given the level of investment involved, I believe this is a reasonable request.
 
 This cannot be compiled as a standalone mod as it does not contain all of the 1.02+ files, only the ones I have modified or added over the years.
 
+<p align="center">
+  <img src="./images/R25.png" alt="R25">
+</p>
+
+# R25 - R25h Changelog
+
+## Hotfixes
+
+* Issues to do with map terrain have been fixed.
+* Improvements have been made to enhance game stability.
+* Fixed an issue affecting how squad experience is counted inside of Hammerheads.
+* Fixed an issue causing MCVs to be undeployable when Tiberium Vein Detonation, Catalyst Missile is used on them.
+* Added Shockwave Artillery to the crash fix list affecting Sonic Emitters and Shatterers.
+* Shatterers dying inside of V35 Ox Transports now appear normal.
+* Fixed a crash with Shatterers/Sonic Emitters taking damage from objects that dispatch other objects to deal damage.
+* Fixed an issue causing Avatars/Purifiers to go rogue when recaptured after Rage Generator.
+* Fixed a crash issue caused by the Redeemers Rage Generator and Phase Field on Mechapedes.
+
+## Bug Fixes
+
+* Fixed the free infantry exploit affecting all squads in the game. [Video Link](https://youtu.be/n7UVaZAKLw8)
+* Fixed a squad veterancy issue affecting Mechapedes, Sniper Teams, Black Disciples, and Confessor Leaders.
+* Fixed an issue causing MCVs to ignore move commands while packing up.
+* Fixed an issue causing EMP’d phased units to retain their phased status and visual effects after the phase timer expired.[Video Link](https://youtu.be/1pP_DTagHzs)
+* Fixed the Rage Generator model state persisting beyond the intended six-second duration on units affected by EMP. [Video Link](https://youtu.be/IPcT7_ZTqrQ)
+* Fixed an issue preventing the Supersonic Airstrike from damaging aircraft over uneven terrain.
+* Fixed an issue causing Firehawks to sometimes fail to bomb after receiving a player-issued force-fire command.
+* Fixed an issue causing Sonic Emitters and Shatterers to have their weapon fire canceled when they were destroyed. [Video Link](https://youtu.be/oEN7zRvjT3M)
+* Fixed an issue causing V35 Ox and Carryall transports to continue providing vision after landing and flying off the map.
+* Fixed a Stasis Shield, Temporal Wormhole issue that allowed units caught on the edge of its area of effect to be affected.
+* Fixed an issue causing Harvesters to ignore box-selection commands drawn around garrisoned structures. [Video Link](https://youtu.be/ihhgtO-OIbQ)
+* Fixed an issue preventing Nod turrets from respawning after being hit by Tiberium Vein Detonation, Overlord's Wrath, or the Ion Cannon.
+* Fixed an issue causing reverse-move bug detection to run on units that had not moved before reversing.
+* Fixed an issue causing units to move awkwardly when reversing after attacking and coming to a stop. [Video Link](https://youtu.be/qP_ZDwdd9ss)
+* Fixed an issue causing the Sniper Team spotter to spawn instantly in front of the Barracks.
+* Updated the Mechapede to benefit from the rally-point bug fix.
+* Desyncs on the maps Unfair Advantage, Dead Eight, Dockside Devastation have been fixed.
+
+## Balance Changes
+
+* Juggernaut / Behemoth - Turret turn speed increased from 40 to 50.
+* Riflemen Squad - Base damage against Disintegrators before researching AP Ammo increased by 10%.
+* Hammerhead - Landing time when picking up infantry reduced. Delay after loading or unloading infantry also reduced.
+* Zone Raiders - Anti-air damage reduced from 140 to 120.
+* Grenadier Squad - Attack range increased by 10% while garrisoned inside a Hammerhead.
+* Avatar / Purifier - Repair rate increased by 15%.
+* Gun Walker / Shard Walker - Firing arc reduced from 25° to 15°, requiring the unit to align more closely with its target before firing.
+
+## Gameplay Changes
+
+* Hammerhead Garrisons Video Link  - Infantry garrisoned inside Hammerheads can now fire over structures.  
+Applies to：
+    * Zone Troopers
+    * Zone Raiders
+    * Missile Squads
+    * Riflemen Squads
+    * Grenadier Squads
+    * Mutant Squads.
+
+## Visual / Sound Fixes
+
+* Normalized the Shatterer's sinking rate after destruction to match that of the Slingshot.
+* Fixed the decal size of the Shatterer and Zone Shatterer.
+* Fixed an issue causing Shredder Turret hubs with the subfaction Quad Turret upgrade to disappear when heavily damaged.
+* Fixed the Traveler Engine mesh displayed on Devastator Warships while inside Ion Storms.
+* Fixed footstep sounds on several units.
+* Fixed an issue causing Firehawk Stratofighter boosters to disappear while climbing hills.
 
 # R24s - R24u Changelog
 
