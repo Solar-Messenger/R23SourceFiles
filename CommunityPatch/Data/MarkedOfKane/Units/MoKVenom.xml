@@ -127,7 +127,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING USER_1">
 					<Model
-						Name="W3DContainer:NUVenomR_SKN" />
+						Name="" />
 					<ParticleSysBone
 						BoneName="ROOTTRANSFORM"
 						FXParticleSystemTemplate="GDIDebrisSmallFire"
@@ -197,7 +197,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING USER_5">
 					<Model
-						Name="W3DContainer:NUVenomR_SKN" />
+						Name="" />
 					<Texture
 						Original="NuVenomD"
 						New="NuVenomD_K" />
@@ -271,7 +271,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:NUVenomR_SKN" />
+						Name="" />
 					<ParticleSysBone
 						BoneName="ROOTTRANSFORM"
 						FXParticleSystemTemplate="GDIDebrisSmallFire"

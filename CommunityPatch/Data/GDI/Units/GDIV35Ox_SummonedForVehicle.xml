@@ -155,7 +155,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:GUDropShipR_SKN" />
+						Name="" />
 				</ModelConditionState>
 				<!--
 				<ModelConditionState

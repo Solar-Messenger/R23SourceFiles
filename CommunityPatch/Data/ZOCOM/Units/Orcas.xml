@@ -189,7 +189,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING USER_6">
 					<Model
-						Name="W3DContainer:GUOrcaR_SKN" />
+						Name="" />
 					<Texture
 						Original="GUOrca_07D"
 						New="GUOrca_UGCA" />
@@ -265,7 +265,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:GUOrcaR_SKN" />
+						Name="" />
 					<ParticleSysBone
 						BoneName="ROOTTRANSFORM"
 						FXParticleSystemTemplate="GDIDebrisSmallFire"

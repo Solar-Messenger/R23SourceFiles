@@ -226,7 +226,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:NUCARRYALL_SKN"
+						Name=""
 						ExtraMesh="False" />
 					<Texture
 						Original="NUCarryAll"

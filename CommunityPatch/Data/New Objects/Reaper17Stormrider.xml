@@ -196,7 +196,7 @@
                     ParseCondStateType="PARSE_NORMAL"
                     ConditionsYes="DYING">
                     <Model
-                        Name="W3DContainer:AUSRIDERR_SKN" />
+                        Name="" />
                 </ModelConditionState>
                 <ModelConditionState
                     ParseCondStateType="PARSE_NORMAL"

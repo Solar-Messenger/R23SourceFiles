@@ -262,7 +262,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:NUVERTR_SKN"
+						Name=""
 						ExtraMesh="False" />
 				</ModelConditionState>
 				<ModelConditionState
@@ -333,7 +333,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:NUVERTR_SKN"
+						Name=""
 						ExtraMesh="False" />
 				</ModelConditionState>
 				<AnimationState

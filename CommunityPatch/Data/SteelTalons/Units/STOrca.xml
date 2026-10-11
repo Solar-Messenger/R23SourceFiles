@@ -242,7 +242,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:GUORCAR_SKN"
+						Name=""
 						ExtraMesh="False" />
 					<ParticleSysBone
 						BoneName="ROOTTRANSFORM"
