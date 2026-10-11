@@ -488,9 +488,9 @@
                 SpecialPowerTemplate="SpecialPowerReturnToProducer" />
             <SlowDeath
                 id="ModuleTag_Death"
-                SinkDelay="0s"
-                SinkRate="0.5"
-                DestructionDelay="0s">
+                SinkDelay="0.05s"
+                SinkRate="99999"
+                DestructionDelay="5s">
                 <OCL
                     Type="INITIAL">
                     <OCL>OCL_ALIENStormRiderDebris</OCL>
