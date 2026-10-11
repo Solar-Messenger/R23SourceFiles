@@ -1691,6 +1691,7 @@
 		</Body>
 		<Geometry
 			IsSmall="False">
+			<!--
 			<Shape
 				Type="BOX"
 				ContactPointGeneration="NONE"
@@ -1706,12 +1707,89 @@
 					y="0"
 					z="0" />
 			</Shape>
+	-->
+
+			<Shape
+				Type="BOX"
+				ContactPointGeneration="NONE"
+				MajorRadius="29.5"
+				MinorRadius="28.5"
+				Height="24"
+				FrontAngle="0d"
+				Active="True"
+				UsedForHealthBox="True">
+				<Offset
+					x="38"
+					y="-19"
+					z="0" />
+			</Shape>
+
+			<Shape
+				Type="CYLINDER"
+				ContactPointGeneration="NONE"
+				MajorRadius="32.5"
+				MinorRadius="32.5"
+				Height="24"
+				FrontAngle="0d"
+				Active="True"
+				UsedForHealthBox="True">
+				<Offset
+					x="-17"
+					y="-19.5"
+					z="0" />
+			</Shape>
+
+			<Shape
+				Type="CYLINDER"
+				ContactPointGeneration="NONE"
+				MajorRadius="20"
+				MinorRadius="20"
+				Height="24"
+				FrontAngle="0d"
+				Active="True"
+				UsedForHealthBox="True">
+				<Offset
+					x="3.3"
+					y="34"
+					z="0" />
+			</Shape>
+
+			<Shape
+				Type="CYLINDER"
+				ContactPointGeneration="NONE"
+				MajorRadius="20"
+				MinorRadius="20"
+				Height="24"
+				FrontAngle="0d"
+				Active="True"
+				UsedForHealthBox="True">
+				<Offset
+					x="43"
+					y="34"
+					z="0" />
+			</Shape>
+
+			<Shape
+				Type="BOX"
+				ContactPointGeneration="NONE"
+				MajorRadius="5"
+				MinorRadius="25"
+				Height="24"
+				FrontAngle="0d"
+				Active="True"
+				UsedForHealthBox="True">
+				<Offset
+					x="-55"
+					y="-21"
+					z="0" />
+			</Shape>
+
 			<Shape
 				Type="CYLINDER"
 				ContactPointGeneration="NONE"
 				Name="Geom_Tower"
-				MajorRadius="18"
-				MinorRadius="18"
+				MajorRadius="20"
+				MinorRadius="20"
 				Height="90"
 				FrontAngle="0d"
 				Active="True"
@@ -1721,6 +1799,22 @@
 					y="16"
 					z="0" />
 			</Shape>
+			
+			<Shape
+				Type="BOX"
+				ContactPointGeneration="NONE"
+				MajorRadius="46"
+				MinorRadius="4"
+				Height="24"
+				FrontAngle="0d"
+				Active="True"
+				UsedForHealthBox="True">
+				<Offset
+					x="21.5"
+					y="13"
+					z="0" />
+			</Shape>
+
 			<ContactPoint>
 				<Pos
 					x="-49"
