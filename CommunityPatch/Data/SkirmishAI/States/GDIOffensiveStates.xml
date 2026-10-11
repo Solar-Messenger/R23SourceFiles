@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Tags></Tags>
+	<Includes></Includes>
+	
+	<AIStrategicStateDefinition
+	  id="GDIOffensiveAirEconomyAttack"
+	  UnitUpgradeMultiplier="0.0">
+		<Heuristic>
+			<ConstantHeuristic />
+			<SiegeThresholdHeuristic SiegeMode="false" Threshold="3.0"/>
+		</Heuristic>
+		<TargetHeuristic TargetHeuristic="SafestToAirHarvesterAssaultAirstrikeHeuristic" TargetType="AssaultAirstrike"/>
+		<Tactic Tactic="DefenseAvoidanceAttack" TargetType="AssaultAirstrike">
+			<TeamTemplate MinUnits="4" MaxUnits="4" IncludeKindOf="CAN_ATTACK AIRCRAFT RELOAD_AIRCRAFT" ExcludeKindOf="INFANTRY UNIQUE_UNIT SIEGE_WEAPON BOMBER_AIRCRAFT" AlwaysRelease="false" AlwaysRecruit="false">
+				<CreateUnits UnitName="GDIOrca"/>
+				<CreateUnits UnitName="GDIOrca"/>
+				<CreateUnits UnitName="GDIOrca"/>
+				<CreateUnits UnitName="GDIOrca"/>
+			</TeamTemplate>
+		</Tactic>
+	</AIStrategicStateDefinition>
+
+</AssetDeclaration>

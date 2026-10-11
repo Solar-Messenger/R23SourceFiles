@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Tags></Tags>
+	<Includes></Includes>
+	
+	<AIStrategicStateDefinition
+	  id="NODOptimalGroundEconomyAttack"
+	  UnitUpgradeMultiplier="0.0">
+		<Heuristic>
+			<PathToTargetHeuristic PathExists="true"/>
+			<EnemyNearbyHeuristic Distance="2000.0" EnemyNearby="false" />
+			<SiegeThresholdHeuristic SiegeMode="false" Threshold="4.0"/>
+		</Heuristic>
+		<TargetHeuristic TargetHeuristic="SafestToGroundHarvesterHeuristic" TargetType="Unit"/>
+		<Tactic Tactic="DefenseAvoidanceAttack" TargetType="Unit">
+			<TeamTemplate MinUnits="1" MaxUnits="1" IncludeKindOf="CAN_ATTACK" ExcludeKindOf="INFANTRY UNIQUE_UNIT SIEGE_WEAPON AIRCRAFT" AlwaysRelease="false" AlwaysRecruit="false">
+				<CreateUnits UnitName="NODStealthTank"/>
+			</TeamTemplate>
+		</Tactic>
+	</AIStrategicStateDefinition>
+
+	<AIStrategicStateDefinition
+    id="NODOptimalSpotters"
+    UnitUpgradeMultiplier="0.0">
+		<Heuristic>
+			<PathToTargetHeuristic PathExists="true"/>
+			<SiegeThresholdHeuristic SiegeMode="false" Threshold="4.0"/>
+		</Heuristic>
+		<TargetHeuristic TargetHeuristic="SafestToGroundStructureOpportunityHeuristic" TargetType="Opportunity"/>
+		<Tactic Tactic="DefenseAvoidanceAttack" TargetType="Opportunity">
+			<TeamTemplate MinUnits="3" MaxUnits="3" IncludeKindOf="CAN_ATTACK" ExcludeKindOf="VEHICLE AIRCRAFT UNIQUE_UNIT" AlwaysRelease="false" AlwaysRecruit="false">
+				<CreateUnits UnitName="NODShadowSquad"/>
+				<CreateUnits UnitName="NODShadowSquad"/>
+				<CreateUnits UnitName="NODShadowSquad"/>
+			</TeamTemplate>
+		</Tactic>
+	</AIStrategicStateDefinition>
+
+	<AIStrategicStateDefinition
+		  id="NODOptimalBombingRuns"
+		  UnitUpgradeMultiplier="0.0">
+		<Heuristic>
+			<ConstantHeuristic />
+		</Heuristic>
+    <TargetHeuristic TargetHeuristic="SafestToAirTechBombingAirstrikeHeuristic" WeightMultiplier="2.5" TargetType="BombingAirstrike"/>
+    <TargetHeuristic TargetHeuristic="SafestToAirAirfieldBombingAirstrikeHeuristic" WeightMultiplier="2.0" TargetType="BombingAirstrike"/>
+    <TargetHeuristic TargetHeuristic="SafestToAirWarfactoryBombingAirstrikeHeuristic" WeightMultiplier="1.5" TargetType="BombingAirstrike"/>
+    <TargetHeuristic TargetHeuristic="SafestToAirRefineryBombingAirstrikeHeuristic" WeightMultiplier="1.0" TargetType="BombingAirstrike"/>
+    <TargetHeuristic TargetHeuristic="SafestToAirStructureBombingHeuristic" WeightMultiplier="0.5" TargetType="BombingAirstrike"/>		
+		<Tactic Tactic="DefenseAvoidanceAttack" TargetType="BombingAirstrike">
+			<TeamTemplate MinUnits="2" MaxUnits="2" IncludeKindOf="CAN_ATTACK AIRCRAFT BOMBER_AIRCRAFT" ExcludeKindOf="INFANTRY UNIQUE_UNIT" AlwaysRelease="false" AlwaysRecruit="false">
+				<CreateUnits UnitName="NODVertigo"/>
+				<CreateUnits UnitName="NODVertigo"/>
+			</TeamTemplate>
+		</Tactic>
+	</AIStrategicStateDefinition>
+
+	<AIStrategicStateDefinition
+		  id="NODOptimalEngineer"
+		  UnitUpgradeMultiplier="0.0">
+		<Heuristic>
+			<OpeningMoveHeuristic Complete="true" />
+			<PathToTargetHeuristic PathExists="true"/>
+			<SiegeThresholdHeuristic SiegeMode="false" Threshold="4.0"/>
+			<EnemyNearbyHeuristic Distance="1000.0" EnemyNearby="false"/>
+		</Heuristic>
+		<TargetHeuristic TargetHeuristic="EngineerHeuristic" TargetType="Engineer"/>
+		<Tactic Tactic="DefenseAvoidanceAttack" TargetType="Engineer">
+			<TeamTemplate MinUnits="1" MaxUnits="1" IncludeKindOf="" ExcludeKindOf="AIRCRAFT" AlwaysRelease="false" AlwaysRecruit="false">
+				<CreateUnits UnitName="NODSaboteur"/>
+			</TeamTemplate>
+		</Tactic>
+	</AIStrategicStateDefinition>
+</AssetDeclaration>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Tags></Tags>
+  <Includes></Includes>
+	
+	<AIStrategicStateDefinition
+		id="R17GuerillaGroundEconomyAttack"
+		UnitUpgradeMultiplier="0.0">
+		<Heuristic> 
+			<PathToTargetHeuristic PathExists="true"/>
+			<SiegeThresholdHeuristic SiegeMode="false" Threshold="4.0"/>
+		</Heuristic>
+		<TargetHeuristic TargetHeuristic="SafestToGroundHarvesterHeuristic" TargetType="Unit"/>
+		<Tactic Tactic="DefenseAvoidanceAttack" TargetType="Unit">
+			<TeamTemplate MinUnits="1" MaxUnits="1" IncludeKindOf="CAN_ATTACK" ExcludeKindOf="AIRCRAFT" AlwaysRelease="false" AlwaysRecruit="false">
+				<CreateUnits UnitName="Reaper17CustomizableVehicle"/>
+			</TeamTemplate>
+		</Tactic>
+	</AIStrategicStateDefinition>
+	
+	<AIStrategicStateDefinition
+		id="R17GuerillaAirEconomyAttack"
+		UnitUpgradeMultiplier="0.0">
+		<Heuristic>
+			<ConstantHeuristic />
+		</Heuristic>
+		<TargetHeuristic TargetHeuristic="SafestToAirHarvesterAssaultAirstrikeHeuristic" TargetType="AssaultAirstrike"/>
+		<Tactic Tactic="DefenseAvoidanceAttack" TargetType="AssaultAirstrike">
+			<TeamTemplate MinUnits="4" MaxUnits="4" IncludeKindOf="CAN_ATTACK ASSAULT_AIRCRAFT" ExcludeKindOf="INFANTRY UNIQUE_UNIT RELOAD_AIRCRAFT BOMBER_AIRCRAFT PRODUCED_AT_HELIPAD" AlwaysRelease="false" AlwaysRecruit="false">
+				<CreateUnits UnitName="Reaper17Stormrider"/>
+				<CreateUnits UnitName="Reaper17Stormrider"/>
+				<CreateUnits UnitName="Reaper17Stormrider"/>
+				<CreateUnits UnitName="Reaper17Stormrider"/>
+			</TeamTemplate>
+		</Tactic>
+	</AIStrategicStateDefinition>
+
+	<AIStrategicStateDefinition
+		  id="R17GuerillaEngineer"
+		  UnitUpgradeMultiplier="0.0">
+		<Heuristic>
+			<OpeningMoveHeuristic Complete="true" />
+			<PathToTargetHeuristic PathExists="true"/>
+			<SiegeThresholdHeuristic SiegeMode="false" Threshold="4.0"/>
+			<EnemyNearbyHeuristic Distance="600.0" EnemyNearby="false"/>
+		</Heuristic>
+		<TargetHeuristic TargetHeuristic="EngineerHeuristic" TargetType="Engineer"/>
+		<Tactic Tactic="DefenseAvoidanceAttack" TargetType="Engineer">
+			<TeamTemplate MinUnits="1" MaxUnits="1" IncludeKindOf="" ExcludeKindOf="AIRCRAFT" AlwaysRelease="false" AlwaysRecruit="false">
+				<CreateUnits UnitName="AlienAssimilator"/>
+			</TeamTemplate>
+		</Tactic>
+	</AIStrategicStateDefinition>
+  
+</AssetDeclaration>
+

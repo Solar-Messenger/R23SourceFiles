@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Tags></Tags>
+	<Includes>
+
+		<Include type="all" source="AIGeneralStates.xml"/>
+		<Include type="all" source="AISpecialStates.xml"/>
+		<Include type="all" source="UnitPreferences/AIUnitPreferences.xml"/>
+		<Include type="all" source="UnitPreferences/GDIUnitPreferences.xml"/>
+		<Include type="all" source="UnitPreferences/NODUnitPreferences.xml"/>
+		<Include type="all" source="UnitPreferences/AlienUnitPreferences.xml"/>
+		<Include type="all" source="UnitPreferences/STUnitPreferences.xml"/>
+		<Include type="all" source="UnitPreferences/BHUnitPreferences.xml"/>
+		<Include type="all" source="UnitPreferences/R17UnitPreferences.xml"/>
+		<Include type="all" source="UnitPreferences/ZOCOMUnitPreferences.xml"/>
+		<Include type="all" source="UnitPreferences/MOKUnitPreferences.xml"/>
+		<Include type="all" source="UnitPreferences/T59UnitPreferences.xml"/>
+
+		<Include type="all" source="GDIOffensiveStates.xml"/>
+		<Include type="all" source="NODOffensiveStates.xml"/>
+		<Include type="all" source="AlienOffensiveStates.xml"/>
+		<Include type="all" source="SteelTalonsOffensiveStates.xml"/>
+		<Include type="all" source="BlackHandOffensiveStates.xml"/>
+		<Include type="all" source="Reaper17OffensiveStates.xml"/>
+		<Include type="all" source="ZOCOMOffensiveStates.xml"/>
+		<Include type="all" source="MarkedOfKaneOffensiveStates.xml"/>
+		<Include type="all" source="Traveler59OffensiveStates.xml"/>
+
+		<Include type="all" source="GDIDefensiveStates.xml"/>
+		<Include type="all" source="NODDefensiveStates.xml"/>
+		<Include type="all" source="AlienDefensiveStates.xml"/>
+		<Include type="all" source="SteelTalonsDefensiveStates.xml"/>
+		<Include type="all" source="BlackHandDefensiveStates.xml"/>
+		<Include type="all" source="Reaper17DefensiveStates.xml"/>
+		<Include type="all" source="ZOCOMDefensiveStates.xml"/>
+		<Include type="all" source="MarkedOfKaneDefensiveStates.xml"/>
+		<Include type="all" source="Traveler59DefensiveStates.xml"/>
+
+		<Include type="all" source="GDIOverlordStates.xml"/>
+		<Include type="all" source="NODOverlordStates.xml"/>
+		<Include type="all" source="AlienOverlordStates.xml"/>
+		<Include type="all" source="SteelTalonsOverlordStates.xml"/>
+		<Include type="all" source="BlackHandOverlordStates.xml"/>
+		<Include type="all" source="Reaper17OverlordStates.xml"/>
+		<Include type="all" source="ZOCOMOverlordStates.xml"/>
+		<Include type="all" source="MarkedOfKaneOverlordStates.xml"/>
+		<Include type="all" source="Traveler59OverlordStates.xml"/>
+
+		<Include type="all" source="GDIGuerillaStates.xml"/>
+		<Include type="all" source="NODGuerillaStates.xml"/>
+		<Include type="all" source="AlienGuerillaStates.xml"/>
+		<Include type="all" source="SteelTalonsGuerillaStates.xml"/>
+		<Include type="all" source="BlackHandGuerillaStates.xml"/>
+		<Include type="all" source="Reaper17GuerillaStates.xml"/>
+		<Include type="all" source="ZOCOMGuerillaStates.xml"/>
+		<Include type="all" source="MarkedOfKaneGuerillaStates.xml"/>
+		<Include type="all" source="Traveler59GuerillaStates.xml"/>
+
+		<Include type="all" source="GDIOptimalStates.xml"/>
+		<Include type="all" source="NODOptimalStates.xml"/>
+		<Include type="all" source="AlienOptimalStates.xml"/>
+		<Include type="all" source="SteelTalonsOptimalStates.xml"/>
+		<Include type="all" source="BlackHandOptimalStates.xml"/>
+		<Include type="all" source="Reaper17OptimalStates.xml"/>
+		<Include type="all" source="ZOCOMOptimalStates.xml"/>
+		<Include type="all" source="MarkedOfKaneOptimalStates.xml"/>
+		<Include type="all" source="Traveler59OptimalStates.xml"/>
+		
+	<!-- AI States for Act I - Reunification -->
+
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_1_1_Rio_Insurrection\CM_1_1_Rio_Insurrection_AIS_SplinterNod_Main.xml"/>
+
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_1_2_Steel_Talons\CM_1_2_Steel_Talons_AIS_SteelTalons_Main.xml"/> <!-- CM 2-5: Temple Prime - PlyrGDI_A, PlyrNOD_B, PlyrNOD_D and PlyrNOD_E AI States -->
+
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_1_3_Brother_Marcion\CM_1_3_AIS_MarcionsBase_Main.xml"/>
+
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_1_4_Tib_Research\CM_1_4_Tib_Research_AIS_SteelTalons.xml"/>
+
+	<!-- AI States for Act II - Kane Rising -->
+
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_2_1_Capture_Tech\CM_2_1_AIStates.xml"/>
+
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_2_4_MARV\CM_2_4_AIS_GDI_ZCM.xml"/>
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_2_4_MARV\CM_2_4_AIS_GDI_ZCM_A.xml"/>
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_2_4_MARV\CM_2_4_AIS_GDI_ZCM_B.xml"/>
+
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_2_3_Capture_Giraud\CM_2_3_AIStates.xml"/> <!-- CM 2-3: Capture Giraud - PlyrGDI_A, PlyrGDI_B AI States -->
+
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_2_5_Temple_Prime\CM_2_5_AIStates.xml"/> <!-- CM 2-5: Temple Prime - PlyrGDI_A, PlyrNOD_B, PlyrNOD_D and PlyrNOD_E AI States -->
+
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_2_6_Traveler59\CM_2_6_AIStates.xml"/> <!-- CM 2-6: Traveler59 - PlyrSCRIN_TVL_Skirmish AI States -->
+
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_2_7_Tacitus_A\CM_2_7_AIStates.xml"/> <!-- CM 2-7: Tacitus - PlyrZOCOM, PlyrZOCOMEast, PlyrZOCOMWest AI States -->
+
+	<!-- AI States for Act III - Resurrection -->
+
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_3_2_Tacitus_B\CM_3_2_AIStates.xml"/> <!-- CM 3-2: TacitusB - GDI Player AI States -->
+	
+	<Include type="all" source="DATA:SkirmishAI\Campaign\CM_3_1_Marked_Of_Kane\CM_3_1_Marked_Of_Kane_AIS_GDI_1_Main.xml"/> <!-- CM 3-1: PlyrGDI_1 AI States -->
+
+	</Includes>
+
+</AssetDeclaration>
