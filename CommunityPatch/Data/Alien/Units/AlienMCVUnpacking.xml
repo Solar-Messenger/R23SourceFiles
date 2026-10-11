@@ -235,8 +235,8 @@
 			<!-- Normal Dying -->
 			<SlowDeath
 				id="ModuleTag_SlowDeath"
-				SinkDelay="0.05s"
-				SinkRate="99999"
+				SinkDelay="0s"
+				SinkRate="0.5"
 				DestructionDelay="5s">
 				<OCL
 					Type="INITIAL">

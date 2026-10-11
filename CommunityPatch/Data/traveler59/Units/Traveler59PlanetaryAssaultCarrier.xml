@@ -1569,10 +1569,10 @@
 				IgnoreTerrainHeight="False" />
 			<SlowDeath
 				id="73542D4A"
-				SinkRate="99999"
+				SinkRate="0.5"
 				ProbabilityModifier="10"
 				ModifierBonusPerOverkillPercent="0%"
-				SinkDelay="0.05s"
+				SinkDelay="0s"
 				SinkDelayVariance="0s"
 				DestructionDelay="5s"
 				DestructionDelayVariance="0s"

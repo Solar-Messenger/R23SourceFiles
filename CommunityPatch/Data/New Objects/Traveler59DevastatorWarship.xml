@@ -910,8 +910,8 @@
                 id="ModuleTag_Physics" />
             <SlowDeath
                 id="ModuleTag_Death"
-                SinkDelay="0.05s"
-                SinkRate="99999"
+                SinkDelay="0s"
+                SinkRate="0.5"
                 DestructionDelay="5s">
                 <OCL
                     Type="INITIAL">
