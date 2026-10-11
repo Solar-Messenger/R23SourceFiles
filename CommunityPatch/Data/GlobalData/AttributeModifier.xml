@@ -526,7 +526,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="95%"/>
-		<Modifier Type="HEALTH_MULT" Value="95%"/>
 		<Modifier Type="RECHARGE_TIME" Value="105%"/>
 	</AttributeModifier>
 
@@ -535,7 +534,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="90%"/>
-		<Modifier Type="HEALTH_MULT" Value="90%"/>
 		<Modifier Type="RECHARGE_TIME" Value="110%"/>
 	</AttributeModifier>
 
@@ -544,7 +542,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="85%"/>
-		<Modifier Type="HEALTH_MULT" Value="85%"/>
 		<Modifier Type="RECHARGE_TIME" Value="115%"/>
 	</AttributeModifier>
 
@@ -553,7 +550,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="80%"/>
-		<Modifier Type="HEALTH_MULT" Value="80%"/>
 		<Modifier Type="RECHARGE_TIME" Value="120%"/>
 	</AttributeModifier>
 
@@ -562,7 +558,6 @@
 	Category="LEVEL"
 	Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="75%"/>
-		<Modifier Type="HEALTH_MULT" Value="75%"/>
 		<Modifier Type="RECHARGE_TIME" Value="125%"/>
 	</AttributeModifier>
 
@@ -571,7 +566,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="70%"/>
-		<Modifier Type="HEALTH_MULT" Value="70%"/>
 		<Modifier Type="RECHARGE_TIME" Value="130%"/>
 	</AttributeModifier>
 
@@ -580,7 +574,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="65%"/>
-		<Modifier Type="HEALTH_MULT" Value="65%"/>
 		<Modifier Type="RECHARGE_TIME" Value="135%"/>
 	</AttributeModifier>
 
@@ -589,7 +582,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="60%"/>
-		<Modifier Type="HEALTH_MULT" Value="60%"/>
 		<Modifier Type="RECHARGE_TIME" Value="140%"/>
 	</AttributeModifier>
 
@@ -598,7 +590,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="55%"/>
-		<Modifier Type="HEALTH_MULT" Value="55%"/>
 		<Modifier Type="RECHARGE_TIME" Value="145%"/>
 	</AttributeModifier>
 
@@ -607,7 +598,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="50%"/>
-		<Modifier Type="HEALTH_MULT" Value="50%"/>
 		<Modifier Type="RECHARGE_TIME" Value="150%"/>
 	</AttributeModifier>
 
@@ -616,7 +606,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="45%"/>
-		<Modifier Type="HEALTH_MULT" Value="45%"/>
 		<Modifier Type="RECHARGE_TIME" Value="155%"/>
 	</AttributeModifier>
 
@@ -625,7 +614,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="40%"/>
-		<Modifier Type="HEALTH_MULT" Value="40%"/>
 		<Modifier Type="RECHARGE_TIME" Value="160%"/>
 	</AttributeModifier>
 
@@ -634,7 +622,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="35%"/>
-		<Modifier Type="HEALTH_MULT" Value="35%"/>
 		<Modifier Type="RECHARGE_TIME" Value="165%"/>
 	</AttributeModifier>
 
@@ -643,7 +630,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="30%"/>
-		<Modifier Type="HEALTH_MULT" Value="30%"/>
 		<Modifier Type="RECHARGE_TIME" Value="170%"/>
 	</AttributeModifier>
 
@@ -652,7 +638,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="25%"/>
-		<Modifier Type="HEALTH_MULT" Value="25%"/>
 		<Modifier Type="RECHARGE_TIME" Value="175%"/>
 	</AttributeModifier>
 
@@ -661,7 +646,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="20%"/>
-		<Modifier Type="HEALTH_MULT" Value="20%"/>
 		<Modifier Type="RECHARGE_TIME" Value="180%"/>
 	</AttributeModifier>
 
@@ -670,7 +654,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="15%"/>
-		<Modifier Type="HEALTH_MULT" Value="15%"/>
 		<Modifier Type="RECHARGE_TIME" Value="185%"/>
 	</AttributeModifier>
 
@@ -679,7 +662,6 @@
 		Category="LEVEL"
 		Duration="0s">
 		<Modifier Type="DAMAGE_MULT" Value="10%"/>
-		<Modifier Type="HEALTH_MULT" Value="10%"/>
 		<Modifier Type="RECHARGE_TIME" Value="190%"/>
 	</AttributeModifier>
 
