@@ -520,6 +520,12 @@
 						FXParticleSystemTemplate="AlienDamageFlyingIchor"
 						FollowBone="true" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="" />
+				</ModelConditionState>
 
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
