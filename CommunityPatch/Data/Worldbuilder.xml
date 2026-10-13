@@ -3,7 +3,16 @@
 
 	<Includes>
 		
-		<Include type="all" source="StaticGameObjects.xml" />
+		<!-- neutral buildings for wb stream -->
+		<Include type="all" source="TiberiumSpike.xml" />
+		<Include type="all" source="Neutral/CDMTower.xml" />
+		<Include type="all" source="Neutral/DefensiveTower.xml" />
+		<Include type="all" source="Neutral/ElectromagneticPulseControlCenter.xml" />
+		<Include type="all" source="Neutral/TiberiumSilo.xml" />
+		<Include type="all" source="Alien/Structures/MutantHovel.xml" />
+
+
+		<!--<Include type="all" source="StaticGameObjects.xml" />-->
 		<!--
 		<Include type="all" source="ART:Static/Models/AUAnlTrpdHB_SKN.W3X" />
 		<Include type="all" source="ART:Static/Models/AUAnlTrpd_SKL.W3X" />
