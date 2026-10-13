@@ -1135,7 +1135,7 @@
 				SpecialPowerAIType="SPECIAL_POWER_MOVEMENT" />
 			<SlowDeath
 				id="ModuleTag_Death"
-				SinkDelay="0s"
+				SinkDelay="5s"
 				SinkRate="0.5"
 				DestructionDelay="5s">
 				<OCL
