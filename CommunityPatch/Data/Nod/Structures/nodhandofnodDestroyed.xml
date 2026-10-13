@@ -440,6 +440,18 @@
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
+			<!-- show subobjects if confessors or black disciples is upgraded -->
+			<SubObjectsUpgrade
+				id="ModuleTag_NODConfessorUpgrade"
+				ShowSubObjects="CONFUPGRD GLOWS">
+				<TriggeredBy>Upgrade_NODConfessorUpgrade</TriggeredBy>
+			</SubObjectsUpgrade>
+			
+			<SubObjectsUpgrade
+				id="ModuleTag_ShowBlackDisciplesUpgrade"
+				ShowSubObjects="BLACKDISCIPLES_GLOWS BLACKDISCIPLESUPGRD">
+				<TriggeredBy>Upgrade_BlackHandBlackDisciplesUpgrade</TriggeredBy>
+			</SubObjectsUpgrade>
 		</Behaviors>
 		<AI>
 			<AIUpdate
