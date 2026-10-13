@@ -520,7 +520,7 @@
 	</AttributeModifier>
 
 	<!-- reverting handicap changes apart from -95% -->
-	<!--
+
 	<AttributeModifier
 		id="HandicapPercent5"
 		Category="LEVEL"
@@ -683,7 +683,7 @@
 			Type="PRODUCTION"
 			Value="4000%" />
 	</AttributeModifier>
-	-->
+	
 	<!--
 	<AttributeModifier
 		id="HandicapPercent100"
