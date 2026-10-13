@@ -287,27 +287,6 @@
 					<Model
 						Name="Asset not found in stream: [317EED54:DF3DA41D]"
 						ExtraMesh="False" />
-					<ParticleSysBone
-						BoneName="FX_JetL"
-						FXParticleSystemTemplate="GDIDebrisSmallFire"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="FX_JetL"
-						FXParticleSystemTemplate="GDIDebrisSmallFireDistortion"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="FX_JetR"
-						FXParticleSystemTemplate="GDIDebrisSmallSmoke"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -400,27 +379,6 @@
 					<Model
 						Name="Asset not found in stream: [317EED54:DF3DA41D]"
 						ExtraMesh="False" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFire"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFireDistortion"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallSmoke"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"

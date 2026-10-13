@@ -286,27 +286,6 @@
 					RetainSubObjects="False">
 					<Model
 						Name="W3DMesh:GUHamheadR" />
-					<ParticleSysBone
-						BoneName="FX_JetL"
-						FXParticleSystemTemplate="GDIDebrisSmallFire"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="FX_JetL"
-						FXParticleSystemTemplate="GDIDebrisSmallFireDistortion"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="FX_JetR"
-						FXParticleSystemTemplate="GDIDebrisSmallSmoke"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -398,27 +377,6 @@
 					RetainSubObjects="False">
 					<Model
 						Name="W3DMesh:GUHamheadR" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFire"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFireDistortion"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallSmoke"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"

@@ -750,27 +750,6 @@
 						<Texture
 						Original="HC_GUHamhead"
 						New="HC_GUHamhead_UGCA" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFire"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFireDistortion"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallSmoke"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -878,27 +857,6 @@
 					<Texture
 						Original="GUHamhead"
 						New="GUHamheadD" />	
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFire"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFireDistortion"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallSmoke"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"

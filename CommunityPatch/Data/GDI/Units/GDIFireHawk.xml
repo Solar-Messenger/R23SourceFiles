@@ -225,10 +225,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING USER_5">
 					<Model
-						Name="" />
-					<Texture
-						Original="GU_FireHawkD"
-						New="GU_FireHawkD_K" />		
+						Name="" />		
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -380,9 +377,6 @@
 					ConditionsYes="DYING">
 					<Model
 						Name="" />
-					<Texture
-						Original="GU_FireHawkD"
-						New="GU_FireHawkD" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -855,6 +849,12 @@
 					<Model
 						Name="W3DContainer:FXInvisBone" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="" />
+				</ModelConditionState>
 			</ScriptedModelDraw>
 			
 			<ScriptedModelDraw
@@ -890,6 +890,12 @@
 					ConditionsYes="PACKING_TYPE_1 PACKING USER_1">
 					<Model
 						Name="W3DContainer:FXInvisBone" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="" />
 				</ModelConditionState>
 			</ScriptedModelDraw>
 			

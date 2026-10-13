@@ -142,30 +142,6 @@
 					ConditionsYes="DYING USER_6">
 					<Model
 						Name="" />
-					<Texture
-						Original="GUOrca_07D"
-						New="GUOrca_UGCA" />
-					<Texture
-						Original="GUOrca_07_NRM"
-						New="GUOrca_UGCA_NRM" />
-					<Texture
-						Original="GUOrca_07_SPM"
-						New="GUOrca_UGCA_SPM" />
-					<Texture
-						Original="HC_GUOrca_07"
-						New="HC_GUOrca_UGCA" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFire"
-						FollowBone="true" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFireDistortion"
-						FollowBone="true" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallSmoke"
-						FollowBone="true" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -239,18 +215,6 @@
 					ConditionsYes="DYING">
 					<Model
 						Name="" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFire"
-						FollowBone="true" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFireDistortion"
-						FollowBone="true" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallSmoke"
-						FollowBone="true" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"

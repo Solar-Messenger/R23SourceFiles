@@ -228,37 +228,6 @@
 					<Model
 						Name=""
 						ExtraMesh="False" />
-					<Texture
-						Original="NUCarryAll"
-						New="NUCarryAll_D" />
-					<ParticleSysBone
-						BoneName="Bone_Engine_LF"
-						FXParticleSystemTemplate="orcaexhaust"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="Bone_Engine_RR"
-						FXParticleSystemTemplate="orcaexhaust"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="Bone_Engine_RR"
-						FXParticleSystemTemplate="orcadamagefire"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="Bone_Engine_RR"
-						FXParticleSystemTemplate="orcadamagesmoke"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"

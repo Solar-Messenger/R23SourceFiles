@@ -244,27 +244,6 @@
 					<Model
 						Name=""
 						ExtraMesh="False" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFire"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallFireDistortion"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-					<ParticleSysBone
-						BoneName="ROOTTRANSFORM"
-						FXParticleSystemTemplate="GDIDebrisSmallSmoke"
-						PersistID="0"
-						FollowBone="True"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -2030,4 +2009,3 @@
 		<DisplayUpgrade>Upgrade_GDIHardpoints</DisplayUpgrade>
 	</GameObject>
 </AssetDeclaration>
-

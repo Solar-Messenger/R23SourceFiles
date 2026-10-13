@@ -1026,6 +1026,12 @@
 						Name="W3DContainer:NUVERTFXBONES"
 						ExtraMesh="False" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="" />
+				</ModelConditionState>
 			</ScriptedModelDraw>
 			<TracerModelDraw
 				id="54201A36"
