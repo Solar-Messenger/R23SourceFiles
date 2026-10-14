@@ -682,10 +682,10 @@
 				RandomizeTargetLocation="False" />
 			<SlowDeath
 				id="73542D4A"
-				SinkRate="4"
+				SinkRate="99999"
 				ProbabilityModifier="10"
 				ModifierBonusPerOverkillPercent="0%"
-				SinkDelay="3s"
+				SinkDelay="0.05s"
 				SinkDelayVariance="0s"
 				DestructionDelay="8s"
 				DestructionDelayVariance="0s"
@@ -701,9 +701,6 @@
 				DeathObjectStatusBits=""
 				ShadowWhenDead="False"
 				Fade="False">
-				<Sound
-					Type="INITIAL"
-					List="ALI_Building_Die" />
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""
@@ -1007,6 +1004,19 @@
 					MinKillerAngle="0.9999999d"
 					MaxKillerAngle="-0.9999999d"
 					DeathTypes="SUICIDED"
+					DeathTypesForbidden="" />
+			</CreateObjectDie>
+
+			<CreateObjectDie
+				id="ModuleTag_CreatedDestroyedBuilding"
+				CreationList="OCL_AlienDestroyedControlCenter">
+				<DieMuxData
+					ExemptStatus=""
+					RequiredStatus=""
+					DamageAmountRequired="-1"
+					MinKillerAngle="0.9999999d"
+					MaxKillerAngle="-0.9999999d"
+					DeathTypes="ALL"
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
 			<SpecialPower

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<GameObject
+		id="CDMTowerDestroyed"
+		Side="Neutral"
+		EditorSorting="MISC_MAN_MADE"
+		KindOf="IMMOBILE NO_COLLIDE UNATTACKABLE NOT_AUTOACQUIRABLE CAN_CAST_REFLECTIONS"
+		EditorName="CDMTowerDestroyed">
+		<DisplayName>CDMTowerDestroyed</DisplayName>
+		<ArmorSet
+			Armor="StructureArmor" />
+		<Draws>
+			<ScriptedModelDraw
+				id="ModuleTag_Draw"
+				OkToChangeModelColor="true">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:CBPrpagand" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE">
+					<Model
+						Name="W3DContainer:CBPrpagand_D3" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:CBPrpagand_D2" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DAMAGED">
+					<Model
+						Name="W3DContainer:CBPrpagand_D1" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT">
+					<!-- no anim -->
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="CBPrpagand_D3"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED"
+					StateName="STATE_ReallyDamaged"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="CBPrpagand_D2"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_ReallyDamaged" and Prev ~= "TRANS_IntoReallyDamaged" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoReallyDamaged")
+						end
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoReallyDamaged">
+					<Animation
+						AnimationName="CBPrpagand_D2"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble">
+					<Animation
+						AnimationName="CBPrpagand_D3"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+			</ScriptedModelDraw>
+		</Draws>
+		<Behaviors>
+			<LifetimeUpdate
+				id="ModuleTag_LifetimeUpdate"
+				MinLifetime="0s"
+				MaxLifetime="0s" />
+		
+			<SlowDeath
+				id="ModuleTag_Death"
+				SinkDelay="4s"
+				SinkRate="3.0"
+				DestructionDelay="8.0s">
+				<Sound
+					Type="INITIAL"
+					List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					DeathTypes="ALL" />
+			</SlowDeath>
+		</Behaviors>
+		<Body>
+			<ActiveBody
+				id="ModuleTag_Body"
+				MaxHealth="100.0"
+				InitialHealth="100.0" />
+		</Body>
+		<Geometry
+			IsSmall="false">
+			<Shape
+				Type="BOX"
+				MajorRadius="19.0228"
+				MinorRadius="18.3183"
+				Height="13.1516">
+				<Offset
+					x="6.64374"
+					y="-0.302509"
+					z="0.0" />
+			</Shape>
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="44.661"
+				MinorRadius="44.661"
+				Height="17.3789">
+				<Offset
+					x="0.302792"
+					y="-0.302515"
+					z="55.2747" />
+			</Shape>
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="5.88532"
+				MinorRadius="5.88532"
+				Height="56.364">
+				<Offset
+					x="0.302791"
+					y="-0.30251"
+					z="0.0" />
+			</Shape>
+			<ContactPoint>
+				<Pos
+					x="-27.487"
+					y="-27.6517"
+					z="58.0303" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="28.3569"
+					y="-27.6517"
+					z="71.5467" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="28.3569"
+					y="28.1922"
+					z="58.0303" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-27.487"
+					y="28.1922"
+					z="71.5467" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-27.487"
+					y="-27.6517"
+					z="71.5467" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="28.3569"
+					y="-27.6517"
+					z="58.0303" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="28.3569"
+					y="28.1922"
+					z="71.5467" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-27.487"
+					y="28.1922"
+					z="58.0303" />
+			</ContactPoint>
+		</Geometry>
+		<ShadowInfo
+			Type="VOLUME" />
+		<VisionInfo
+			VisionRange="100"
+			ShroudClearingRange="275" />
+	</GameObject>
+</AssetDeclaration>

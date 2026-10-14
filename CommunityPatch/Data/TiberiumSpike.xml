@@ -315,10 +315,10 @@
 				id="788FFB50" />
 			<SlowDeath
 				id="1673247C"
-				SinkRate="3"
+				SinkRate="99999"
 				ProbabilityModifier="10"
 				ModifierBonusPerOverkillPercent="0%"
-				SinkDelay="4s"
+				SinkDelay="0.05s"
 				SinkDelayVariance="0s"
 				DestructionDelay="8s"
 				DestructionDelayVariance="0s"
@@ -334,9 +334,6 @@
 				DeathObjectStatusBits=""
 				ShadowWhenDead="False"
 				Fade="False">
-				<Sound
-					Type="INITIAL"
-					List="HumanFaction_MediumBuilding_DieMS" />
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""
@@ -392,6 +389,19 @@
 					MaxKillerAngle="-0.9999999d"
 					DeathTypes="ALL"
 					DeathTypesForbidden="SUICIDED" />
+			</CreateObjectDie>
+
+			<CreateObjectDie
+				id="ModuleTag_CreatedDestroyedBuilding"
+				CreationList="OCL_DestroyedTiberiumSpike">
+				<DieMuxData
+					ExemptStatus=""
+					RequiredStatus=""
+					DamageAmountRequired="-1"
+					MinKillerAngle="0.9999999d"
+					MaxKillerAngle="-0.9999999d"
+					DeathTypes="ALL"
+					DeathTypesForbidden="" />
 			</CreateObjectDie>
 			<AutoDepositUpdate
 				id="63AFF4D3"

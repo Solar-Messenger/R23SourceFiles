@@ -105,13 +105,25 @@
 				id="DefaultAttributeModifierPoolUpdate"/>
 			<SlowDeath
 				id="ModuleTag_Death"
-				SinkDelay="4s"
-				SinkRate="3.0"
+				SinkDelay="0.05s"
+				SinkRate="99999"
 				DestructionDelay="8.0s">
-				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
+
+			<CreateObjectDie
+				id="ModuleTag_CreatedDestroyedBuilding"
+				CreationList="OCL_DestroyedCDMTower">
+				<DieMuxData
+					ExemptStatus=""
+					RequiredStatus=""
+					DamageAmountRequired="-1"
+					MinKillerAngle="0.9999999d"
+					MaxKillerAngle="-0.9999999d"
+					DeathTypes="ALL"
+					DeathTypesForbidden="" />
+			</CreateObjectDie>
 			<FXListBehavior
 				id="ModuleTag_FXList">
 				<DieMuxData

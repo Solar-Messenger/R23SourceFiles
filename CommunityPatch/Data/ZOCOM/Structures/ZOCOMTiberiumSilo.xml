@@ -276,12 +276,24 @@
 					DeathTypes="ALL"
 					DeathTypesForbidden="SUICIDED" />
 			</CreateObjectDie>
+
+			<CreateObjectDie
+				id="ModuleTag_CreatedDestroyedBuilding"
+				CreationList="OCL_GDIDestroyedTiberiumSilo">
+				<DieMuxData
+					ExemptStatus=""
+					RequiredStatus=""
+					DamageAmountRequired="-1"
+					MinKillerAngle="0.9999999d"
+					MaxKillerAngle="-0.9999999d"
+					DeathTypes="ALL"
+					DeathTypesForbidden="" />
+			</CreateObjectDie>
 			<SlowDeath
 				id="ModuleTag_Death"
-				SinkDelay="3.0s"
-				SinkRate="4.0"
+				SinkDelay="0.05s"
+				SinkRate="99999"
 				DestructionDelay="8.0s">
-				<Sound Type="INITIAL" List="HumanFaction_SmallBuilding_DieMS" />
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>

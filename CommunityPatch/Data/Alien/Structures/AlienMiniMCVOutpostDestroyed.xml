@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<GameObject
+		id="AlienMiniMCVOutpostDestroyed"
+		Side="Alien"
+		EditorSorting="MISC_MAN_MADE"
+		KindOf="IMMOBILE NO_COLLIDE UNATTACKABLE NOT_AUTOACQUIRABLE CAN_CAST_REFLECTIONS"
+		EditorName="AlienMiniMCVOutpostDestroyed">
+		<DisplayName>AlienMiniMCVOutpostDestroyed</DisplayName>
+		<ArmorSet
+			Armor="AlienMiniMCVOutpostArmor"
+			DamageFX="FactionStructureDamageFX" />
+		<Draws>
+			<ScriptedModelDraw
+				id="ModuleTag_Draw"
+				OkToChangeModelColor="true">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:AUSurvyr_SKN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING">
+					<Model
+						Name="W3DContainer:AUSurvyr_SKN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE">
+					<Model
+						Name="W3DContainer:ABOutpost_D3SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:ABOutpost_D2SN" />
+					<ParticleSysBone
+						BoneName="FXBone01"
+						FXParticleSystemTemplate="AlienDamageFire01"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone01"
+						FXParticleSystemTemplate="AlienDamageFireGlow01"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone01"
+						FXParticleSystemTemplate="AlienDamageFireGlow02"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone02"
+						FXParticleSystemTemplate="AlienDamageFire01"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone02"
+						FXParticleSystemTemplate="AlienDamageFireGlow01"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone02"
+						FXParticleSystemTemplate="AlienDamageFireGlow02"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone03"
+						FXParticleSystemTemplate="AlienDamageFire01"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone03"
+						FXParticleSystemTemplate="AlienDamageFireGlow01"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone03"
+						FXParticleSystemTemplate="AlienDamageFireGlow02"
+						FollowBone="true" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DAMAGED">
+					<Model
+						Name="W3DContainer:ABOutpost" />
+					<Texture
+						Original="AUSurvyr"
+						New="AUSurvyr_D" />
+					<ParticleSysBone
+						BoneName="FXBone01"
+						FXParticleSystemTemplate="AlienDamageFire01"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone03"
+						FXParticleSystemTemplate="AlienDamageFire01"
+						FollowBone="true" />
+				</ModelConditionState>
+				
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="AUSurvyr_UPAK3"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev == "STATE_StartUnpak" then
+						CurDrawableSetTransitionAnimState("TRANS_UPakToIdle")
+						end
+					</Script>						
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING"
+					StateName="STATE_StartUnpak">
+					<Animation
+						AnimationName="AUSurvyr_UPAK2"
+						AnimationMode="LOOP" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_StartUnpak" and Prev ~= "TRANS_IntoUPak" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoUPak")
+						end
+					</Script>
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Con_Small_Light"
+						FollowBone="true" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoUPak">
+					<Animation
+						AnimationName="AUSurvyr_UPAK"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Alien_Con_Small"
+						FollowBone="true" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_UPakToIdle">
+					<Animation
+						AnimationName="AUSurvyr_UPAK3"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="ABOutpost_D3AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
+				</AnimationState> 
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED"
+					StateName="STATE_ReallyDamaged"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="ABOutpost_D2AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_ReallyDamaged" and Prev ~= "TRANS_IntoReallyDamaged" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoReallyDamaged")
+						end
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoReallyDamaged">
+					<Animation
+						AnimationName="ABOutpost_D2AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble">
+					<Animation
+						AnimationName="ABOutpost_D3AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+			</ScriptedModelDraw>
+		</Draws>
+		<Behaviors>
+			<LifetimeUpdate
+				id="ModuleTag_LifetimeUpdate"
+				MinLifetime="0s"
+				MaxLifetime="0s" />
+		
+			<SlowDeath
+				id="ModuleTag_Death"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound
+					Type="INITIAL"
+					List="ALI_Building_Die" />
+				<DieMuxData
+					DeathTypes="ALL" />
+			</SlowDeath>
+		</Behaviors>
+		<Body>
+			<ActiveBody
+				id="ModuleTag_Body"
+				MaxHealth="100.0"
+				InitialHealth="100.0" />
+		</Body>
+		<Geometry
+			IsSmall="false">
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="18.0"
+				Height="40.0"
+				ContactPointGeneration="INFANTRY" />
+		</Geometry>
+		<ShadowInfo
+			Type="VOLUME" />
+		<VisionInfo
+			VisionRange="200"
+			ShroudClearingRange="400" />
+	</GameObject>
+</AssetDeclaration>

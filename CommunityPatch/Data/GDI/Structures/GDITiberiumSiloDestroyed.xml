@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<GameObject
+		id="GDITiberiumSiloDestroyed"
+		Side="GDI"
+		EditorSorting="MISC_MAN_MADE"
+		KindOf="IMMOBILE NO_COLLIDE UNATTACKABLE NOT_AUTOACQUIRABLE CAN_CAST_REFLECTIONS"
+		EditorName="GDITiberiumSiloDestroyed">
+		<DisplayName>GDITiberiumSiloDestroyed</DisplayName>
+		<ArmorSet
+			Armor="GDITiberiumSiloArmor"
+			DamageFX="FactionStructureDamageFX" />
+		<Draws>
+			<ScriptedModelDraw
+				id="ModuleTag_Draw"
+				OkToChangeModelColor="true">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:GBSilo" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING">
+					<Model
+						Name="W3DContainer:GBSilo_ASN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE">
+					<Model
+						Name="W3DContainer:GBSiloD3_SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:GBSiloD2_SN" />
+					<ParticleSysBone
+						BoneName="FXBone01"
+						FXParticleSystemTemplate="GDISiloDamagedFire"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone01"
+						FXParticleSystemTemplate="GDISiloDamagedDist"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone02"
+						FXParticleSystemTemplate="GDISiloDamagedSmoke"
+						FollowBone="true" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DAMAGED">
+					<Model
+						Name="W3DContainer:GBSilo" />
+					<Texture
+						Original="GBSilo"
+						New="GBSilo_D" />
+					<ParticleSysBone
+						BoneName="FXBone01"
+						FXParticleSystemTemplate="GDISiloDamagedSteam"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone01"
+						FXParticleSystemTemplate="GDISiloDamagedDist2"
+						FollowBone="true" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT">
+					<!-- no anim -->
+				</AnimationState>
+				<!-- BUILDUP ANIMATION -->
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING">
+					<Animation
+						AnimationName="GBSilo_AAN"
+						AnimationMode="ONCE" />
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Con_Medium"
+						FollowBone="true" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="GBSiloD3_AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Medium"
+						FollowBone="false" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED"
+					StateName="STATE_ReallyDamaged"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="GBSiloD2_AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_ReallyDamaged" and Prev ~= "TRANS_IntoReallyDamaged" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoReallyDamaged")
+						end
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoReallyDamaged">
+					<Animation
+						AnimationName="GBSiloD2_AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble">
+					<Animation
+						AnimationName="GBSiloD3_AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+			</ScriptedModelDraw>
+			<!-- DRAW TIBERIUM METER -->
+			<ScriptedModelDraw
+				id="ModuleTag_Draw_TIB"
+				OkToChangeModelColor="false">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:GBSilo_TIB" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING">
+					<Model
+						Name="W3DContainer:NBEmpty_ABLD" />
+				</ModelConditionState>					
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Script>
+						CurDrawableHideSubObject("Tib_25")
+						CurDrawableHideSubObject("Tib_50")
+						CurDrawableHideSubObject("Tib_75")
+						CurDrawableHideSubObject("Tib_100")
+						CurDrawableHideSubObject("FXGlows_25")
+						CurDrawableHideSubObject("FXGlows_50")
+						CurDrawableHideSubObject("FXGlows_75")
+						CurDrawableHideSubObject("FXGlows_100")
+					</Script>
+				</AnimationState>
+				<!-- BUILD UP ANIMATION -->
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING"
+					StateName="STATE_Buildup">
+					<Animation
+						AnimationName="NBEmpty_ABLD"
+						AnimationMode="ONCE" />
+				</AnimationState>				
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="MONEY_STORED_AMOUNT_1">
+					<Script>
+						CurDrawableShowSubObject("Tib_25")
+						CurDrawableHideSubObject("Tib_50")
+						CurDrawableHideSubObject("Tib_75")
+						CurDrawableHideSubObject("Tib_100")
+						CurDrawableShowSubObject("FXGlows_25")
+						CurDrawableHideSubObject("FXGlows_50")
+						CurDrawableHideSubObject("FXGlows_75")
+						CurDrawableHideSubObject("FXGlows_100")
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="MONEY_STORED_AMOUNT_2">
+					<Script>
+						CurDrawableHideSubObject("Tib_25")
+						CurDrawableShowSubObject("Tib_50")
+						CurDrawableHideSubObject("Tib_75")
+						CurDrawableHideSubObject("Tib_100")
+						CurDrawableHideSubObject("FXGlows_25")
+						CurDrawableShowSubObject("FXGlows_50")
+						CurDrawableHideSubObject("FXGlows_75")
+						CurDrawableHideSubObject("FXGlows_100")
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="MONEY_STORED_AMOUNT_3">
+					<Script>
+						CurDrawableHideSubObject("Tib_25")
+						CurDrawableHideSubObject("Tib_50")
+						CurDrawableShowSubObject("Tib_75")
+						CurDrawableHideSubObject("Tib_100")
+						CurDrawableHideSubObject("FXGlows_25")
+						CurDrawableHideSubObject("FXGlows_50")
+						CurDrawableShowSubObject("FXGlows_75")
+						CurDrawableHideSubObject("FXGlows_100")
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="MONEY_STORED_AMOUNT_4">
+					<Script>
+						CurDrawableHideSubObject("Tib_25")
+						CurDrawableHideSubObject("Tib_50")
+						CurDrawableHideSubObject("Tib_75")
+						CurDrawableShowSubObject("Tib_100")
+						CurDrawableHideSubObject("FXGlows_25")
+						CurDrawableHideSubObject("FXGlows_50")
+						CurDrawableHideSubObject("FXGlows_75")
+						CurDrawableShowSubObject("FXGlows_100")
+					</Script>
+				</AnimationState>
+			</ScriptedModelDraw>
+		</Draws>
+		<Behaviors>
+			<LifetimeUpdate
+				id="ModuleTag_LifetimeUpdate"
+				MinLifetime="0s"
+				MaxLifetime="0s" />
+		
+			<SlowDeath
+				id="ModuleTag_Death"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound
+					Type="INITIAL"
+					List="HumanFaction_SmallBuilding_DieMS" />
+				<DieMuxData
+					DeathTypes="ALL" />
+			</SlowDeath>
+		</Behaviors>
+		<Body>
+			<ActiveBody
+				id="ModuleTag_Body"
+				MaxHealth="100.0"
+				InitialHealth="100.0" />
+		</Body>
+		<Geometry
+			IsSmall="false">
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="18.0"
+				Height="20.0">
+				<Offset
+					x="3.0"
+					y="-15.0"
+					z="0" />
+			</Shape>
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="12.0"
+				Height="46.0">
+				<Offset
+					x="-1.0"
+					y="19.0"
+					z="0" />
+			</Shape>
+			<Shape
+				Type="BOX"
+				MajorRadius="3.5"
+				MinorRadius="11.0"
+				Height="42.0">
+				<Offset
+					x="0.0"
+					y="0.0"
+					z="0" />
+			</Shape>
+			<ContactPoint>
+				<Pos
+					x="-10.0"
+					y="30.0"
+					z="30" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="8.0"
+					y="30.0"
+					z="0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="20.0"
+					y="-28.0"
+					z="30" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="8.0"
+					y="30.0"
+					z="0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-12.0"
+					y="-30.0"
+					z="30" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="8.0"
+					y="30.0"
+					z="0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-12.0"
+					y="-30.0"
+					z="30" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-10.0"
+					y="30.0"
+					z="0" />
+			</ContactPoint>
+		</Geometry>
+		<ShadowInfo
+			Type="VOLUME" />
+		<VisionInfo
+			VisionRange="100"
+			ShroudClearingRange="400" />
+	</GameObject>
+</AssetDeclaration>

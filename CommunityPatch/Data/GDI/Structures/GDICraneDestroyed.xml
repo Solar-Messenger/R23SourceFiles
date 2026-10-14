@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<GameObject
+		id="GDICraneDestroyed"
+		Side="GDI"
+		EditorSorting="MISC_MAN_MADE"
+		KindOf="IMMOBILE NO_COLLIDE UNATTACKABLE NOT_AUTOACQUIRABLE CAN_CAST_REFLECTIONS"
+		EditorName="GDICraneDestroyed">
+		<DisplayName>GDICraneDestroyed</DisplayName>
+		<ArmorSet
+			Armor="GDICraneArmor"
+			DamageFX="FactionStructureDamageFX" />
+		<Draws>
+			<ScriptedModelDraw
+				id="ModuleTag_Draw"
+				OkToChangeModelColor="true">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:GBCrane_SKN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING">
+					<Model
+						Name="W3DContainer:GBCrane_ASN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE">
+					<Model
+						Name="W3DContainer:GBCrane_D3_SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:GBCrane_D2_SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DAMAGED">
+					<Model
+						Name="W3DContainer:GBCrane_SKN" />
+					<Texture
+						Original="GB_Conyard01"
+						New="GB_Conyard01D" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT"
+					Flags="RESTART_ANIM_WHEN_COMPLETE DO_NOT_PLAY_WHEN_UNPOWERED"
+					StateName="STATE_bored">
+					<Animation
+						AnimationName="GBCrane_IDLA"
+						AnimationMode="ONCE"
+						AnimationPriority="10" />
+					<Animation
+						AnimationName="GBCrane_IDLB"
+						AnimationMode="ONCE"
+						AnimationPriority="1" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="BUILD_PLACEMENT_CURSOR">
+				</AnimationState>		
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING">
+					<Animation
+						AnimationName="GBCrane_AAN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="GBCrane_D3_AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Small"
+						FollowBone="false" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED"
+					StateName="STATE_ReallyDamaged"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="GBCrane_D2_AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_ReallyDamaged" and Prev ~= "TRANS_IntoReallyDamaged" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoReallyDamaged")
+						end
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoReallyDamaged">
+					<Animation
+						AnimationName="GBCrane_D2_AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble">
+					<Animation
+						AnimationName="GBCrane_D3_AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+			</ScriptedModelDraw>
+			
+			<!-- Draw sonic repulsion field -->
+			
+			<ScriptedModelDraw
+				id="ModuleTag_DrawGDIWarfactorySRF"
+				OkToChangeModelColor="true"
+				UseStandardModelNames="true"
+				StaticModelLODMode="true">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT" >
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DYING">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 REALLYDAMAGED">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DAMAGED">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6">
+					<Model
+						Name="W3DContainer:GBCraneSRF_SKN" />
+				</ModelConditionState>
+			</ScriptedModelDraw>
+		</Draws>
+		<Behaviors>
+			<LifetimeUpdate
+				id="ModuleTag_LifetimeUpdate"
+				MinLifetime="0s"
+				MaxLifetime="0s" />
+		
+			<SlowDeath
+				id="ModuleTag_Death"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound
+					Type="INITIAL"
+					List="HumanFaction_SmallBuilding_DieMS" />
+				<DieMuxData
+					DeathTypes="ALL" />
+			</SlowDeath>
+		</Behaviors>
+		<Body>
+			<ActiveBody
+				id="ModuleTag_Body"
+				MaxHealth="100.0"
+				InitialHealth="100.0" />
+		</Body>
+		<Geometry
+			IsSmall="false">
+			<Shape
+				Type="BOX"
+				MajorRadius="20.0"
+				MinorRadius="15.0"
+				Height="25.0">
+				<Offset
+					x="0"
+					y="0"
+					z="0" />
+			</Shape>
+			<ContactPoint>
+				<Pos
+					x="-13.0"
+					y="13.0"
+					z="20" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="13.0"
+					y="13.0"
+					z="0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="13.0"
+					y="-13.0"
+					z="20" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="13.0"
+					y="13.0"
+					z="0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-13.0"
+					y="-13.0"
+					z="20" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="13.0"
+					y="13.0"
+					z="0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-13.0"
+					y="-13.0"
+					z="20" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-13.0"
+					y="13.0"
+					z="0" />
+			</ContactPoint>
+		</Geometry>
+		<ShadowInfo
+			Type="VOLUME" />
+		<VisionInfo
+			VisionRange="100"
+			ShroudClearingRange="400" />
+	</GameObject>
+</AssetDeclaration>

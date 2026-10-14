@@ -225,11 +225,9 @@
 				</WeaponSlotHardpoint>
 			</WeaponSetUpdate>
 			<SlowDeath id="ModuleTag_Death"
-				SinkDelay="3.0s"
-				SinkRate="4.0"
+				SinkDelay="0.05s"
+				SinkRate="99999"
 				DestructionDelay="8.0s">
-				<Sound Type="INITIAL"
-					List="ALI_Building_Die" />
 				<DieMuxData DeathTypes="ALL" />
 			</SlowDeath>
 			<SpawnBehavior id="ModuleTag_SpawnBuzzers"
@@ -282,6 +280,19 @@
 				CreationList="OCL_AlienBuzzerHiveDie">
 				<DieMuxData
 					DeathTypes="NORMAL CRUSHED BURNED EXPLODED POISONED TOPPLED FLOODED LASERED DETONATED" />
+			</CreateObjectDie>
+
+			<CreateObjectDie
+				id="ModuleTag_CreatedDestroyedBuilding"
+				CreationList="OCL_AlienDestroyedBuzzerHive">
+				<DieMuxData
+					ExemptStatus=""
+					RequiredStatus=""
+					DamageAmountRequired="-1"
+					MinKillerAngle="0.9999999d"
+					MaxKillerAngle="-0.9999999d"
+					DeathTypes="ALL"
+					DeathTypesForbidden="" />
 			</CreateObjectDie>
 			<StructureUnpackUpdate id="StructureUnpackUpdate"
 				UnpackTime="2.0s" />

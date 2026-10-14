@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<GameObject
+		id="GDIMiniMCVOutpostDestroyed"
+		Side="GDI"
+		EditorSorting="MISC_MAN_MADE"
+		KindOf="IMMOBILE NO_COLLIDE UNATTACKABLE NOT_AUTOACQUIRABLE CAN_CAST_REFLECTIONS"
+		EditorName="GDIMiniMCVOutpostDestroyed">
+		<DisplayName>GDIMiniMCVOutpostDestroyed</DisplayName>
+		<ArmorSet
+			Armor="GDIMiniMCVOutpostArmor"
+			DamageFX="FactionStructureDamageFX" />
+		<Draws>
+			<ScriptedModelDraw
+				id="ModuleTag_Draw"
+				OkToChangeModelColor="true">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:GUSuvUPAK_SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING">
+					<Model
+						Name="W3DContainer:GUSuvUPAK_SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE">
+					<Model
+						Name="W3DContainer:GUOutD3_SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:GUOutD2_SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DAMAGED">
+					<Model
+						Name="W3DContainer:GUSuvUPAK_SN" />
+					<Texture
+						Original="GB_Suv"
+						New="GU_Suv_D" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Animation
+						AnimationName="GUSUVUPAK_IDLA"
+						AnimationMode="LOOP" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev == "STATE_StartUnpak" then
+						CurDrawableSetTransitionAnimState("TRANS_UPakToIdle")
+						end
+					</Script>						
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING"
+					StateName="STATE_StartUnpak">
+					<Animation
+						AnimationName="GUSUVUPAK_UPK2"
+						AnimationMode="LOOP" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_StartUnpak" and Prev ~= "TRANS_IntoUPak" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoUPak")
+						end
+					</Script>
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Con_Small_Light"
+						FollowBone="true" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoUPak">
+					<Animation
+						AnimationName="GUSUVUPAK_UPK1"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+						
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_UPakToIdle">
+					<Animation
+						AnimationName="GUSUVUPAK_UPK3"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="GUOutD3_AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
+					
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED"
+					StateName="STATE_ReallyDamaged"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="GUOutD2_AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_ReallyDamaged" and Prev ~= "TRANS_IntoReallyDamaged" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoReallyDamaged")
+						end
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DAMAGED"
+					StateName="STATE_Damaged"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="GUSUVUPAK_IDLA"
+						AnimationMode="MANUAL" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoReallyDamaged">
+					<Animation
+						AnimationName="GUOutD2_AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble">
+					<Animation
+						AnimationName="GUOutD3_AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Medium"
+						FollowBone="false" />
+				</AnimationState>
+				
+			</ScriptedModelDraw>
+		</Draws>
+		<Behaviors>
+			<LifetimeUpdate
+				id="ModuleTag_LifetimeUpdate"
+				MinLifetime="0s"
+				MaxLifetime="0s" />
+		
+			<SlowDeath
+				id="ModuleTag_Death"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound
+					Type="INITIAL"
+					List="HumanFaction_SmallBuilding_DieMS" />
+				<DieMuxData
+					DeathTypes="ALL" />
+			</SlowDeath>
+		</Behaviors>
+		<Body>
+			<ActiveBody
+				id="ModuleTag_Body"
+				MaxHealth="100.0"
+				InitialHealth="100.0" />
+		</Body>
+		<Geometry
+			IsSmall="false">
+			<Shape
+				Type="BOX"
+				MajorRadius="20.0"
+				MinorRadius="15.0"
+				Height="25.0"
+				ContactPointGeneration="VEHICLE" />
+		</Geometry>
+		<ShadowInfo
+			Type="VOLUME" />
+		<VisionInfo
+			VisionRange="100"
+			ShroudClearingRange="400" />
+	</GameObject>
+</AssetDeclaration>

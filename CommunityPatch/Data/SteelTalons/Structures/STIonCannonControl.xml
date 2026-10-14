@@ -302,10 +302,9 @@
 		
 			<SlowDeath
 				id="ModuleTag_Death"
-				SinkDelay="3s"
-				SinkRate="6.0"
+				SinkDelay="0.05s"
+				SinkRate="99999"
 				DestructionDelay="9.0s">
-				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
@@ -448,6 +447,19 @@
 				id="ModuleTag_CreateOccupiedSuicide"
 				CreationList="OCL_GenericSteelTalonsBuildingSuicide" >
 				<DieMuxData DeathTypes="SUICIDED" />
+			</CreateObjectDie>
+
+			<CreateObjectDie
+				id="ModuleTag_CreatedDestroyedBuilding"
+				CreationList="OCL_GDIDestroyedIonCannonControl">
+				<DieMuxData
+					ExemptStatus=""
+					RequiredStatus=""
+					DamageAmountRequired="-1"
+					MinKillerAngle="0.9999999d"
+					MaxKillerAngle="-0.9999999d"
+					DeathTypes="ALL"
+					DeathTypesForbidden="" />
 			</CreateObjectDie>
 		
 		<!-- This needs to be in every Stategic Buildings XML

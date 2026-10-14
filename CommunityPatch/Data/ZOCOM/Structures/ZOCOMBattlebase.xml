@@ -1101,10 +1101,10 @@
 			</WeaponSetUpdate>
 			<SlowDeath
 				id="73542D4A"
-				SinkRate="4"
+				SinkRate="99999"
 				ProbabilityModifier="10"
 				ModifierBonusPerOverkillPercent="0%"
-				SinkDelay="5s"
+				SinkDelay="0.05s"
 				SinkDelayVariance="0s"
 				DestructionDelay="11s"
 				DestructionDelayVariance="0s"
@@ -1120,9 +1120,6 @@
 				DeathObjectStatusBits=""
 				ShadowWhenDead="False"
 				Fade="False">
-				<Sound
-					Type="INITIAL"
-					List="HumanFaction_MediumBuilding_DieMS" />
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""
@@ -1502,6 +1499,19 @@
 				id="ModuleTag_CreateOccupiedSuicide"
 				CreationList="OCL_BattleBaseZOCOMBuildingSuicide">
 				<DieMuxData DeathTypes="SUICIDED" />
+			</CreateObjectDie>
+
+			<CreateObjectDie
+				id="ModuleTag_CreatedDestroyedBuilding"
+				CreationList="OCL_GDIDestroyedBattleBase">
+				<DieMuxData
+					ExemptStatus=""
+					RequiredStatus=""
+					DamageAmountRequired="-1"
+					MinKillerAngle="0.9999999d"
+					MaxKillerAngle="-0.9999999d"
+					DeathTypes="ALL"
+					DeathTypesForbidden="" />
 			</CreateObjectDie>
 			
 			<HordeTransportContain
