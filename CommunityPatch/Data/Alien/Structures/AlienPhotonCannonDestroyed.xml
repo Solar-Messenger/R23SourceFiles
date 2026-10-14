@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<GameObject
+		id="AlienPhotonCannonDestroyed"
+		Side="Alien"
+		EditorSorting="MISC_MAN_MADE"
+		KindOf="IMMOBILE NO_COLLIDE UNATTACKABLE NOT_AUTOACQUIRABLE CAN_CAST_REFLECTIONS"
+		EditorName="AlienPhotonCannonDestroyed">
+		<DisplayName>AlienPhotonCannonDestroyed</DisplayName>
+		<ArmorSet
+			Armor="AlienPhotonCannonArmor"
+			DamageFX="FactionStructureDamageFX" />
+		<Draws>
+			<ScriptedModelDraw
+				id="ModuleTag_Draw"
+				OkToChangeModelColor="true">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:ABPhoton_SKN" />
+					<WeaponFireFXBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						BoneName="FX_Weapon_00" />
+					<WeaponLaunchBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						BoneName="FX_Weapon_00" />
+					<Turret
+						TurretNameKey="Turret"
+						TurretPitch="Turret_Pitch"
+						TurretID="1" />
+				</ModelConditionState>
+				<!-- BUILDING -->
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING">
+					<Model
+						Name="W3DContainer:ABPhotonBld_SKN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE">
+					<Model
+						Name="W3DContainer:ABPhoton_D3SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:ABPhoton_D2SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DAMAGED">
+					<Model
+						Name="W3DContainer:ABPhoton_SKN" />
+					<Texture
+						Original="ABPhoton"
+						New="ABPhoton_D" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT">
+					<!-- no anim -->
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="BUILD_PLACEMENT_CURSOR">
+					<Script>
+						CurDrawableHideSubObject("UG_SHARD")
+						CurDrawableHideSubObject("UG_SHARDWEAPON")
+					</Script>
+				</AnimationState>				
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING">
+					<Animation
+						AnimationName="ABPhotonBld_AAN"
+						AnimationMode="ONCE" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="ABPhoton_D3AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED"
+					StateName="STATE_ReallyDamaged"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="ABPhoton_D2AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_ReallyDamaged" and Prev ~= "TRANS_IntoReallyDamaged" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoReallyDamaged")
+						end
+					</Script>
+				</AnimationState>
+				<!--				
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DAMAGED"
+					StateName="STATE_Damaged"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="ABGatewayD1"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Damaged" and Prev ~= "TRANS_IntoDamaged" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoDamaged")
+						end
+					</Script>
+				</AnimationState>
+
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoDamaged">
+					<Animation
+						AnimationName="ABGatewayD1"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0"/>
+				</AnimationState>
+-->
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoReallyDamaged">
+					<Animation
+						AnimationName="ABPhoton_D2AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble">
+					<Animation
+						AnimationName="ABPhoton_D3AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+			</ScriptedModelDraw>
+			<SpotlightDraw
+				id="ModuleTag_Spotlight"
+				AttachToBoneInAnotherModule="bone_stealthdetector"
+				RefreshTime="2.0s"
+				SweepTime="1.0s">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DMesh:FXASpotlight" />
+				</ModelConditionState>
+			</SpotlightDraw>
+		</Draws>
+		<Behaviors>
+			<LifetimeUpdate
+				id="ModuleTag_LifetimeUpdate"
+				MinLifetime="0s"
+				MaxLifetime="0s" />
+		
+			<SlowDeath
+				id="ModuleTag_Death"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound
+					Type="INITIAL"
+					List="ALI_Building_Die" />
+				<DieMuxData
+					DeathTypes="ALL" />
+			</SlowDeath>
+		</Behaviors>
+		<Body>
+			<ActiveBody
+				id="ModuleTag_Body"
+				MaxHealth="100.0"
+				InitialHealth="100.0" />
+		</Body>
+		<Geometry
+			IsSmall="false">
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="7.17878"
+				MinorRadius="7.17878"
+				Height="19.0944">
+				<Offset
+					x="3.60058"
+					y="-9.53674e-007"
+					z="17.8599" />
+			</Shape>
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="3.7004"
+				MinorRadius="3.7004"
+				Height="18.0136">
+				<Offset
+					x="6.77113"
+					y="-1.19209e-007"
+					z="0.0" />
+			</Shape>
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="10.8835"
+				MinorRadius="10.8835"
+				Height="8.33963">
+				<Offset
+					x="-0.00473022"
+					y="0.0"
+					z="0.0" />
+			</Shape>
+			<ContactPoint>
+				<Pos
+					x="-7.01339"
+					y="-7.18857"
+					z="0.0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="7.68925"
+					y="-7.18856"
+					z="28.586" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="7.68925"
+					y="7.51407"
+					z="0.0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-7.01339"
+					y="7.51408"
+					z="28.586" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-7.01339"
+					y="-7.18856"
+					z="28.586" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="7.68925"
+					y="-7.18857"
+					z="0.0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="7.68925"
+					y="7.51408"
+					z="28.586" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-7.01339"
+					y="7.51407"
+					z="0.0" />
+			</ContactPoint>
+		</Geometry>
+		<ShadowInfo
+			Type="VOLUME" />
+		<VisionInfo
+			VisionRange="350"
+			ShroudClearingRange="500" />
+	</GameObject>
+</AssetDeclaration>

@@ -52,6 +52,7 @@
 		<Include source="Structures/MoKTechCenter.xml" type="all"/>
 		<Include source="Structures/MoKDropZone.xml" type="all"/>
 		<Include source="Structures/MoKhandofnod.xml" type="all"/> 
+		<Include source="Structures/MarkedOfKaneObelisk.xml" type="all"/>
 	</Includes>
 
 </AssetDeclaration>

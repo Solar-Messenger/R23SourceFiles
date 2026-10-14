@@ -52,6 +52,7 @@
 		<Include source="Structures/ZOCOMConstructionYard.xml" type="all"/>
 		<Include source="Structures/ZOCOMTiberiumSilo.xml" type="all"/>
 		<Include source="Structures/ZOCOMTerraformingStation.xml" type="all"/>
+		<Include source="Structures/ZOCOMGolumCannon.xml" type="all"/>
 	</Includes>
 
 </AssetDeclaration>

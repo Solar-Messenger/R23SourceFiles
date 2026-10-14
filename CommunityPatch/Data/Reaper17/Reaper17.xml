@@ -31,6 +31,7 @@
 		<Include source="Structures/R17Ref.xml" type="all"/>			
 		<Include source="Structures/R17WarpChasm.xml" type="all"/>
 		<Include source="Structures/Reaper17DronePlatform.xml" type="all"/> 
+		<Include source="Structures/Reaper17PhotonCannon.xml" type="all"/>
 	</Includes>
 
 </AssetDeclaration>

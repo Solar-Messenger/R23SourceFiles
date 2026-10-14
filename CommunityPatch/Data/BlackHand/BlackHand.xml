@@ -47,5 +47,6 @@
 		<Include type="all" source="Structures/BHSecretShrine.xml" />
 		<Include type="all" source="Structures/BHConstructionYard.xml" />
 		<Include type="all" source="Structures/DecoyTemple.xml" /> 
+		<Include type="all" source="Structures/BlackHandObelisk.xml" />
 	</Includes>
 </AssetDeclaration>

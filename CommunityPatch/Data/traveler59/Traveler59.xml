@@ -33,5 +33,6 @@
 		<Include source="Structures/T59Ref.xml" type="all"/> 
 		<Include source="Structures/Traveler59DronePlatform.xml" type="all"/>
 		<Include source="Structures/Traveler59TemporalWormhole.xml" type="all"/>
+		<Include source="Structures/Traveler59PhotonCannon.xml" type="all"/>
 	</Includes>
 </AssetDeclaration>

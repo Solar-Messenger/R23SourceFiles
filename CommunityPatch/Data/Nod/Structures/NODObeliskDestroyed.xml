@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<GameObject
+		id="NODObeliskDestroyed"
+		Side="NOD"
+		EditorSorting="MISC_MAN_MADE"
+		KindOf="IMMOBILE NO_COLLIDE UNATTACKABLE NOT_AUTOACQUIRABLE CAN_CAST_REFLECTIONS"
+		EditorName="NODObeliskDestroyed">
+		<DisplayName>NODObeliskDestroyed</DisplayName>
+		<ArmorSet
+			Armor="NodObeliskArmor"
+			DamageFX="FactionStructureDamageFX" />
+		<Draws>
+			<ScriptedModelDraw
+				id="ModuleTag_01"
+				OkToChangeModelColor="true"
+				ExtraPublicBone="FXBONE01">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:NBObelisk" />
+					<WeaponFireFXBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						BoneName="FX_Weapon" />
+					<WeaponLaunchBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						BoneName="FX_Weapon" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING">
+					<Model
+						Name="W3DContainer:NBObeliskA_SN" />
+					<WeaponFireFXBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						BoneName="FX_Weapon" />
+					<WeaponLaunchBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						BoneName="FX_Weapon" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DAMAGED">
+					<Model
+						Name="W3DContainer:NBObeliskD2_SN" />
+					<WeaponFireFXBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						BoneName="FX_Weapon" />
+					<WeaponLaunchBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						BoneName="FX_Weapon" />
+					<ParticleSysBone
+						BoneName="FXBone01"
+						FXParticleSystemTemplate="NODObDamagedSteam"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone01"
+						FXParticleSystemTemplate="NODObDamagedDist"
+						FollowBone="true" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:NBObeliskD2_SN" />
+					<WeaponFireFXBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						BoneName="FX_Weapon" />
+					<WeaponLaunchBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						BoneName="FX_Weapon" />
+					<ParticleSysBone
+						BoneName="FXBone01"
+						FXParticleSystemTemplate="NODObDamagedSpew"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone01"
+						FXParticleSystemTemplate="NODObDamagedSpewDist"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="FXBone02"
+						FXParticleSystemTemplate="NODObDamagedSmoke"
+						FollowBone="true" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:NBObeliskD3_SN" />
+					<WeaponFireFXBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						BoneName="FX_Weapon" />
+					<WeaponLaunchBone
+						WeaponSlotType="PRIMARY_WEAPON"
+						BoneName="FX_Weapon" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT"></AnimationState>
+				<!-- BUILD UP ANIMATION -->
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="STRUCTURE_UNPACKING"
+					StateName="STATE_Buildup">
+					<Animation
+						AnimationName="NBObeliskA_AN"
+						AnimationMode="ONCE" />
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Con_Small"
+						FollowBone="true" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DAMAGED"
+					StateName="STATE_Damaged"
+					Flags="START_FRAME_FIRST">
+					<Animation
+						AnimationName="NBObeliskD2_AN"
+						AnimationMode="MANUAL" />
+				</AnimationState>
+				<!-- REALLY DAMAGED ANIMATION -->
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="REALLYDAMAGED"
+					StateName="STATE_ReallyDamaged">
+					<Animation
+						AnimationName="NBObeliskD2_AN"
+						AnimationMode="ONCE" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+							if Prev == "STATE_Damaged" then CurDrawableSetTransitionAnimState("TRANS_DamagedToReallyDamaged") end;
+					</Script>
+				</AnimationState>
+				<!-- DYING ANIMATION -->
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Animation
+						AnimationName="NBObeliskD3_AN"
+						AnimationMode="ONCE" />
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Small"
+						FollowBone="false" />
+				</AnimationState>
+				<!-- Transitions -->
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					ConditionsYes="TRANS_DamagedToReallyDamaged">
+					<Animation
+						AnimationName="NBObeliskD2_AN"
+						AnimationMode="ONCE" />
+				</AnimationState>
+			</ScriptedModelDraw>
+			<!-- DRAW CRYSTAL -->
+			<ScriptedModelDraw
+				id="ModuleTag_Draw_Crystal"
+				OkToChangeModelColor="true">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DContainer:NBObeliskCrstl" />
+				</ModelConditionState>
+				<AnimationState
+					ParseCondStateType="PARSE_DEFAULT"
+					Flags="START_FRAME_FIRST">
+					<Animation
+						AnimationName="NBObeliskCrstl"
+						AnimationMode="MANUAL" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="PREATTACK_A">
+					<Animation
+						AnimationName="NBObeliskCrstl"
+						AnimationMode="ONCE" />
+					<ParticleSysBone
+						BoneName="FX_Weapon"
+						FXParticleSystemTemplate="NODObeliskFireDistort" />
+					<ParticleSysBone
+						BoneName="FX_Weapon"
+						FXParticleSystemTemplate="NODObeliskFireGlow" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="FIRING_A"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName="NBObeliskCrstl"
+						AnimationMode="MANUAL" />
+				</AnimationState>
+			</ScriptedModelDraw>
+			<SpotlightDraw
+				id="ModuleTag_Spotlight"
+				AttachToBoneInAnotherModule="FXBone01"
+				RefreshTime="2.0s"
+				SweepTime="1.0s">
+				<ModelConditionState
+					ParseCondStateType="PARSE_DEFAULT">
+					<Model
+						Name="W3DMesh:FXspotlight" />
+				</ModelConditionState>
+			</SpotlightDraw>
+			<LaserDraw
+				id="ModuleTag_LaserDraw"
+				Texture1_UTile="1"
+				Texture1_VTile=".5"
+				Texture1_UScrollRate="0"
+				Texture1_VScrollRate=".2"
+				Texture1_NumFrames="1"
+				Texture1_FrameRate="30"
+				Texture2_UTile="1"
+				Texture2_VTile=".03"
+				Texture2_UScrollRate="0"
+				Texture2_VScrollRate="1"
+				Texture2_NumFrames="1"
+				Texture2_FrameRate="30"
+				LaserWidth="20"
+				LaserStateID="1">
+				<FXShader
+					ShaderName="Laser.fx"
+					TechniqueIndex="0">
+					<Constants>
+						<Texture
+							Name="Texture1">
+							<Value>FXObeliskLaser</Value>
+						</Texture>
+						<Texture
+							Name="Texture2">
+							<Value>FXLaserOverlay</Value>
+						</Texture>
+					</Constants>
+				</FXShader>
+			</LaserDraw>
+			<LaserDraw
+				id="ModuleTag_AntiInfantryLaserDraw"
+				Texture1_UTile="1"
+				Texture1_VTile=".5"
+				Texture1_UScrollRate="0"
+				Texture1_VScrollRate=".2"
+				Texture1_NumFrames="1"
+				Texture1_FrameRate="30"
+				Texture2_UTile="1"
+				Texture2_VTile=".03"
+				Texture2_UScrollRate="0"
+				Texture2_VScrollRate="1"
+				Texture2_NumFrames="1"
+				Texture2_FrameRate="30"
+				LaserWidth="20"
+				LaserStateID="2">
+				<FXShader
+					ShaderName="Laser.fx"
+					TechniqueIndex="0">
+					<Constants>
+						<Texture
+							Name="Texture1">
+							<Value>FXObeliskLaser</Value>
+						</Texture>
+						<Texture
+							Name="Texture2">
+							<Value>FXLaserOverlay</Value>
+						</Texture>
+					</Constants>
+				</FXShader>
+			</LaserDraw>
+		</Draws>
+		<Behaviors>
+			<LifetimeUpdate
+				id="ModuleTag_LifetimeUpdate"
+				MinLifetime="0s"
+				MaxLifetime="0s" />
+		
+			<SlowDeath
+				id="ModuleTag_Death"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound
+					Type="INITIAL"
+					List="HumanFaction_SmallBuilding_DieMS" />
+				<DieMuxData
+					DeathTypes="ALL" />
+			</SlowDeath>
+		</Behaviors>
+		<Body>
+			<ActiveBody
+				id="ModuleTag_Body"
+				MaxHealth="100.0"
+				InitialHealth="100.0" />
+		</Body>
+		<Geometry
+			IsSmall="false">
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="18.0"
+				Height="10.0"></Shape>
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="13.0"
+				Height="10.0">
+				<Offset
+					x="0"
+					y="0"
+					z="10" />
+			</Shape>
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="10.0"
+				Height="10.0">
+				<Offset
+					x="0"
+					y="0"
+					z="20" />
+			</Shape>
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="7.0"
+				Height="15.0">
+				<Offset
+					x="2"
+					y="0"
+					z="30" />
+			</Shape>
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="5.0"
+				Height="15.0">
+				<Offset
+					x="5"
+					y="0"
+					z="45" />
+			</Shape>
+			<Shape
+				Type="CYLINDER"
+				MajorRadius="4.0"
+				Height="14.0">
+				<Offset
+					x="9"
+					y="0"
+					z="60" />
+			</Shape>
+			<ContactPoint>
+				<Pos
+					x="-2.0"
+					y="2.0"
+					z="40" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="5.0"
+					y="5.0"
+					z="0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="2.0"
+					y="2.0"
+					z="40" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-5.0"
+					y="-5.0"
+					z="0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="2.0"
+					y="-2.0"
+					z="40" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="5.0"
+					y="-5.0"
+					z="0" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-2.0"
+					y="-2.0"
+					z="40" />
+			</ContactPoint>
+			<ContactPoint>
+				<Pos
+					x="-5.0"
+					y="5.0"
+					z="0" />
+			</ContactPoint>
+		</Geometry>
+		<ShadowInfo
+			Type="VOLUME" />
+		<VisionInfo
+			VisionRange="450"
+			ShroudClearingRange="500" />
+	</GameObject>
+</AssetDeclaration>
