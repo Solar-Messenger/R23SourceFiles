@@ -741,10 +741,10 @@
 			</ParkingPlaceBehavior>
 			<SlowDeath
 				id="73542D4A"
-				SinkRate="4"
+				SinkRate="99999"
 				ProbabilityModifier="10"
 				ModifierBonusPerOverkillPercent="0%"
-				SinkDelay="1.5s"
+				SinkDelay="0.05s"
 				SinkDelayVariance="0s"
 				DestructionDelay="8s"
 				DestructionDelayVariance="0s"
@@ -760,9 +760,6 @@
 				DeathObjectStatusBits=""
 				ShadowWhenDead="False"
 				Fade="False">
-				<Sound
-					Type="INITIAL"
-					List="HumanFaction_MediumBuilding_DieMS" />
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""
@@ -894,6 +891,18 @@
 				id="ModuleTag_CreateOccupiedSuicide"
 				CreationList="OCL_GenericMarkedOfKaneBuildingSuicide" >
 				<DieMuxData DeathTypes="SUICIDED" />
+			</CreateObjectDie>
+			<CreateObjectDie
+				id="ModuleTag_CreatedDestroyedBuilding"
+				CreationList="OCL_NODDestroyedAirSupport">
+				<DieMuxData
+					ExemptStatus=""
+					RequiredStatus=""
+					DamageAmountRequired="-1"
+					MinKillerAngle="0.9999999d"
+					MaxKillerAngle="-0.9999999d"
+					DeathTypes="ALL"
+					DeathTypesForbidden="" />
 			</CreateObjectDie>
 		</Behaviors>
 		<Body>
@@ -1825,10 +1834,10 @@
 			</ParkingPlaceBehavior>
 			<SlowDeath
 				id="73542D4A"
-				SinkRate="4"
+				SinkRate="99999"
 				ProbabilityModifier="10"
 				ModifierBonusPerOverkillPercent="0%"
-				SinkDelay="1.5s"
+				SinkDelay="0.05s"
 				SinkDelayVariance="0s"
 				DestructionDelay="8s"
 				DestructionDelayVariance="0s"
@@ -1844,9 +1853,6 @@
 				DeathObjectStatusBits=""
 				ShadowWhenDead="False"
 				Fade="False">
-				<Sound
-					Type="INITIAL"
-					List="HumanFaction_MediumBuilding_DieMS" />
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""
@@ -1988,6 +1994,18 @@
 					MinKillerAngle="1d"
 					MaxKillerAngle="-1d"
 					DeathTypes="SUICIDED"
+					DeathTypesForbidden="" />
+			</CreateObjectDie>
+			<CreateObjectDie
+				id="ModuleTag_CreatedDestroyedBuilding"
+				CreationList="OCL_NODDestroyedAirSupport">
+				<DieMuxData
+					ExemptStatus=""
+					RequiredStatus=""
+					DamageAmountRequired="-1"
+					MinKillerAngle="0.9999999d"
+					MaxKillerAngle="-0.9999999d"
+					DeathTypes="ALL"
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
 		</Behaviors>
@@ -3029,10 +3047,10 @@
 			</ParkingPlaceBehavior>
 			<SlowDeath
 				id="73542D4A"
-				SinkRate="4"
+				SinkRate="99999"
 				ProbabilityModifier="10"
 				ModifierBonusPerOverkillPercent="0%"
-				SinkDelay="1.8s"
+				SinkDelay="0.05s"
 				SinkDelayVariance="0s"
 				DestructionDelay="8s"
 				DestructionDelayVariance="0s"
@@ -3048,9 +3066,6 @@
 				DeathObjectStatusBits=""
 				ShadowWhenDead="False"
 				Fade="False">
-				<Sound
-					Type="INITIAL"
-					List="HumanFaction_MediumBuilding_DieMS" />
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""
@@ -3182,6 +3197,18 @@
 				id="ModuleTag_CreateOccupiedSuicide"
 				CreationList="OCL_GenericGDIBuildingSuicide1" >
 				<DieMuxData DeathTypes="SUICIDED" />
+			</CreateObjectDie>
+			<CreateObjectDie
+				id="ModuleTag_CreatedDestroyedBuilding"
+				CreationList="OCL_GDIDestroyedAirSupport">
+				<DieMuxData
+					ExemptStatus=""
+					RequiredStatus=""
+					DamageAmountRequired="-1"
+					MinKillerAngle="0.9999999d"
+					MaxKillerAngle="-0.9999999d"
+					DeathTypes="ALL"
+					DeathTypesForbidden="" />
 			</CreateObjectDie>
 		</Behaviors>
 		<Body>
@@ -4255,10 +4282,10 @@
 			</ParkingPlaceBehavior>
 			<SlowDeath
 				id="73542D4A"
-				SinkRate="4"
+				SinkRate="99999"
 				ProbabilityModifier="10"
 				ModifierBonusPerOverkillPercent="0%"
-				SinkDelay="1.8s"
+				SinkDelay="0.05s"
 				SinkDelayVariance="0s"
 				DestructionDelay="8s"
 				DestructionDelayVariance="0s"
@@ -4274,9 +4301,6 @@
 				DeathObjectStatusBits=""
 				ShadowWhenDead="False"
 				Fade="False">
-				<Sound
-					Type="INITIAL"
-					List="HumanFaction_MediumBuilding_DieMS" />
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""
@@ -4408,6 +4432,18 @@
 				id="ModuleTag_CreateOccupiedSuicide"
 				CreationList="OCL_GenericZOCOMBuildingSuicide1" >
 				<DieMuxData DeathTypes="SUICIDED" />
+			</CreateObjectDie>
+			<CreateObjectDie
+				id="ModuleTag_CreatedDestroyedBuilding"
+				CreationList="OCL_GDIDestroyedAirSupport">
+				<DieMuxData
+					ExemptStatus=""
+					RequiredStatus=""
+					DamageAmountRequired="-1"
+					MinKillerAngle="0.9999999d"
+					MaxKillerAngle="-0.9999999d"
+					DeathTypes="ALL"
+					DeathTypesForbidden="" />
 			</CreateObjectDie>
 		</Behaviors>
 		<Body>
@@ -5480,10 +5516,10 @@
 			</ParkingPlaceBehavior>
 			<SlowDeath
 				id="73542D4A"
-				SinkRate="4"
+				SinkRate="99999"
 				ProbabilityModifier="10"
 				ModifierBonusPerOverkillPercent="0%"
-				SinkDelay="1.8s"
+				SinkDelay="0.05s"
 				SinkDelayVariance="0s"
 				DestructionDelay="8s"
 				DestructionDelayVariance="0s"
@@ -5499,9 +5535,6 @@
 				DeathObjectStatusBits=""
 				ShadowWhenDead="False"
 				Fade="False">
-				<Sound
-					Type="INITIAL"
-					List="HumanFaction_MediumBuilding_DieMS" />
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""
@@ -5633,6 +5666,18 @@
 				id="ModuleTag_CreateOccupiedSuicide"
 				CreationList="OCL_GenericSteelTalonsBuildingSuicide1" >
 				<DieMuxData DeathTypes="SUICIDED" />
+			</CreateObjectDie>
+			<CreateObjectDie
+				id="ModuleTag_CreatedDestroyedBuilding"
+				CreationList="OCL_GDIDestroyedAirSupport">
+				<DieMuxData
+					ExemptStatus=""
+					RequiredStatus=""
+					DamageAmountRequired="-1"
+					MinKillerAngle="0.9999999d"
+					MaxKillerAngle="-0.9999999d"
+					DeathTypes="ALL"
+					DeathTypesForbidden="" />
 			</CreateObjectDie>
 		</Behaviors>
 		<Body>
