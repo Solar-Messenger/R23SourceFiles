@@ -164,29 +164,11 @@
 	</ObjectCreationList>
 
 	<ObjectCreationList
-		id="OCL_GDIDestroyedBattleBase">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>GDIBattleBaseDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
 		id="OCL_GDIDestroyedCrane">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
 			Disposition="LIKE_EXISTING">
 			<CreateObject>GDICraneDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
-		id="OCL_GDIDestroyedGolumCannon">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>GDIGolumCannonDestroyed</CreateObject>
 		</CreateObject>
 	</ObjectCreationList>
 
@@ -223,15 +205,6 @@
 			Options="IGNORE_ALL_OBJECTS"
 			Disposition="LIKE_EXISTING">
 			<CreateObject>GDISpaceCommandUplinkDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
-		id="OCL_GDIDestroyedTerraformingStation">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>GDITerraformingStationDestroyed</CreateObject>
 		</CreateObject>
 	</ObjectCreationList>
 
@@ -286,15 +259,6 @@
 			Options="IGNORE_ALL_OBJECTS"
 			Disposition="LIKE_EXISTING">
 			<CreateObject>GDIDigInBuildingDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
-		id="OCL_GDIDestroyedWatchTower">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>GDIWatchTowerDestroyed</CreateObject>
 		</CreateObject>
 	</ObjectCreationList>
 
@@ -389,38 +353,11 @@
 	</ObjectCreationList>
 
 	<ObjectCreationList
-		id="OCL_NODDestroyedLaserCannon">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>NodLaserCannonDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
 		id="OCL_NODDestroyedPowerPlant">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS COPY_CREATORS_UPGRADES"
 			Disposition="LIKE_EXISTING">
 			<CreateObject>NODPowerPlantDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
-		id="OCL_NODDestroyedRocketBunker">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>NodRocketBunkerDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
-		id="OCL_NODDestroyedShredderTurretHub">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>NodShredderTurretHubDestroyed</CreateObject>
 		</CreateObject>
 	</ObjectCreationList>
 
@@ -515,15 +452,6 @@
 	</ObjectCreationList>
 
 	<ObjectCreationList
-		id="OCL_AlienDestroyedStormColumn">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>AlienStormColumnDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
 		id="OCL_AlienDestroyedTibHive">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
@@ -542,29 +470,11 @@
 	</ObjectCreationList>
 
 	<ObjectCreationList
-		id="OCL_AlienDestroyedBuzzerHive">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>AlienBuzzerHiveDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
 		id="OCL_DestroyedCDMTower">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
 			Disposition="LIKE_EXISTING">
 			<CreateObject>CDMTowerDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
-		id="OCL_DestroyedDefensiveTower">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>DefensiveTowerDestroyed</CreateObject>
 		</CreateObject>
 	</ObjectCreationList>
 
@@ -592,24 +502,6 @@
 			Options="IGNORE_ALL_OBJECTS"
 			Disposition="LIKE_EXISTING">
 			<CreateObject>TiberiumSpikeDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
-		id="OCL_NODDestroyedObelisk">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>NODObeliskDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
-		id="OCL_AlienDestroyedPhotonCannon">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>AlienPhotonCannonDestroyed</CreateObject>
 		</CreateObject>
 	</ObjectCreationList>
 

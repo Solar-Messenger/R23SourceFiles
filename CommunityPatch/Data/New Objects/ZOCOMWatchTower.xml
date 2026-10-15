@@ -279,9 +279,11 @@
 				<TriggeredBy>Upgrade_GDIAPAmmo</TriggeredBy>
 			</StatusBitsUpgrade>
 			<SlowDeath id="ModuleTag_Death"
-				SinkDelay="0.05s"
-				SinkRate="99999"
+				SinkDelay="4.0s"
+				SinkRate="4.0"
 				DestructionDelay="10.0s">
+				<Sound Type="INITIAL"
+					List="HumanFaction_SmallBuilding_DieMS" />
 				<DieMuxData DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior id="ModuleTag_FXList">
@@ -307,19 +309,6 @@
 				id="ModuleTag_CreateOccupiedSuicide"
 				CreationList="OCL_GenericZOCOMBuildingSuicide">
 				<DieMuxData DeathTypes="SUICIDED" />
-			</CreateObjectDie>
-
-			<CreateObjectDie
-				id="ModuleTag_CreatedDestroyedBuilding"
-				CreationList="OCL_GDIDestroyedWatchTower">
-				<DieMuxData
-					ExemptStatus=""
-					RequiredStatus=""
-					DamageAmountRequired="-1"
-					MinKillerAngle="0.9999999d"
-					MaxKillerAngle="-0.9999999d"
-					DeathTypes="ALL"
-					DeathTypesForbidden="" />
 			</CreateObjectDie>
 			<EngineerContain xmlns="uri:ea.com:eala:asset"
 				id="ModuleTag_EngineerContain"

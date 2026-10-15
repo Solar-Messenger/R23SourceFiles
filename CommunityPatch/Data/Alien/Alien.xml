@@ -49,7 +49,6 @@
 		<Include source="Structures/AlienWarpChasm.xml" type="all"/>
 		<Include source="Structures/AlienDronePlatform.xml" type="all"/>
 		<Include source="Structures/AlienPhotonCannon.xml" type="all"/>
-		<Include source="Structures/AlienPhotonCannonDestroyed.xml" type="all"/>
 		<Include source="Units\AlienCrystalShieldDummy.xml" type="all"/>
 		<Include source="Units/AlienRazorDrones.xml" type="all"/>
 	

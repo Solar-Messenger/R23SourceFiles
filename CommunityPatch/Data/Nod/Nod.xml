@@ -60,6 +60,5 @@
 		<Include source="Structures/NodShredderTurretHub.xml" type="all"/> 
 		<Include source="Structures/NodConyards.xml" type="all"/>
 		<Include source="Structures/NODObelisk.xml" type="all"/>
-		<Include source="Structures/NODObeliskDestroyed.xml" type="all"/>
 	</Includes>
 </AssetDeclaration>
