@@ -399,6 +399,9 @@
 					<Model
 						Name="W3DContainer:ABPOWERUPGRADE"
 						ExtraMesh="False" />
+					<Texture
+						Original="ABPower"
+						New="ABPowerD" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -409,6 +412,9 @@
 					<Model
 						Name="W3DContainer:ABPOWERUPGRADE"
 						ExtraMesh="False" />
+					<Texture
+						Original="ABPower"
+						New="ABPowerD" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -419,6 +425,9 @@
 					<Model
 						Name="W3DContainer:ABPOWERUPGRADE"
 						ExtraMesh="False" />
+					<Texture
+						Original="ABPower"
+						New="ABPowerD" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
