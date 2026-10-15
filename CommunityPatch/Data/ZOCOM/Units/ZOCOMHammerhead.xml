@@ -353,7 +353,21 @@
 				SweepTime="1.0s"
 				AlwaysOn="true">
 				<ModelConditionState
-					ParseCondStateType="PARSE_DEFAULT">
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="NONE">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<!-- hide when dying -->
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING NIGHT">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
 					<Model
 						Name="" />
 				</ModelConditionState>
@@ -371,7 +385,21 @@
 				SweepTime="1.0s"
 				AlwaysOn="true">
 				<ModelConditionState
-					ParseCondStateType="PARSE_DEFAULT">
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="NONE">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<!-- hide when dying -->
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING NIGHT">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
 					<Model
 						Name="" />
 				</ModelConditionState>
