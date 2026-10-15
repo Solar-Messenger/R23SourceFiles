@@ -579,7 +579,24 @@
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
+			<SubObjectsUpgrade
+				id="ModuleTag_SignatureGeneratorSubObject"
+				ShowSubObjects="UG_SIGGEN UG_SIGGEN_02">
+				<TriggeredBy>Upgrade_NODSignatureGenerator</TriggeredBy>
+			</SubObjectsUpgrade>
+			<SubObjectsUpgrade
+				id="ModuleTag_DisruptionPodSubObject"
+				ShowSubObjects="DISRUPTIONPODS">
+				<TriggeredBy>Upgrade_VertigoDisruptionPod</TriggeredBy>
+			</SubObjectsUpgrade>
 		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="ModuleTag_AI"
+				AutoAcquireEnemiesWhenIdle="NO"
+				AILuaEventsList="NODHangarFunctions"
+			/>
+		</AI>
 		<Body>
 			<ActiveBody
 				id="ModuleTag_Body"

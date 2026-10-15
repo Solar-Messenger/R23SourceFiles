@@ -358,7 +358,61 @@
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
+			<SubObjectsUpgrade
+				id="746DA2EC"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				ShowSubObjects="UG_QUADTURRETS"
+				FadeTimeInSeconds="0.5"
+				WaitBeforeFadeInSeconds="0"
+				RecolorHouse="False"
+				SkipFadeOnCreate="False"
+				HideSubObjectsOnRemove="False"
+				UnHideSubObjectsOnRemove="False">
+				<TriggeredBy>Upgrade_NODQuadTurrets</TriggeredBy>
+			</SubObjectsUpgrade>
+			<SubObjectsUpgrade
+				id="062FC786"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				ShowSubObjects="UG_DOZERBLADES"
+				FadeTimeInSeconds="0.5"
+				WaitBeforeFadeInSeconds="0"
+				RecolorHouse="False"
+				SkipFadeOnCreate="False"
+				HideSubObjectsOnRemove="False"
+				UnHideSubObjectsOnRemove="False">
+				<TriggeredBy>Upgrade_NODDozerBlades</TriggeredBy>
+			</SubObjectsUpgrade>
 		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="12FA48BA"
+				AutoAcquireEnemiesWhenIdle="YES"
+				StopChaseDistance="500"
+				HoldGroundCloseRangeDistance="0"
+				AILuaEventsList="NODOperationsCenterFunctions"
+				MinCowerTime="0s"
+				MaxCowerTime="0s"
+				RampageTime="0s"
+				BurningDeathTime="0s"
+				TimeToEjectPassengersOnRampage="0"
+				ComboLocomotorSet="NORMAL"
+				ComboLocoAttackDistance="80"
+				IdleTargetTime="0s"
+				MaxCombineChildren="1"
+				SpawnOffsetRadius="0"
+				StandGround="False"
+				CanAttackWhileContained="False"
+				RampageRequiresAflame="False"
+				FadeOnPortals="False" />
+		</AI>
 		<Body>
 			<ActiveBody
 				id="ModuleTag_Body"

@@ -730,7 +730,51 @@
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
+			<SubObjectsUpgrade
+				id="F216445A"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				ShowSubObjects="UG_Boost"
+				FadeTimeInSeconds="0.5"
+				WaitBeforeFadeInSeconds="0"
+				RecolorHouse="False"
+				SkipFadeOnCreate="False"
+				HideSubObjectsOnRemove="False"
+				UnHideSubObjectsOnRemove="False">
+				<CustomAnimAndDuration
+					AnimState="USER_4"
+					Frames="0"
+					Trigger="0" />
+				<TriggeredBy>Upgrade_FirehawkStratofighterBooster</TriggeredBy>
+			</SubObjectsUpgrade>
+			<SubObjectsUpgrade
+				id="ModuleTag_Upgrade_hardpoints"
+				ShowSubObjects="UG_Hardpoints UG_Hardpoints01 UG_Hardpoints02 UG_Hardpoints03">
+				<TriggeredBy>Upgrade_GDIHardpoints</TriggeredBy>
+			</SubObjectsUpgrade>
+			<SubObjectsUpgrade
+				id="ModuleTag_Upgrade_Boosters"
+				ShowSubObjects="UG_Boost">
+				<CustomAnimAndDuration
+					AnimState="USER_4"></CustomAnimAndDuration>
+				<TriggeredBy>Upgrade_FirehawkStratofighterBooster</TriggeredBy>
+			</SubObjectsUpgrade>
+			<SubObjectsUpgrade
+				id="ModuleTag_Upgrade_CeramicArmor"
+				ShowSubObjects="UG_Ceramic UG_Ceramic01">
+				<TriggeredBy>Upgrade_CeramicArmor</TriggeredBy>
+			</SubObjectsUpgrade>
 		</Behaviors>
+		<AI>
+			<!-- needed for special powers -->
+			<AIUpdate
+				id="ModuleTag_AIUpdate" 
+				AILuaEventsList="GDIAirfieldFunctions"
+				AutoAcquireEnemiesWhenIdle="NO" />
+		</AI>
 		<Body>
 			<ActiveBody
 				id="ModuleTag_Body"

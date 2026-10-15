@@ -585,6 +585,28 @@
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
+			<SubObjectsUpgrade
+				id="CBC43F2F"
+				RequiresAllTriggers="False"
+				RequiresAllConflictingTriggers="False"
+				Permanent="False"
+				WaypointMode="False"
+				WaypointModeTerminal="True"
+				ShowSubObjects="ABPowerUpgrade"
+				FadeTimeInSeconds="0.5"
+				WaitBeforeFadeInSeconds="0"
+				RecolorHouse="False"
+				SkipFadeOnCreate="False"
+				HideSubObjectsOnRemove="False"
+				UnHideSubObjectsOnRemove="False">
+				<CustomAnimAndDuration
+					AnimState="USER_1"
+					Frames="0"
+					Trigger="0" />
+				<TriggeredBy>Upgrade_FusionCore</TriggeredBy>
+				<TriggeredBy>Upgrade_Reaper17FusionCore</TriggeredBy>
+				<TriggeredBy>Upgrade_Traveler59FusionCore</TriggeredBy>
+			</SubObjectsUpgrade>
 		</Behaviors>
 		<Body>
 			<ActiveBody

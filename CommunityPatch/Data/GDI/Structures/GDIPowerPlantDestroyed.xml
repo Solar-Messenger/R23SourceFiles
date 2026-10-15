@@ -288,7 +288,21 @@
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
+			<SubObjectsUpgrade
+				id="ModuleTag_ShowTurbines"
+				ShowSubObjects="Turbines TurbineGlows">
+				<CustomAnimAndDuration
+					AnimState="USER_1"></CustomAnimAndDuration>
+				<TriggeredBy>Upgrade_PowerPlantTurbine</TriggeredBy>
+				<TriggeredBy>Upgrade_SteelTalonsPowerPlantTurbine</TriggeredBy>
+				<TriggeredBy>Upgrade_ZOCOMPowerPlantTurbine</TriggeredBy>
+			</SubObjectsUpgrade>
 		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="ModulTag_AIForLua"
+				AILuaEventsList="GDIPowerPlantFunctions" />
+		</AI>
 		<Body>
 			<ActiveBody
 				id="ModuleTag_Body"

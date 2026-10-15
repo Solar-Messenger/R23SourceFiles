@@ -211,7 +211,7 @@
 	<ObjectCreationList
 		id="OCL_GDIDestroyedPowerPlant">
 		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
+			Options="IGNORE_ALL_OBJECTS COPY_CREATORS_UPGRADES"
 			Disposition="LIKE_EXISTING">
 			<CreateObject>GDIPowerPlantDestroyed</CreateObject>
 		</CreateObject>
@@ -400,7 +400,7 @@
 	<ObjectCreationList
 		id="OCL_NODDestroyedPowerPlant">
 		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
+			Options="IGNORE_ALL_OBJECTS COPY_CREATORS_UPGRADES"
 			Disposition="LIKE_EXISTING">
 			<CreateObject>NODPowerPlantDestroyed</CreateObject>
 		</CreateObject>
@@ -463,7 +463,7 @@
 	<ObjectCreationList
 		id="OCL_AlienDestroyedReactor">
 		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
+			Options="IGNORE_ALL_OBJECTS COPY_CREATORS_UPGRADES"
 			Disposition="LIKE_EXISTING">
 			<CreateObject>AlienReactorDestroyed</CreateObject>
 		</CreateObject>

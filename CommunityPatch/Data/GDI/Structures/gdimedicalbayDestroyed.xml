@@ -180,7 +180,49 @@
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
+			<SubObjectsUpgrade
+				id="ModuleTag_Upgrade_GDICompositeArmor"
+				ShowSubObjects="UG_Armor">
+				<CustomAnimAndDuration
+					AnimState="USER_1"></CustomAnimAndDuration>
+				<TriggeredBy>Upgrade_GDICompositeArmor</TriggeredBy>
+			</SubObjectsUpgrade>
+			<SubObjectsUpgrade
+				id="ModuleTag_Upgrade_EMPGrenades"
+				ShowSubObjects="UG_GrenadeEMP UG_GrenadeEMP01">
+				<CustomAnimAndDuration
+					AnimState="USER_3"></CustomAnimAndDuration>
+				<TriggeredBy>Upgrade_EMPGrenades</TriggeredBy>
+			</SubObjectsUpgrade>
+			<SubObjectsUpgrade
+				id="ModuleTag_Upgrade _ZoneTrooperInjectors"
+				ShowSubObjects="UG_Injector">
+				<CustomAnimAndDuration
+					AnimState="USER_4"></CustomAnimAndDuration>
+				<TriggeredBy>Upgrade_ZoneTrooperAutoInjectors</TriggeredBy>
+			</SubObjectsUpgrade>
+			<SubObjectsUpgrade
+				id="ModuleTag_Upgrade_ZOCOMFieldSuits"
+				ShowSubObjects="UG_CompositeArmor UG_CompositeArmor02">
+				<CustomAnimAndDuration
+					AnimState="USER_1"></CustomAnimAndDuration>
+				<TriggeredBy>Upgrade_ZOCOMFieldSuits</TriggeredBy>
+			</SubObjectsUpgrade>
+			<SubObjectsUpgrade
+				id="ModuleTag_Upgrade _ZoneRaiderInjectors"
+				ShowSubObjects="UG_Injector">
+				<CustomAnimAndDuration
+					AnimState="USER_4"></CustomAnimAndDuration>
+				<TriggeredBy>Upgrade_ZoneRaiderAutoInjectors</TriggeredBy>
+			</SubObjectsUpgrade>
 		</Behaviors>
+		<AI>
+			<!-- needed for special powers -->
+			<AIUpdate
+				id="ModuleTag_AIUpdate"
+				AutoAcquireEnemiesWhenIdle="NO"
+				AILuaEventsList="GDIMedicalBayFunctions" />
+		</AI>
 		<Body>
 			<ActiveBody
 				id="ModuleTag_Body"
