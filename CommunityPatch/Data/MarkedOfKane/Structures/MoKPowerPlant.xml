@@ -92,12 +92,6 @@
 						FXParticleSystemTemplate="NODDamagedFireDistortion"
 						FollowBone="true" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="W3DContainer:NBPowerD3_SN" />
-				</ModelConditionState>
 				<!-- BUILDUP ANIMATION -->
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -137,17 +131,6 @@
 				</Script>
 				</AnimationState>
 				<!-- DYING ANIMATION -->
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Animation
-						AnimationName="NBPowerD3_AN"
-						AnimationMode="ONCE" />
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Large"
-						FollowBone="false" />
-				</AnimationState>
 				<!-- Transitions -->
 				<AnimationState
 					ParseCondStateType="PARSE_TRANSITION"
@@ -183,12 +166,6 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_1 REALLYDAMAGED">
-					<Model
-						Name="W3DContainer:NBTibCore_D1" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_1 DYING">
 					<Model
 						Name="W3DContainer:NBTibCore_D1" />
 				</ModelConditionState>
@@ -246,17 +223,6 @@
 				</Script>
 				</AnimationState>
 				<!-- DYING ANIMATION -->
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Animation
-						AnimationName="NBTibCore_D1"
-						AnimationMode="ONCE" />
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Large"
-						FollowBone="false" />
-				</AnimationState>
 				<!-- Transitions -->
 				<AnimationState
 					ParseCondStateType="PARSE_TRANSITION"

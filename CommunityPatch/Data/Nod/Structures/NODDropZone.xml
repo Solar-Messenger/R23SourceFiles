@@ -64,12 +64,6 @@
 					<Model
 						Name="W3DContainer:NBDrpZnD2_SN" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="W3DContainer:NBDrpZnD3_SN" />
-				</ModelConditionState>
 				<!-- BUILDUP ANIMATION -->
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -108,17 +102,6 @@
 				</Script>
 				</AnimationState>
 				<!-- DYING ANIMATION -->
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Animation
-						AnimationName="NBDrpZnD3_AN"
-						AnimationMode="ONCE" />
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Large"
-						FollowBone="false" />
-				</AnimationState>
 				<!-- Transitions -->
 				<AnimationState
 					ParseCondStateType="PARSE_TRANSITION"
@@ -160,15 +143,6 @@
 					<Texture
 						Original="NB_DropZone"
 						New="NB_DropZoneD" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="W3DContainer:NBDrpZnDoor_SKN" />
-					<Texture
-						Original="NB_DropZone"
-						New="W3DContainer:NB_DropZoneD" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -243,15 +217,6 @@
 						Original="NB_DropZone"
 						New="NB_DropZoneD" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="W3DContainer:NBDrpZnX_D3" />
-					<Texture
-						Original="NB_DropZone"
-						New="NB_DropZoneD" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					StateName="STATE_Closed"
@@ -270,13 +235,6 @@
 					ConditionsYes="STRUCTURE_UNPACKING">
 					<Animation
 						AnimationName="NBEmpty_ABLD"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Animation
-						AnimationName="NBDrpZnX_D3"
 						AnimationMode="ONCE" />
 				</AnimationState>
 				<AnimationState
@@ -341,12 +299,6 @@
 				StaticModelLODMode="true">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT" >
-					<Model
-						Name="" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DYING">
 					<Model
 						Name="" />
 				</ModelConditionState>

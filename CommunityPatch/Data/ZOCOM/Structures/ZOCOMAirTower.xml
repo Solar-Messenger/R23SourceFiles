@@ -83,12 +83,6 @@
 						FXParticleSystemTemplate="GDIRefineryDamagedDist"
 						FollowBone="true" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="W3DContainer:GBAirField_D3SN" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"></AnimationState>
 				<AnimationState
@@ -118,25 +112,6 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST">
-					<Animation
-						AnimationName="GBAirField_D3AN"
-						AnimationMode="MANUAL" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Medium"
-						FollowBone="false" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
 					StateName="STATE_ReallyDamaged"
 					Flags="START_FRAME_LAST">
@@ -158,14 +133,6 @@
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
 				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					StateName="TRANS_IntoRubble">
-					<Animation
-						AnimationName="GBAirField_D3AN"
-						AnimationMode="ONCE"
-						AnimationBlendTime="0" />
-				</AnimationState>
 			</ScriptedModelDraw>
 			<!-- DRAW DOOR01 -->
 			<ScriptedModelDraw
@@ -182,24 +149,6 @@
 					ConditionsYes="STRUCTURE_UNPACKING">
 					<Model
 						Name="W3DContainer:GBAirDoor_A" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING PARKINGPLACE_1_DOOR_OPEN">
-					<Model
-						Name="W3DContainer:GBAirDoor01_SKN" />
-					<Texture
-						Original="GBAirField"
-						New="GBAirField_D" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="W3DContainer:GBAirDoor01_D3SN" />
-					<Texture
-						Original="GBAirField"
-						New="GBAirField_D" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -231,20 +180,6 @@
 					ConditionsYes="STRUCTURE_UNPACKING">
 					<Animation
 						AnimationName="GBAirDoor_A"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING PARKINGPLACE_1_DOOR_OPEN">
-					<Animation
-						AnimationName="GBAirDoor_OPNS"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Animation
-						AnimationName="GBAirDoor_D3AN"
 						AnimationMode="ONCE" />
 				</AnimationState>
 				<AnimationState
@@ -310,24 +245,6 @@
 						Original="GBAirField"
 						New="GBAirField_D" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING PARKINGPLACE_1_DOOR_OPEN">
-					<Model
-						Name="W3DContainer:GBAirDoor02_SKN" />
-					<Texture
-						Original="GBAirField"
-						New="GBAirField_D" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="W3DContainer:GBAirDoor02_D3SN" />
-					<Texture
-						Original="GBAirField"
-						New="GBAirField_D" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT">
 					<Animation
@@ -340,20 +257,6 @@
 					ConditionsYes="STRUCTURE_UNPACKING">
 					<Animation
 						AnimationName="GBAirDoor_A"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING PARKINGPLACE_1_DOOR_OPEN">
-					<Animation
-						AnimationName="GBAirDoor_OPNS"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Animation
-						AnimationName="GBAirDoor_D3AN"
 						AnimationMode="ONCE" />
 				</AnimationState>
 				<AnimationState
@@ -419,24 +322,6 @@
 						Original="GBAirField"
 						New="GBAirField_D" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING PARKINGPLACE_1_DOOR_OPEN">
-					<Model
-						Name="W3DContainer:GBAirDoor03_SKN" />
-					<Texture
-						Original="GBAirField"
-						New="GBAirField_D" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="W3DContainer:GBAirDoor03_D3SN" />
-					<Texture
-						Original="GBAirField"
-						New="GBAirField_D" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT">
 					<Animation
@@ -449,20 +334,6 @@
 					ConditionsYes="STRUCTURE_UNPACKING">
 					<Animation
 						AnimationName="GBAirDoor_A"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING PARKINGPLACE_1_DOOR_OPEN">
-					<Animation
-						AnimationName="GBAirDoor_OPNS"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Animation
-						AnimationName="GBAirDoor_D3AN"
 						AnimationMode="ONCE" />
 				</AnimationState>
 				<AnimationState
@@ -528,24 +399,6 @@
 						Original="GBAirField"
 						New="GBAirField_D" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING PARKINGPLACE_1_DOOR_OPEN">
-					<Model
-						Name="W3DContainer:GBAirDoor04_SKN" />
-					<Texture
-						Original="GBAirField"
-						New="GBAirField_D" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="W3DContainer:GBAirDoor04_D3SN" />
-					<Texture
-						Original="GBAirField"
-						New="GBAirField_D" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT">
 					<Animation
@@ -558,20 +411,6 @@
 					ConditionsYes="STRUCTURE_UNPACKING">
 					<Animation
 						AnimationName="GBAirDoor_A"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING PARKINGPLACE_1_DOOR_OPEN">
-					<Animation
-						AnimationName="GBAirDoor_OPNS"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Animation
-						AnimationName="GBAirDoor_D3AN"
 						AnimationMode="ONCE" />
 				</AnimationState>
 				<AnimationState
@@ -630,12 +469,6 @@
 					<Model
 						Name="W3DContainer:GBAirRadarD" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					Flags="DO_NOT_PLAY_WHEN_UNPOWERED">
@@ -662,14 +495,6 @@
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
-					Flags="DO_NOT_PLAY_WHEN_UNPOWERED">
-					<Animation
-						AnimationName="GBAirRadarD"
-						AnimationMode="LOOP" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING"
 					Flags="DO_NOT_PLAY_WHEN_UNPOWERED">
 					<Animation
 						AnimationName="GBAirRadarD"
@@ -709,12 +534,6 @@
 				StaticModelLODMode="true">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT" >
-					<Model
-						Name="" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DYING">
 					<Model
 						Name="" />
 				</ModelConditionState>

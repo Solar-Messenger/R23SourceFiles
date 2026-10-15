@@ -57,12 +57,6 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE">
-					<Model
-						Name="W3DContainer:GBWarFacD3_SN" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
 					<Model
 						Name="W3DContainer:GBWarFacD2_SN" />
@@ -91,25 +85,6 @@
 						BoneName="NONE"
 						FXParticleSystemTemplate="Con_Large"
 						FollowBone="true" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST">
-					<Animation
-						AnimationName="GBWarFacD3_AN"
-						AnimationMode="MANUAL" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Large"
-						FollowBone="false" />
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -160,14 +135,6 @@
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
 				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					StateName="TRANS_IntoRubble">
-					<Animation
-						AnimationName="GBWarFacD3_AN"
-						AnimationMode="ONCE"
-						AnimationBlendTime="0" />
-				</AnimationState>
 			</ScriptedModelDraw>
 			<!-- DRAW CRANE -->
 			<ScriptedModelDraw
@@ -198,12 +165,6 @@
 					<Model
 						Name="W3DContainer:GBWarFacXD_SKN" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="W3DContainer:GBWarFacXD3_SN" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					Flags="START_FRAME_FIRST">
@@ -224,13 +185,6 @@
 					ConditionsYes="ACTIVELY_CONSTRUCTING">
 					<Animation
 						AnimationName="GBWarFacX_CON"
-						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Animation
-						AnimationName="GBWarFacXD3_AN"
 						AnimationMode="ONCE" />
 				</AnimationState>
 			</ScriptedModelDraw>
@@ -287,13 +241,6 @@
 					<Animation
 						AnimationName="GBWarDoor_CLS"
 						AnimationMode="ONCE" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Animation
-						AnimationName="GBWarDoor_OPN"
-						AnimationMode="ONCE" />
 				</AnimationState>				
 			</ScriptedModelDraw>
 			<!-- draw a decal when this thing is selected -->
@@ -331,12 +278,6 @@
 				StaticModelLODMode="true">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT" >
-					<Model
-						Name="" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DYING">
 					<Model
 						Name="" />
 				</ModelConditionState>

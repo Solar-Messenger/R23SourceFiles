@@ -50,12 +50,6 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE">
-					<Model
-						Name="W3DContainer:NBDistTwr_D3SN" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
 					<Model
 						Name="W3DContainer:NBDistTwr_D2SN" />
@@ -100,21 +94,6 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST">
-					<Animation
-						AnimationName="NBDistTwr_D3AN"
-						AnimationMode="MANUAL" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
 					StateName="STATE_ReallyDamaged"
 					Flags="START_FRAME_LAST">
@@ -133,14 +112,6 @@
 					StateName="TRANS_IntoReallyDamaged">
 					<Animation
 						AnimationName="NBDistTwr_D2AN"
-						AnimationMode="ONCE"
-						AnimationBlendTime="0" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					StateName="TRANS_IntoRubble">
-					<Animation
-						AnimationName="NBDistTwr_D3AN"
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
 				</AnimationState>

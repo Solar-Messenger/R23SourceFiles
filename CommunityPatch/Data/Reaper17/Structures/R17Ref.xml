@@ -289,16 +289,6 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					PortraitImage=""
-					ButtonImage=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DContainer:ABTIBERTOW_D3SN"
-						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
 					PortraitImage=""
 					ButtonImage=""
@@ -370,38 +360,6 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						AnimationName="ABTIBERTOW_D3AN"
-						AnimationMode="MANUAL"
-						Distance="0"
-						AnimationBlendTime="5"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
 					StateName="STATE_ReallyDamaged"
 					Flags="START_FRAME_LAST"
@@ -442,30 +400,6 @@
 					SimilarRestart="False">
 					<Animation
 						AnimationName="ABTIBERTOW_D2AN"
-						AnimationMode="ONCE"
-						Distance="0"
-						AnimationBlendTime="0"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					StateName="TRANS_IntoRubble"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						AnimationName="ABTIBERTOW_D3AN"
 						AnimationMode="ONCE"
 						Distance="0"
 						AnimationBlendTime="0"
@@ -655,31 +589,6 @@
 					<Animation
 						AnimationName="ABTIBERTOWX_IDL"
 						AnimationMode="LOOP"
-						Distance="0"
-						AnimationBlendTime="5"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING"
-					StateName="STATE_loading"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						AnimationName="ABTIBERTOWX_D3"
-						AnimationMode="ONCE"
 						Distance="0"
 						AnimationBlendTime="5"
 						AnimationSpeedFactorMin="1"

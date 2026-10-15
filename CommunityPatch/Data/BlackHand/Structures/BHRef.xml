@@ -346,16 +346,6 @@
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING"
-					PortraitImage=""
-					ButtonImage=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DContainer:NBREFINERYD3_SN"
-						ExtraMesh="False" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="STRUCTURE_UNPACKING"
@@ -443,38 +433,6 @@
 					</Script>
 				</AnimationState>
 				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING"
-					StateName="STATE_Dying"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						AnimationName="NBREFINERYD3_AN"
-						AnimationMode="ONCE"
-						Distance="0"
-						AnimationBlendTime="5"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Large"
-						PersistID="0"
-						FollowBone="False"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-				</AnimationState>
-				<AnimationState
 					ParseCondStateType="PARSE_TRANSITION"
 					ConditionsYes="TRANS_DamagedToReallyDamaged"
 					EnteringStateFX=""
@@ -553,16 +511,6 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="STRUCTURE_UNPACKING"
-					PortraitImage=""
-					ButtonImage=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DContainer:NBEMPTY_ABLD"
-						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING"
 					PortraitImage=""
 					ButtonImage=""
 					RetainSubObjects="False">
@@ -697,16 +645,6 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="STRUCTURE_UNPACKING"
-					PortraitImage=""
-					ButtonImage=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DContainer:NBEMPTY_ABLD"
-						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING"
 					PortraitImage=""
 					ButtonImage=""
 					RetainSubObjects="False">
@@ -859,16 +797,6 @@
 				SetAnimsToLastFrameOnConstructionComplete="True">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT"
-					PortraitImage=""
-					ButtonImage=""
-					RetainSubObjects="False">
-					<Model
-						Name=""
-						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DYING"
 					PortraitImage=""
 					ButtonImage=""
 					RetainSubObjects="False">

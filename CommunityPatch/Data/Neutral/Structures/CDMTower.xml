@@ -32,12 +32,6 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE">
-					<Model
-						Name="W3DContainer:CBPrpagand_D3" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
 					<Model
 						Name="W3DContainer:CBPrpagand_D2" />
@@ -51,21 +45,6 @@
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT">
 					<!-- no anim -->
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST">
-					<Animation
-						AnimationName="CBPrpagand_D3"
-						AnimationMode="MANUAL" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -87,14 +66,6 @@
 					StateName="TRANS_IntoReallyDamaged">
 					<Animation
 						AnimationName="CBPrpagand_D2"
-						AnimationMode="ONCE"
-						AnimationBlendTime="0" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					StateName="TRANS_IntoRubble">
-					<Animation
-						AnimationName="CBPrpagand_D3"
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
 				</AnimationState>

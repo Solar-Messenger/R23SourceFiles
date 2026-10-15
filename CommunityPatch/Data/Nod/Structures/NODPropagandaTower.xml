@@ -49,12 +49,6 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE">
-					<Model
-						Name="W3DContainer:NBVoicKaneD3_SKN" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
 					<Model
 						Name="W3DContainer:NBVoicKaneD2_SKN" />
@@ -99,21 +93,6 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST">
-					<Animation
-						AnimationName="NBVoicKaneD3_ANM"
-						AnimationMode="MANUAL" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
 					StateName="STATE_ReallyDamaged"
 					Flags="START_FRAME_LAST">
@@ -132,14 +111,6 @@
 					StateName="TRANS_IntoReallyDamaged">
 					<Animation
 						AnimationName="NBVoicKaneD2_ANM"
-						AnimationMode="ONCE"
-						AnimationBlendTime="0" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					StateName="TRANS_IntoRubble">
-					<Animation
-						AnimationName="NBVoicKaneD3_ANM"
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
 				</AnimationState>

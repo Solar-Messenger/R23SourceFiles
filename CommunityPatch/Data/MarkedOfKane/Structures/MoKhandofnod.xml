@@ -152,12 +152,6 @@
 						FXParticleSystemTemplate="GDIWTDamagedDist"
 						FollowBone="true" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="W3DContainer:NBHandD3_SN" />
-				</ModelConditionState>
 				<!-- BUILDUP ANIMATION -->
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -197,17 +191,6 @@
 				</Script>
 				</AnimationState>
 				<!-- DYING ANIMATION -->
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Animation
-						AnimationName="NBHandD3_AN"
-						AnimationMode="ONCE" />
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Medium"
-						FollowBone="false" />
-				</AnimationState>
 				<!-- Transitions -->
 				<AnimationState
 					ParseCondStateType="PARSE_TRANSITION"
@@ -226,12 +209,6 @@
 				StaticModelLODMode="true">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT" >
-					<Model
-						Name="" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DYING">
 					<Model
 						Name="" />
 				</ModelConditionState>

@@ -123,12 +123,6 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE">
-					<Model
-						Name="W3DContainer:NBOpCenD3_SN" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
 					<Model
 						Name="W3DContainer:NBOpCenD2_SN" />
@@ -168,21 +162,6 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST">
-					<Animation
-						AnimationName="NBOpCenD3_AN"
-						AnimationMode="MANUAL" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
 					StateName="STATE_ReallyDamaged"
 					Flags="START_FRAME_LAST">
@@ -204,14 +183,6 @@
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
 				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					StateName="TRANS_IntoRubble">
-					<Animation
-						AnimationName="NBOpCenD3_AN"
-						AnimationMode="ONCE"
-						AnimationBlendTime="0" />
-				</AnimationState>
 			</ScriptedModelDraw>
 			
 			<ScriptedModelDraw
@@ -221,12 +192,6 @@
 				StaticModelLODMode="true">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT" >
-					<Model
-						Name="" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DYING">
 					<Model
 						Name="" />
 				</ModelConditionState>
@@ -279,12 +244,6 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="STRUCTURE_UNPACKING">
-					<Model
-						Name="W3DContainer:NBEmpty_ABLD" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
 					<Model
 						Name="W3DContainer:NBEmpty_ABLD" />
 				</ModelConditionState>
@@ -409,12 +368,6 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="STRUCTURE_UNPACKING">
-					<Model
-						Name="W3DContainer:NBEmpty_ABLD" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
 					<Model
 						Name="W3DContainer:NBEmpty_ABLD" />
 				</ModelConditionState>

@@ -170,16 +170,6 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					PortraitImage=""
-					ButtonImage=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DContainer:GBCOMPOSTD3_SN2"
-						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
 					PortraitImage=""
 					ButtonImage=""
@@ -275,45 +265,6 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						AnimationName="GBCOMPOSTD3_AN"
-						AnimationMode="MANUAL"
-						Distance="0"
-						AnimationBlendTime="5"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Medium"
-						PersistID="0"
-						FollowBone="False"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
 					StateName="STATE_ReallyDamaged"
 					Flags="START_FRAME_LAST"
@@ -368,30 +319,6 @@
 						UseWeaponTiming="False"
 						FadingIn="False" />
 				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					StateName="TRANS_IntoRubble"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						AnimationName="GBCOMPOSTD3_AN"
-						AnimationMode="ONCE"
-						Distance="0"
-						AnimationBlendTime="0"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-				</AnimationState>
 			</ScriptedModelDraw>	
 			<ScriptedModelDraw
 				id="ModuleTag_Show_CPGlow"
@@ -404,16 +331,6 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="STRUCTURE_UNPACKING"
-					PortraitImage=""
-					ButtonImage=""
-					RetainSubObjects="False">
-					<Model
-						Name=""
-						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING"
 					PortraitImage=""
 					ButtonImage=""
 					RetainSubObjects="False">
@@ -533,16 +450,6 @@
 						Name="W3DContainer:GBCOMPOST_RDRD"
 						ExtraMesh="False" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING"
-					PortraitImage=""
-					ButtonImage=""
-					RetainSubObjects="False">
-					<Model
-						Name="NBEMPTY_ABLD"
-						ExtraMesh="False" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					Flags="MAINTAIN_FRAME_ACROSS_STATES DO_NOT_PLAY_WHEN_UNPOWERED"
@@ -591,14 +498,6 @@
 						UseWeaponTiming="False"
 						FadingIn="False" />
 				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DAMAGED"
@@ -696,16 +595,6 @@
 				SetAnimsToLastFrameOnConstructionComplete="True">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT"
-					PortraitImage=""
-					ButtonImage=""
-					RetainSubObjects="False">
-					<Model
-						Name=""
-						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DYING"
 					PortraitImage=""
 					ButtonImage=""
 					RetainSubObjects="False">

@@ -200,16 +200,6 @@
 						Name="W3DContainer:GBTECHCEND2_SN"
 						ExtraMesh="False" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					PortraitImage=""
-					ButtonImage=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DContainer:GBTECHCEND3_SN"
-						ExtraMesh="False" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					EnteringStateFX=""
@@ -287,45 +277,6 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						AnimationName="GBTECHCEND3_AN"
-						AnimationMode="MANUAL"
-						Distance="0"
-						AnimationBlendTime="5"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Medium"
-						PersistID="0"
-						FollowBone="False"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
 					StateName="STATE_ReallyDamaged"
 					Flags="START_FRAME_LAST"
@@ -366,30 +317,6 @@
 					SimilarRestart="False">
 					<Animation
 						AnimationName="GBTECHCEND2_AN"
-						AnimationMode="ONCE"
-						Distance="0"
-						AnimationBlendTime="0"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					StateName="TRANS_IntoRubble"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						AnimationName="GBTECHCEND3_AN"
 						AnimationMode="ONCE"
 						Distance="0"
 						AnimationBlendTime="0"
@@ -458,16 +385,6 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DYING"
-					PortraitImage=""
-					ButtonImage=""
-					RetainSubObjects="False">
-					<Model
-						Name=""
-						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_6 REALLYDAMAGED"
 					PortraitImage=""
 					ButtonImage=""
@@ -511,16 +428,6 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="STRUCTURE_UNPACKING"
-					PortraitImage=""
-					ButtonImage=""
-					RetainSubObjects="False">
-					<Model
-						Name=""
-						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_7 DYING"
 					PortraitImage=""
 					ButtonImage=""
 					RetainSubObjects="False">

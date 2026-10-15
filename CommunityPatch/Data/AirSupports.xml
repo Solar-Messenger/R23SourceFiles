@@ -270,21 +270,6 @@
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					Name=""
-					ConditionsYes="DYING"
-					Skeleton=""
-					ModelAnimationPrefix=""
-					PortraitImage=""
-					ButtonImage=""
-					OverrideTooltip=""
-					id=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DContainer:NBAIRSPPRT_D3SKN"
-						ExtraMesh="False" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					AnimNickName=""
@@ -340,52 +325,6 @@
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
-					ConditionsYes="RUBBLE"
-					Name=""
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						Flags=""
-						AnimationName="NBAIRSPPRT_D3ANM"
-						AnimationMode="MANUAL"
-						AnimNickName=""
-						Distance="0"
-						AnimationBlendTime="5"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Medium"
-						FXTrigger=""
-						Persist=""
-						PersistID="0"
-						id=""
-						FollowBone="False"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					AnimNickName=""
 					ConditionsYes="REALLYDAMAGED"
 					Name=""
 					StateName="STATE_ReallyDamaged"
@@ -434,36 +373,6 @@
 					<Animation
 						Flags=""
 						AnimationName="NBAIRSPPRT_D2ANM"
-						AnimationMode="ONCE"
-						AnimNickName=""
-						Distance="0"
-						AnimationBlendTime="0"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					AnimNickName=""
-					ConditionsYes=""
-					Name=""
-					StateName="TRANS_IntoRubble"
-					Flags=""
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						Flags=""
-						AnimationName="NBAIRSPPRT_D3ANM"
 						AnimationMode="ONCE"
 						AnimNickName=""
 						Distance="0"
@@ -1363,21 +1272,6 @@
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					Name=""
-					ConditionsYes="DYING"
-					Skeleton=""
-					ModelAnimationPrefix=""
-					PortraitImage=""
-					ButtonImage=""
-					OverrideTooltip=""
-					id=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DContainer:NBAIRSPPRT_D3SKN"
-						ExtraMesh="False" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					AnimNickName=""
@@ -1433,52 +1327,6 @@
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
-					ConditionsYes="RUBBLE"
-					Name=""
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						Flags=""
-						AnimationName="NBAIRSPPRT_D3ANM"
-						AnimationMode="MANUAL"
-						AnimNickName=""
-						Distance="0"
-						AnimationBlendTime="5"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Medium"
-						FXTrigger=""
-						Persist=""
-						PersistID="0"
-						id=""
-						FollowBone="False"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					AnimNickName=""
 					ConditionsYes="REALLYDAMAGED"
 					Name=""
 					StateName="STATE_ReallyDamaged"
@@ -1527,36 +1375,6 @@
 					<Animation
 						Flags=""
 						AnimationName="NBAIRSPPRT_D2ANM"
-						AnimationMode="ONCE"
-						AnimNickName=""
-						Distance="0"
-						AnimationBlendTime="0"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					AnimNickName=""
-					ConditionsYes=""
-					Name=""
-					StateName="TRANS_IntoRubble"
-					Flags=""
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						Flags=""
-						AnimationName="NBAIRSPPRT_D3ANM"
 						AnimationMode="ONCE"
 						AnimNickName=""
 						Distance="0"
@@ -2468,21 +2286,6 @@
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					Name=""
-					ConditionsYes="DYING"
-					Skeleton=""
-					ModelAnimationPrefix=""
-					PortraitImage=""
-					ButtonImage=""
-					OverrideTooltip=""
-					id=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DContainer:GBAIRSUPPRTD3_SKN"
-						ExtraMesh="False" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					AnimNickName=""
@@ -2565,52 +2368,6 @@
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
-					ConditionsYes="RUBBLE"
-					Name=""
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						Flags=""
-						AnimationName="GBAIRSUPPRTD3_ANM"
-						AnimationMode="MANUAL"
-						AnimNickName=""
-						Distance="0"
-						AnimationBlendTime="5"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Medium"
-						FXTrigger=""
-						Persist=""
-						PersistID="0"
-						id=""
-						FollowBone="False"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					AnimNickName=""
 					ConditionsYes="REALLYDAMAGED"
 					Name=""
 					StateName="STATE_ReallyDamaged"
@@ -2674,36 +2431,6 @@
 						UseWeaponTiming="False"
 						FadingIn="False" />
 				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					AnimNickName=""
-					ConditionsYes=""
-					Name=""
-					StateName="TRANS_IntoRubble"
-					Flags=""
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						Flags=""
-						AnimationName="GBAIRSUPPRTD3_ANM"
-						AnimationMode="ONCE"
-						AnimNickName=""
-						Distance="0"
-						AnimationBlendTime="0"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-				</AnimationState>
 			</ScriptedModelDraw>
 			
 			<ScriptedModelDraw
@@ -2737,12 +2464,6 @@
 					<Texture
 						Original="GBAirSupprt"
 						New="GBAirSupprtD" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -3703,21 +3424,6 @@
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					Name=""
-					ConditionsYes="DYING"
-					Skeleton=""
-					ModelAnimationPrefix=""
-					PortraitImage=""
-					ButtonImage=""
-					OverrideTooltip=""
-					id=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DContainer:GBAIRSUPPRTD3_SKN"
-						ExtraMesh="False" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					AnimNickName=""
@@ -3800,52 +3506,6 @@
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
-					ConditionsYes="RUBBLE"
-					Name=""
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						Flags=""
-						AnimationName="GBAIRSUPPRTD3_ANM"
-						AnimationMode="MANUAL"
-						AnimNickName=""
-						Distance="0"
-						AnimationBlendTime="5"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Medium"
-						FXTrigger=""
-						Persist=""
-						PersistID="0"
-						id=""
-						FollowBone="False"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					AnimNickName=""
 					ConditionsYes="REALLYDAMAGED"
 					Name=""
 					StateName="STATE_ReallyDamaged"
@@ -3909,36 +3569,6 @@
 						UseWeaponTiming="False"
 						FadingIn="False" />
 				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					AnimNickName=""
-					ConditionsYes=""
-					Name=""
-					StateName="TRANS_IntoRubble"
-					Flags=""
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						Flags=""
-						AnimationName="GBAIRSUPPRTD3_ANM"
-						AnimationMode="ONCE"
-						AnimNickName=""
-						Distance="0"
-						AnimationBlendTime="0"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-				</AnimationState>
 			</ScriptedModelDraw>
 			
 			<ScriptedModelDraw
@@ -3972,12 +3602,6 @@
 					<Texture
 						Original="GBAirSupprt"
 						New="GBAirSupprtD" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -4937,21 +4561,6 @@
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					Name=""
-					ConditionsYes="DYING"
-					Skeleton=""
-					ModelAnimationPrefix=""
-					PortraitImage=""
-					ButtonImage=""
-					OverrideTooltip=""
-					id=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DContainer:GBAIRSUPPRTD3_SKN"
-						ExtraMesh="False" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					AnimNickName=""
@@ -5034,52 +4643,6 @@
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
-					ConditionsYes="RUBBLE"
-					Name=""
-					StateName="STATE_Rubble"
-					Flags="START_FRAME_LAST"
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						Flags=""
-						AnimationName="GBAIRSUPPRTD3_ANM"
-						AnimationMode="MANUAL"
-						AnimNickName=""
-						Distance="0"
-						AnimationBlendTime="5"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-					<Script>
-						Prev = CurDrawablePrevAnimationState();
-						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
-						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
-						end
-					</Script>
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Medium"
-						FXTrigger=""
-						Persist=""
-						PersistID="0"
-						id=""
-						FollowBone="False"
-						OnlyIfOnWater="False"
-						OnlyIfOnLand="False" />
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					AnimNickName=""
 					ConditionsYes="REALLYDAMAGED"
 					Name=""
 					StateName="STATE_ReallyDamaged"
@@ -5143,36 +4706,6 @@
 						UseWeaponTiming="False"
 						FadingIn="False" />
 				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_TRANSITION"
-					AnimNickName=""
-					ConditionsYes=""
-					Name=""
-					StateName="TRANS_IntoRubble"
-					Flags=""
-					EnteringStateFX=""
-					FrameForPristineBonePositions="0"
-					ShareAnimation="False"
-					AllowRepeatInRandomPick="False"
-					SimilarRestart="False">
-					<Animation
-						Flags=""
-						AnimationName="GBAIRSUPPRTD3_ANM"
-						AnimationMode="ONCE"
-						AnimNickName=""
-						Distance="0"
-						AnimationBlendTime="0"
-						AnimationSpeedFactorMin="1"
-						AnimationSpeedFactorMax="1"
-						WeaponTimingOrdering="PRIMARY_WEAPON"
-						WeaponTimingSlotID="1"
-						AnimationPriority="1"
-						FadeBeginFrame="-1"
-						FadeEndFrame="-1"
-						AnimationMustCompleteBlend="False"
-						UseWeaponTiming="False"
-						FadingIn="False" />
-				</AnimationState>
 			</ScriptedModelDraw>
 			
 			<ScriptedModelDraw
@@ -5206,12 +4739,6 @@
 					<Texture
 						Original="GBAirSupprt"
 						New="GBAirSupprtD" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"

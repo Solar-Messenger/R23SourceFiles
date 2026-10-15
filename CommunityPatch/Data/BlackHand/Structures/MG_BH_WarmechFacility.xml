@@ -68,12 +68,6 @@
 					<Model
 						Name="W3DContainer:NBEngFaD2Base_SKN" />
 				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="W3DContainer:NBEngFaD3_SKN" />
-				</ModelConditionState>
 
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -103,17 +97,6 @@
 						AnimationMode="ONCE" />
 				</AnimationState>
 
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Animation
-						AnimationName="NBEngFaD3_AAN"
-						AnimationMode="ONCE" />
-					<ParticleSysBone
-						BoneName="NONE"
-						FXParticleSystemTemplate="Des_Large"
-						FollowBone="false" />
-				</AnimationState>
 			</ScriptedModelDraw>
 
 
@@ -506,12 +489,6 @@
 -->						
 				</ModelConditionState>
 
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="" />
-				</ModelConditionState>
 
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -1019,12 +996,6 @@
 						Name="W3DContainer:NBEmpty_ABLD" />			
 				</ModelConditionState>
 								
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING">
-					<Model
-						Name="" />
-				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					Flags="START_FRAME_LAST">
@@ -1218,12 +1189,6 @@
 				StaticModelLODMode="true">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT" >
-					<Model
-						Name="" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="USER_6 DYING">
 					<Model
 						Name="" />
 				</ModelConditionState>
