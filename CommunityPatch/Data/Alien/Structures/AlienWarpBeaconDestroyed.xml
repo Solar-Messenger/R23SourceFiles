@@ -701,29 +701,6 @@
 						AnimationMode="ONCE" />
 				</AnimationState>
 			</ScriptedModelDraw>
-			<ScriptedModelDraw
-					id="ModuleTag_RepairDecal"
-					OkToChangeModelColor="true">
-				<ModelConditionState
-					ParseCondStateType="PARSE_DEFAULT">
-					<Model Name="" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="SELECTED">
-					<Model Name="W3DContainer:FXInvisBone" />
-					<ShadowInfo
-						Type="ADDITIVE_DECAL"
-						SizeX="340"
-						SizeY="340"
-						OverrideLODVisibility="true"
-						MaxHeight="200"
-						UseHouseColor="true"
-						LocalPlayerOnly="true"
-						Texture="Decal_Rig_CO" 
-					/>
-				</ModelConditionState>
-			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
 			<LifetimeUpdate

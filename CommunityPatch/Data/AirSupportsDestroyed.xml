@@ -386,106 +386,6 @@
 						FadingIn="False" />
 				</AnimationState>
 			</ScriptedModelDraw>
-			<ScriptedModelDraw
-				id="540ED15A"
-				Name=""
-				RecoilDamping="0.4"
-				MaxRecoilDistance="3"
-				InitialRecoilSpeed="2"
-				RecoilSettleSpeed="0.065"
-				MinLODRequired="LOW"
-				ProjectileBoneFeedbackEnabledSlots=""
-				TrackMarks=""
-				AttachToBoneInAnotherModule=""
-				DependencySharedModelFlags=""
-				TrackMarksLeftBone=""
-				TrackMarksRightBone=""
-				RampMesh1=""
-				RampMesh2=""
-				WallBoundsMesh=""
-				RaisedWallMesh=""
-				HighDetailLODThreshold="0"
-				LowDetailLODThreshold="0"
-				WadingParticleSys=""
-				AlphaCameraFadeOuterRadius="0"
-				AlphaCameraFadeInnerRadius="0"
-				AlphaCameraAtInnerRadius="100%"
-				StaticSortLevelWhileFading="-1"
-				BirthFadeTime="0"
-				OkToChangeModelColor="True"
-				AnimationsRequirePower="True"
-				UseYAxisForTurretRotation="False"
-				TrackMarksOnlyWhenCorneringQuickly="False"
-				UseProducerTexture="False"
-				NoRotate="False"
-				UseFiringArcRotation="False"
-				Selectable="True"
-				RandomTextureFixedRandomIndex="False"
-				ParticlesAttachedToAnimatedBones="False"
-				ParticleBonesCheckDrawable="False"
-				ShadowForceDisable="False"
-				SwitchModelLODMode="False"
-				StaticModelLODMode="False"
-				ShowShadowWhileContained="False"
-				UseStandardModelNames="False"
-				UseDefaultAnimation="False"
-				BirthFadeAdditive="False"
-				ZWriteDisableOverride="False"
-				MultiPlayerOnly="False"
-				AffectedByStealth="True"
-				InvertStealthOpacity="False"
-				HighDetailOnly="False"
-				SetAnimsToLastFrameOnConstructionComplete="True">
-				<ModelConditionState
-					ParseCondStateType="PARSE_DEFAULT"
-					Name=""
-					ConditionsYes=""
-					Skeleton=""
-					ModelAnimationPrefix=""
-					PortraitImage=""
-					ButtonImage=""
-					OverrideTooltip=""
-					id=""
-					RetainSubObjects="False">
-					<Model
-						Name=""
-						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					Name=""
-					ConditionsYes="SELECTED"
-					Skeleton=""
-					ModelAnimationPrefix=""
-					PortraitImage=""
-					ButtonImage=""
-					OverrideTooltip=""
-					id=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DContainer:FXINVISBONE"
-						ExtraMesh="False" />
-					<ShadowInfo
-						Type="ADDITIVE_DECAL"
-						Texture="Decal_Rig_CO"
-						AdditionalTexture=""
-						SizeX="340"
-						SizeY="340"
-						OffsetX="0"
-						OffsetY="0"
-						OpacityStart="0"
-						OpacityFadeInTime="0s"
-						OpacityPeak="1"
-						OpacityFadeOutTime="0s"
-						OpacityEnd="0"
-						MaxHeight="200"
-						SunAngle="0"
-						OverrideLODVisibility="True"
-						UseHouseColor="True"
-						IsRotatingWithObject="True"
-						LocalPlayerOnly="True" />
-				</ModelConditionState>
-			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
 			<LifetimeUpdate
@@ -581,25 +481,25 @@
 					z="0" />
 			</ContactPoint>
 		</Geometry>
-					<ShadowInfo
-						Type="ADDITIVE_DECAL"
-						Texture="Decal_Rig_CO"
-						AdditionalTexture=""
-						SizeX="340"
-						SizeY="340"
-						OffsetX="0"
-						OffsetY="0"
-						OpacityStart="0"
-						OpacityFadeInTime="0s"
-						OpacityPeak="1"
-						OpacityFadeOutTime="0s"
-						OpacityEnd="0"
-						MaxHeight="200"
-						SunAngle="0"
-						OverrideLODVisibility="True"
-						UseHouseColor="True"
-						IsRotatingWithObject="True"
-						LocalPlayerOnly="True" />
+		<ShadowInfo
+			Type="VOLUME"
+			Texture=""
+			AdditionalTexture=""
+			SizeX="0"
+			SizeY="0"
+			OffsetX="0"
+			OffsetY="0"
+			OpacityStart="0"
+			OpacityFadeInTime="0s"
+			OpacityPeak="1"
+			OpacityFadeOutTime="0s"
+			OpacityEnd="0"
+			MaxHeight="20"
+			SunAngle="0"
+			OverrideLODVisibility="False"
+			UseHouseColor="False"
+			IsRotatingWithObject="True"
+			LocalPlayerOnly="False" />
 		<VisionInfo
 			VisionRange="100"
 			ShroudClearingRange="150"
@@ -1105,106 +1005,6 @@
 				-->
 			</ScriptedModelDraw>
 			
-			<ScriptedModelDraw
-				id="540ED15A"
-				Name=""
-				RecoilDamping="0.4"
-				MaxRecoilDistance="3"
-				InitialRecoilSpeed="2"
-				RecoilSettleSpeed="0.065"
-				MinLODRequired="LOW"
-				ProjectileBoneFeedbackEnabledSlots=""
-				TrackMarks=""
-				AttachToBoneInAnotherModule=""
-				DependencySharedModelFlags=""
-				TrackMarksLeftBone=""
-				TrackMarksRightBone=""
-				RampMesh1=""
-				RampMesh2=""
-				WallBoundsMesh=""
-				RaisedWallMesh=""
-				HighDetailLODThreshold="0"
-				LowDetailLODThreshold="0"
-				WadingParticleSys=""
-				AlphaCameraFadeOuterRadius="0"
-				AlphaCameraFadeInnerRadius="0"
-				AlphaCameraAtInnerRadius="100%"
-				StaticSortLevelWhileFading="-1"
-				BirthFadeTime="0"
-				OkToChangeModelColor="True"
-				AnimationsRequirePower="True"
-				UseYAxisForTurretRotation="False"
-				TrackMarksOnlyWhenCorneringQuickly="False"
-				UseProducerTexture="False"
-				NoRotate="False"
-				UseFiringArcRotation="False"
-				Selectable="True"
-				RandomTextureFixedRandomIndex="False"
-				ParticlesAttachedToAnimatedBones="False"
-				ParticleBonesCheckDrawable="False"
-				ShadowForceDisable="False"
-				SwitchModelLODMode="False"
-				StaticModelLODMode="False"
-				ShowShadowWhileContained="False"
-				UseStandardModelNames="False"
-				UseDefaultAnimation="False"
-				BirthFadeAdditive="False"
-				ZWriteDisableOverride="False"
-				MultiPlayerOnly="False"
-				AffectedByStealth="True"
-				InvertStealthOpacity="False"
-				HighDetailOnly="False"
-				SetAnimsToLastFrameOnConstructionComplete="True">
-				<ModelConditionState
-					ParseCondStateType="PARSE_DEFAULT"
-					Name=""
-					ConditionsYes=""
-					Skeleton=""
-					ModelAnimationPrefix=""
-					PortraitImage=""
-					ButtonImage=""
-					OverrideTooltip=""
-					id=""
-					RetainSubObjects="False">
-					<Model
-						Name=""
-						ExtraMesh="False" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					Name=""
-					ConditionsYes="SELECTED"
-					Skeleton=""
-					ModelAnimationPrefix=""
-					PortraitImage=""
-					ButtonImage=""
-					OverrideTooltip=""
-					id=""
-					RetainSubObjects="False">
-					<Model
-						Name="W3DContainer:FXINVISBONE"
-						ExtraMesh="False" />
-					<ShadowInfo
-						Type="ADDITIVE_DECAL"
-						Texture="Decal_Rig_CO"
-						AdditionalTexture=""
-						SizeX="340"
-						SizeY="340"
-						OffsetX="0"
-						OffsetY="0"
-						OpacityStart="0"
-						OpacityFadeInTime="0s"
-						OpacityPeak="1"
-						OpacityFadeOutTime="0s"
-						OpacityEnd="0"
-						MaxHeight="200"
-						SunAngle="0"
-						OverrideLODVisibility="True"
-						UseHouseColor="True"
-						IsRotatingWithObject="True"
-						LocalPlayerOnly="True" />
-				</ModelConditionState>
-			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
 			<LifetimeUpdate
@@ -1331,25 +1131,25 @@
 					z="0" />
 			</ContactPoint>
 		</Geometry>
-					<ShadowInfo
-						Type="ADDITIVE_DECAL"
-						Texture="Decal_Rig_CO"
-						AdditionalTexture=""
-						SizeX="340"
-						SizeY="340"
-						OffsetX="0"
-						OffsetY="0"
-						OpacityStart="0"
-						OpacityFadeInTime="0s"
-						OpacityPeak="1"
-						OpacityFadeOutTime="0s"
-						OpacityEnd="0"
-						MaxHeight="200"
-						SunAngle="0"
-						OverrideLODVisibility="True"
-						UseHouseColor="True"
-						IsRotatingWithObject="True"
-						LocalPlayerOnly="True" />
+		<ShadowInfo
+			Type="VOLUME"
+			Texture=""
+			AdditionalTexture=""
+			SizeX="0"
+			SizeY="0"
+			OffsetX="0"
+			OffsetY="0"
+			OpacityStart="0"
+			OpacityFadeInTime="0s"
+			OpacityPeak="1"
+			OpacityFadeOutTime="0s"
+			OpacityEnd="0"
+			MaxHeight="20"
+			SunAngle="0"
+			OverrideLODVisibility="False"
+			UseHouseColor="False"
+			IsRotatingWithObject="True"
+			LocalPlayerOnly="False" />
 		<VisionInfo
 			VisionRange="100"
 			ShroudClearingRange="150"

@@ -281,31 +281,6 @@
 						AnimationMode="ONCE" />
 				</AnimationState>
 			</ScriptedModelDraw>
-			<!-- draw a decal when this thing is selected -->
-			<!-- This is duplicated in several files. Please do a search and update those too -->
-			<ScriptedModelDraw
-				id="ModuleTag_Draw_Selected_Repair_Decal"
-				OkToChangeModelColor="true">
-				<ModelConditionState
-					ParseCondStateType="PARSE_DEFAULT">
-					<Model Name="" />
-				</ModelConditionState>
-				<ModelConditionState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="SELECTED">
-					<Model Name="W3DContainer:FXInvisBone" />
-					<ShadowInfo
-						Type="ADDITIVE_DECAL"
-						SizeX="340"
-						SizeY="340"
-						OverrideLODVisibility="true"
-						MaxHeight="200"
-						UseHouseColor="true"
-						LocalPlayerOnly="true"
-						Texture="Decal_Rig_CO" 
-					/>
-				</ModelConditionState>
-			</ScriptedModelDraw>
 	<!-- Laser fencing -->		
 			<ScriptedModelDraw
 				id="ModuleTag_DrawNodWarFactoryLF"

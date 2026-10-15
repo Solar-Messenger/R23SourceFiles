@@ -122,30 +122,6 @@
 						AnimationBlendTime="0" />
 				</AnimationState>
 			</ScriptedModelDraw>
-	<!-- buff radius draw -->		
-			<ScriptedModelDraw
-							id="ModuleTag_Draw_Selected_Repair_Decal"
-							OkToChangeModelColor="true">
-							<ModelConditionState
-								ParseCondStateType="PARSE_DEFAULT">
-								<Model Name="" />
-							</ModelConditionState>
-							<ModelConditionState
-								ParseCondStateType="PARSE_NORMAL"
-								ConditionsYes="SELECTED">
-								<Model Name="W3DContainer:FXInvisBone" />
-								<ShadowInfo
-									Type="ADDITIVE_DECAL"
-									SizeX="949"
-									SizeY="949"
-									OverrideLODVisibility="true"
-									MaxHeight="350"
-									UseHouseColor="true"
-									LocalPlayerOnly="true"
-									Texture="Decal_LeadershipBuff" 
-								/>
-							</ModelConditionState>
-			</ScriptedModelDraw>			
 			
 		</Draws>
 		<Behaviors>
@@ -180,16 +156,8 @@
 				Height="55.0"
 				ContactPointGeneration="INFANTRY" />
 		</Geometry>
-								<ShadowInfo
-									Type="ADDITIVE_DECAL"
-									SizeX="949"
-									SizeY="949"
-									OverrideLODVisibility="true"
-									MaxHeight="350"
-									UseHouseColor="true"
-									LocalPlayerOnly="true"
-									Texture="Decal_LeadershipBuff" 
-								/>
+		<ShadowInfo
+			Type="VOLUME" />
 		<VisionInfo
 			VisionRange="350"
 			ShroudClearingRange="400" />
