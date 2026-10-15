@@ -409,7 +409,7 @@
 	<ObjectCreationList
 		id="OCL_AlienDestroyedPowerProjector">
 		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
+			Options="IGNORE_ALL_OBJECTS COPY_CREATORS_UPGRADES"
 			Disposition="LIKE_EXISTING">
 			<CreateObject>AlienPowerProjectorDestroyed</CreateObject>
 		</CreateObject>
@@ -418,7 +418,7 @@
 	<ObjectCreationList
 		id="OCL_AlienDestroyedReactor">
 		<CreateObject
-			Options="IGNORE_ALL_OBJECTS COPY_CREATORS_UPGRADES"
+			Options="IGNORE_ALL_OBJECTS"
 			Disposition="LIKE_EXISTING">
 			<CreateObject>AlienReactorDestroyed</CreateObject>
 		</CreateObject>

@@ -257,6 +257,14 @@
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
+			<SubObjectsUpgrade
+				id="ModuleTag_ShowTurbines">
+				<CustomAnimAndDuration
+					AnimState="USER_1"></CustomAnimAndDuration>
+				<TriggeredBy>Upgrade_NODLiquidTiberiumCore</TriggeredBy>
+				<TriggeredBy>Upgrade_BlackHandLiquidTiberiumCore</TriggeredBy>
+				<TriggeredBy>Upgrade_MarkedOfKaneLiquidTiberiumCore</TriggeredBy>
+			</SubObjectsUpgrade>
 		</Behaviors>
 		<Body>
 			<ActiveBody
