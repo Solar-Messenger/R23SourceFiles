@@ -64,6 +64,12 @@
 					<Model
 						Name="W3DContainer:NBDrpZnD2_SN" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:NBDrpZnD2_SN" />
+				</ModelConditionState>
 				<!-- BUILDUP ANIMATION -->
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -144,6 +150,15 @@
 						Original="NB_DropZone"
 						New="NB_DropZoneD" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:NBDrpZnDoor_SKN" />
+					<Texture
+						Original="NB_DropZone"
+						New="NB_DropZoneD" />
+				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					Flags="START_FRAME_LAST">
@@ -211,6 +226,15 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:NBDrpZnX_SKN" />
+					<Texture
+						Original="NB_DropZone"
+						New="NB_DropZoneD" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
 					<Model
 						Name="W3DContainer:NBDrpZnX_SKN" />
 					<Texture
@@ -299,6 +323,12 @@
 				StaticModelLODMode="true">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT" >
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DYING">
 					<Model
 						Name="" />
 				</ModelConditionState>

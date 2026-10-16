@@ -100,6 +100,12 @@
 						FXParticleSystemTemplate="GDIRefineryDamagedDist"
 						FollowBone="true" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:GBPwrPlntD2_SN" />
+				</ModelConditionState>
 				<!-- ANIMATIONS -->
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"></AnimationState>
@@ -207,6 +213,18 @@
 						BoneName="TurbineB"
 						FXParticleSystemTemplate="GDIPowerTurbineDistortionA"
 						FollowBone="true" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="AFFECTED_BY_EMP DYING USER_1">
+					<Model
+						Name="W3DContainer:GBPwrPlntTD_SKN" />					
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_1">
+					<Model
+						Name="W3DContainer:GBPwrPlntTD_SKN" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"

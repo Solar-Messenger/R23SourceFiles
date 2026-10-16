@@ -64,6 +64,12 @@
 					<Model
 						Name="W3DContainer:NBHangarD2_SN" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:NBHangarD2_SN" />
+				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"></AnimationState>
 				<!-- BUILDUP ANIMATION -->
@@ -156,6 +162,15 @@
 						Original="NBHangar"
 						New="NBHangar_D" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:NBHangDoor1_SKN" />
+					<Texture
+						Original="NBHangar"
+						New="NBHangar_D" />
+				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					Flags="START_FRAME_LAST">
@@ -230,6 +245,15 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:NBHangDoor2_SKN" />
+					<Texture
+						Original="NBHangar"
+						New="NBHangar_D" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
 					<Model
 						Name="W3DContainer:NBHangDoor2_SKN" />
 					<Texture
@@ -316,6 +340,15 @@
 						Original="NBHangar"
 						New="NBHangar_D" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:NBHangDoor3_SKN" />
+					<Texture
+						Original="NBHangar"
+						New="NBHangar_D" />
+				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					Flags="START_FRAME_LAST">
@@ -390,6 +423,15 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:NBHangDoor4_SKN" />
+					<Texture
+						Original="NBHangar"
+						New="NBHangar_D" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
 					<Model
 						Name="W3DContainer:NBHangDoor4_SKN" />
 					<Texture
@@ -474,6 +516,12 @@
 				StaticModelLODMode="true">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT" >
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DYING">
 					<Model
 						Name="" />
 				</ModelConditionState>

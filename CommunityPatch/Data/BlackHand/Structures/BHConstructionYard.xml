@@ -110,6 +110,12 @@
 						FXParticleSystemTemplate="NODConDamagedVent"
 						FollowBone="true" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:NBConYardD2_SN" />
+				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="UNPACKING">
@@ -193,6 +199,15 @@
 					<Texture
 						Original="NBConYard"
 						New="NBConYardD" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:NBConArm_SKN" />
+					<Texture
+						Original="NBConYard"
+						New="NBConYardD" />
 				</ModelConditionState>	
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -244,6 +259,12 @@
 				StaticModelLODMode="true">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT" >
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DYING">
 					<Model
 						Name="" />
 				</ModelConditionState>

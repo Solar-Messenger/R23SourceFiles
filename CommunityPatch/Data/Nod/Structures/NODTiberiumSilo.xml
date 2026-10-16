@@ -98,6 +98,12 @@
 						FXParticleSystemTemplate="GDISiloDamagedSmoke"
 						FollowBone="true" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:NB_SiloD2_SN" />
+				</ModelConditionState>
 				<!-- BUILDUP ANIMATION -->
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"

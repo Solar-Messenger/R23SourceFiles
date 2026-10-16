@@ -200,6 +200,16 @@
 						Name="W3DContainer:GBTECHCEND2_SN"
 						ExtraMesh="False" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					PortraitImage=""
+					ButtonImage=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:GBTECHCEND2_SN"
+						ExtraMesh="False" />
+				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					EnteringStateFX=""
@@ -385,6 +395,16 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DYING"
+					PortraitImage=""
+					ButtonImage=""
+					RetainSubObjects="False">
+					<Model
+						Name=""
+						ExtraMesh="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_6 REALLYDAMAGED"
 					PortraitImage=""
 					ButtonImage=""
@@ -433,6 +453,16 @@
 					RetainSubObjects="False">
 					<Model
 						Name=""
+						ExtraMesh="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_7 DYING"
+					PortraitImage=""
+					ButtonImage=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:UGRAILBUILDINGD"
 						ExtraMesh="False" />
 				</ModelConditionState>	
 				<ModelConditionState

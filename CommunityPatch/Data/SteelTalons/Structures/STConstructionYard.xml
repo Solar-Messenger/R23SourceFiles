@@ -78,6 +78,12 @@
 					<Model
 						Name="W3DContainer:GBConYardD2_SN" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:GBConYardD2_SN" />
+				</ModelConditionState>
 				<!-- UNPACKING -->
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -165,6 +171,15 @@
 						Original="GB_Conyard01"
 						New="GB_Conyard01D" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:GBConYardX_SKN" />
+					<Texture
+						Original="GB_Conyard01"
+						New="GB_Conyard01D" />
+				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					StateName="STATE_Idle"
@@ -212,6 +227,12 @@
 				StaticModelLODMode="true">
 				<ModelConditionState
 					ParseCondStateType="PARSE_DEFAULT" >
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DYING">
 					<Model
 						Name="" />
 				</ModelConditionState>

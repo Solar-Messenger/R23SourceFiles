@@ -92,6 +92,12 @@
 						FXParticleSystemTemplate="NODDamagedFireDistortion"
 						FollowBone="true" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:NBPowerD2_SN" />
+				</ModelConditionState>
 				<!-- BUILDUP ANIMATION -->
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -166,6 +172,12 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_1 REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:NBTibCore_D1" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_1 DYING">
 					<Model
 						Name="W3DContainer:NBTibCore_D1" />
 				</ModelConditionState>

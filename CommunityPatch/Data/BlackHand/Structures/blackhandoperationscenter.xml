@@ -123,6 +123,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE">
+					<Model
+						Name="W3DContainer:NBOpCenD2_SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
 					<Model
 						Name="W3DContainer:NBOpCenD2_SN" />
@@ -197,6 +203,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="USER_6 DYING">
+					<Model
+						Name="" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="USER_6 REALLYDAMAGED">
 					<Model
 						Name="" />
@@ -246,6 +258,15 @@
 					ConditionsYes="STRUCTURE_UNPACKING">
 					<Model
 						Name="W3DContainer:NBEmpty_ABLD" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:NBOpCenterX2_SKN" />
+					<Texture
+						Original="NBOpCenter"
+						New="NBOpCenter_D" />
 				</ModelConditionState>
 				<!-- ANIMATIONS -->
 				<AnimationState
@@ -370,6 +391,15 @@
 					ConditionsYes="STRUCTURE_UNPACKING">
 					<Model
 						Name="W3DContainer:NBEmpty_ABLD" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
+					<Model
+						Name="W3DContainer:NBOpCenter_Dish" />
+					<Texture
+						Original="NBOpCenter"
+						New="NBOpCenter_D" />
 				</ModelConditionState>
 				<!-- ANIMATIONS -->
 				<AnimationState

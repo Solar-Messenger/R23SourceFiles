@@ -270,6 +270,21 @@
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
+					ConditionsYes="DYING"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:NBAIRSPPRT_D2SKN"
+						ExtraMesh="False" />
+				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					AnimNickName=""
@@ -1271,6 +1286,21 @@
 						FollowBone="True"
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
+					ConditionsYes="DYING"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:NBAIRSPPRT_D2SKN"
+						ExtraMesh="False" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -2286,6 +2316,21 @@
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
+					ConditionsYes="DYING"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:GBAIRSUPPRTD2_SKN2"
+						ExtraMesh="False" />
+				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					AnimNickName=""
@@ -2459,6 +2504,15 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:GBAIRSUPPRTDISH" />
+					<Texture
+						Original="GBAirSupprt"
+						New="GBAirSupprtD" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
 					<Model
 						Name="W3DContainer:GBAIRSUPPRTDISH" />
 					<Texture
@@ -3424,6 +3478,21 @@
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
+					ConditionsYes="DYING"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:GBAIRSUPPRTD2_SKN2"
+						ExtraMesh="False" />
+				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					AnimNickName=""
@@ -3597,6 +3666,15 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:GBAIRSUPPRTDISH" />
+					<Texture
+						Original="GBAirSupprt"
+						New="GBAirSupprtD" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
 					<Model
 						Name="W3DContainer:GBAIRSUPPRTDISH" />
 					<Texture
@@ -4561,6 +4639,21 @@
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
+					ConditionsYes="DYING"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:GBAIRSUPPRTD2_SKN2"
+						ExtraMesh="False" />
+				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					AnimNickName=""
@@ -4734,6 +4827,15 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED">
+					<Model
+						Name="W3DContainer:GBAIRSUPPRTDISH" />
+					<Texture
+						Original="GBAirSupprt"
+						New="GBAirSupprtD" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
 					<Model
 						Name="W3DContainer:GBAIRSUPPRTDISH" />
 					<Texture
