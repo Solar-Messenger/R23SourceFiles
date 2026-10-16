@@ -410,6 +410,13 @@
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
+
+			<ModelConditionUpgrade
+				id="ModuleTag_HideCrateGDI"
+				AddConditionFlags="USER_5">
+				<TriggeredBy>Upgrade_GDICompositeArmor</TriggeredBy>
+			</ModelConditionUpgrade>
+			
 		</Behaviors>
 		<Body>
 			<ActiveBody

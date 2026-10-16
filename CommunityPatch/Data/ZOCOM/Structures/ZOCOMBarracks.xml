@@ -539,7 +539,7 @@
 
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
-				CreationList="OCL_GDIDestroyedBarracks">
+				CreationList="OCL_ZOCOMDestroyedBarracks">
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""

@@ -196,7 +196,7 @@
 			</SubObjectsUpgrade>
 			<SubObjectsUpgrade
 				id="ModuleTag_Upgrade _ZoneTrooperInjectors"
-				ShowSubObjects="UG_Injector">
+				ShowSubObjects="UG_Injector UG_Injectorz">
 				<CustomAnimAndDuration
 					AnimState="USER_4"></CustomAnimAndDuration>
 				<TriggeredBy>Upgrade_ZoneTrooperAutoInjectors</TriggeredBy>
@@ -210,7 +210,7 @@
 			</SubObjectsUpgrade>
 			<SubObjectsUpgrade
 				id="ModuleTag_Upgrade _ZoneRaiderInjectors"
-				ShowSubObjects="UG_Injector">
+				ShowSubObjects="UG_Injector UG_Injectorz">
 				<CustomAnimAndDuration
 					AnimState="USER_4"></CustomAnimAndDuration>
 				<TriggeredBy>Upgrade_ZoneRaiderAutoInjectors</TriggeredBy>
