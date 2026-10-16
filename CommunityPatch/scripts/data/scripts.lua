@@ -352,6 +352,7 @@ function OnGDIMedicalBayCreated(self)
 	ObjectHideSubObjectPermanently( self, "UG_StealthDetector", true )
 	ObjectHideSubObjectPermanently( self, "UG_StealthDetector01", true )
 	ObjectHideSubObjectPermanently( self, "UG_Injector", true )
+	ObjectHideSubObjectPermanently( self, "UG_Injectorz", true )
 	ObjectHideSubObjectPermanently( self, "UG_Armor", true )
 end
 
