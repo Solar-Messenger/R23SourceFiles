@@ -339,6 +339,14 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName=""
+						AnimationMode="LOOP" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
 					ConditionsYes="REALLYDAMAGED"
 					Name=""
@@ -1353,6 +1361,14 @@
 						FollowBone="True"
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName=""
+						AnimationMode="LOOP" />
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -2409,6 +2425,14 @@
 						FollowBone="True"
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName=""
+						AnimationMode="LOOP" />
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -3574,6 +3598,14 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName=""
+						AnimationMode="LOOP" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
 					ConditionsYes="REALLYDAMAGED"
 					Name=""
@@ -4732,6 +4764,14 @@
 						FollowBone="True"
 						OnlyIfOnWater="False"
 						OnlyIfOnLand="False" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName=""
+						AnimationMode="LOOP" />
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"

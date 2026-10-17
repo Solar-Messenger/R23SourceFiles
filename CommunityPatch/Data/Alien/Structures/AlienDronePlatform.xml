@@ -115,6 +115,14 @@
 					ParseCondStateType="PARSE_DEFAULT">
 					<!-- no anim -->
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName=""
+						AnimationMode="LOOP" />
+				</AnimationState>
 				<!-- prevents the TRANS_IntoReallyDamaged playing when unpacking and really damaged -->
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"

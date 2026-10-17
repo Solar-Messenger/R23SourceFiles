@@ -102,6 +102,14 @@
 						AnimationName="GBConYardD2_AN"
 						AnimationMode="MANUAL" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName=""
+						AnimationMode="LOOP" />
+				</AnimationState>
 				<!-- REALLY DAMAGED ANIMATION -->
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
