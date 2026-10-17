@@ -137,6 +137,14 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName=""
+						AnimationMode="LOOP" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
 					StateName="STATE_ReallyDamaged"
 					Flags="START_FRAME_LAST">
@@ -149,14 +157,6 @@
 						CurDrawableSetTransitionAnimState("TRANS_IntoReallyDamaged")
 						end
 					</Script>
-				</AnimationState>
-				<AnimationState
-					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					Flags="START_FRAME_LAST">
-					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_TRANSITION"
