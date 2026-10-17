@@ -107,6 +107,14 @@
 					</Script>
 				</AnimationState>
 				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE"
+					Flags="START_FRAME_LAST">
+					<Animation
+						AnimationName=""
+						AnimationMode="LOOP" />
+				</AnimationState>
+				<AnimationState
 					ParseCondStateType="PARSE_TRANSITION"
 					StateName="TRANS_IntoReallyDamaged">
 					<Animation
@@ -127,6 +135,12 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="STRUCTURE_UNPACKING">
+					<Model
+						Name="W3DContainer:NBEmpty_ABLD" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING">
 					<Model
 						Name="W3DContainer:NBEmpty_ABLD" />
 				</ModelConditionState>
