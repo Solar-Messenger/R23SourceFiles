@@ -4209,9 +4209,32 @@ end
 
 -- ############################# R25 Disable Building Geometry Fix ###################################
 
+-- R25j Structure placement functions
+function StructureIsUnpacking(self)
+	--print("structure is unpacking")
+	-- sets RIDER1 status to true
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 41, 1)
+end
+
+function StructureIsUnpackingEnd(self)
+	--print("structure is unpacking end")
+	-- sets RIDER1 status to false
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 41, 0)
+end
+
+-- -RIDER1, check if the structure is destroyed and if it is disable its geometry by name 
 function DisableGeometryOnDeath(self)
-	ObjectSetGeometryActive(self, "Geom_Tower", false)
-	ObjectSetGeometryActive(self, "Geom_Orig", false)
+	-- do object check and reference a table to disable geometries 
+	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 41) then
+		-- apply model state to begin the rubble animation 
+		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_10", 9999, 100)
+
+		local numOfGeometry = 10
+		for i = 1, numOfGeometry, 1 do 
+			ObjectSetGeometryActive(self, tostring("Geom_" .. i), false)
+		end
+		print("structure geometry disabled.")
+	end
 end
 
 -- ############################# MOBA FUNCTIONS ###################################

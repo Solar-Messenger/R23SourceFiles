@@ -62,6 +62,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE USER_10">
+					<Model
+						Name="W3DContainer:GBBarracks_D3SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE USER_5">
 					<Model
 						Name="W3DContainer:GBBarracks_D2SN2" />
@@ -136,12 +142,26 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
+					ConditionsYes="RUBBLE USER_10"
+					StateName="STATE_Rubble"
 					Flags="START_FRAME_LAST">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="GBBarracks_D3AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Medium"
+						FollowBone="false" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
@@ -162,6 +182,14 @@
 					StateName="TRANS_IntoReallyDamaged">
 					<Animation
 						AnimationName="GBBarracks_D2AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble">
+					<Animation
+						AnimationName="GBBarracks_D3AN"
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
 				</AnimationState>
@@ -335,6 +363,18 @@
 					ExemptStatus="RIDER1"
 					DeathTypes="ALL" />
 			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER1 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER1"
+					DeathTypes="ALL" />
+			</SlowDeath>
+			
 			<FXListBehavior
 				id="ModuleTag_FXList">
 				<DieMuxData
@@ -458,12 +498,12 @@
 				CreationList="OCL_GenericGDIBuildingSuicide" >
 				<DieMuxData DeathTypes="SUICIDED" />
 			</CreateObjectDie>
-
+			<!-- dont create a destroyed barracks if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_GDIDestroyedBarracks">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER1"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -471,6 +511,7 @@
 					DeathTypes="ALL"
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
+
 			<StancesBehavior
 				id="ModuleTag_Stance"
 				StanceTemplate="Generic" />
@@ -499,6 +540,7 @@
 		<Geometry>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_1"
 				MajorRadius = "14.0229"
 				MinorRadius = "17.3374"
 				Height = "7.64887" >
@@ -509,6 +551,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_2"
 				MajorRadius = "7.29192"
 				MinorRadius = "9.36221"
 				Height = "19.2751" >
@@ -519,6 +562,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_3"
 				MajorRadius = "26.0409"
 				MinorRadius = "39.7707"
 				Height = "3.0" >
@@ -529,6 +573,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_4"
 				MajorRadius = "26.0409"
 				MinorRadius = "15.1129"
 				Height = "11.64" >
@@ -539,6 +584,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_5"
 				MajorRadius = "26.0409"
 				MinorRadius = "10.8813"
 				Height = "17.9256" >
@@ -549,6 +595,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_6"
 				MajorRadius = "26.0409"
 				MinorRadius = "15.1129"
 				Height = "11.64" >
@@ -559,6 +606,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_7"
 				MajorRadius = "26.0409"
 				MinorRadius = "10.8813"
 				Height = "17.9256" >
@@ -569,6 +617,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_8"
 				MajorRadius = "32.2907"
 				MinorRadius = "5.87588"
 				Height = "3.58512" >
@@ -579,6 +628,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_9"
 				MajorRadius = "1.56245"
 				MinorRadius = "4.78775"
 				Height = "25.0958" >
@@ -589,6 +639,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_10"
 				MajorRadius = "1.56245"
 				MinorRadius = "4.78775"
 				Height = "25.0958" >

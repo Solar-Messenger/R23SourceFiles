@@ -672,7 +672,17 @@
 		</ModelConditionEvent>					
 		<ModelConditionEvent Name="OnCoverEnd">
 			<Conditions>-COVER</Conditions>
-		</ModelConditionEvent>			
+		</ModelConditionEvent>	
+		
+		<!-- new structure unpacking events -->
+
+		<ModelConditionEvent Name="OnStructureUnpacking">
+			<Conditions>+STRUCTURE_UNPACKING</Conditions>
+		</ModelConditionEvent>	
+
+		<ModelConditionEvent Name="OnStructureUnpackingEnd">
+			<Conditions>-STRUCTURE_UNPACKING</Conditions>
+		</ModelConditionEvent>	
 
 		<ModelConditionEvent Name="OnClipEmpty1">
 			<Conditions>+WEAPONSLOTID_01</Conditions>
@@ -2101,6 +2111,12 @@
 
     <EventList Name="GDIMedicalBayFunctions" Inherit="BaseScriptFunctions">
         <EventHandler EventName="OnCreated"	ScriptFunctionName="OnGDIMedicalBayCreated" DebugSingleStep="false"/>
+		<!-- for STRUCTURE_UNPACKING events, sets RIDER1 status -->
+		<EventHandler EventName="OnStructureUnpacking"	ScriptFunctionName="StructureIsUnpacking" DebugSingleStep="false"/>
+		<!-- unsets RIDER1 status -->
+		<EventHandler EventName="OnStructureUnpackingEnd"	ScriptFunctionName="StructureIsUnpackingEnd" DebugSingleStep="false"/>
+		<!-- when RIDER1 is no longer a status, disable geometry -->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
     </EventList>
 
     <EventList Name="GDIPowerPlantFunctions" Inherit="BaseScriptFunctions">
