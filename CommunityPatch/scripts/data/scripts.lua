@@ -4222,18 +4222,21 @@ function StructureIsUnpackingEnd(self)
 	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 41, 0)
 end
 
+
+StructureGeometryTable = {
+	["13D568B3"] = 10 -- GDIBarracks
+}
+
 -- -RIDER1, check if the structure is destroyed and if it is disable its geometry by name 
 function DisableGeometryOnDeath(self)
 	-- do object check and reference a table to disable geometries 
 	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 41) then
 		-- apply model state to begin the rubble animation 
 		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_10", 9999, 100)
-
-		local numOfGeometry = 10
-		for i = 1, numOfGeometry, 1 do 
+		for i = 1, StructureGeometryTable[getObjectName(self)], 1 do 
 			ObjectSetGeometryActive(self, tostring("Geom_" .. i), false)
 		end
-		print("structure geometry disabled.")
+		--print("structure geometry disabled.")
 	end
 end
 
