@@ -177,7 +177,7 @@
 						Name="W3DContainer:NBDrpZnDoor_SKN" />
 					<Texture
 						Original="NB_DropZone"
-						New="NB_DropZoneD" />
+						New="W3DContainer:NB_DropZoneD" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -256,7 +256,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:NBDrpZnX_SKN" />
+						Name="W3DContainer:NBDrpZnX_D3" />
 					<Texture
 						Original="NB_DropZone"
 						New="NB_DropZoneD" />
@@ -300,6 +300,13 @@
 					StateName="TRANS_ClosedToOpen">
 					<Animation
 						AnimationName="NBDrpZnX_OPN"
+						AnimationMode="ONCE" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="NBDrpZnX_D3"
 						AnimationMode="ONCE" />
 				</AnimationState>
 				<AnimationState

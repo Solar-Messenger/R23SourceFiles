@@ -254,6 +254,17 @@
 					end
 				</Script>
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="NBTibCore_D1"
+						AnimationMode="ONCE" />
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Large"
+						FollowBone="false" />
+				</AnimationState>
 				<!-- DYING ANIMATION -->
 				<!-- Transitions -->
 				<AnimationState

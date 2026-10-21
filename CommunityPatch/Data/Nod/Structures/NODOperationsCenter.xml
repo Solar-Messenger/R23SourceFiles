@@ -295,10 +295,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:NBOpCenterX2_SKN" />
-					<Texture
-						Original="NBOpCenter"
-						New="NBOpCenter_D" />
+						Name="W3DContainer:NBEmpty_ABLD" />
 				</ModelConditionState>
 				<!-- ANIMATIONS -->
 				<AnimationState
@@ -428,10 +425,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:NBOpCenter_Dish" />
-					<Texture
-						Original="NBOpCenter"
-						New="NBOpCenter_D" />
+						Name="W3DContainer:NBEmpty_ABLD" />
 				</ModelConditionState>
 				<!-- ANIMATIONS -->
 				<AnimationState

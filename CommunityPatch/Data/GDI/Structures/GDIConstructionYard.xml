@@ -195,7 +195,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:GBConYardX_SKN" />
+						Name="W3DContainer:GBConYardX_D3" />
 					<Texture
 						Original="GB_Conyard01"
 						New="GB_Conyard01D" />
@@ -228,6 +228,13 @@
 						AnimationMode="ONCE"
 						AnimationSpeedFactorMin="0.8"
 						AnimationSpeedFactorMax="0.8" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="GBConYardX_D3"
+						AnimationMode="ONCE" />
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_TRANSITION"

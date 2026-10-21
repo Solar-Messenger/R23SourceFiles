@@ -851,7 +851,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:GBREFINERYXD2"
+						Name="W3DContainer:GBREFINERYXD3"
 						ExtraMesh="False" />
 				</ModelConditionState>
 				<AnimationState

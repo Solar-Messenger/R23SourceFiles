@@ -213,6 +213,11 @@
 						Bone="ABBHiveB" />
 
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE USER_10"
+					StateName="STATE_Rubble">
+				</AnimationState>
 			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>

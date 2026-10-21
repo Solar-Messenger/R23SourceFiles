@@ -538,7 +538,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:UGRAILBUILDINGD"
+						Name=""
 						ExtraMesh="False" />
 				</ModelConditionState>	
 				<ModelConditionState

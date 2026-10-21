@@ -2836,10 +2836,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:GBAIRSUPPRTDISH" />
-					<Texture
-						Original="GBAirSupprt"
-						New="GBAirSupprtD" />
+						Name="" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -4110,10 +4107,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:GBAIRSUPPRTDISH" />
-					<Texture
-						Original="GBAirSupprt"
-						New="GBAirSupprtD" />
+						Name="" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -5383,10 +5377,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:GBAIRSUPPRTDISH" />
-					<Texture
-						Original="GBAirSupprt"
-						New="GBAirSupprtD" />
+						Name="" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"

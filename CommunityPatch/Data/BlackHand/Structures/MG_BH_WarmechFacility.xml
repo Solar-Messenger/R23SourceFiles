@@ -519,7 +519,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:NBEmpty_ABLD" />
+						Name="" />
 				</ModelConditionState>
 
 				<ModelConditionState
@@ -1032,7 +1032,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:NBEngFaDoorsD2_SKN" />
+						Name="" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"

@@ -211,7 +211,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:GBWarFacXD_SKN" />
+						Name="W3DContainer:GBWarFacXD3_SN" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -233,6 +233,13 @@
 					ConditionsYes="ACTIVELY_CONSTRUCTING">
 					<Animation
 						AnimationName="GBWarFacX_CON"
+						AnimationMode="ONCE" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="GBWarFacXD3_AN"
 						AnimationMode="ONCE" />
 				</AnimationState>
 			</ScriptedModelDraw>
@@ -288,6 +295,13 @@
 					StateName="STATE_Closed">
 					<Animation
 						AnimationName="GBWarDoor_CLS"
+						AnimationMode="ONCE" />
+				</AnimationState>				
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="GBWarDoor_OPN"
 						AnimationMode="ONCE" />
 				</AnimationState>				
 			</ScriptedModelDraw>

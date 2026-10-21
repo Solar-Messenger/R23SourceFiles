@@ -199,6 +199,18 @@
 						FXParticleSystemTemplate="BuildingSteam"
 						FollowBone="true" />						
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING SPECIALPOWER1_READY USER_10">
+					<Model
+						Name="W3DContainer:GBSpcCmndX_RDY_D3" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Model
+						Name="W3DContainer:GBSpcCmndX_D3" />
+				</ModelConditionState>
 				<!-- ANIMATIONS -->
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -237,6 +249,20 @@
 						AnimationName="GBSpcCmndX_IDLA"
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING SPECIALPOWER1_READY USER_10">
+					<Animation
+						AnimationName="GBSpcCmndX_RDY_D3"
+						AnimationMode="ONCE" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="GBSpcCmndX_D3"
+						AnimationMode="ONCE" />
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_TRANSITION"

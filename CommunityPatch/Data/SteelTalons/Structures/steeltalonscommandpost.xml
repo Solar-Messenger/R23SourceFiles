@@ -553,7 +553,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:GBCOMPOST_RDRD"
+						Name="NBEMPTY_ABLD"
 						ExtraMesh="False" />
 				</ModelConditionState>
 				<AnimationState
@@ -656,6 +656,14 @@
 						UseWeaponTiming="False"
 						FadingIn="False" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10"
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False" />
 			</ScriptedModelDraw>
 			<ScriptedModelDraw
 				id="CD182A15"

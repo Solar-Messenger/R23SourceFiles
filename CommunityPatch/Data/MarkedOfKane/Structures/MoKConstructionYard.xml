@@ -262,10 +262,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:NBConArm_SKN" />
-					<Texture
-						Original="NBConYard"
-						New="NBConYardD" />
+						Name="W3DContainer:NBEmpty_ABLD" />
 				</ModelConditionState>	
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"

@@ -245,6 +245,14 @@
 					ConditionsYes="DYING USER_1">
 					<Model
 						Name="W3DContainer:GBPwrPlntTD_SKN" />
+					<ParticleSysBone
+						BoneName="TurbineA"
+						FXParticleSystemTemplate="GDIPowerTurbineDistortionA"
+						FollowBone="true" />
+					<ParticleSysBone
+						BoneName="TurbineB"
+						FXParticleSystemTemplate="GDIPowerTurbineDistortionA"
+						FollowBone="true" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"

@@ -673,11 +673,8 @@
 					id=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:NBCONARM_SKN"
+						Name="W3DContainer:NBEMPTY_ABLD"
 						ExtraMesh="False" />
-					<Texture
-						Original="NBConYard"
-						New="NBConYardD" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"

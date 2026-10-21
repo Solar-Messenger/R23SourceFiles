@@ -474,6 +474,16 @@
 						Name="W3DContainer:NBEMPTY_ABLD"
 						ExtraMesh="False" />
 				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10"
+					PortraitImage=""
+					ButtonImage=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:NBEMPTY_ABLD"
+						ExtraMesh="False" />
+				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
 					StateName="STATE_Idle"

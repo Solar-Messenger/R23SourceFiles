@@ -237,6 +237,14 @@
 						AnimationName="NBHangDoor_CLS"
 						AnimationMode="MANUAL" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="NBHangDoor_D3"
+						AnimationMode="ONCE"
+						AnimationBlendTime="30" />
+				</AnimationState>
 			</ScriptedModelDraw>
 			<!-- DRAW DOOR02 -->
 			<ScriptedModelDraw
@@ -325,6 +333,14 @@
 					<Animation
 						AnimationName="NBHangDoor_CLS"
 						AnimationMode="MANUAL" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="NBHangDoor_D3"
+						AnimationMode="ONCE"
+						AnimationBlendTime="30" />
 				</AnimationState>
 			</ScriptedModelDraw>
 			<!-- DRAW DOOR03 -->
@@ -415,6 +431,14 @@
 						AnimationName="NBHangDoor_CLS"
 						AnimationMode="MANUAL" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="NBHangDoor_D3"
+						AnimationMode="ONCE"
+						AnimationBlendTime="30" />
+				</AnimationState>
 			</ScriptedModelDraw>
 			<!-- DRAW DOOR04 -->
 			<ScriptedModelDraw
@@ -503,6 +527,14 @@
 					<Animation
 						AnimationName="NBHangDoor_CLS"
 						AnimationMode="MANUAL" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="NBHangDoor_D3"
+						AnimationMode="ONCE"
+						AnimationBlendTime="30" />
 				</AnimationState>
 			</ScriptedModelDraw>
 			<ScriptedModelDraw

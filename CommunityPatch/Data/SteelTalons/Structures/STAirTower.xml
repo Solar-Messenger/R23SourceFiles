@@ -206,7 +206,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:GBAirDoor01_SKN" />
+						Name="W3DContainer:GBAirDoor01_D3SN" />
 					<Texture
 						Original="GBAirField"
 						New="GBAirField_D" />
@@ -271,6 +271,20 @@
 						AnimationName="GBAirDoor_CLSS"
 						AnimationMode="ONCE" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING PARKINGPLACE_1_DOOR_OPEN USER_10">
+					<Animation
+						AnimationName="GBAirDoor_OPNS"
+						AnimationMode="ONCE" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="GBAirDoor_D3AN"
+						AnimationMode="ONCE" />
+				</AnimationState>
 			</ScriptedModelDraw>
 			<!-- DRAW DOOR02 -->
 			<ScriptedModelDraw
@@ -319,7 +333,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:GBAirDoor02_SKN" />
+						Name="W3DContainer:GBAirDoor02_D3SN" />
 					<Texture
 						Original="GBAirField"
 						New="GBAirField_D" />
@@ -364,6 +378,20 @@
 					ConditionsYes="PARKINGPLACE_3_DOOR_CLOSED">
 					<Animation
 						AnimationName="GBAirDoor_CLSS"
+						AnimationMode="ONCE" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING PARKINGPLACE_1_DOOR_OPEN USER_10">
+					<Animation
+						AnimationName="GBAirDoor_OPNS"
+						AnimationMode="ONCE" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="GBAirDoor_D3AN"
 						AnimationMode="ONCE" />
 				</AnimationState>
 			</ScriptedModelDraw>
@@ -414,7 +442,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:GBAirDoor03_SKN" />
+						Name="W3DContainer:GBAirDoor03_D3SN" />
 					<Texture
 						Original="GBAirField"
 						New="GBAirField_D" />
@@ -459,6 +487,20 @@
 					ConditionsYes="PARKINGPLACE_2_DOOR_CLOSED">
 					<Animation
 						AnimationName="GBAirDoor_CLSS"
+						AnimationMode="ONCE" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING PARKINGPLACE_1_DOOR_OPEN USER_10">
+					<Animation
+						AnimationName="GBAirDoor_OPNS"
+						AnimationMode="ONCE" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="GBAirDoor_D3AN"
 						AnimationMode="ONCE" />
 				</AnimationState>
 			</ScriptedModelDraw>
@@ -509,7 +551,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:GBAirDoor04_SKN" />
+						Name="W3DContainer:GBAirDoor04_D3SN" />
 					<Texture
 						Original="GBAirField"
 						New="GBAirField_D" />
@@ -556,6 +598,20 @@
 						AnimationName="GBAirDoor_CLSS"
 						AnimationMode="ONCE" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING PARKINGPLACE_1_DOOR_OPEN USER_10">
+					<Animation
+						AnimationName="GBAirDoor_OPNS"
+						AnimationMode="ONCE" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Animation
+						AnimationName="GBAirDoor_D3AN"
+						AnimationMode="ONCE" />
+				</AnimationState>
 			</ScriptedModelDraw>
 			<!-- DRAW RADAR -->
 			<ScriptedModelDraw
@@ -588,7 +644,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
-						Name="W3DContainer:GBAirRadarD" />
+						Name="" />
 				</ModelConditionState>
 				<AnimationState
 					ParseCondStateType="PARSE_DEFAULT"
@@ -616,6 +672,14 @@
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
+					Flags="DO_NOT_PLAY_WHEN_UNPOWERED">
+					<Animation
+						AnimationName="GBAirRadarD"
+						AnimationMode="LOOP" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10"
 					Flags="DO_NOT_PLAY_WHEN_UNPOWERED">
 					<Animation
 						AnimationName="GBAirRadarD"
