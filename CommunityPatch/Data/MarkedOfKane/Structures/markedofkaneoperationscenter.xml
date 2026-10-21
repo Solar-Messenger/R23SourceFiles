@@ -123,6 +123,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE USER_10">
+					<Model
+						Name="W3DContainer:NBOpCenD3_SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE">
 					<Model
 						Name="W3DContainer:NBOpCenD2_SN" />
@@ -168,12 +174,22 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
+					ConditionsYes="RUBBLE USER_10"
+					StateName="STATE_Rubble"
 					Flags="START_FRAME_LAST">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="NBOpCenD3_AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
@@ -194,6 +210,14 @@
 					StateName="TRANS_IntoReallyDamaged">
 					<Animation
 						AnimationName="NBOpCenD2_AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble">
+					<Animation
+						AnimationName="NBOpCenD3_AN"
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
 				</AnimationState>
@@ -477,13 +501,24 @@
 				ShadowWhenDead="False"
 				Fade="False">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="1d"
 					MaxKillerAngle="-1d"
 					DeathTypes="ALL"
 					DeathTypesForbidden="" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="3s"
+				SinkRate="4"
+				DestructionDelay="8s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
+					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
 				id="C74C39D8">
@@ -1225,11 +1260,12 @@
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
 
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_NODDestroyedOperationsCenter">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -1457,6 +1493,7 @@
 			IsSmall="False">
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_1"
 				ContactPointGeneration="INFANTRY"
 				MajorRadius="21"
 				MinorRadius="1"
@@ -1471,6 +1508,7 @@
 			</Shape>
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_2"
 				ContactPointGeneration="INFANTRY"
 				MajorRadius="6"
 				MinorRadius="1"
@@ -1485,6 +1523,7 @@
 			</Shape>
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_3"
 				ContactPointGeneration="INFANTRY"
 				MajorRadius="20"
 				MinorRadius="1"
@@ -1499,6 +1538,7 @@
 			</Shape>
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_4"
 				ContactPointGeneration="INFANTRY"
 				MajorRadius="12.5"
 				MinorRadius="1"
@@ -1513,6 +1553,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_5"
 				ContactPointGeneration="VEHICLE"
 				MajorRadius="15"
 				MinorRadius="20"
@@ -1527,6 +1568,7 @@
 			</Shape>
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_6"
 				ContactPointGeneration="INFANTRY"
 				MajorRadius="4"
 				MinorRadius="1"
@@ -1541,6 +1583,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_7"
 				ContactPointGeneration="INFANTRY"
 				MajorRadius="46.8567"
 				MinorRadius="27.4004"
@@ -1555,6 +1598,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_8"
 				ContactPointGeneration="INFANTRY"
 				MajorRadius="29.4575"
 				MinorRadius="19.6674"

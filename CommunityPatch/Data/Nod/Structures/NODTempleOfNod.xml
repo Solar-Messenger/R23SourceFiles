@@ -169,6 +169,16 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE USER_10"
+					PortraitImage=""
+					ButtonImage=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:NBTPRIME_D3SN"
+						ExtraMesh="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE"
 					PortraitImage=""
 					ButtonImage=""
@@ -289,12 +299,39 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					Flags="START_FRAME_LAST">
+					ConditionsYes="RUBBLE USER_10"
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST"
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="NBTPRIME_D3AN"
+						AnimationMode="MANUAL"
+						Distance="0"
+						AnimationBlendTime="5"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
@@ -337,6 +374,30 @@
 					SimilarRestart="False">
 					<Animation
 						AnimationName="NBTPRIME_D2AN"
+						AnimationMode="ONCE"
+						Distance="0"
+						AnimationBlendTime="0"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble"
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Animation
+						AnimationName="NBTPRIME_D3AN"
 						AnimationMode="ONCE"
 						Distance="0"
 						AnimationBlendTime="0"
@@ -734,13 +795,24 @@
 				ShadowWhenDead="False"
 				Fade="False">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
 					MaxKillerAngle="-0.9999999d"
 					DeathTypes="ALL"
 					DeathTypesForbidden="" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="3s"
+				SinkRate="4"
+				DestructionDelay="8s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
+					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
 				id="C74C39D8">
@@ -1211,11 +1283,12 @@
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
 
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_NODDestroyedTempleOfNOD">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -1311,6 +1384,7 @@
 			IsSmall="False">
 			<Shape
 				Type="BOX"
+				Name="Geom_1"
 				ContactPointGeneration="NONE"
 				MajorRadius="35"
 				MinorRadius="35"
@@ -1325,6 +1399,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_2"
 				ContactPointGeneration="NONE"
 				MajorRadius="10"
 				MinorRadius="10"
@@ -1339,6 +1414,7 @@
 			</Shape>
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_3"
 				ContactPointGeneration="NONE"
 				MajorRadius="23"
 				MinorRadius="1"

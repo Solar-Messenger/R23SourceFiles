@@ -128,6 +128,16 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE USER_10"
+					PortraitImage=""
+					ButtonImage=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:NB_TECHPLANT_D3SN"
+						ExtraMesh="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE">
 					<Model
 						Name="W3DContainer:NB_TechPlant_D2SN" />
@@ -180,12 +190,39 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					Flags="START_FRAME_LAST">
+					ConditionsYes="RUBBLE USER_10"
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST"
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="NB_TECHPLANT_D3AN"
+						AnimationMode="MANUAL"
+						Distance="0"
+						AnimationBlendTime="5"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
@@ -208,6 +245,30 @@
 						AnimationName="NB_TechPlant_D2AN"
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble"
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Animation
+						AnimationName="NB_TECHPLANT_D3AN"
+						AnimationMode="ONCE"
+						Distance="0"
+						AnimationBlendTime="0"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
 				</AnimationState>
 			</ScriptedModelDraw>
 			<ScriptedModelDraw
@@ -353,13 +414,24 @@
 				ShadowWhenDead="False"
 				Fade="False">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="1d"
 					MaxKillerAngle="-1d"
 					DeathTypes="ALL"
 					DeathTypesForbidden="" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="3s"
+				SinkRate="4"
+				DestructionDelay="8s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
+					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
 				id="C74C39D8">
@@ -554,11 +626,12 @@
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
 
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_NODDestroyedTechAssemblyPlant">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -750,6 +823,7 @@
 			IsSmall="False">
 			<Shape
 				Type="BOX"
+				Name="Geom_1"
 				ContactPointGeneration="NONE"
 				MajorRadius="15"
 				MinorRadius="27.5"
@@ -764,6 +838,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_2"
 				ContactPointGeneration="NONE"
 				MajorRadius="15"
 				MinorRadius="20"
@@ -778,6 +853,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_3"
 				ContactPointGeneration="NONE"
 				MajorRadius="15"
 				MinorRadius="12.5"
@@ -792,6 +868,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_4"
 				ContactPointGeneration="NONE"
 				MajorRadius="15.9"
 				MinorRadius="22.5"
@@ -806,6 +883,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_5"
 				ContactPointGeneration="NONE"
 				MajorRadius="15.9"
 				MinorRadius="15.504"
@@ -820,6 +898,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_6"
 				ContactPointGeneration="NONE"
 				MajorRadius="15.9"
 				MinorRadius="17.9846"
@@ -834,6 +913,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_7"
 				ContactPointGeneration="NONE"
 				MajorRadius="15.9"
 				MinorRadius="16.1862"
@@ -848,6 +928,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_8"
 				ContactPointGeneration="NONE"
 				MajorRadius="10"
 				MinorRadius="10"
@@ -862,6 +943,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_9"
 				ContactPointGeneration="NONE"
 				MajorRadius="10"
 				MinorRadius="10"
@@ -876,6 +958,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_10"
 				ContactPointGeneration="NONE"
 				MajorRadius="8"
 				MinorRadius="8"

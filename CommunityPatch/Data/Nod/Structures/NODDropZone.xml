@@ -66,6 +66,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Model
+						Name="W3DContainer:NBDrpZnD3_SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
 						Name="W3DContainer:NBDrpZnD2_SN" />
@@ -93,12 +99,18 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					Flags="START_FRAME_LAST">
+					ConditionsYes="DYING USER_10">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="NBDrpZnD3_AN"
+						AnimationMode="ONCE" />
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Large"
+						FollowBone="false" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<!-- REALLY DAMAGED ANIMATION -->
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -414,6 +426,18 @@
 				SinkRate="99999"
 				DestructionDelay="8s">
 				<DieMuxData
+					ExemptStatus="RIDER4"
+					DeathTypes="ALL" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
 					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
@@ -528,11 +552,12 @@
 				<DieMuxData DeathTypes="SUICIDED" />
 			</CreateObjectDie>
 
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_NODDestroyedDropZone">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -553,6 +578,7 @@
 		<AI>
 			<AIUpdate
 				id="ModuleTag_AI"
+				AILuaEventsList="StructureUnpackingFunctions"
 				AutoAcquireEnemiesWhenIdle="NO"></AIUpdate>
 		</AI>
 		<Body>
@@ -576,6 +602,7 @@
 			IsSmall="false">
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_1"
 				MajorRadius="38.0"
 				Height="8.0">
 				<Offset
@@ -585,6 +612,7 @@
 			</Shape>
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_2"
 				MajorRadius="23.0"
 				Height="8.0">
 				<Offset
@@ -594,6 +622,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_3"
 				MajorRadius="22.5"
 				MinorRadius="24.0"
 				Height="8.0">
@@ -604,6 +633,7 @@
 			</Shape>
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_4"
 				MajorRadius="4.0"
 				Height="30.0">
 				<Offset
@@ -613,6 +643,7 @@
 			</Shape>
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_5"
 				MajorRadius="4.0"
 				Height="30.0">
 				<Offset

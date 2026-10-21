@@ -86,6 +86,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Model
+						Name="W3DContainer:GBAirField_D3SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
 						Name="W3DContainer:GBAirField_D2SN" />
@@ -119,12 +125,26 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
+					ConditionsYes="RUBBLE USER_10"
+					StateName="STATE_Rubble"
 					Flags="START_FRAME_LAST">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="GBAirField_D3AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Medium"
+						FollowBone="false" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
@@ -145,6 +165,14 @@
 					StateName="TRANS_IntoReallyDamaged">
 					<Animation
 						AnimationName="GBAirField_D2AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble">
+					<Animation
+						AnimationName="GBAirField_D3AN"
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
 				</AnimationState>
@@ -780,6 +808,18 @@
 				SinkRate="99999"
 				DestructionDelay="8.0s">
 				<DieMuxData
+					ExemptStatus="RIDER4"
+					DeathTypes="ALL" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
 					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
@@ -921,11 +961,12 @@
 				<DieMuxData DeathTypes="SUICIDED" />
 			</CreateObjectDie>
 
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_GDIDestroyedAirTower">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -974,13 +1015,13 @@
 			IsSmall="false">
 			<Shape
 				Type="BOX"
-				Name="Geom_Orig"
+				Name="Geom_1"
 				MajorRadius="50.0"
 				MinorRadius="75.0"
 				Height="30.0"></Shape>
 			<Shape
 				Type="CYLINDER"
-				Name="Geom_Tower"
+				Name="Geom_2"
 				MajorRadius="12.0"
 				MinorRadius="12.0"
 				Height="75.0">
@@ -991,6 +1032,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_3"
 				MajorRadius = "60.0"
 				MinorRadius = "80.0"
 				Height = "3.0" >

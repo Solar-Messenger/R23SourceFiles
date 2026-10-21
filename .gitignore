@@ -42,3 +42,6 @@ CommunityPatch/Assets/**
 CommunityPatch/Data/Static.xml
 CommunityPatch/Data/Worldbuilder.xml
 CommunityPatch/Data/MPSettings.xml
+/CommunityPatch/Art/Models
+/CommunityPatch/Art/Textures
+CommunityPatch/Data/StaticArt.xml

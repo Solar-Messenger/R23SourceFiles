@@ -273,6 +273,21 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					Name=""
+					ConditionsYes="DYING USER_10"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:NBAIRSPPRT_D3SKN"
+						ExtraMesh="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
 					ConditionsYes="DYING"
 					Skeleton=""
 					ModelAnimationPrefix=""
@@ -339,12 +354,53 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					Flags="START_FRAME_LAST">
+					AnimNickName=""
+					ConditionsYes="RUBBLE USER_10"
+					Name=""
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST"
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						Flags=""
+						AnimationName="NBAIRSPPRT_D3ANM"
+						AnimationMode="MANUAL"
+						AnimNickName=""
+						Distance="0"
+						AnimationBlendTime="5"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Medium"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="False"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
@@ -396,6 +452,36 @@
 					<Animation
 						Flags=""
 						AnimationName="NBAIRSPPRT_D2ANM"
+						AnimationMode="ONCE"
+						AnimNickName=""
+						Distance="0"
+						AnimationBlendTime="0"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					AnimNickName=""
+					ConditionsYes=""
+					Name=""
+					StateName="TRANS_IntoRubble"
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Animation
+						Flags=""
+						AnimationName="NBAIRSPPRT_D3ANM"
 						AnimationMode="ONCE"
 						AnimNickName=""
 						Distance="0"
@@ -693,13 +779,24 @@
 				ShadowWhenDead="False"
 				Fade="False">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
 					MaxKillerAngle="-0.9999999d"
 					DeathTypes="ALL"
 					DeathTypesForbidden="" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="1.5s"
+				SinkRate="4"
+				DestructionDelay="8s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
+					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
 				id="C74C39D8">
@@ -824,11 +921,12 @@
 				CreationList="OCL_GenericMarkedOfKaneBuildingSuicide" >
 				<DieMuxData DeathTypes="SUICIDED" />
 			</CreateObjectDie>
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_NODDestroyedAirSupport">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -837,6 +935,12 @@
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
 		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="ModuleTag_AIForLua"
+				AutoAcquireEnemiesWhenIdle="NO"
+				AILuaEventsList="StructureUnpackingFunctions" />
+		</AI>
 		<Body>
 			<ActiveBody
 				id="B313F576"
@@ -880,6 +984,7 @@
 			IsSmall="false">
 			<Shape
 				Type="BOX"
+				Name="Geom_1"
 				MajorRadius="25.0"
 				MinorRadius="25.0"
 				Height="50.0">
@@ -890,6 +995,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_2"
 				MajorRadius = "50.0"
 				MinorRadius = "50.0"
 				Height = "5.0" >
@@ -1298,6 +1404,21 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					Name=""
+					ConditionsYes="DYING USER_10"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:NBAIRSPPRT_D3SKN"
+						ExtraMesh="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
 					ConditionsYes="DYING"
 					Skeleton=""
 					ModelAnimationPrefix=""
@@ -1364,12 +1485,53 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					Flags="START_FRAME_LAST">
+					AnimNickName=""
+					ConditionsYes="RUBBLE USER_10"
+					Name=""
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST"
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						Flags=""
+						AnimationName="NBAIRSPPRT_D3ANM"
+						AnimationMode="MANUAL"
+						AnimNickName=""
+						Distance="0"
+						AnimationBlendTime="5"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Medium"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="False"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
@@ -1421,6 +1583,36 @@
 					<Animation
 						Flags=""
 						AnimationName="NBAIRSPPRT_D2ANM"
+						AnimationMode="ONCE"
+						AnimNickName=""
+						Distance="0"
+						AnimationBlendTime="0"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					AnimNickName=""
+					ConditionsYes=""
+					Name=""
+					StateName="TRANS_IntoRubble"
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Animation
+						Flags=""
+						AnimationName="NBAIRSPPRT_D3ANM"
 						AnimationMode="ONCE"
 						AnimNickName=""
 						Distance="0"
@@ -1718,13 +1910,24 @@
 				ShadowWhenDead="False"
 				Fade="False">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
 					MaxKillerAngle="-0.9999999d"
 					DeathTypes="ALL"
 					DeathTypesForbidden="" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="1.5s"
+				SinkRate="4"
+				DestructionDelay="8s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
+					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
 				id="C74C39D8">
@@ -1860,11 +2063,12 @@
 					DeathTypes="SUICIDED"
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_NODDestroyedAirSupport">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -1873,6 +2077,12 @@
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
 		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="ModuleTag_AIForLua"
+				AutoAcquireEnemiesWhenIdle="NO"
+				AILuaEventsList="StructureUnpackingFunctions" />
+		</AI>
 		<Body>
 			<ActiveBody
 				id="B313F576"
@@ -1916,6 +2126,7 @@
 			IsSmall="false">
 			<Shape
 				Type="BOX"
+				Name="Geom_1"
 				MajorRadius="25.0"
 				MinorRadius="25.0"
 				Height="50.0">
@@ -1926,6 +2137,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_2"
 				MajorRadius = "50.0"
 				MinorRadius = "50.0"
 				Height = "5.0" >
@@ -2335,6 +2547,21 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					Name=""
+					ConditionsYes="DYING USER_10"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:GBAIRSUPPRTD3_SKN"
+						ExtraMesh="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
 					ConditionsYes="DYING"
 					Skeleton=""
 					ModelAnimationPrefix=""
@@ -2428,12 +2655,53 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					Flags="START_FRAME_LAST">
+					AnimNickName=""
+					ConditionsYes="RUBBLE USER_10"
+					Name=""
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST"
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						Flags=""
+						AnimationName="GBAIRSUPPRTD3_ANM"
+						AnimationMode="MANUAL"
+						AnimNickName=""
+						Distance="0"
+						AnimationBlendTime="5"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Medium"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="False"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
@@ -2485,6 +2753,36 @@
 					<Animation
 						Flags=""
 						AnimationName="GBAIRSUPPRTD2_ANM"
+						AnimationMode="ONCE"
+						AnimNickName=""
+						Distance="0"
+						AnimationBlendTime="0"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					AnimNickName=""
+					ConditionsYes=""
+					Name=""
+					StateName="TRANS_IntoRubble"
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Animation
+						Flags=""
+						AnimationName="GBAIRSUPPRTD3_ANM"
 						AnimationMode="ONCE"
 						AnimNickName=""
 						Distance="0"
@@ -2866,13 +3164,24 @@
 				ShadowWhenDead="False"
 				Fade="False">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
 					MaxKillerAngle="-0.9999999d"
 					DeathTypes="ALL"
 					DeathTypesForbidden="" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="1.8s"
+				SinkRate="4"
+				DestructionDelay="8s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
+					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
 				id="C74C39D8">
@@ -2997,11 +3306,12 @@
 				CreationList="OCL_GenericGDIBuildingSuicide1" >
 				<DieMuxData DeathTypes="SUICIDED" />
 			</CreateObjectDie>
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_GDIDestroyedAirSupport">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -3010,6 +3320,12 @@
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
 		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="ModuleTag_AIForLua"
+				AutoAcquireEnemiesWhenIdle="NO"
+				AILuaEventsList="StructureUnpackingFunctions" />
+		</AI>
 		<Body>
 			<ActiveBody
 				id="B313F576"
@@ -3054,7 +3370,7 @@
 			<Shape
 				Type="BOX"
 				ContactPointGeneration="NONE"
-				Name="Geom_Orig"
+				Name="Geom_1"
 				MajorRadius="50"
 				MinorRadius="75"
 				Other=""
@@ -3065,7 +3381,7 @@
 			<Shape
 				Type="CYLINDER"
 				ContactPointGeneration="NONE"
-				Name="Geom_Tower"
+				Name="Geom_2"
 				MajorRadius="12"
 				MinorRadius="12"
 				Other=""
@@ -3081,7 +3397,7 @@
 			<Shape
 				Type="BOX"
 				ContactPointGeneration="NONE"
-				Name=""
+				Name="Geom_3"
 				MajorRadius="60"
 				MinorRadius="80"
 				Other=""
@@ -3505,6 +3821,21 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					Name=""
+					ConditionsYes="DYING USER_10"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:GBAIRSUPPRTD3_SKN"
+						ExtraMesh="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
 					ConditionsYes="DYING"
 					Skeleton=""
 					ModelAnimationPrefix=""
@@ -3598,12 +3929,53 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					Flags="START_FRAME_LAST">
+					AnimNickName=""
+					ConditionsYes="RUBBLE USER_10"
+					Name=""
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST"
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						Flags=""
+						AnimationName="GBAIRSUPPRTD3_ANM"
+						AnimationMode="MANUAL"
+						AnimNickName=""
+						Distance="0"
+						AnimationBlendTime="5"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Medium"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="False"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
@@ -3655,6 +4027,36 @@
 					<Animation
 						Flags=""
 						AnimationName="GBAIRSUPPRTD2_ANM"
+						AnimationMode="ONCE"
+						AnimNickName=""
+						Distance="0"
+						AnimationBlendTime="0"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					AnimNickName=""
+					ConditionsYes=""
+					Name=""
+					StateName="TRANS_IntoRubble"
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Animation
+						Flags=""
+						AnimationName="GBAIRSUPPRTD3_ANM"
 						AnimationMode="ONCE"
 						AnimNickName=""
 						Distance="0"
@@ -4036,13 +4438,24 @@
 				ShadowWhenDead="False"
 				Fade="False">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
 					MaxKillerAngle="-0.9999999d"
 					DeathTypes="ALL"
 					DeathTypesForbidden="" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="1.8s"
+				SinkRate="4"
+				DestructionDelay="8s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
+					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
 				id="C74C39D8">
@@ -4167,11 +4580,12 @@
 				CreationList="OCL_GenericZOCOMBuildingSuicide1" >
 				<DieMuxData DeathTypes="SUICIDED" />
 			</CreateObjectDie>
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_GDIDestroyedAirSupport">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -4180,6 +4594,12 @@
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
 		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="ModuleTag_AIForLua"
+				AutoAcquireEnemiesWhenIdle="NO"
+				AILuaEventsList="StructureUnpackingFunctions" />
+		</AI>
 		<Body>
 			<ActiveBody
 				id="B313F576"
@@ -4224,7 +4644,7 @@
 			<Shape
 				Type="BOX"
 				ContactPointGeneration="NONE"
-				Name="Geom_Orig"
+				Name="Geom_1"
 				MajorRadius="50"
 				MinorRadius="75"
 				Other=""
@@ -4235,7 +4655,7 @@
 			<Shape
 				Type="CYLINDER"
 				ContactPointGeneration="NONE"
-				Name="Geom_Tower"
+				Name="Geom_2"
 				MajorRadius="12"
 				MinorRadius="12"
 				Other=""
@@ -4251,7 +4671,7 @@
 			<Shape
 				Type="BOX"
 				ContactPointGeneration="NONE"
-				Name=""
+				Name="Geom_3"
 				MajorRadius="60"
 				MinorRadius="80"
 				Other=""
@@ -4674,6 +5094,21 @@
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
 					Name=""
+					ConditionsYes="DYING USER_10"
+					Skeleton=""
+					ModelAnimationPrefix=""
+					PortraitImage=""
+					ButtonImage=""
+					OverrideTooltip=""
+					id=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:GBAIRSUPPRTD3_SKN"
+						ExtraMesh="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
+					Name=""
 					ConditionsYes="DYING"
 					Skeleton=""
 					ModelAnimationPrefix=""
@@ -4767,12 +5202,53 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					Flags="START_FRAME_LAST">
+					AnimNickName=""
+					ConditionsYes="RUBBLE USER_10"
+					Name=""
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST"
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						Flags=""
+						AnimationName="GBAIRSUPPRTD3_ANM"
+						AnimationMode="MANUAL"
+						AnimNickName=""
+						Distance="0"
+						AnimationBlendTime="5"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Medium"
+						FXTrigger=""
+						Persist=""
+						PersistID="0"
+						id=""
+						FollowBone="False"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					AnimNickName=""
@@ -4824,6 +5300,36 @@
 					<Animation
 						Flags=""
 						AnimationName="GBAIRSUPPRTD2_ANM"
+						AnimationMode="ONCE"
+						AnimNickName=""
+						Distance="0"
+						AnimationBlendTime="0"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					AnimNickName=""
+					ConditionsYes=""
+					Name=""
+					StateName="TRANS_IntoRubble"
+					Flags=""
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Animation
+						Flags=""
+						AnimationName="GBAIRSUPPRTD3_ANM"
 						AnimationMode="ONCE"
 						AnimNickName=""
 						Distance="0"
@@ -5205,13 +5711,24 @@
 				ShadowWhenDead="False"
 				Fade="False">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
 					MaxKillerAngle="-0.9999999d"
 					DeathTypes="ALL"
 					DeathTypesForbidden="" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="1.8s"
+				SinkRate="4"
+				DestructionDelay="8s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
+					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
 				id="C74C39D8">
@@ -5336,11 +5853,12 @@
 				CreationList="OCL_GenericSteelTalonsBuildingSuicide1" >
 				<DieMuxData DeathTypes="SUICIDED" />
 			</CreateObjectDie>
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_GDIDestroyedAirSupport">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -5349,6 +5867,12 @@
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
 		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="ModuleTag_AIForLua"
+				AutoAcquireEnemiesWhenIdle="NO"
+				AILuaEventsList="StructureUnpackingFunctions" />
+		</AI>
 		<Body>
 			<ActiveBody
 				id="B313F576"
@@ -5393,7 +5917,7 @@
 			<Shape
 				Type="BOX"
 				ContactPointGeneration="NONE"
-				Name="Geom_Orig"
+				Name="Geom_1"
 				MajorRadius="50"
 				MinorRadius="75"
 				Other=""
@@ -5404,7 +5928,7 @@
 			<Shape
 				Type="CYLINDER"
 				ContactPointGeneration="NONE"
-				Name="Geom_Tower"
+				Name="Geom_2"
 				MajorRadius="12"
 				MinorRadius="12"
 				Other=""
@@ -5420,7 +5944,7 @@
 			<Shape
 				Type="BOX"
 				ContactPointGeneration="NONE"
-				Name=""
+				Name="Geom_3"
 				MajorRadius="60"
 				MinorRadius="80"
 				Other=""

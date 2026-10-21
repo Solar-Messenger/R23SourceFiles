@@ -66,6 +66,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Model
+						Name="W3DContainer:NBHangarD3_SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
 						Name="W3DContainer:NBHangarD2_SN" />
@@ -105,12 +111,18 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					Flags="START_FRAME_LAST">
+					ConditionsYes="DYING USER_10">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="NBHangarD3_AN"
+						AnimationMode="ONCE" />
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Medium"
+						FollowBone="false" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<!-- REALLY DAMAGED ANIMATION -->
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -624,6 +636,18 @@
 				SinkRate="99999"
 				DestructionDelay="8.0s">
 				<DieMuxData
+					ExemptStatus="RIDER4"
+					DeathTypes="ALL" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="2.0s"
+				SinkRate="3.0"
+				DestructionDelay="8.0s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
 					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
@@ -743,11 +767,12 @@
 				<DieMuxData DeathTypes="SUICIDED" />
 			</CreateObjectDie>
 
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_NODDestroyedHangar">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -788,6 +813,7 @@
 			IsSmall="false">
 			<Shape
 				Type="BOX"
+				Name="Geom_1"
 				MajorRadius="36.0"
 				MinorRadius="36.0"
 				Height="88.0">
@@ -798,6 +824,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_2"
 				MajorRadius = "55.0"
 				MinorRadius = "55.0"
 				Height = "5.0" >

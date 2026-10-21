@@ -94,6 +94,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="DYING USER_10">
+					<Model
+						Name="W3DContainer:NBPowerD3_SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING">
 					<Model
 						Name="W3DContainer:NBPowerD2_SN" />
@@ -122,12 +128,18 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					Flags="START_FRAME_LAST">
+					ConditionsYes="DYING USER_10">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="NBPowerD3_AN"
+						AnimationMode="ONCE" />
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Large"
+						FollowBone="false" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<!-- REALLY DAMAGED ANIMATION -->
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -275,6 +287,18 @@
 				SinkRate="99999"
 				DestructionDelay="8.0s">
 				<DieMuxData
+					ExemptStatus="RIDER4"
+					DeathTypes="ALL" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
 					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
@@ -429,11 +453,12 @@
 				<DieMuxData DeathTypes="SUICIDED" />
 			</CreateObjectDie>
 
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_NODDestroyedPowerPlant">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -458,6 +483,7 @@
 			IsSmall="false">
 			<Shape 
 				Type= "BOX"
+				Name="Geom_1"
 				MajorRadius = "27.7657"
 				MinorRadius = "16.6304"
 				Height = "28.8532" >
@@ -468,6 +494,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_2"
 				MajorRadius = "32.7635"
 				MinorRadius = "21.9521"
 				Height = "14.4266" >
@@ -478,6 +505,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_3"
 				MajorRadius = "4.0"
 				MinorRadius = "4.0"
 				Height = "14.4266" >
@@ -488,6 +516,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_4"
 				MajorRadius = "4.0"
 				MinorRadius = "8.88"
 				Height = "24.5252" >
@@ -498,6 +527,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_5"
 				MajorRadius = "4.0"
 				MinorRadius = "8.88"
 				Height = "24.5252" >
@@ -508,6 +538,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_6"
 				MajorRadius = "6.0"
 				MinorRadius = "6.0"
 				Height = "15.0036" >
@@ -518,6 +549,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_7"
 				MajorRadius = "4.0"
 				MinorRadius = "4.0"
 				Height = "52.32" >
@@ -528,6 +560,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_8"
 				MajorRadius = "2.5"
 				MinorRadius = "2.5"
 				Height = "65.9232" >
@@ -538,6 +571,7 @@
 			</Shape>
 			<Shape 
 				Type= "BOX"
+				Name="Geom_9"
 				MajorRadius = "13.5707"
 				MinorRadius = "16.6304"
 				Height = "37.9647" >
@@ -549,6 +583,7 @@
 <!-- Tiberium Core -->			
 			<Shape 
 				Type= "BOX"
+				Name="Geom_10"
 				MajorRadius = "13.2939"
 				MinorRadius = "7.9971"
 				Height = "16.6174" >

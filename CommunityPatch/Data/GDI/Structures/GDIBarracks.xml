@@ -360,10 +360,10 @@
 				SinkRate="99999"
 				DestructionDelay="8s">
 				<DieMuxData
-					ExemptStatus="RIDER1"
+					ExemptStatus="RIDER4"
 					DeathTypes="ALL" />
 			</SlowDeath>
-			<!-- normal slow death if structure is destroyed while unpacking, RIDER1 is set while structure has STRUCTURE_UNPACKING model state -->
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
 			<SlowDeath
 				id="ModuleTag_DeathUnpacking"
 				SinkDelay="3.0s"
@@ -371,7 +371,7 @@
 				DestructionDelay="8.0s">
 				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
 				<DieMuxData
-					RequiredStatus="RIDER1"
+					RequiredStatus="RIDER4"
 					DeathTypes="ALL" />
 			</SlowDeath>
 			
@@ -503,7 +503,7 @@
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_GDIDestroyedBarracks">
 				<DieMuxData
-					ExemptStatus="RIDER1"
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"

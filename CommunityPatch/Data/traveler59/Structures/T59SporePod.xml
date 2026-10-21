@@ -50,6 +50,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE USER_10">
+					<Model
+						Name="W3DContainer:ABSporePod_D3SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE">
 					<Model
 						Name="W3DContainer:ABSporePod_D2SN" />
@@ -136,12 +142,22 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
+					ConditionsYes="RUBBLE USER_10"
+					StateName="STATE_Rubble"
 					Flags="START_FRAME_LAST">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="ABSporePod_D3AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
@@ -162,6 +178,14 @@
 					StateName="TRANS_IntoReallyDamaged">
 					<Animation
 						AnimationName="ABSporePod_D2AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble">
+					<Animation
+						AnimationName="ABSporePod_D3AN"
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
 				</AnimationState>
@@ -200,6 +224,18 @@
 				SinkRate="99999"
 				DestructionDelay="8.0s">
 				<DieMuxData
+					ExemptStatus="RIDER4"
+					DeathTypes="ALL" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound Type="INITIAL" List="ALI_Building_Die" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
 					DeathTypes="ALL" />
 			</SlowDeath>
 			<TiberiumGrowthModBehavior
@@ -284,11 +320,12 @@
 				<DieMuxData DeathTypes="SUICIDED" />
 			</CreateObjectDie>
 
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_AlienDestroyedSporePod">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -297,6 +334,12 @@
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
 		</Behaviors>
+		<AI>
+			<AIUpdate
+				id="ModuleTag_AIForLua"
+				AutoAcquireEnemiesWhenIdle="NO"
+				AILuaEventsList="StructureUnpackingFunctions" />
+		</AI>
 		<Body>
 			<ActiveBody
 				id="ModuleTag_Body"
@@ -306,6 +349,7 @@
 			IsSmall="false">
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_1"
 				MajorRadius="12.1114"
 				MinorRadius="12.1114"
 				Height="52.6624">
@@ -316,6 +360,7 @@
 			</Shape>
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_2"
 				MajorRadius="23.2912"
 				MinorRadius="23.2912"
 				Height="26.3312">

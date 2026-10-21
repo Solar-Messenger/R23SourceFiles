@@ -2107,26 +2107,54 @@
         <EventHandler EventName="OnCreated"	ScriptFunctionName="OnGDITechCenterCreated" DebugSingleStep="false"/>
 		<EventHandler EventName="OnPowerOutage" ScriptFunctionName="onBuildingPowerOutage" DebugSingleStep="false"/>
 		<EventHandler EventName="OnPowerRestore" ScriptFunctionName="onBuildingPowerRestored" DebugSingleStep="false"/>
+		<!-- for STRUCTURE_UNPACKING events, sets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpacking"	ScriptFunctionName="StructureIsUnpacking" DebugSingleStep="false"/>
+		<!-- unsets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpackingEnd"	ScriptFunctionName="StructureIsUnpackingEnd" DebugSingleStep="false"/>
+		<!-- when RIDER4 is no longer a status, disable geometry -->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
     </EventList>
 
     <EventList Name="GDIMedicalBayFunctions" Inherit="BaseScriptFunctions">
         <EventHandler EventName="OnCreated"	ScriptFunctionName="OnGDIMedicalBayCreated" DebugSingleStep="false"/>
-		<!-- for STRUCTURE_UNPACKING events, sets RIDER1 status -->
+		<!-- for STRUCTURE_UNPACKING events, sets RIDER4 status -->
 		<EventHandler EventName="OnStructureUnpacking"	ScriptFunctionName="StructureIsUnpacking" DebugSingleStep="false"/>
-		<!-- unsets RIDER1 status -->
+		<!-- unsets RIDER4 status -->
 		<EventHandler EventName="OnStructureUnpackingEnd"	ScriptFunctionName="StructureIsUnpackingEnd" DebugSingleStep="false"/>
-		<!-- when RIDER1 is no longer a status, disable geometry -->
+		<!-- when RIDER4 is no longer a status, disable geometry -->
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
     </EventList>
+
+	<!-- structures that only need the STRUCTURE_UNPACKING / destroyed while unpacking geometry fix -->
+	<EventList Name="StructureUnpackingFunctions" Inherit="BaseScriptFunctions">
+		<!-- for STRUCTURE_UNPACKING events, sets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpacking"	ScriptFunctionName="StructureIsUnpacking" DebugSingleStep="false"/>
+		<!-- unsets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpackingEnd"	ScriptFunctionName="StructureIsUnpackingEnd" DebugSingleStep="false"/>
+		<!-- when RIDER4 is no longer a status, disable geometry -->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
+	</EventList>
 
     <EventList Name="GDIPowerPlantFunctions" Inherit="BaseScriptFunctions">
         <EventHandler EventName="OnCreated"	ScriptFunctionName="OnGDIPowerPlantCreated" DebugSingleStep="false"/>
 		<EventHandler EventName="OnPowerOutage" ScriptFunctionName="onBuildingPowerOutage" DebugSingleStep="false"/>
 		<EventHandler EventName="OnPowerRestore" ScriptFunctionName="onBuildingPowerRestored" DebugSingleStep="false"/>
+		<!-- for STRUCTURE_UNPACKING events, sets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpacking"	ScriptFunctionName="StructureIsUnpacking" DebugSingleStep="false"/>
+		<!-- unsets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpackingEnd"	ScriptFunctionName="StructureIsUnpackingEnd" DebugSingleStep="false"/>
+		<!-- when RIDER4 is no longer a status, disable geometry -->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
     </EventList>
     
     <EventList Name="GDICommandPostFunctions" Inherit="BaseScriptFunctions">
         <EventHandler EventName="OnCreated"	ScriptFunctionName="OnGDICommandPostCreated" DebugSingleStep="false"/>
+		<!-- for STRUCTURE_UNPACKING events, sets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpacking"	ScriptFunctionName="StructureIsUnpacking" DebugSingleStep="false"/>
+		<!-- unsets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpackingEnd"	ScriptFunctionName="StructureIsUnpackingEnd" DebugSingleStep="false"/>
+		<!-- when RIDER4 is no longer a status, disable geometry -->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
     </EventList>
     
     <EventList Name="GDIZoneTrooperFunctions" Inherit="BaseScriptFunctions">
@@ -2226,24 +2254,48 @@
 
 	<EventList Name="NODTechAssembleyPlantFunctions" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnCreated"	ScriptFunctionName="OnNODTechAssembleyPlantCreated" DebugSingleStep="false"/>
+		<!-- for STRUCTURE_UNPACKING events, sets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpacking"	ScriptFunctionName="StructureIsUnpacking" DebugSingleStep="false"/>
+		<!-- unsets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpackingEnd"	ScriptFunctionName="StructureIsUnpackingEnd" DebugSingleStep="false"/>
+		<!-- when RIDER4 is no longer a status, disable geometry -->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NODHangarFunctions" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnCreated"	ScriptFunctionName="OnNODHangarCreated" DebugSingleStep="false"/>
 		<EventHandler EventName="OnPowerOutage" ScriptFunctionName="onBuildingPowerOutage" DebugSingleStep="false"/>
 		<EventHandler EventName="OnPowerRestore" ScriptFunctionName="onBuildingPowerRestored" DebugSingleStep="false"/>
+		<!-- for STRUCTURE_UNPACKING events, sets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpacking"	ScriptFunctionName="StructureIsUnpacking" DebugSingleStep="false"/>
+		<!-- unsets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpackingEnd"	ScriptFunctionName="StructureIsUnpackingEnd" DebugSingleStep="false"/>
+		<!-- when RIDER4 is no longer a status, disable geometry -->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NODOperationsCenterFunctions" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnCreated"	ScriptFunctionName="OnNODOperationsCenterCreated" DebugSingleStep="false"/>
 		<EventHandler EventName="OnPowerOutage" ScriptFunctionName="onBuildingPowerOutage" DebugSingleStep="false"/>
 		<EventHandler EventName="OnPowerRestore" ScriptFunctionName="onBuildingPowerRestored" DebugSingleStep="false"/>
+		<!-- for STRUCTURE_UNPACKING events, sets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpacking"	ScriptFunctionName="StructureIsUnpacking" DebugSingleStep="false"/>
+		<!-- unsets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpackingEnd"	ScriptFunctionName="StructureIsUnpackingEnd" DebugSingleStep="false"/>
+		<!-- when RIDER4 is no longer a status, disable geometry -->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="NODSecretShrineFunctions" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnCreated"	ScriptFunctionName="OnNODSecretShrineCreated" DebugSingleStep="false"/>
 		<EventHandler EventName="OnPowerOutage" ScriptFunctionName="OnNODSecretShrinePowerOutage" DebugSingleStep="false"/>
 		<EventHandler EventName="OnPowerRestore" ScriptFunctionName="OnNODSecretShrinePowerRestored" DebugSingleStep="false"/>
+		<!-- for STRUCTURE_UNPACKING events, sets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpacking"	ScriptFunctionName="StructureIsUnpacking" DebugSingleStep="false"/>
+		<!-- unsets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpackingEnd"	ScriptFunctionName="StructureIsUnpackingEnd" DebugSingleStep="false"/>
+		<!-- when RIDER4 is no longer a status, disable geometry -->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="ControlPointFunctions" Inherit="BaseScriptFunctions">
@@ -2253,6 +2305,12 @@
 	<EventList Name="BuildingPowerFunctions" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnPowerOutage" ScriptFunctionName="onBuildingPowerOutage" DebugSingleStep="false"/>
 		<EventHandler EventName="OnPowerRestore" ScriptFunctionName="onBuildingPowerRestored" DebugSingleStep="false"/>
+		<!-- for STRUCTURE_UNPACKING events, sets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpacking"	ScriptFunctionName="StructureIsUnpacking" DebugSingleStep="false"/>
+		<!-- unsets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpackingEnd"	ScriptFunctionName="StructureIsUnpackingEnd" DebugSingleStep="false"/>
+		<!-- when RIDER4 is no longer a status, disable geometry -->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
 	</EventList>
 
 	<!-- R25 production structuree event lists -->
@@ -2355,6 +2413,12 @@
 	
 	<EventList Name="NODMetaUnitFunctions" Inherit="BaseScriptFunctions">
 		<EventHandler EventName="OnCreated"	ScriptFunctionName="OnNODMetaUnitCreated" DebugSingleStep="false"/>
+		<!-- for STRUCTURE_UNPACKING events, sets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpacking"	ScriptFunctionName="StructureIsUnpacking" DebugSingleStep="false"/>
+		<!-- unsets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpackingEnd"	ScriptFunctionName="StructureIsUnpackingEnd" DebugSingleStep="false"/>
+		<!-- when RIDER4 is no longer a status, disable geometry -->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
 	</EventList>
 
 	<EventList Name="GDIGrenadeSoldierFunctions" Inherit="BaseScriptFunctions">
@@ -2540,6 +2604,12 @@
 	
 	<EventList Name="GDIAirfieldFunctions" Inherit="BaseScriptFunctions">
 	    <EventHandler EventName="OnCreated"	ScriptFunctionName="OnGDIAirfieldCreated" DebugSingleStep="false"/>
+		<!-- for STRUCTURE_UNPACKING events, sets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpacking"	ScriptFunctionName="StructureIsUnpacking" DebugSingleStep="false"/>
+		<!-- unsets RIDER4 status -->
+		<EventHandler EventName="OnStructureUnpackingEnd"	ScriptFunctionName="StructureIsUnpackingEnd" DebugSingleStep="false"/>
+		<!-- when RIDER4 is no longer a status, disable geometry -->
+		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
 	</EventList>	
 
 	<!-- ################################################ NEW FUNCTIONS FOR MOBA/RENEGADE WARS ########################################################## -->

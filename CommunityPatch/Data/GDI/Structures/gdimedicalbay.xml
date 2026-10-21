@@ -54,6 +54,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE USER_10">
+					<Model
+						Name="W3DContainer:GBMedBayD3_SKN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE">
 					<Model
 						Name="W3DContainer:GBMedBayD2_SKN" />
@@ -105,12 +111,22 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
+					ConditionsYes="RUBBLE USER_10"
+					StateName="STATE_Rubble"
 					Flags="START_FRAME_LAST">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="GBMedBayD3_ANM"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
@@ -131,6 +147,14 @@
 					StateName="TRANS_IntoReallyDamaged">
 					<Animation
 						AnimationName="GBMedBayD2_ANM"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble">
+					<Animation
+						AnimationName="GBMedBayD3_ANM"
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
 				</AnimationState>
@@ -208,6 +232,18 @@
 				SinkRate="99999"
 				DestructionDelay="8.0s">
 				<DieMuxData
+					ExemptStatus="RIDER4"
+					DeathTypes="ALL" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
 					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
@@ -409,11 +445,12 @@
 				<DieMuxData DeathTypes="SUICIDED" />
 			</CreateObjectDie>
 
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_GDIDestroyedMedicalBay">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -453,6 +490,7 @@
 			IsSmall="false">
 			<Shape
 				Type= "BOX"
+				Name="Geom_1"
 				MajorRadius = "27.0119"
 				MinorRadius = "28.328"
 				Height = "11.3312" >
@@ -463,6 +501,7 @@
 			</Shape>
 			<Shape
 				Type= "BOX"
+				Name="Geom_2"
 				MajorRadius = "18.9771"
 				MinorRadius = "28.328"
 				Height = "17.2551" >
@@ -473,6 +512,7 @@
 			</Shape>
 			<Shape
 				Type= "BOX"
+				Name="Geom_3"
 				MajorRadius = "6.8014"
 				MinorRadius = "23.2289"
 				Height = "34.386" >
@@ -483,6 +523,7 @@
 			</Shape>
 			<Shape
 				Type= "BOX"
+				Name="Geom_4"
 				MajorRadius = "7.20948"
 				MinorRadius = "9.29157"
 				Height = "13.9511" >
@@ -493,6 +534,7 @@
 			</Shape>
 			<Shape
 				Type= "BOX"
+				Name="Geom_5"
 				MajorRadius = "14.419"
 				MinorRadius = "14.8665"
 				Height = "1.2401" >
@@ -503,6 +545,7 @@
 			</Shape>
 			<Shape
 				Type= "BOX"
+				Name="Geom_6"
 				MajorRadius = "12.5445"
 				MinorRadius = "4.04369"
 				Height = "17.6714" >
@@ -513,6 +556,7 @@
 			</Shape>
 			<Shape
 				Type= "BOX"
+				Name="Geom_7"
 				MajorRadius = "31.0323"
 				MinorRadius = "42.5007"
 				Height = "2.69846" >
@@ -523,6 +567,7 @@
 			</Shape>
 			<Shape
 				Type= "BOX"
+				Name="Geom_8"
 				MajorRadius = "4.83035"
 				MinorRadius = "5.06483"
 				Height = "22.8798" >

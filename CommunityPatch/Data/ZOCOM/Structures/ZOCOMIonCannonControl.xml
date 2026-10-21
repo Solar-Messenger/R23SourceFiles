@@ -53,6 +53,12 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE USER_10">
+					<Model
+						Name="W3DContainer:GBIonCan_D3SN" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE">
 					<Model
 						Name="W3DContainer:GBIonCan_D2SN" />
@@ -91,12 +97,22 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
+					ConditionsYes="RUBBLE USER_10"
+					StateName="STATE_Rubble"
 					Flags="START_FRAME_LAST">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="GBIonCan_D3AN"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
@@ -121,6 +137,18 @@
 						AnimationBlendTime="0" />
 				</AnimationState>
 				
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble">
+					<Animation
+						AnimationName="GBIonCan_D3AN"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Medium"
+						FollowBone="false" />
+				</AnimationState>
 			</ScriptedModelDraw>
 			<!-- DRAW CANNON -->
 			<ScriptedModelDraw
@@ -286,6 +314,18 @@
 				SinkRate="99999"
 				DestructionDelay="9.0s">
 				<DieMuxData
+					ExemptStatus="RIDER4"
+					DeathTypes="ALL" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="3s"
+				SinkRate="6.0"
+				DestructionDelay="9.0s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
 					DeathTypes="ALL" />
 			</SlowDeath>
 			<FXListBehavior
@@ -429,11 +469,12 @@
 				<DieMuxData DeathTypes="SUICIDED" />
 			</CreateObjectDie>
 
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_GDIDestroyedIonCannonControl">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -462,7 +503,7 @@
 		</Behaviors>
 		<AI>
 			<AIUpdate
-				id="ModuleTag_AI" />
+				id="ModuleTag_AI" AILuaEventsList="StructureUnpackingFunctions" />
 		</AI>
 		<Body>
  		  <ActiveBody
@@ -496,6 +537,7 @@
 			IsSmall="false">
 			<Shape
 				Type="BOX"
+				Name="Geom_1"
 				MajorRadius="45.0"
 				MinorRadius="32.5"
 				Height="17.5">
@@ -506,6 +548,7 @@
 			</Shape>
 			<Shape
 				Type="BOX"
+				Name="Geom_2"
 				MajorRadius="22.0"
 				MinorRadius="39.0"
 				Height="17.5">
@@ -516,6 +559,7 @@
 			</Shape>
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_3"
 				MajorRadius="19.0"
 				Height="81.0">
 				<Offset

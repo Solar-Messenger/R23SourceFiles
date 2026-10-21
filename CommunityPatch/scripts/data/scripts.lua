@@ -4212,28 +4212,186 @@ end
 -- R25j Structure placement functions
 function StructureIsUnpacking(self)
 	--print("structure is unpacking")
-	-- sets RIDER1 status to true
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 41, 1)
+	-- sets RIDER4 status to true
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 44, 1)
 end
 
 function StructureIsUnpackingEnd(self)
 	--print("structure is unpacking end")
-	-- sets RIDER1 status to false
-	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 41, 0)
+	-- sets RIDER4 status to false
+	ExecuteAction("UNIT_CHANGE_OBJECT_STATUS", SetObjectReference(self), 44, 0)
 end
 
 
 StructureGeometryTable = {
-	["13D568B3"] = 10 -- GDIBarracks
+	-- Combat support airfields
+	["75F7ECE5"] = 2, -- MarkedOfKaneAirSupport
+	["E4953BD"] = 2, -- NODAirSupport
+	["9D247A0D"] = 3, -- GDIAirSupport
+	["F689DAA0"] = 3, -- ZOCOMAirSupport
+	["DF57BC42"] = 3, -- SteelTalonsAirSupport
+	-- Alien
+	["FEF5ADF5"] = 1, -- AlienDronePlatform
+	["550E8876"] = 1, -- AlienFoundry
+	["FEFD8CB5"] = 1, -- AlienGateway
+	["684835DA"] = 1, -- AlienMiniMCVOutpost
+	["929BD6C1"] = 1, -- AlienPortal
+	["95A33CC6"] = 2, -- AlienPowerProjector
+	["951B67BA"] = 4, -- AlienReactor
+	["CA58AEF"] = 4, -- AlienTiberiumTower
+	["384EA3E7"] = 2, -- AlienRiftGenerator
+	["E315D4B3"] = 1, -- AlienSignalTransmitter
+	["DFCF8D47"] = 2, -- AlienSporePod
+	["C1AFF92C"] = 1, -- AlienStatisChamber
+	["D0074177"] = 2, -- AlienTibHive
+	["468981C5"] = 9, -- AlienWarpBeacon
+	["23BE7BC2"] = 6, -- MG_Alien_Hive
+	-- BlackHand
+	["D001A512"] = 6, -- BlackHandConstructionYard
+	["A06D953"] = 1, -- BlackHandCrane
+	["2C62828E"] = 5, -- BlackHandDropZone
+	["2995FCD"] = 1, -- BlackHandMiniMCVOutpost
+	["29BD08C8"] = 10, -- BlackHandPowerPlant
+	["D78A3ED5"] = 1, -- BlackHandPropagandaTower
+	["5F6FA50"] = 8, -- BlackHandRefinery
+	["F62BDA5"] = 1, -- BlackHandSecretShrine
+	["6F950650"] = 10, -- BlackHandTechAssemblyPlant
+	["8D78D973"] = 3, -- BlackHandTempleOfNOD
+	["CE205DD2"] = 5, -- BlackHandTiberiumLiquidationFacility
+	["BCE723C7"] = 3, -- BlackHandTiberiumSilo
+	["68488698"] = 3, -- BlackHandDecoyTempleOfNOD
+	["71F0EA3D"] = 32, -- MG_BlackHand_WarmechFacility
+	["701FB486"] = 4, -- BlackHandHandOfNOD
+	["23052F70"] = 8, -- BlackHandOperationsCenter
+	-- CGF
+	["EEBC2492"] = 3, -- AlienControlCenter
+	["EFB4E2C0"] = 3, -- Reaper17ControlCenter
+	["74F0DB70"] = 3, -- Traveler59ControlCenter
+	-- GDI
+	["8314C7A0"] = 3, -- GDIAirTower
+	["13D568B3"] = 10, -- GDIBarracks
+	["750B856F"] = 3, -- GDIConstructionYard
+	["6BF191EB"] = 1, -- GDICrane
+	["F1F5671A"] = 3, -- GDIIonCannonControl
+	["F1D30548"] = 1, -- GDIMiniMCVOutpost
+	["239262C6"] = 4, -- GDIPowerPlant
+	["16A86D68"] = 7, -- GDIRefinery
+	["8136F6F6"] = 3, -- GDISpaceCommandUplink
+	["15043F6B"] = 3, -- GDITiberiumSilo
+	["9ABD65AC"] = 2, -- GDIWarFactory
+	["51474781"] = 6, -- MG_GDI_ReclamatorHub
+	["33B40C6F"] = 2, -- GDIArmory
+	["E1659649"] = 6, -- GDICommandPost
+	["115E0E31"] = 8, -- GDIMedicalBay
+	["3BEFFBCD"] = 1, -- GDIDigInBuilding
+	-- MarkedOfKane
+	["F2A73707"] = 32, -- MG_MarkedOfKane_WarmechFacility
+	["40DCA116"] = 8, -- MarkedOfKaneRefinery
+	["A12474B6"] = 3, -- MarkedOfKaneTempleOfNOD
+	["D5326C9E"] = 5, -- MarkedOfKaneTiberiumLiquidationFacility
+	["7CADE3A3"] = 1, -- MarkedOfKaneDisruptionTower
+	["17D5CAAA"] = 3, -- MarkedOfKaneTiberiumSilo
+	["858F72B0"] = 6, -- MarkedOfKaneConstructionYard
+	["6753D4CA"] = 1, -- MarkedOfKaneCrane
+	["E6D4B65C"] = 5, -- MarkedOfKaneDropZone
+	["8E42292A"] = 2, -- MarkedOfKaneHangar
+	["AD1CC7D4"] = 1, -- MarkedOfKaneMiniMCVOutpost
+	["BDEA92DF"] = 10, -- MarkedOfKanePowerPlant
+	["13517F79"] = 1, -- MarkedOfKanePropagandaTower
+	["8ADF6801"] = 1, -- MarkedOfKaneSecretShrine
+	["F79AF4E3"] = 10, -- MarkedOfKaneTechAssemblyPlant
+	["84B21B76"] = 4, -- MarkedOfKaneHandOfNOD
+	["C6999B8E"] = 8, -- MarkedOfKaneOperationsCenter
+	-- Nod
+	["A78E52C1"] = 32, -- MG_NOD_WarmechFacility
+	["667CDE9C"] = 1, -- NODCrane
+	["5C9C4468"] = 1, -- NODDisruptionTower
+	["22943F1D"] = 5, -- NODDropZone
+	["D5C63044"] = 2, -- NODHangar
+	["2F9CA888"] = 1, -- NODMiniMCVOutpost
+	["A46AA481"] = 8, -- NODOperationsCenter
+	["9C462965"] = 1, -- NODPropagandaTower
+	["B5D275B6"] = 8, -- NODRefinery
+	["989B10EB"] = 1, -- NODSecretShrine
+	["E630F233"] = 10, -- NODTechAssemblyPlant
+	["638C1170"] = 3, -- NODTempleOfNOD
+	["5593CBD2"] = 3, -- NODTiberiumSilo
+	["D1754783"] = 6, -- NODConstructionYard
+	["A333C6A8"] = 10, -- NODPowerPlant
+	["8F61720F"] = 5, -- NODTiberiumLiquidationFacility
+	["72407A4F"] = 4, -- NODHandOfNOD
+	-- Reaper17
+	["3400D06F"] = 1, -- Reaper17Foundry
+	["9A917351"] = 1, -- Reaper17Gateway
+	["F60E8257"] = 1, -- Reaper17MiniMCVOutpost
+	["38A4A9E0"] = 1, -- Reaper17Portal
+	["3CDBD279"] = 2, -- Reaper17PowerProjector
+	["DFDD1DA9"] = 4, -- Reaper17Reactor
+	["7E291858"] = 4, -- Reaper17TiberiumTower
+	["A503835E"] = 2, -- Reaper17RiftGenerator
+	["C371C2A"] = 1, -- Reaper17SignalTransmitter
+	["DBE925A9"] = 2, -- Reaper17GrowthStimulator
+	["EB2D33E3"] = 1, -- Reaper17StasisChamber
+	["3A64AE56"] = 9, -- Reaper17WarpBeacon
+	["589D2B2B"] = 6, -- MG_Reaper17_Hive
+	["E9DE7FB9"] = 1, -- Reaper17DronePlatform
+	-- SteelTalons
+	["EEAC5E37"] = 3, -- SteelTalonsAirTower
+	["349BBD51"] = 10, -- SteelTalonsBarracks
+	["C9945096"] = 3, -- SteelTalonsConstructionYard
+	["A0426848"] = 1, -- SteelTalonsCrane
+	["EABA4298"] = 6, -- MG_SteelTalons_ReclamatorHub
+	["1644BAB"] = 3, -- SteelTalonsIonCannonControl
+	["2E909708"] = 1, -- SteelTalonsMiniMCVOutpost
+	["E5F7D19B"] = 4, -- SteelTalonsPowerPlant
+	["4C2E2C25"] = 7, -- SteelTalonsRefinery
+	["F640F30"] = 3, -- SteelTalonsSpaceCommandUplink
+	["40A17081"] = 2, -- SteelTalonsWarFactory
+	["2C6EB27C"] = 3, -- SteelTalonsTiberiumSilo
+	["296BE097"] = 6, -- SteelTalonsCommandPost
+	["6C309FAB"] = 2, -- SteelTalonsTechCenter
+	-- ZOCOM
+	["EBDE1709"] = 6, -- MG_ZOCOM_ReclamatorHub
+	["F2B92697"] = 3, -- ZOCOMAirTower
+	["50EB58F7"] = 10, -- ZOCOMBarracks
+	["6B5A4330"] = 3, -- ZOCOMConstructionYard
+	["DCD2D288"] = 1, -- ZOCOMCrane
+	["3FA3BC72"] = 3, -- ZOCOMIonCannonControl
+	["E3265F9D"] = 1, -- ZOCOMMiniMCVOutpost
+	["34E71EC6"] = 4, -- ZOCOMPowerPlant
+	["BA62677D"] = 7, -- ZOCOMRefinery
+	["1F54F6C2"] = 3, -- ZOCOMSpaceCommandUplink
+	["D2CA793C"] = 3, -- ZOCOMTiberiumSilo
+	["8F222FF5"] = 2, -- ZOCOMWarFactory
+	["E76FAF0F"] = 2, -- ZOCOMArmory
+	["D2E0D294"] = 6, -- ZOCOMCommandPost
+	["7D372A88"] = 8, -- ZOCOMMedicalBay
+	-- traveler59
+	["DE06E6CF"] = 1, -- Traveler59Foundry
+	["5743BC5C"] = 1, -- Traveler59Gateway
+	["FF7832A0"] = 1, -- Traveler59MiniMCVOutpost
+	["AD3B9CCD"] = 1, -- Traveler59Portal
+	["1F633A81"] = 2, -- Traveler59PowerProjector
+	["9AF79C8D"] = 4, -- Traveler59Reactor
+	["F4E73A51"] = 4, -- Traveler59TiberiumTower
+	["4379775A"] = 2, -- Traveler59RiftGenerator
+	["3E28732D"] = 1, -- Traveler59SignalTransmitter
+	["730EA95B"] = 2, -- Traveler59SporePod
+	["73D55ACC"] = 1, -- Traveler59StatisChamber
+	["714AFABF"] = 9, -- Traveler59WarpBeacon
+	["A69624CC"] = 6, -- MG_Traveler59_Hive
+	["3E52427A"] = 1, -- Traveler59DronePlatform
 }
 
--- -RIDER1, check if the structure is destroyed and if it is disable its geometry by name 
+-- -RIDER4, check if the structure is destroyed and if it is disable its geometry by name 
 function DisableGeometryOnDeath(self)
+	-- shared event lists also reach objects that are not in the table, skip those
+	local numOfGeometry = StructureGeometryTable[getObjectName(self)]
 	-- do object check and reference a table to disable geometries 
-	if EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 41) then
+	if numOfGeometry and EvaluateCondition("UNIT_HAS_OBJECT_STATUS", SetObjectReference(self), 44) then
 		-- apply model state to begin the rubble animation 
 		ExecuteAction("UNIT_SET_MODELCONDITION_FOR_DURATION", self, "USER_10", 9999, 100)
-		for i = 1, StructureGeometryTable[getObjectName(self)], 1 do 
+		for i = 1, numOfGeometry, 1 do 
 			ObjectSetGeometryActive(self, tostring("Geom_" .. i), false)
 		end
 		--print("structure geometry disabled.")

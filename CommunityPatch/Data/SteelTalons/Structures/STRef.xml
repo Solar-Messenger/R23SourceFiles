@@ -341,6 +341,16 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE USER_10"
+					PortraitImage=""
+					ButtonImage=""
+					RetainSubObjects="False">
+					<Model
+						Name="W3DContainer:GBRefinery_D3"
+						ExtraMesh="False" />
+				</ModelConditionState>
+				<ModelConditionState
+					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="DYING"
 					PortraitImage=""
 					ButtonImage=""
@@ -499,12 +509,39 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="RUBBLE"
-					Flags="START_FRAME_LAST">
+					ConditionsYes="RUBBLE USER_10"
+					StateName="STATE_Dying"
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">		
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="GBREFINERY_D3A"
+						AnimationMode="ONCE"
+						Distance="0"
+						AnimationBlendTime="5"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+					<ParticleSysBone
+						BoneName="NONE"
+						FXParticleSystemTemplate="Des_Large"
+						PersistID="0"
+						FollowBone="False"
+						OnlyIfOnWater="False"
+						OnlyIfOnLand="False" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_NORMAL"
+					ConditionsYes="RUBBLE" />
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="REALLYDAMAGED"
@@ -1307,13 +1344,24 @@
 				ShadowWhenDead="False"
 				Fade="False">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
 					MaxKillerAngle="-0.9999999d"
 					DeathTypes="ALL"
 					DeathTypesForbidden="" />
+			</SlowDeath>
+			<!-- normal slow death if structure is destroyed while unpacking, RIDER4 is set while structure has STRUCTURE_UNPACKING model state -->
+			<SlowDeath
+				id="ModuleTag_DeathUnpacking"
+				SinkDelay="3.0s"
+				SinkRate="4.0"
+				DestructionDelay="8.0s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
+				<DieMuxData
+					RequiredStatus="RIDER4"
+					DeathTypes="ALL" />
 			</SlowDeath>
 			<!--
 			<DestroyDie
@@ -1482,11 +1530,12 @@
 					DeathTypesForbidden="" />
 			</CreateObjectDie>
 
+			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
 				CreationList="OCL_GDIDestroyedRefinery">
 				<DieMuxData
-					ExemptStatus=""
+					ExemptStatus="RIDER4"
 					RequiredStatus=""
 					DamageAmountRequired="-1"
 					MinKillerAngle="0.9999999d"
@@ -1677,6 +1726,7 @@
 
 			<Shape
 				Type="BOX"
+				Name="Geom_1"
 				ContactPointGeneration="NONE"
 				MajorRadius="29.5"
 				MinorRadius="28.5"
@@ -1692,6 +1742,7 @@
 
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_2"
 				ContactPointGeneration="NONE"
 				MajorRadius="32.5"
 				MinorRadius="32.5"
@@ -1707,6 +1758,7 @@
 
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_3"
 				ContactPointGeneration="NONE"
 				MajorRadius="20"
 				MinorRadius="20"
@@ -1722,6 +1774,7 @@
 
 			<Shape
 				Type="CYLINDER"
+				Name="Geom_4"
 				ContactPointGeneration="NONE"
 				MajorRadius="20"
 				MinorRadius="20"
@@ -1737,6 +1790,7 @@
 
 			<Shape
 				Type="BOX"
+				Name="Geom_5"
 				ContactPointGeneration="NONE"
 				MajorRadius="5"
 				MinorRadius="25"
@@ -1753,7 +1807,7 @@
 			<Shape
 				Type="CYLINDER"
 				ContactPointGeneration="NONE"
-				Name="Geom_Tower"
+				Name="Geom_6"
 				MajorRadius="20"
 				MinorRadius="20"
 				Height="90"
@@ -1768,6 +1822,7 @@
 			
 			<Shape
 				Type="BOX"
+				Name="Geom_7"
 				ContactPointGeneration="NONE"
 				MajorRadius="46"
 				MinorRadius="4"
