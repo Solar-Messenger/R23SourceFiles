@@ -1,0 +1,761 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset">
+	
+	<!--SpecialPowerTemplates Recovered:
+	- SpecialPowerCloneObjectSelect
+	- SpecialPower_RailgunAccelerator
+	- SpecialPowerTibVeinDetonation
+	- SpecialPowerMastermindTeleportObject
+	- SpecialPower_UseTiberiumAgitation
+	- SpecialAbilityStratoFighter
+	- SpecialPowerSensorPod_Dispatch
+	- SpecialPowerSensorPod_UnTargeted
+	- SpecialPowerSensorPod_Targeted_Ally
+	- SpecialPowerGetToJumpJetRange
+	- STEMPGrenadesGetInRange
+	- SpecialPower_FireSTEMPGrenades
+	- SpecialPower_TiberiumVibrationScanDummy
+	-->
+
+<SpecialPowerTemplate
+		id="SpecialPowerCloneObjectSelect"
+		TargetType="LOCATION"
+		Flags="NEEDS_OBJECT_FILTER NOT_CLIFF_CELL SHARED_SYNC IS_PLAYER_POWER"
+		ReloadTime="0s"
+		InitiateSound=""
+		InitiateAtLocationSound=""
+		ViewObjectDuration="0s"
+		ViewObjectRange="0"
+		RadiusCursorRadius="100"
+		PreventConditions=""
+		RequiredConditions=""
+		DisallowedTargetModelStates=""
+		RequiredTargetObjectStatus=""
+		DisallowedTargetObjectStatus=""
+		MaxCastRange="1000000"
+		MinCastRange="0"
+		ForbiddenObjectRange="0"
+		EvaEventToPlayWhenSelectingTarget="SelectUnit"
+		RestrictionType="UNRESTRICTED"
+		Money="0"
+		TimerImage=""
+		ReachableTargetsCircleDisplayRadius="0"
+		MetaGameOperation="INVALID"
+		ActiveMetaGamePhases=""
+		StrikeForceRejectStatus=""
+		WaypointModeTerminal="True"
+		StrikeForceRejectMatchAll="False">
+		<ObjectFilter
+			Rule="ANY"
+			Relationship="ALLIES"
+			Alignment="NONE"
+			Include="INFANTRY VEHICLE"
+			Exclude="AIRCRAFT SUMMONED HUSK"
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="">
+			<ExcludeThing>AlienMCVUnpacking</ExcludeThing>
+			<ExcludeThing>AlienBuzzers_Slaved</ExcludeThing>
+			<ExcludeThing>Viceroid</ExcludeThing>
+			<ExcludeThing>NODShadowSquadBeacon</ExcludeThing>
+		</ObjectFilter>
+		<ForbiddenObjectFilter
+			id="73A18191"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+	</SpecialPowerTemplate>
+	
+	<SpecialPowerTemplate
+		id="SpecialPower_RailgunAccelerator"
+		TargetType="LOCATION"
+		Flags="NEEDS_OBJECT_FILTER WATER_OK TARGET_NEEDS_OBJECT_STATUS SHARED_SYNC IS_PLAYER_POWER"
+		ReloadTime="60s"
+		InitiateSound=""
+		InitiateAtLocationSound="Multisound:GDI_RailgunAccerlatorMS"
+		ViewObjectDuration="0s"
+		ViewObjectRange="0"
+		RadiusCursorRadius="200"
+		PreventConditions=""
+		RequiredConditions=""
+		DisallowedTargetModelStates=""
+		RequiredTargetObjectStatus="RIDER2"
+		DisallowedTargetObjectStatus="IN_STASIS"
+		MaxCastRange="1000000"
+		MinCastRange="0"
+		ForbiddenObjectRange="0"
+		EvaEventToPlayWhenSelectingTarget="SelectSpecialPowerTarget"
+		RestrictionType="UNRESTRICTED"
+		Money="-500"
+		TimerImage=""
+		ReachableTargetsCircleDisplayRadius="0"
+		MetaGameOperation="INVALID"
+		ActiveMetaGamePhases=""
+		StrikeForceRejectStatus=""
+		WaypointModeTerminal="True"
+		StrikeForceRejectMatchAll="False">
+		<ObjectFilter
+			Rule="ALL"
+			Relationship="ALLIES"
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags="RIDER2"
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<ForbiddenObjectFilter
+			id="7F49960E"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+	</SpecialPowerTemplate>
+	
+	<SpecialPowerTemplate
+		id="SpecialPowerTibVeinDetonation"
+		DisplayName="NAME:SpecialPowerTibVeinDetonation"
+		Description="DESC:SpecialPowerTibVeinDetonation"
+		TargetType="LOCATION"
+		Flags="NEEDS_OBJECT_FILTER SHARED_SYNC IS_PLAYER_POWER IGNORE_MAP_EXTENTS"
+		ReloadTime="420s"
+		InitiateSound=""
+		InitiateAtLocationSound="Multisound:NOD_TiberiumVeinDetonationMS"
+		ViewObjectDuration="0s"
+		ViewObjectRange="0"
+		RadiusCursorRadius="250"
+		PreventConditions=""
+		RequiredConditions=""
+		DisallowedTargetModelStates=""
+		RequiredTargetObjectStatus=""
+		DisallowedTargetObjectStatus=""
+		MaxCastRange="1000000"
+		MinCastRange="0"
+		ForbiddenObjectRange="0"
+		EvaEventToPlayWhenSelectingTarget="SelectSpecialPowerTarget"
+		RestrictionType="UNRESTRICTED"
+		Money="-3500"
+		TimerImage=""
+		ReachableTargetsCircleDisplayRadius="0"
+		MetaGameOperation="INVALID"
+		ActiveMetaGamePhases=""
+		StrikeForceRejectStatus=""
+		WaypointModeTerminal="True"
+		StrikeForceRejectMatchAll="False">
+		<ObjectFilter
+			Rule="ANY"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="">
+			<IncludeThing>TiberiumField</IncludeThing>
+			<IncludeThing>TiberiumFieldBlue</IncludeThing>
+			<IncludeThing>TiberiumFieldRedZone</IncludeThing>
+		</ObjectFilter>
+		<ForbiddenObjectFilter
+			id="0F310310"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+	</SpecialPowerTemplate>
+	
+<SpecialPowerTemplate
+		id="SpecialPowerMastermindTeleportObject"
+		TargetType="LOCATION"
+		Flags="NO_FORBIDDEN_OBJECTS LIMIT_DISTANCE PATHABLE_ONLY NOT_CLIFF_CELL"
+		ReloadTime="20s"
+		InitiateSound=""
+		InitiateAtLocationSound=""
+		ViewObjectDuration="0s"
+		ViewObjectRange="0"
+		RadiusCursorRadius="50"
+		PreventConditions=""
+		RequiredConditions=""
+		DisallowedTargetModelStates=""
+		RequiredTargetObjectStatus=""
+		DisallowedTargetObjectStatus=""
+		MaxCastRange="9999999"
+		MinCastRange="0"
+		ForbiddenObjectRange="25"
+		EvaEventToPlayWhenSelectingTarget="SelectSpecialPowerTarget"
+		RestrictionType="UNRESTRICTED"
+		Money="0"
+		TimerImage=""
+		ReachableTargetsCircleDisplayRadius="0"
+		MetaGameOperation="INVALID"
+		ActiveMetaGamePhases=""
+		StrikeForceRejectStatus=""
+		WaypointModeTerminal="False"
+		StrikeForceRejectMatchAll="False">
+		<ObjectFilter
+			id="2E0FC004"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<ForbiddenObjectFilter
+			Rule="ANY"
+			Relationship=""
+			Alignment="NONE"
+			Include="STRUCTURE"
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+	</SpecialPowerTemplate>
+	
+<SpecialPowerTemplate
+		id="SpecialPower_UseTiberiumAgitation"
+		TargetType="OBJECT"
+		Flags="NEEDS_OBJECT_FILTER NO_FORBIDDEN_MODEL_STATES"
+		ReloadTime="45s"
+		InitiateSound=""
+		InitiateAtLocationSound=""
+		ViewObjectDuration="0s"
+		ViewObjectRange="0"
+		RadiusCursorRadius="0"
+		PreventConditions="AIRBORNE_TARGET IGNORE_AI_COMMAND"
+		RequiredConditions=""
+		DisallowedTargetModelStates="USER_16"
+		RequiredTargetObjectStatus="DOES_CONTAIN_TIBERIUM"
+		DisallowedTargetObjectStatus=""
+		MaxCastRange="1000000"
+		MinCastRange="0"
+		ForbiddenObjectRange="0"
+		NameOfVoiceNameToUseAsInitiateIntendToDoVoice="DAA1CAFD"
+		RestrictionType="UNRESTRICTED"
+		Money="0"
+		TimerImage=""
+		ReachableTargetsCircleDisplayRadius="0"
+		MetaGameOperation="INVALID"
+		ActiveMetaGamePhases=""
+		StrikeForceRejectStatus=""
+		WaypointModeTerminal="True"
+		StrikeForceRejectMatchAll="False">
+		<ObjectFilter
+			Rule="ANY"
+			Relationship="ALLIES ENEMIES NEUTRAL"
+			Alignment="NONE"
+			Include="FS_MONEY_STORAGE TIBERIUM_BASED"
+			Exclude="UNATTACKABLE"
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="">
+			<IncludeThing>NODRefinery</IncludeThing>
+			<IncludeThing>BlackHandRefinery</IncludeThing>
+			<IncludeThing>MarkedOfKaneRefinery</IncludeThing>
+			<IncludeThing>GDIRefinery</IncludeThing>
+			<IncludeThing>SteelTalonsRefinery</IncludeThing>
+			<IncludeThing>ZOCOMRefinery</IncludeThing>
+			<IncludeThing>AlienTiberiumTower</IncludeThing>
+			<IncludeThing>Traveler59TiberiumTower</IncludeThing>
+			<IncludeThing>Reaper17TiberiumTower</IncludeThing>
+			<IncludeThing>GDITiberiumSilo</IncludeThing>
+			<IncludeThing>SteelTalonsTiberiumSilo</IncludeThing>
+			<IncludeThing>ZOCOMTiberiumSilo</IncludeThing>
+			<IncludeThing>NODTiberiumSilo</IncludeThing>
+			<IncludeThing>MarkedOfKaneTiberiumSilo</IncludeThing>
+			<IncludeThing>BlackHandTiberiumSilo</IncludeThing>
+			<IncludeThing>TiberiumSpike</IncludeThing>
+			<IncludeThing>TiberiumSilo</IncludeThing>
+			<IncludeThing>NODHarvester</IncludeThing>
+			<IncludeThing>BlackHandHarvester</IncludeThing>
+			<IncludeThing>MarkedOfKaneHarvester</IncludeThing>
+			<IncludeThing>GDIHarvester</IncludeThing>
+			<IncludeThing>SteelTalonsHeavyHarvester</IncludeThing>
+			<IncludeThing>ZOCOMHarvester</IncludeThing>
+			<IncludeThing>AlienHarvester</IncludeThing>
+			<IncludeThing>Traveler59Harvester</IncludeThing>
+			<IncludeThing>Reaper17Harvester</IncludeThing>
+			<IncludeThing>AlienSporePod</IncludeThing>
+			<IncludeThing>Traveler59SporePod</IncludeThing>
+			<IncludeThing>Reaper17GrowthStimulator</IncludeThing>
+			<IncludeThing>Reaper17AnnihilatorTripod</IncludeThing>
+			<IncludeThing>AlienDevourerTank</IncludeThing>
+			<IncludeThing>Reaper17DevourerTank</IncludeThing>
+			<IncludeThing>Reaper17Corrupter</IncludeThing>
+			<IncludeThing>Traveler59Corrupter</IncludeThing>
+			<IncludeThing>AlienCorrupter</IncludeThing>
+			<IncludeThing>MarkedOfKaneTiberiumTrooperSquad</IncludeThing>
+			<IncludeThing>MarkedOfKaneTiberiumTrooper</IncludeThing>
+			<IncludeThing>NODPowerPlant</IncludeThing>
+			<IncludeThing>BlackHandPowerPlant</IncludeThing>
+			<IncludeThing>MarkedOfKanePowerPlant</IncludeThing>
+		</ObjectFilter>
+		<ForbiddenObjectFilter
+			id="1D592101"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+	</SpecialPowerTemplate>
+	
+	<SpecialPowerTemplate
+		id="SpecialAbilityStratoFighter"
+		TargetType="LOCATION"
+		Flags="FOGGED_SHROUDED_CELLS_OK"
+		ReloadTime="20s"
+		InitiateSound=""
+		InitiateAtLocationSound=""
+		ViewObjectDuration="0s"
+		ViewObjectRange="0"
+		RadiusCursorRadius="0"
+		PreventConditions=""
+		RequiredConditions=""
+		DisallowedTargetModelStates=""
+		RequiredTargetObjectStatus=""
+		DisallowedTargetObjectStatus=""
+		MaxCastRange="1000000"
+		MinCastRange="0"
+		ForbiddenObjectRange="0"
+		NameOfVoiceNameToUseAsInitiateIntendToDoVoice="18993064"
+		RestrictionType="UNRESTRICTED"
+		Money="0"
+		TimerImage=""
+		ReachableTargetsCircleDisplayRadius="0"
+		MetaGameOperation="INVALID"
+		ActiveMetaGamePhases=""
+		StrikeForceRejectStatus=""
+		WaypointModeTerminal="False"
+		StrikeForceRejectMatchAll="False">
+		<ObjectFilter
+			id="20AAF563"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<ForbiddenObjectFilter
+			id="20AAF563"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<GameDependency
+			RequiredModelConditionsAny=""
+			ForbiddenModelConditions="TAKING_OFF LANDING"
+			RequiredObjectStatusAny="AIRBORNE_TARGET" />
+	</SpecialPowerTemplate>
+	
+	<SpecialPowerTemplate
+		id="SpecialPowerSensorPod_Dispatch"
+		TargetType="OBJECT_OR_LOCATION"
+		Flags="FOGGED_SHROUDED_CELLS_OK"
+		ReloadTime="1.5s"
+		InitiateSound=""
+		InitiateAtLocationSound=""
+		ViewObjectDuration="0s"
+		ViewObjectRange="0"
+		RadiusCursorRadius="0"
+		PreventConditions=""
+		RequiredConditions=""
+		DisallowedTargetModelStates=""
+		RequiredTargetObjectStatus=""
+		DisallowedTargetObjectStatus=""
+		MaxCastRange="1000000"
+		MinCastRange="0"
+		ForbiddenObjectRange="0"
+		NameOfVoiceNameToUseAsInitiateIntendToDoVoice="5BED4CE3"
+		RestrictionType="UNRESTRICTED"
+		Money="-100"
+		TimerImage=""
+		ReachableTargetsCircleDisplayRadius="0"
+		MetaGameOperation="INVALID"
+		ActiveMetaGamePhases=""
+		StrikeForceRejectStatus=""
+		WaypointModeTerminal="False"
+		StrikeForceRejectMatchAll="False">
+		<ObjectFilter
+			id="42CE7C0C"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<ForbiddenObjectFilter
+			id="42CE7C0C"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<GameDependency
+			RequiredModelConditionsAny=""
+			ForbiddenModelConditions=""
+			RequiredObjectStatusAny="">
+			<NeededUpgrade>Upgrade_OrcaSensorPod</NeededUpgrade>
+		</GameDependency>
+	</SpecialPowerTemplate>
+	
+	<SpecialPowerTemplate
+		id="SpecialPowerSensorPod_UnTargeted"
+		TargetType="LOCATION"
+		Flags=""
+		ReloadTime="1.5s"
+		InitiateSound=""
+		InitiateAtLocationSound=""
+		ViewObjectDuration="0s"
+		ViewObjectRange="0"
+		RadiusCursorRadius="0"
+		PreventConditions=""
+		RequiredConditions=""
+		DisallowedTargetModelStates=""
+		RequiredTargetObjectStatus=""
+		DisallowedTargetObjectStatus=""
+		MaxCastRange="1000000"
+		MinCastRange="0"
+		ForbiddenObjectRange="0"
+		NameOfVoiceNameToUseAsInitiateIntendToDoVoice="5BED4CE3"
+		RestrictionType="UNRESTRICTED"
+		Money="-100"
+		TimerImage=""
+		ReachableTargetsCircleDisplayRadius="0"
+		MetaGameOperation="INVALID"
+		ActiveMetaGamePhases=""
+		StrikeForceRejectStatus=""
+		WaypointModeTerminal="True"
+		StrikeForceRejectMatchAll="False">
+		<ObjectFilter
+			id="3769DEAD"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<ForbiddenObjectFilter
+			id="3769DEAD"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+	</SpecialPowerTemplate>
+	
+	<SpecialPowerTemplate
+		id="SpecialPowerSensorPod_Targeted_Ally"
+		TargetType="OBJECT"
+		Flags="NEEDS_OBJECT_FILTER"
+		ReloadTime="1.5s"
+		InitiateSound=""
+		InitiateAtLocationSound=""
+		ViewObjectDuration="0s"
+		ViewObjectRange="0"
+		RadiusCursorRadius="0"
+		PreventConditions=""
+		RequiredConditions=""
+		DisallowedTargetModelStates=""
+		RequiredTargetObjectStatus=""
+		DisallowedTargetObjectStatus=""
+		MaxCastRange="1000000"
+		MinCastRange="0"
+		ForbiddenObjectRange="0"
+		NameOfVoiceNameToUseAsInitiateIntendToDoVoice="5BED4CE3"
+		RestrictionType="UNRESTRICTED"
+		Money="-100"
+		TimerImage=""
+		ReachableTargetsCircleDisplayRadius="0"
+		MetaGameOperation="INVALID"
+		ActiveMetaGamePhases=""
+		StrikeForceRejectStatus=""
+		WaypointModeTerminal="True"
+		StrikeForceRejectMatchAll="False">
+		<ObjectFilter
+			Rule="ANY"
+			Relationship="ALLIES"
+			Alignment="NONE"
+			Include="STRUCTURE VEHICLE TIBERIUM"
+			Exclude="INFANTRY AIRCRAFT HORDE"
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<ForbiddenObjectFilter
+			id="569761F0"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+	</SpecialPowerTemplate>
+	
+	<SpecialPowerTemplate
+		id="SpecialPowerGetToJumpJetRange"
+		TargetType="LOCATION"
+		Flags="NO_FORBIDDEN_OBJECTS LIMIT_DISTANCE PATHABLE_ONLY NOT_CLIFF_CELL NOT_BENEATH_BRIDGE"
+		ReloadTime="10s"
+		InitiateSound=""
+		InitiateAtLocationSound=""
+		ViewObjectDuration="0s"
+		ViewObjectRange="0"
+		RadiusCursorRadius="20"
+		PreventConditions=""
+		RequiredConditions=""
+		DisallowedTargetModelStates=""
+		RequiredTargetObjectStatus=""
+		DisallowedTargetObjectStatus=""
+		MaxCastRange="750"
+		MinCastRange="0"
+		ForbiddenObjectRange="20"
+		NameOfVoiceNameToUseAsInitiateIntendToDoVoice="108EB4CF"
+		RestrictionType="UNRESTRICTED"
+		Money="0"
+		TimerImage=""
+		ReachableTargetsCircleDisplayRadius="0"
+		MetaGameOperation="INVALID"
+		ActiveMetaGamePhases=""
+		StrikeForceRejectStatus=""
+		WaypointModeTerminal="False"
+		StrikeForceRejectMatchAll="False">
+		<ObjectFilter
+			Rule="UNPARSED"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<ForbiddenObjectFilter
+			Rule="ANY"
+			Relationship=""
+			Alignment="NONE"
+			Include="STRUCTURE CRUSHABLE_OBSTACLE"
+			Exclude="BRIDGE_SEGMENT BRIDGE_ENDCAP"
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+	</SpecialPowerTemplate>
+	
+	<SpecialPowerTemplate
+		id="STEMPGrenadesGetInRange"
+		TargetType="LOCATION"
+		Flags=""
+		ReloadTime="30s"
+		InitiateSound=""
+		InitiateAtLocationSound=""
+		ViewObjectDuration="0s"
+		ViewObjectRange="0"
+		RadiusCursorRadius="60"
+		PreventConditions=""
+		RequiredConditions=""
+		DisallowedTargetModelStates=""
+		RequiredTargetObjectStatus=""
+		DisallowedTargetObjectStatus=""
+		MaxCastRange="1000000"
+		MinCastRange="0"
+		ForbiddenObjectRange="0"
+		NameOfVoiceNameToUseAsInitiateIntendToDoVoice="D6AB46C3"
+		RestrictionType="UNRESTRICTED"
+		Money="0"
+		TimerImage=""
+		ReachableTargetsCircleDisplayRadius="0"
+		MetaGameOperation="INVALID"
+		ActiveMetaGamePhases=""
+		StrikeForceRejectStatus=""
+		WaypointModeTerminal="True"
+		StrikeForceRejectMatchAll="False">
+		<ObjectFilter
+			id="1BCB3A35"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<ForbiddenObjectFilter
+			id="1BCB3A35"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<GameDependency
+			RequiredModelConditionsAny=""
+			ForbiddenModelConditions=""
+			RequiredObjectStatusAny="">
+			<NeededUpgrade>Upgrade_SteelTalonsEMPGrenades</NeededUpgrade>
+		</GameDependency>
+	</SpecialPowerTemplate>
+	
+	<SpecialPowerTemplate
+		id="SpecialPower_FireSTEMPGrenades"
+		TargetType="LOCATION"
+		Flags=""
+		ReloadTime="30s"
+		InitiateSound=""
+		InitiateAtLocationSound=""
+		ViewObjectDuration="0s"
+		ViewObjectRange="0"
+		RadiusCursorRadius="60"
+		PreventConditions=""
+		RequiredConditions=""
+		DisallowedTargetModelStates=""
+		RequiredTargetObjectStatus=""
+		DisallowedTargetObjectStatus=""
+		MaxCastRange="1000000"
+		MinCastRange="0"
+		ForbiddenObjectRange="0"
+		NameOfVoiceNameToUseAsInitiateIntendToDoVoice="95DA9A99"
+		RestrictionType="UNRESTRICTED"
+		Money="0"
+		TimerImage=""
+		ReachableTargetsCircleDisplayRadius="0"
+		MetaGameOperation="INVALID"
+		ActiveMetaGamePhases=""
+		StrikeForceRejectStatus=""
+		WaypointModeTerminal="True"
+		StrikeForceRejectMatchAll="False">
+		<ObjectFilter
+			id="039516B4"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<ForbiddenObjectFilter
+			id="039516B4"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<GameDependency
+			RequiredModelConditionsAny=""
+			ForbiddenModelConditions=""
+			RequiredObjectStatusAny="">
+			<NeededUpgrade>Upgrade_SteelTalonsEMPGrenades</NeededUpgrade>
+		</GameDependency>
+	</SpecialPowerTemplate>
+	
+	<SpecialPowerTemplate
+		id="SpecialPower_TiberiumVibrationScanDummy"
+		TargetType="NONE"
+		Flags="WATER_OK IS_PLAYER_POWER"
+		ReloadTime="0s"
+		InitiateSound=""
+		InitiateAtLocationSound=""
+		ViewObjectDuration="0s"
+		ViewObjectRange="0"
+		RadiusCursorRadius="0"
+		PreventConditions=""
+		RequiredConditions=""
+		DisallowedTargetModelStates=""
+		RequiredTargetObjectStatus=""
+		DisallowedTargetObjectStatus=""
+		MaxCastRange="1000000"
+		MinCastRange="0"
+		ForbiddenObjectRange="0"
+		RestrictionType="UNRESTRICTED"
+		Money="0"
+		TimerImage=""
+		ReachableTargetsCircleDisplayRadius="0"
+		MetaGameOperation="INVALID"
+		ActiveMetaGamePhases=""
+		StrikeForceRejectStatus=""
+		WaypointModeTerminal="True"
+		StrikeForceRejectMatchAll="False">
+		<ObjectFilter
+			id="E284E0D6"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+		<ForbiddenObjectFilter
+			id="E284E0D6"
+			Rule="NONE"
+			Relationship=""
+			Alignment="NONE"
+			Include=""
+			Exclude=""
+			StatusBitFlags=""
+			RejectStatusBitFlags=""
+			AcceptModelCondition=""
+			RejectModelCondition="" />
+	</SpecialPowerTemplate>
+
+</AssetDeclaration>

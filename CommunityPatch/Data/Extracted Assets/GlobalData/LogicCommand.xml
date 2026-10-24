@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset">
+	
+	<!--LogicCommands recovered:
+	- Command_FireSTEMPGrenades
+	- Command_UseTiberiumAgitation
+	- Command_ConstructSteelTalonsRig
+	- Command_PurchaseUpgradeSTEMPGrenades
+	- Command_RepairVehicleMRT
+	- Command_STEMPGrenadesGetInRange
+	- Command_UseTraveler59ProdigyBlinkPack
+	-->
+	
+	<LogicCommand
+		id="Command_FireSTEMPGrenades"
+		Type="SPECIAL_POWER"
+		Options="NEED_TARGET_POS">
+		<SpecialPower>SpecialPower_FireSTEMPGrenades</SpecialPower>
+	</LogicCommand>
+	
+	<LogicCommand
+		id="Command_UseTiberiumAgitation"
+		Type="SPECIAL_POWER"
+		Options="NEED_TARGET_ENEMY_OBJECT NEED_TARGET_NEUTRAL_OBJECT NEED_TARGET_ALLY_OBJECT">
+		<SpecialPower>TiberiumAgitationGetInRange</SpecialPower>
+	</LogicCommand>
+	
+	<LogicCommand
+		id="Command_ConstructSteelTalonsRig"
+		Type="UNIT_BUILD"
+		Options="">
+		<Object>SteelTalonsRig</Object>
+	</LogicCommand>
+	
+	<LogicCommand
+		id="Command_ConstructZOCOMRig"
+		Type="UNIT_BUILD"
+		Options="">
+		<Object>ZOCOMRig</Object>
+	</LogicCommand>
+	
+	<LogicCommand
+		id="Command_PurchaseUpgradeSTEMPGrenades"
+		Type="PLAYER_UPGRADE"
+		Options="">
+		<Upgrade>Upgrade_SteelTalonsEMPGrenades</Upgrade>
+	</LogicCommand>
+	
+	<LogicCommand
+		id="Command_RepairVehicleMRT"
+		Type="SPECIAL_POWER"
+		Options="">
+		<SpecialPower>SpecialPower_TargetedRepairVehicleMRT</SpecialPower>
+	</LogicCommand>
+	
+	<LogicCommand
+		id="Command_STEMPGrenadesGetInRange"
+		Type="SPECIAL_POWER"
+		Options="NEED_TARGET_POS">
+		<SpecialPower>STEMPGrenadesGetInRange</SpecialPower>
+	</LogicCommand>
+	
+	<LogicCommand
+		id="Command_UseTraveler59ProdigyBlinkPack"
+		Type="SPECIAL_POWER"
+		Options="NEED_TARGET_POS">
+		<SpecialPower>SpecialPower_UseTraveler59ProdigyBlinkPack</SpecialPower>
+	</LogicCommand>
+
+</AssetDeclaration>

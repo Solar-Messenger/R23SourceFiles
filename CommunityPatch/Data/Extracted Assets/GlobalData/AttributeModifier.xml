@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude">	
+	
+	<!--Attribute Modifiers restored:
+	- ZoneTrooper_ScannerPack
+	- AttributeModifier_TransportEmpty
+	- Modifier_MSCatalystInfect
+	-->
+	
+	<AttributeModifier
+		id="ZoneTrooper_ScannerPack"
+		Category="INNATE_VISION"
+		Duration="0s"
+		MetaDuration="0"
+		StartFX=""
+		EndFX=""
+		ObjectStatusToSet=""
+		StackingLimit="1"
+		ReplaceInCategoryIfLongest="False"
+		IgnoreIfAnticategoryActive="False">
+		<Modifier
+			Type="RANGE"
+			Value="100%" />
+		<Modifier
+			Type="VISION"
+			Value="100%" />
+		<Modifier
+			Type="SHROUD_CLEARING"
+			Value="120%" />
+	</AttributeModifier>
+	
+	<AttributeModifier
+		id="AttributeModifier_TransportEmpty"
+		Category="INNATE_VISION"
+		Duration="0s"
+		MetaDuration="0"
+		StartFX=""
+		EndFX=""
+		ObjectStatusToSet=""
+		StackingLimit="1"
+		ReplaceInCategoryIfLongest="False"
+		IgnoreIfAnticategoryActive="False">
+		<Modifier
+			Type="SHROUD_CLEARING"
+			Value="0%" />
+	</AttributeModifier>
+	
+	<AttributeModifier
+		id="Modifier_MSCatalystInfect"
+		Category="NONE"
+		Duration="0.5s"
+		MetaDuration="0"
+		StartFX=""
+		EndFX=""
+		ObjectStatusToSet="HEALTH_PERCENT_0"
+		StackingLimit="1"
+		ReplaceInCategoryIfLongest="False"
+		IgnoreIfAnticategoryActive="False" />
+	
+</AssetDeclaration>
