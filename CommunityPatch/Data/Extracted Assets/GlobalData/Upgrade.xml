@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset">
+	
+	<!--Upgrades Restored:
+	- Upgrade_SelectLoad_04
+	- Upgrade_Traveler59AdvancedArticulators
+	- Upgrade_SelectLoad_03
+	- Upgrade_SteelTalonsEMPGrenades
+	- Upgrade_Transporting
+	- 
+	-->
+	
+	<UpgradeTemplate
+		id="Upgrade_SelectLoad_04"
+		DisplayName="NAME:MortarDisable_103"
+		Description="UPGRADE:SelectLoadOut04Description"
+		Type="OBJECT"
+		BuildTime="0s"
+		BuildCost="0"
+		ResearchSound=""
+		UnitSpecificSound=""
+		UpgradeFX=""
+		UseObjectTemplateForCostDiscount=""
+		GroupOrder="0"
+		SkirmishAIHeuristic="IGNORE"
+		Options="DO_NOT_TRANSFER"
+		WaypointQueueable="False">
+		<GameDependency
+			RequiredModelConditionsAny=""
+			ForbiddenModelConditions="FIRING_OR_RELOADING_A"
+			RequiredObjectStatusAny="WEAPON_UPGRADED_01" />
+	</UpgradeTemplate>
+	
+	<UpgradeTemplate
+		id="Upgrade_Traveler59AdvancedArticulators"
+		DisplayName="UpgradeName:Traveler59AdvancedArticulators"
+		Description="UpgradeDesc:Traveler59AdvancedArticulators"
+		TypeDescription="UpgradeType:Traveler59AdvancedArticulators"
+		AcquireHint="UpgradePrereq:Traveler59AdvancedArticulators"
+		Type="PLAYER"
+		BuildTime="30s"
+		BuildCost="1000"
+		ResearchSound="AudioEvent:ALI_AdvancedArticulators_Upgrade"
+		ResearchCompleteEvaEvent="UpgradeComplete"
+		UnitSpecificSound=""
+		UpgradeFX=""
+		LocalPlayerProductionStartedEvaEvent="None"
+		LocalPlayerBuildOnHoldEvaEvent="BuildOnHold"
+		LocalPlayerBuildCancelledEvaEvent="BuildCancelled"
+		UseObjectTemplateForCostDiscount=""
+		GroupOrder="0"
+		SkirmishAIHeuristic="INVALID"
+		Options="DO_NOT_TRANSFER"
+		IconImage="Button_Upgrade_AdvArticulators"
+		WaypointQueueable="False" />
+	
+	<UpgradeTemplate
+		id="Upgrade_SelectLoad_03"
+		DisplayName="NAME:MortarEnable_103"
+		Description="UPGRADE:SelectLoadOut03Description"
+		Type="OBJECT"
+		BuildTime="0s"
+		BuildCost="0"
+		ResearchSound=""
+		UnitSpecificSound=""
+		UpgradeFX=""
+		UseObjectTemplateForCostDiscount=""
+		GroupOrder="0"
+		SkirmishAIHeuristic="IGNORE"
+		Options="DO_NOT_TRANSFER"
+		WaypointQueueable="False">
+		<GameDependency
+			RequiredModelConditionsAny=""
+			ForbiddenModelConditions="FIRING_OR_RELOADING_A"
+			RequiredObjectStatusAny="WEAPON_UPGRADED_01" />
+	</UpgradeTemplate>
+	
+	<UpgradeTemplate
+		id="Upgrade_SteelTalonsEMPGrenades"
+		DisplayName="UpgradeName:EMPGrenades"
+		Description="UpgradeDesc:EMPGrenades"
+		TypeDescription="UpgradeType:EMPGrenades"
+		AcquireHint="UpgradePrereq:GDIAPAmmo"
+		Type="PLAYER"
+		BuildTime="30s"
+		BuildCost="1000"
+		ResearchSound="AudioEvent:GDI_Armory_EMPGrenadesUpgrade"
+		ResearchCompleteEvaEvent="UpgradeComplete"
+		UnitSpecificSound=""
+		UpgradeFX=""
+		LocalPlayerBuildOnHoldEvaEvent="BuildOnHold"
+		LocalPlayerBuildCancelledEvaEvent="BuildCancelled"
+		UseObjectTemplateForCostDiscount=""
+		GroupOrder="0"
+		SkirmishAIHeuristic="INVALID"
+		Options="DO_NOT_TRANSFER"
+		IconImage="Button_Ability_FireEMPGrenades"
+		WaypointQueueable="False">
+		<GameDependency
+			RequiredModelConditionsAny=""
+			ForbiddenModelConditions=""
+			RequiredObjectStatusAny="">
+			<RequiredObject>SteelTalonsTechCenter</RequiredObject>
+		</GameDependency>
+	</UpgradeTemplate>
+	
+	<UpgradeTemplate
+		id="Upgrade_Transporting"
+		Type="OBJECT"
+		BuildTime="0s"
+		BuildCost="0"
+		ResearchSound=""
+		UnitSpecificSound=""
+		UpgradeFX=""
+		UseObjectTemplateForCostDiscount=""
+		GroupOrder="0"
+		SkirmishAIHeuristic="INVALID"
+		Options="DO_NOT_TRANSFER"
+		WaypointQueueable="False" />
+
+</AssetDeclaration>

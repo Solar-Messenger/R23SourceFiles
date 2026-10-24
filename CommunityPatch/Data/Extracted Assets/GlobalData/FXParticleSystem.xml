@@ -1,0 +1,1307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset">
+
+	<!--FXParticleSystemTemplates Recovered:
+		- TibCoreMissileProjectileTrail
+		- AvatarExplodeBlueSpark1
+		- AvatarExplodeBlueSpark2
+		- RailAccSteam_Pred
+		- RailAccSteam_MammL
+		- RailAccSteam_MammR
+		- RailAccSteam_Titan
+		-->
+	
+	<FXParticleSystemTemplate
+		id="TibCoreMissileProjectileTrail"
+		Priority="VERY_LOW_OR_ABOVE"
+		Shader="ADDITIVE"
+		Type="TRAIL"
+		ParticleTexture="FXCloudCR01"
+		Drawable=""
+		SlaveSystem=""
+		PerParticleAttachedSystem=""
+		SystemLifetime="100"
+		SortLevel="1"
+		EmitterSound=""
+		IsOneShot="False"
+		IsGroundAligned="False"
+		IsEmitAboveGroundOnly="False"
+		IsParticleUpTowardsEmitter="False"
+		UseMaximumHeight="False">
+		<SlavePosOffset
+			x="0"
+			y="0"
+			z="0" />
+		<Lifetime
+			Type="UNIFORM"
+			Low="30"
+			High="40" />
+		<Size
+			Type="UNIFORM"
+			Low="4"
+			High="6" />
+		<StartSizeRate
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<BurstDelay
+			Type="UNIFORM"
+			Low="3"
+			High="4" />
+		<BurstCount
+			Type="UNIFORM"
+			Low="1"
+			High="1" />
+		<InitialDelay
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<Colors
+			HouseColorSaturation="1"
+			UseHouseColor="False">
+			<Color
+				RelativeAge="50%"
+				Frame="2">
+				<Color
+					r="0.372549"
+					g="0.662745"
+					b="0.329412" />
+			</Color>
+			<Color
+				RelativeAge="100%"
+				Frame="3">
+				<Color
+					r="0"
+					g="0"
+					b="0" />
+			</Color>
+			<ColorScale
+				Type="UNIFORM"
+				Low="0"
+				High="0" />
+		</Colors>
+		<Wind
+			Motion="NOT_USED"
+			Strength="1"
+			FullStrengthDist="5"
+			ZeroStrengthDist="200"
+			AngleChangeMin="0.05"
+			AngleChangeMax="0.1"
+			PingPongStartAngleMin="0"
+			PingPongStartAngleMax="0.1"
+			PingPongEndAngleMin="5.49779"
+			PingPongEndAngleMax="6.283185"
+			TurbulenceAmplitude="0.01"
+			TurbulenceFrequency="5" />
+		<Physics>
+			<Default
+				Gravity="-0.01"
+				Swirly="False"
+				ParticlesAttachToBone="True">
+				<VelocityDamping
+					Type="UNIFORM"
+					Low="1"
+					High="1" />
+				<DriftVelocity
+					x="0.03"
+					y="0"
+					z="0" />
+			</Default>
+		</Physics>
+		<Draw>
+			<Trail
+				TrailLife="30"
+				UTile="1"
+				VTile="1"
+				UScrollRate="0"
+				VScrollRate="0" />
+		</Draw>
+		<Volume>
+			<Point
+				IsHollow="False" />
+		</Volume>
+		<Velocity>
+			<Ortho>
+				<Position>
+					<x
+						Type="UNIFORM"
+						Low="0"
+						High="0" />
+					<y
+						Type="UNIFORM"
+						Low="0"
+						High="0" />
+					<z
+						Type="UNIFORM"
+						Low="0"
+						High="0" />
+				</Position>
+			</Ortho>
+		</Velocity>
+		<Event />
+		<Update>
+			<Default
+				Rotation="ROTATION_OFF">
+				<SizeRate
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<SizeRateDamping
+					Type="UNIFORM"
+					Low="1"
+					High="1" />
+				<AngleZ
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularRateZ
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularDamping
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngleXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularRateXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularDampingXY
+					Type="UNIFORM"
+					Low="1"
+					High="1" />
+			</Default>
+		</Update>
+	</FXParticleSystemTemplate>
+	
+	<FXParticleSystemTemplate
+		id="AvatarExplodeBlueSpark1"
+		Priority="ALWAYS_RENDER"
+		Shader="ADDITIVE"
+		Type="GPU_PARTICLE"
+		ParticleTexture="FXBlast04"
+		Drawable=""
+		SlaveSystem=""
+		PerParticleAttachedSystem=""
+		SystemLifetime="750"
+		SortLevel="1"
+		EmitterSound=""
+		IsOneShot="False"
+		IsGroundAligned="False"
+		IsEmitAboveGroundOnly="False"
+		IsParticleUpTowardsEmitter="False"
+		UseMaximumHeight="False">
+		<SlavePosOffset
+			x="0"
+			y="0"
+			z="0" />
+		<Lifetime
+			Type="UNIFORM"
+			Low="4"
+			High="5" />
+		<Size
+			Type="UNIFORM"
+			Low="5"
+			High="7" />
+		<StartSizeRate
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<BurstDelay
+			Type="UNIFORM"
+			Low="1"
+			High="5" />
+		<BurstCount
+			Type="UNIFORM"
+			Low="8"
+			High="10" />
+		<InitialDelay
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<Colors
+			HouseColorSaturation="1"
+			UseHouseColor="False">
+			<Color
+				RelativeAge="0%"
+				Frame="1">
+				<Color
+					r="0.6"
+					g="0.9"
+					b="1" />
+			</Color>
+			<Color
+				RelativeAge="100%"
+				Frame="2">
+				<Color
+					r="0"
+					g="0"
+					b="0" />
+			</Color>
+			<ColorScale
+				Type="UNIFORM"
+				Low="0"
+				High="100" />
+		</Colors>
+		<Physics>
+			<Default
+				Gravity="0"
+				Swirly="False"
+				ParticlesAttachToBone="True">
+				<VelocityDamping
+					Type="UNIFORM"
+					Low="1"
+					High="1" />
+				<DriftVelocity
+					x="0"
+					y="0"
+					z="0" />
+			</Default>
+		</Physics>
+		<Draw>
+			<Gpu
+				Shader="GPUParticle.fx"
+				FramesPerRow="1"
+				TotalFrames="1"
+				DetailTexture=""
+				SpeedMultiplier="1"
+				GeometryType="SIMPLE_QUAD"
+				SortParticles="False" />
+		</Draw>
+		<Volume>
+			<Box
+				IsHollow="False">
+				<HalfSize
+					x="20"
+					y="10"
+					z="10" />
+			</Box>
+		</Volume>
+		<Velocity>
+			<Ortho>
+				<Position>
+					<x
+						Type="UNIFORM"
+						Low="0"
+						High="0" />
+					<y
+						Type="UNIFORM"
+						Low="0"
+						High="0" />
+					<z
+						Type="UNIFORM"
+						Low="0"
+						High="0" />
+				</Position>
+			</Ortho>
+		</Velocity>
+		<Event />
+		<Update>
+			<Default
+				Rotation="ROTATION_OFF">
+				<SizeRate
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<SizeRateDamping
+					Type="UNIFORM"
+					Low="1"
+					High="1" />
+				<AngleZ
+					Type="UNIFORM"
+					Low="0"
+					High="7" />
+				<AngularRateZ
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularDamping
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngleXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularRateXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularDampingXY
+					Type="UNIFORM"
+					Low="1"
+					High="1" />
+			</Default>
+		</Update>
+	</FXParticleSystemTemplate>
+	
+	<FXParticleSystemTemplate
+		id="AvatarExplodeBlueSpark2"
+		Priority="ALWAYS_RENDER"
+		Shader="ADDITIVE"
+		Type="GPU_PARTICLE"
+		ParticleTexture="FXBlast04"
+		Drawable=""
+		SlaveSystem=""
+		PerParticleAttachedSystem=""
+		SystemLifetime="750"
+		SortLevel="1"
+		EmitterSound=""
+		IsOneShot="False"
+		IsGroundAligned="False"
+		IsEmitAboveGroundOnly="False"
+		IsParticleUpTowardsEmitter="False"
+		UseMaximumHeight="False">
+		<SlavePosOffset
+			x="0"
+			y="0"
+			z="0" />
+		<Lifetime
+			Type="UNIFORM"
+			Low="4"
+			High="5" />
+		<Size
+			Type="UNIFORM"
+			Low="5"
+			High="7" />
+		<StartSizeRate
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<BurstDelay
+			Type="UNIFORM"
+			Low="1"
+			High="5" />
+		<BurstCount
+			Type="UNIFORM"
+			Low="8"
+			High="10" />
+		<InitialDelay
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<Colors
+			HouseColorSaturation="1"
+			UseHouseColor="False">
+			<Color
+				RelativeAge="0%"
+				Frame="1">
+				<Color
+					r="0.9"
+					g="0.9"
+					b="0.9" />
+			</Color>
+			<Color
+				RelativeAge="100%"
+				Frame="2">
+				<Color
+					r="0"
+					g="0"
+					b="0" />
+			</Color>
+			<ColorScale
+				Type="UNIFORM"
+				Low="0"
+				High="100" />
+		</Colors>
+		<Physics>
+			<Default
+				Gravity="0"
+				Swirly="False"
+				ParticlesAttachToBone="True">
+				<VelocityDamping
+					Type="UNIFORM"
+					Low="1"
+					High="1" />
+				<DriftVelocity
+					x="0"
+					y="0"
+					z="0" />
+			</Default>
+		</Physics>
+		<Draw>
+			<Gpu
+				Shader="GPUParticle.fx"
+				FramesPerRow="1"
+				TotalFrames="1"
+				DetailTexture=""
+				SpeedMultiplier="1"
+				GeometryType="SIMPLE_QUAD"
+				SortParticles="False" />
+		</Draw>
+		<Volume>
+			<Box
+				IsHollow="False">
+				<HalfSize
+					x="20"
+					y="10"
+					z="10" />
+			</Box>
+		</Volume>
+		<Velocity>
+			<Ortho>
+				<Position>
+					<x
+						Type="UNIFORM"
+						Low="0"
+						High="0" />
+					<y
+						Type="UNIFORM"
+						Low="0"
+						High="0" />
+					<z
+						Type="UNIFORM"
+						Low="0"
+						High="0" />
+				</Position>
+			</Ortho>
+		</Velocity>
+		<Event />
+		<Update>
+			<Default
+				Rotation="ROTATION_OFF">
+				<SizeRate
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<SizeRateDamping
+					Type="UNIFORM"
+					Low="1"
+					High="1" />
+				<AngleZ
+					Type="UNIFORM"
+					Low="0"
+					High="7" />
+				<AngularRateZ
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularDamping
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngleXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularRateXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularDampingXY
+					Type="UNIFORM"
+					Low="1"
+					High="1" />
+			</Default>
+		</Update>
+	</FXParticleSystemTemplate>
+	
+	<FXParticleSystemTemplate
+		id="RailAccSteam_Pred"
+		Priority="VERY_LOW_OR_ABOVE"
+		Shader="ALPHA"
+		Type="GPU_PARTICLE"
+		ParticleTexture="FXSteam"
+		Drawable=""
+		SlaveSystem=""
+		PerParticleAttachedSystem=""
+		SystemLifetime="500"
+		SortLevel="1"
+		EmitterSound=""
+		IsOneShot="True"
+		IsGroundAligned="False"
+		IsEmitAboveGroundOnly="False"
+		IsParticleUpTowardsEmitter="False"
+		UseMaximumHeight="False">
+		<SlavePosOffset
+			x="0"
+			y="0"
+			z="0" />
+		<Lifetime
+			Type="UNIFORM"
+			Low="20"
+			High="25" />
+		<Size
+			Type="UNIFORM"
+			Low="4"
+			High="5" />
+		<StartSizeRate
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<BurstDelay
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<BurstCount
+			Type="UNIFORM"
+			Low="6"
+			High="8" />
+		<InitialDelay
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<Alphas>
+			<Alpha
+				Type="UNIFORM"
+				Low="0.35"
+				High="0.35"
+				RelativeAge="25%"
+				Frame="2" />
+			<Alpha
+				Type="UNIFORM"
+				Low="0.35"
+				High="0.35"
+				RelativeAge="75%"
+				Frame="3" />
+			<Alpha
+				Type="UNIFORM"
+				Low="0"
+				High="0"
+				RelativeAge="100%"
+				Frame="4" />
+		</Alphas>
+		<Colors
+			HouseColorSaturation="1"
+			UseHouseColor="False">
+			<Color
+				RelativeAge="0%"
+				Frame="1">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<Color
+				RelativeAge="25%"
+				Frame="2">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<Color
+				RelativeAge="75%"
+				Frame="3">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<Color
+				RelativeAge="100%"
+				Frame="4">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<ColorScale
+				Type="UNIFORM"
+				Low="0"
+				High="0" />
+		</Colors>
+		<Physics>
+			<Default
+				Gravity="0"
+				Swirly="False"
+				ParticlesAttachToBone="False">
+				<VelocityDamping
+					Type="UNIFORM"
+					Low="0.7"
+					High="0.75" />
+				<DriftVelocity
+					x="0"
+					y="0"
+					z="-1" />
+			</Default>
+		</Physics>
+		<Draw>
+			<Gpu
+				Shader="GPUParticle.fx"
+				FramesPerRow="1"
+				TotalFrames="1"
+				DetailTexture="FXSphereNRM"
+				SpeedMultiplier="1"
+				GeometryType="SIMPLE_QUAD"
+				SortParticles="False" />
+		</Draw>
+		<Volume>
+			<Line
+				IsHollow="False">
+				<StartPoint
+					x="0"
+					y="-5"
+					z="25" />
+				<EndPoint
+					x="0"
+					y="-15"
+					z="1" />
+			</Line>
+		</Volume>
+		<Velocity>
+			<Ortho>
+				<Position>
+					<x
+						Type="UNIFORM"
+						Low="-2"
+						High="2" />
+					<y
+						Type="UNIFORM"
+						Low="-1"
+						High="1" />
+					<z
+						Type="UNIFORM"
+						Low="0"
+						High="0" />
+				</Position>
+			</Ortho>
+		</Velocity>
+		<Event />
+		<Update>
+			<Default
+				Rotation="ROTATION_OFF">
+				<SizeRate
+					Type="UNIFORM"
+					Low="0.2"
+					High="0.4" />
+				<SizeRateDamping
+					Type="UNIFORM"
+					Low="0.98"
+					High="0.99" />
+				<AngleZ
+					Type="UNIFORM"
+					Low="-7"
+					High="7" />
+				<AngularRateZ
+					Type="UNIFORM"
+					Low="-0.05"
+					High="0.05" />
+				<AngularDamping
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngleXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularRateXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularDampingXY
+					Type="UNIFORM"
+					Low="1"
+					High="1" />
+			</Default>
+		</Update>
+	</FXParticleSystemTemplate>
+	
+	<FXParticleSystemTemplate
+		id="RailAccSteam_MammL"
+		Priority="VERY_LOW_OR_ABOVE"
+		Shader="ALPHA"
+		Type="GPU_PARTICLE"
+		ParticleTexture="FXSteam"
+		Drawable=""
+		SlaveSystem=""
+		PerParticleAttachedSystem=""
+		SystemLifetime="500"
+		SortLevel="1"
+		EmitterSound=""
+		IsOneShot="True"
+		IsGroundAligned="False"
+		IsEmitAboveGroundOnly="False"
+		IsParticleUpTowardsEmitter="False"
+		UseMaximumHeight="False">
+		<SlavePosOffset
+			x="0"
+			y="0"
+			z="0" />
+		<Lifetime
+			Type="UNIFORM"
+			Low="25"
+			High="35" />
+		<Size
+			Type="UNIFORM"
+			Low="9"
+			High="10" />
+		<StartSizeRate
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<BurstDelay
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<BurstCount
+			Type="UNIFORM"
+			Low="8"
+			High="10" />
+		<InitialDelay
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<Alphas>
+			<Alpha
+				Type="UNIFORM"
+				Low="0.35"
+				High="0.35"
+				RelativeAge="25%"
+				Frame="2" />
+			<Alpha
+				Type="UNIFORM"
+				Low="0.35"
+				High="0.35"
+				RelativeAge="75%"
+				Frame="3" />
+			<Alpha
+				Type="UNIFORM"
+				Low="0"
+				High="0"
+				RelativeAge="100%"
+				Frame="4" />
+		</Alphas>
+		<Colors
+			HouseColorSaturation="1"
+			UseHouseColor="False">
+			<Color
+				RelativeAge="0%"
+				Frame="1">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<Color
+				RelativeAge="25%"
+				Frame="2">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<Color
+				RelativeAge="75%"
+				Frame="3">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<Color
+				RelativeAge="100%"
+				Frame="4">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<ColorScale
+				Type="UNIFORM"
+				Low="0"
+				High="0" />
+		</Colors>
+		<Physics>
+			<Default
+				Gravity="0"
+				Swirly="False"
+				ParticlesAttachToBone="False">
+				<VelocityDamping
+					Type="UNIFORM"
+					Low="0.7"
+					High="0.75" />
+				<DriftVelocity
+					x="0"
+					y="0"
+					z="-1" />
+			</Default>
+		</Physics>
+		<Draw>
+			<Gpu
+				Shader="GPUParticle.fx"
+				FramesPerRow="1"
+				TotalFrames="1"
+				DetailTexture="FXSphereNRM"
+				SpeedMultiplier="1"
+				GeometryType="SIMPLE_QUAD"
+				SortParticles="False" />
+		</Draw>
+		<Volume>
+			<Line
+				IsHollow="False">
+				<StartPoint
+					x="0"
+					y="-5"
+					z="18" />
+				<EndPoint
+					x="0"
+					y="30"
+					z="1" />
+			</Line>
+		</Volume>
+		<Velocity>
+			<Ortho>
+				<Position>
+					<x
+						Type="UNIFORM"
+						Low="-2"
+						High="2" />
+					<y
+						Type="UNIFORM"
+						Low="-1"
+						High="1" />
+					<z
+						Type="UNIFORM"
+						Low="0"
+						High="0" />
+				</Position>
+			</Ortho>
+		</Velocity>
+		<Event />
+		<Update>
+			<Default
+				Rotation="ROTATION_OFF">
+				<SizeRate
+					Type="UNIFORM"
+					Low="0.2"
+					High="0.4" />
+				<SizeRateDamping
+					Type="UNIFORM"
+					Low="0.98"
+					High="0.99" />
+				<AngleZ
+					Type="UNIFORM"
+					Low="-7"
+					High="7" />
+				<AngularRateZ
+					Type="UNIFORM"
+					Low="-0.05"
+					High="0.05" />
+				<AngularDamping
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngleXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularRateXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularDampingXY
+					Type="UNIFORM"
+					Low="1"
+					High="1" />
+			</Default>
+		</Update>
+	</FXParticleSystemTemplate>
+	
+<FXParticleSystemTemplate
+		id="RailAccSteam_MammR"
+		Priority="VERY_LOW_OR_ABOVE"
+		Shader="ALPHA"
+		Type="GPU_PARTICLE"
+		ParticleTexture="FXSteam"
+		Drawable=""
+		SlaveSystem=""
+		PerParticleAttachedSystem=""
+		SystemLifetime="500"
+		SortLevel="1"
+		EmitterSound=""
+		IsOneShot="True"
+		IsGroundAligned="False"
+		IsEmitAboveGroundOnly="False"
+		IsParticleUpTowardsEmitter="False"
+		UseMaximumHeight="False">
+		<SlavePosOffset
+			x="0"
+			y="0"
+			z="0" />
+		<Lifetime
+			Type="UNIFORM"
+			Low="25"
+			High="35" />
+		<Size
+			Type="UNIFORM"
+			Low="9"
+			High="10" />
+		<StartSizeRate
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<BurstDelay
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<BurstCount
+			Type="UNIFORM"
+			Low="8"
+			High="10" />
+		<InitialDelay
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<Alphas>
+			<Alpha
+				Type="UNIFORM"
+				Low="0.35"
+				High="0.35"
+				RelativeAge="25%"
+				Frame="2" />
+			<Alpha
+				Type="UNIFORM"
+				Low="0.35"
+				High="0.35"
+				RelativeAge="75%"
+				Frame="3" />
+			<Alpha
+				Type="UNIFORM"
+				Low="0"
+				High="0"
+				RelativeAge="100%"
+				Frame="4" />
+		</Alphas>
+		<Colors
+			HouseColorSaturation="1"
+			UseHouseColor="False">
+			<Color
+				RelativeAge="0%"
+				Frame="1">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<Color
+				RelativeAge="25%"
+				Frame="2">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<Color
+				RelativeAge="75%"
+				Frame="3">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<Color
+				RelativeAge="100%"
+				Frame="4">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<ColorScale
+				Type="UNIFORM"
+				Low="0"
+				High="0" />
+		</Colors>
+		<Physics>
+			<Default
+				Gravity="0"
+				Swirly="False"
+				ParticlesAttachToBone="False">
+				<VelocityDamping
+					Type="UNIFORM"
+					Low="0.7"
+					High="0.75" />
+				<DriftVelocity
+					x="0"
+					y="0"
+					z="-1" />
+			</Default>
+		</Physics>
+		<Draw>
+			<Gpu
+				Shader="GPUParticle.fx"
+				FramesPerRow="1"
+				TotalFrames="1"
+				DetailTexture="FXSphereNRM"
+				SpeedMultiplier="1"
+				GeometryType="SIMPLE_QUAD"
+				SortParticles="False" />
+		</Draw>
+		<Volume>
+			<Line
+				IsHollow="False">
+				<StartPoint
+					x="0"
+					y="5"
+					z="18" />
+				<EndPoint
+					x="0"
+					y="-30"
+					z="1" />
+			</Line>
+		</Volume>
+		<Velocity>
+			<Ortho>
+				<Position>
+					<x
+						Type="UNIFORM"
+						Low="-2"
+						High="2" />
+					<y
+						Type="UNIFORM"
+						Low="-1"
+						High="1" />
+					<z
+						Type="UNIFORM"
+						Low="0"
+						High="0" />
+				</Position>
+			</Ortho>
+		</Velocity>
+		<Event />
+		<Update>
+			<Default
+				Rotation="ROTATION_OFF">
+				<SizeRate
+					Type="UNIFORM"
+					Low="0.2"
+					High="0.4" />
+				<SizeRateDamping
+					Type="UNIFORM"
+					Low="0.98"
+					High="0.99" />
+				<AngleZ
+					Type="UNIFORM"
+					Low="-7"
+					High="7" />
+				<AngularRateZ
+					Type="UNIFORM"
+					Low="-0.05"
+					High="0.05" />
+				<AngularDamping
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngleXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularRateXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularDampingXY
+					Type="UNIFORM"
+					Low="1"
+					High="1" />
+			</Default>
+		</Update>
+	</FXParticleSystemTemplate>
+	
+<FXParticleSystemTemplate
+		id="RailAccSteam_Titan"
+		Priority="VERY_LOW_OR_ABOVE"
+		Shader="ALPHA"
+		Type="GPU_PARTICLE"
+		ParticleTexture="FXSteam"
+		Drawable=""
+		SlaveSystem=""
+		PerParticleAttachedSystem=""
+		SystemLifetime="500"
+		SortLevel="1"
+		EmitterSound=""
+		IsOneShot="True"
+		IsGroundAligned="False"
+		IsEmitAboveGroundOnly="False"
+		IsParticleUpTowardsEmitter="False"
+		UseMaximumHeight="False">
+		<SlavePosOffset
+			x="0"
+			y="0"
+			z="0" />
+		<Lifetime
+			Type="UNIFORM"
+			Low="16"
+			High="20" />
+		<Size
+			Type="UNIFORM"
+			Low="3"
+			High="4" />
+		<StartSizeRate
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<BurstDelay
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<BurstCount
+			Type="UNIFORM"
+			Low="10"
+			High="12" />
+		<InitialDelay
+			Type="CONSTANT"
+			Low="0"
+			High="0" />
+		<Alphas>
+			<Alpha
+				Type="UNIFORM"
+				Low="0.35"
+				High="0.35"
+				RelativeAge="25%"
+				Frame="2" />
+			<Alpha
+				Type="UNIFORM"
+				Low="0.35"
+				High="0.35"
+				RelativeAge="75%"
+				Frame="3" />
+			<Alpha
+				Type="UNIFORM"
+				Low="0"
+				High="0"
+				RelativeAge="100%"
+				Frame="4" />
+		</Alphas>
+		<Colors
+			HouseColorSaturation="1"
+			UseHouseColor="False">
+			<Color
+				RelativeAge="0%"
+				Frame="1">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<Color
+				RelativeAge="25%"
+				Frame="2">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<Color
+				RelativeAge="75%"
+				Frame="3">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<Color
+				RelativeAge="100%"
+				Frame="4">
+				<Color
+					r="0.78"
+					g="0.9"
+					b="1" />
+			</Color>
+			<ColorScale
+				Type="UNIFORM"
+				Low="0"
+				High="0" />
+		</Colors>
+		<Physics>
+			<Default
+				Gravity="0"
+				Swirly="False"
+				ParticlesAttachToBone="False">
+				<VelocityDamping
+					Type="UNIFORM"
+					Low="0.7"
+					High="0.75" />
+				<DriftVelocity
+					x="0"
+					y="0"
+					z="-1" />
+			</Default>
+		</Physics>
+		<Draw>
+			<Gpu
+				Shader="GPUParticle.fx"
+				FramesPerRow="1"
+				TotalFrames="1"
+				DetailTexture="FXSphereNRM"
+				SpeedMultiplier="1"
+				GeometryType="SIMPLE_QUAD"
+				SortParticles="False" />
+		</Draw>
+		<Volume>
+			<Line
+				IsHollow="False">
+				<StartPoint
+					x="0"
+					y="-12"
+					z="5" />
+				<EndPoint
+					x="2"
+					y="-16"
+					z="-4" />
+			</Line>
+		</Volume>
+		<Velocity>
+			<Ortho>
+				<Position>
+					<x
+						Type="UNIFORM"
+						Low="-2"
+						High="2" />
+					<y
+						Type="UNIFORM"
+						Low="-1"
+						High="1" />
+					<z
+						Type="UNIFORM"
+						Low="0"
+						High="0" />
+				</Position>
+			</Ortho>
+		</Velocity>
+		<Event />
+		<Update>
+			<Default
+				Rotation="ROTATION_OFF">
+				<SizeRate
+					Type="UNIFORM"
+					Low="0.2"
+					High="0.4" />
+				<SizeRateDamping
+					Type="UNIFORM"
+					Low="0.98"
+					High="0.99" />
+				<AngleZ
+					Type="UNIFORM"
+					Low="-7"
+					High="7" />
+				<AngularRateZ
+					Type="UNIFORM"
+					Low="-0.05"
+					High="0.05" />
+				<AngularDamping
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngleXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularRateXY
+					Type="UNIFORM"
+					Low="0"
+					High="0" />
+				<AngularDampingXY
+					Type="UNIFORM"
+					Low="1"
+					High="1" />
+			</Default>
+		</Update>
+	</FXParticleSystemTemplate>
+
+</AssetDeclaration>

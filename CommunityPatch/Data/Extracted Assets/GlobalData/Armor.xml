@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude">	
+
+	<!--ArmorTemplates restored:
+		- AlienSeekerTankArmor
+		-NODBunkerTruckArmor
+		-NODBunkerTruckArmorDozerBlades
+		-NODSaboteurArmor
+		-SteelTalonsTitanArmor
+		-AlienMiniMCVOutpostArmor
+		-NODMiniMCVOutpostArmor
+		-GDIMiniMCVOutpostArmor
+		-MOKTibTrooperArmor
+		-MutantHovelArmor
+		-MutantMarauderArmor
+		-NODShadowArmor
+		-->
+	
+	<ArmorTemplate
+		id="AlienSeekerTankArmor"
+		Default="100%"
+		DamageScalar="100%"
+		SideDamageScalar="100%"
+		RearDamageScalar="100%"
+		FlankedPenalty="100%">
+		<Armor
+			Damage="SNIPER"
+			Percent="1%" />
+		<Armor
+			Damage="CANNON"
+			Percent="110%" />
+		<Armor
+			Damage="ROCKET"
+			Percent="75%" />
+		<Armor
+			Damage="GRENADE"
+			Percent="40%" />
+		<Armor
+			Damage="GUN"
+			Percent="60%" />
+	</ArmorTemplate>
+	
+	<ArmorTemplate
+		id="NODBunkerTruckArmor"
+		Default="100%"
+		DamageScalar="100%"
+		SideDamageScalar="110%"
+		RearDamageScalar="150%"
+		FlankedPenalty="100%">
+		<Armor
+			Damage="CANNON"
+			Percent="100%" />
+		<Armor
+			Damage="ROCKET"
+			Percent="75%" />
+		<Armor
+			Damage="GRENADE"
+			Percent="50%" />
+		<Armor
+			Damage="GUN"
+			Percent="40%" />
+		<Armor
+			Damage="SNIPER"
+			Percent="1%" />
+	</ArmorTemplate>
+	
+	<ArmorTemplate
+		id="NODBunkerTruckArmorDozerBlades"
+		Default="100%"
+		DamageScalar="100%"
+		SideDamageScalar="110%"
+		RearDamageScalar="150%"
+		FlankedPenalty="100%">
+		<Armor
+			Damage="CANNON"
+			Percent="100%" />
+		<Armor
+			Damage="ROCKET"
+			Percent="75%" />
+		<Armor
+			Damage="GRENADE"
+			Percent="50%" />
+		<Armor
+			Damage="GUN"
+			Percent="40%" />
+		<Armor
+			Damage="SNIPER"
+			Percent="1%" />
+		<Armor
+			Damage="MINE"
+			Percent="1%" />
+	</ArmorTemplate>
+	
+	<ArmorTemplate
+		id="NODSaboteurArmor"
+		Default="100%"
+		DamageScalar="100%"
+		SideDamageScalar="100%"
+		RearDamageScalar="100%"
+		FlankedPenalty="100%">
+		<Armor
+			Damage="CANNON"
+			Percent="25%" />
+		<Armor
+			Damage="ROCKET"
+			Percent="25%" />
+		<Armor
+			Damage="GRENADE"
+			Percent="75%" />
+		<Armor
+			Damage="GUN"
+			Percent="100%" />
+		<Armor
+			Damage="SNIPER"
+			Percent="100%" />
+	</ArmorTemplate>
+	
+	<ArmorTemplate
+		id="SteelTalonsTitanArmor"
+		Default="100%"
+		DamageScalar="100%"
+		SideDamageScalar="110%"
+		RearDamageScalar="120%"
+		FlankedPenalty="100%">
+		<Armor
+			Damage="CANNON"
+			Percent="100%" />
+		<Armor
+			Damage="ROCKET"
+			Percent="70%" />
+		<Armor
+			Damage="GRENADE"
+			Percent="25%" />
+		<Armor
+			Damage="GUN"
+			Percent="25%" />
+		<Armor
+			Damage="SNIPER"
+			Percent="1%" />
+	</ArmorTemplate>
+	
+	<ArmorTemplate
+		id="AlienMiniMCVOutpostArmor"
+		Default="100%"
+		DamageScalar="100%"
+		SideDamageScalar="100%"
+		RearDamageScalar="100%"
+		FlankedPenalty="100%">
+		<Armor
+			Damage="SNIPER"
+			Percent="1%" />
+		<Armor
+			Damage="CANNON"
+			Percent="75%" />
+		<Armor
+			Damage="ROCKET"
+			Percent="50%" />
+		<Armor
+			Damage="GRENADE"
+			Percent="100%" />
+		<Armor
+			Damage="GUN"
+			Percent="75%" />
+	</ArmorTemplate>
+	
+	<ArmorTemplate
+		id="GDIMiniMCVOutpostArmor"
+		Default="100%"
+		DamageScalar="100%"
+		SideDamageScalar="100%"
+		RearDamageScalar="100%"
+		FlankedPenalty="100%">
+		<Armor
+			Damage="SNIPER"
+			Percent="1%" />
+		<Armor
+			Damage="CANNON"
+			Percent="75%" />
+		<Armor
+			Damage="ROCKET"
+			Percent="50%" />
+		<Armor
+			Damage="GRENADE"
+			Percent="100%" />
+		<Armor
+			Damage="GUN"
+			Percent="75%" />
+	</ArmorTemplate>
+	
+	<ArmorTemplate
+		id="MOKTibTrooperArmor"
+		Default="100%"
+		DamageScalar="100%"
+		SideDamageScalar="100%"
+		RearDamageScalar="100%"
+		FlankedPenalty="100%">
+		<Armor
+			Damage="SNIPER"
+			Percent="100%" />
+		<Armor
+			Damage="CANNON"
+			Percent="5%" />
+		<Armor
+			Damage="ROCKET"
+			Percent="50%" />
+		<Armor
+			Damage="GRENADE"
+			Percent="75%" />
+		<Armor
+			Damage="GUN"
+			Percent="100%" />
+	</ArmorTemplate>
+	
+	<ArmorTemplate
+		id="MutantHovelArmor"
+		Default="100%"
+		DamageScalar="100%"
+		SideDamageScalar="100%"
+		RearDamageScalar="100%"
+		FlankedPenalty="100%">
+		<Armor
+			Damage="SNIPER"
+			Percent="1%" />
+		<Armor
+			Damage="CANNON"
+			Percent="18%" />
+		<Armor
+			Damage="ROCKET"
+			Percent="12%" />
+		<Armor
+			Damage="GRENADE"
+			Percent="25%" />
+		<Armor
+			Damage="GUN"
+			Percent="7%" />
+	</ArmorTemplate>
+	
+	<ArmorTemplate
+		id="MutantMarauderArmor"
+		Default="50%"
+		DamageScalar="100%"
+		SideDamageScalar="100%"
+		RearDamageScalar="100%"
+		FlankedPenalty="100%">
+		<Armor
+			Damage="CANNON"
+			Percent="20%" />
+		<Armor
+			Damage="ROCKET"
+			Percent="20%" />
+		<Armor
+			Damage="GRENADE"
+			Percent="60%" />
+		<Armor
+			Damage="GUN"
+			Percent="100%" />
+		<Armor
+			Damage="SNIPER"
+			Percent="100%" />
+	</ArmorTemplate>
+	
+	<ArmorTemplate
+		id="NODMiniMCVOutpostArmor"
+		Default="100%"
+		DamageScalar="100%"
+		SideDamageScalar="100%"
+		RearDamageScalar="100%"
+		FlankedPenalty="100%">
+		<Armor
+			Damage="SNIPER"
+			Percent="1%" />
+		<Armor
+			Damage="CANNON"
+			Percent="75%" />
+		<Armor
+			Damage="ROCKET"
+			Percent="50%" />
+		<Armor
+			Damage="GRENADE"
+			Percent="100%" />
+		<Armor
+			Damage="GUN"
+			Percent="75%" />
+	</ArmorTemplate>
+	
+	<ArmorTemplate
+		id="NODShadowArmor"
+		Default="100%"
+		DamageScalar="100%"
+		SideDamageScalar="100%"
+		RearDamageScalar="100%"
+		FlankedPenalty="100%">
+		<Armor
+			Damage="CANNON"
+			Percent="25%" />
+		<Armor
+			Damage="ROCKET"
+			Percent="25%" />
+		<Armor
+			Damage="GRENADE"
+			Percent="75%" />
+		<Armor
+			Damage="GUN"
+			Percent="100%" />
+		<Armor
+			Damage="SNIPER"
+			Percent="100%" />
+	</ArmorTemplate>
+
+</AssetDeclaration>
