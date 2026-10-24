@@ -730,6 +730,14 @@
 			<Conditions>+DESTROYED +USER_59</Conditions>
 		</ModelConditionEvent>	
 
+		<ModelConditionEvent Name="OnSpecialPower1Ready">
+			<Conditions>+SPECIALPOWER1_READY</Conditions>
+		</ModelConditionEvent>
+
+		<ModelConditionEvent Name="OnSpecialPower1ReadyEnd">
+			<Conditions>-SPECIALPOWER1_READY</Conditions>
+		</ModelConditionEvent>
+
 		<ObjectStatusEvent Name="OnTempDefected">
 			<Conditions>+TEMPORARILY_DEFECTED</Conditions>
 		</ObjectStatusEvent>									
@@ -2313,7 +2321,12 @@
 		<EventHandler EventName="OnDestroyed"	ScriptFunctionName="DisableGeometryOnDeath" DebugSingleStep="false"/>
 	</EventList>
 
-	<!-- R25 production structuree event lists -->
+	<!-- R25 production structure event lists -->
+
+	<EventList Name="GDISpaceCommandUplinkFunctions" Inherit="BuildingPowerFunctions">
+		<EventHandler EventName="OnSpecialPower1Ready" ScriptFunctionName="ShockwaveArtilleryGrantUpgrade" DebugSingleStep="false"/>
+		<EventHandler EventName="OnSpecialPower1ReadyEnd" ScriptFunctionName="ShockwaveArtilleryRemoveUpgrade" DebugSingleStep="false"/>
+	</EventList>
 
 	<EventList Name="GDIRefineryFunctions_R25" Inherit="BuildingPowerFunctions">
 		<EventHandler EventName="OnDestroyed" ScriptFunctionName="DisableGDIRefineryGeometry" DebugSingleStep="false"/>

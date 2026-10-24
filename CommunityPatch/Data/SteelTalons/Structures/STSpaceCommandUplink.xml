@@ -548,7 +548,7 @@
 			<AIUpdate
 				id="ModuleTag_AIUpdate"
 				AutoAcquireEnemiesWhenIdle="NO" 
-				AILuaEventsList="BuildingPowerFunctions"
+				AILuaEventsList="GDISpaceCommandUplinkFunctions"
 			/>
 		</AI>
 		<Body>

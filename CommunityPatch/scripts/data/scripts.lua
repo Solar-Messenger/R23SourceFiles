@@ -4398,6 +4398,19 @@ function DisableGeometryOnDeath(self)
 	end
 end
 
+function ShockwaveArtilleryGrantUpgrade(self)
+	--print("shockwave missile ready to fire")
+	if not EvaluateCondition("UNIT_HAS_UPGRADE",SetObjectReference(self), "Upgrade_ShockwaveReady") then
+		ObjectGrantUpgrade(self, "Upgrade_ShockwaveReady")
+	end
+end
+
+function ShockwaveArtilleryRemoveUpgrade(self)
+	if EvaluateCondition("UNIT_HAS_UPGRADE",SetObjectReference(self), "Upgrade_ShockwaveReady") then
+		ObjectRemoveUpgrade(self, "Upgrade_ShockwaveReady")
+	end
+end
+
 -- ############################# MOBA FUNCTIONS ###################################
 
 -- Randomly selects a hero to build

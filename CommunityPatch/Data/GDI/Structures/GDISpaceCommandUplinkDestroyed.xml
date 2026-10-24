@@ -148,7 +148,7 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING SPECIALPOWER1_READY">
+					ConditionsYes="DYING USER_1">
 					<Model
 						Name="W3DContainer:GBSpcCmndX_RDY_D3" />
 				</ModelConditionState>
@@ -160,7 +160,7 @@
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="SPECIALPOWER1_READY">
+					ConditionsYes="USER_1">
 					<Model
 						Name="W3DContainer:GBSpcCmndX_SKN" />
 					<ParticleSysBone
@@ -200,7 +200,7 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="DYING SPECIALPOWER1_READY">
+					ConditionsYes="DYING USER_1">
 					<Animation
 						AnimationName="GBSpcCmndX_RDY_D3"
 						AnimationMode="ONCE" />
@@ -214,7 +214,7 @@
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
-					ConditionsYes="SPECIALPOWER1_READY"
+					ConditionsYes="USER_1"
 					StateName="STATE_Ready">
 					<Animation
 						AnimationName="GBSpcCmndX_RDY"
@@ -302,6 +302,12 @@
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
+
+			<ModelConditionUpgrade
+				id="ModuleTag_ModelConditionUpgrade_ShockwaveMissile"
+				AddConditionFlags="USER_1">
+				<TriggeredBy>Upgrade_ShockwaveReady</TriggeredBy>
+			</ModelConditionUpgrade>
 		</Behaviors>
 		<Body>
 			<ActiveBody
