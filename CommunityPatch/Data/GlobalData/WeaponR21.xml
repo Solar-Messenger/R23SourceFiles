@@ -4914,7 +4914,10 @@
 				<SpecialObjectFilter
 					Rule="ANY"
 					Include="VEHICLE HUGE_VEHICLE INFANTRY STRUCTURE AIRCRAFT MINE">
+
 					<IncludeThing>IonStorm</IncludeThing>
+					<IncludeThing>GDIDropPod</IncludeThing>
+					<IncludeThing>ZOCOMDropPod</IncludeThing>
 					<ExcludeThing>TiberiumFieldSeeded</ExcludeThing>
 					<ExcludeThing>AlienWormhole</ExcludeThing>
 					<ExcludeThing>AlienCrystalShield</ExcludeThing>
@@ -4928,6 +4931,8 @@
 					Rule="ANY"
 					Include="VEHICLE HUGE_VEHICLE INFANTRY STRUCTURE AIRCRAFT TIBERIUM MINE">
 					<IncludeThing>IonStorm</IncludeThing>
+					<IncludeThing>GDIDropPod</IncludeThing>
+					<IncludeThing>ZOCOMDropPod</IncludeThing>
 					<ExcludeThing>TiberiumFieldSeeded</ExcludeThing>
 					<ExcludeThing>AlienWormhole</ExcludeThing>
 					<ExcludeThing>AlienCrystalShield</ExcludeThing>
