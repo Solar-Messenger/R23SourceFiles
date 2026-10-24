@@ -159,7 +159,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:NBHANDD3_SN2"
+						Name="W3DContainer:NBHandD3_SN"
 						ExtraMesh="False" />
 				</ModelConditionState>
 				<ModelConditionState
@@ -199,7 +199,7 @@
 					AllowRepeatInRandomPick="False"
 					SimilarRestart="False">
 					<Animation
-						AnimationName="NBHANDD3_AN2"
+						AnimationName="NBHandD3_AN"
 						AnimationMode="ONCE"
 						Distance="0"
 						AnimationBlendTime="5"
