@@ -285,7 +285,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DMesh:GUHamheadR" />
+						Name="" />
 					<ParticleSysBone
 						BoneName="FX_JetL"
 						FXParticleSystemTemplate="GDIDebrisSmallFire"
@@ -397,7 +397,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DMesh:GUHamheadR" />
+						Name="" />
 					<ParticleSysBone
 						BoneName="ROOTTRANSFORM"
 						FXParticleSystemTemplate="GDIDebrisSmallFire"

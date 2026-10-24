@@ -764,7 +764,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:GUHAMHEADR_SKN"
+						Name=""
 						ExtraMesh="False" />
 					<Texture
 						Original="GUHamhead"
@@ -880,7 +880,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:GUHAMHEADR_SKN"
+						Name=""
 						ExtraMesh="False" />
 					<Texture
 						Original="GUHamhead"

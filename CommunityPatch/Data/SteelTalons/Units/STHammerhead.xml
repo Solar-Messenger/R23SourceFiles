@@ -285,7 +285,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="Asset not found in stream: [317EED54:DF3DA41D]"
+						Name=""
 						ExtraMesh="False" />
 				</ModelConditionState>
 				<ModelConditionState
@@ -377,7 +377,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="Asset not found in stream: [317EED54:DF3DA41D]"
+						Name=""
 						ExtraMesh="False" />
 				</ModelConditionState>
 				<AnimationState
