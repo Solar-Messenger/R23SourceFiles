@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset">
+	
+	<!--LogicCommandSets Recovered:
+	- AlienAssimilatorCommandSet
+	- AlienExplorerCommandSet
+	- AlienHarvesterCommandSet
+	- AlienMCVCommandSet
+	- BlackHandEmissaryCommandSet
+	- EmptyCommandSet
+	- GDIEngineerCommandSet
+	- GDIHammerheadCommandSet
+	- GDIMCVCommandSet
+	- GDISurveyorCommandSet
+	- GDIV35OxCommandSet
+	- GenericCommandSet
+	- NODCarryallCommandSet
+	- NODEmissaryCommandSet
+	- NODMCVCommandSet
+	- NODTechAssemblyPlantCommandSet
+	- Reaper17MCVCommandSet
+	- SteelTalonsCommandPostCommandSet
+	- SteelTalonsGrenadeSoldierSquadCommandSet
+	- SteelTalonsMCVCommandSet
+	- SteelTalonsReclamatorHubCommandSet
+	- SteelTalonsRepairAPCCommandSet
+	- SteelTalonsSurveyorCommandSet
+	- Traveler59ExplorerCommandSet
+	- Traveler59HarvesterCommandSet
+	- Traveler59MCVCommandSet
+	- ZOCOMCommandPostCommandSet
+	- ZOCOMEngineerCommandSet
+	- ZOCOMMCVCommandSet
+	- ZOCOMSurveyorCommandSet
+	-->
+	
+	<LogicCommandSet
+		id="AlienAssimilatorCommandSet">
+		<Cmd>Command_AttackMove</Cmd>
+		<Cmd>COmmand_CaptureBuilding</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="AlienExplorerCommandSet">
+		<Cmd>Command_UnPackExplorer</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="AlienHarvesterCommandSet">
+		<Cmd>Command_HarvesterReturnToExtractor</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="AlienMCVCommandSet">
+		<Cmd>Command_UnPackALIENMCV</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="BlackHandEmissaryCommandSet">
+		<Cmd>Command_UnPackEmissary</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="EmptyCommandSet">
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="GDIEngineerCommandSet">
+		<Cmd>Command_GDICallForTransportInfantry</Cmd>
+		<Cmd>COmmand_CaptureBuilding</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="GDIHammerheadCommandSet">
+		<Cmd>Command_MoveToPositionAndEvacuate</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+		<Cmd>Command_Evacuate</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="GDIMCVCommandSet">
+		<Cmd>Command_UnPackGDIMCV</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="GDISurveyorCommandSet">
+		<Cmd>Command_GDICallForTransportVehicle</Cmd>
+		<Cmd>Command_UnPackSurveyor</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="GDIV35OxCommandSet">
+		<Cmd>Command_MoveToPositionAndEvacuate</Cmd>
+		<Cmd>Command_Evacuate</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="GenericCommandSet">
+		<Cmd>Command_Stop</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="NODCarryallCommandSet">
+		<Cmd>Command_MoveToPositionAndEvacuate</Cmd>
+		<Cmd>Command_Evacuate</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="NODEmissaryCommandSet">
+		<Cmd>Command_NodCallForTransportVehicle</Cmd>
+		<Cmd>Command_UnPackEmissary</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="NODMCVCommandSet">
+		<Cmd>Command_UnPackNODMCV</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="NODTechAssemblyPlantCommandSet">
+		<Cmd>Command_UpgradeNODEmpBurst</Cmd>
+		<Cmd>Command_UpgradeNODLaserCapacitor</Cmd>
+		<Cmd>Command_PurchaseUpgradeTibCoreMissiles</Cmd>
+		<Cmd>Command_Redemption</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="Reaper17MCVCommandSet">
+		<Cmd>Command_UnPackALIENMCV</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="SteelTalonsCommandPostCommandSet">
+		<Cmd>Command_CommandPostRadarScan</Cmd>
+		<Cmd>Command_PurchaseUpgradeSTAPAmmo</Cmd>
+		<Cmd>Command_PurchaseUpgradeOrcaSensorPod</Cmd>
+		<Cmd>Command_PurchaseUpgradeSTEMPGrenades</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="SteelTalonsGrenadeSoldierSquadCommandSet">
+		<Cmd>Command_SteelTalonsCallForTransportInfantry</Cmd>
+		<Cmd>Command_STEMPGrenadesGetInRange</Cmd>
+		<Cmd>Command_FireSTEMPGrenades</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="SteelTalonsMCVCommandSet">
+		<Cmd>Command_UnPackGDIMCV</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="SteelTalonsReclamatorHubCommandSet">
+		<Cmd>Command_ConstructSteelTalonsPitbull</Cmd>
+		<Cmd>Command_ConstructSteelTalonsTitan</Cmd>
+		<Cmd>Command_ConstructSteelTalonsRepairAPC</Cmd>
+		<Cmd>Command_ConstructSteelTalonsHeavyHarvester</Cmd>
+		<Cmd>Command_ConstructSteelTalonsMCV</Cmd>
+		<Cmd>Command_ConstructSteelTalonsWolverine</Cmd>
+		<Cmd>Command_ConstructSteelTalonsAAScout</Cmd>
+		<Cmd>Command_ConstructSteelTalonsRig</Cmd>
+		<Cmd>Command_ConstructSteelTalonsMammoth</Cmd>
+		<Cmd>Command_ConstructSteelTalonsBehemoth</Cmd>
+		<Cmd>Command_ConstructSteelTalonsMARV</Cmd>
+		<Cmd>Command_RepairVehicle</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="SteelTalonsRepairAPCCommandSet">
+		<Cmd>Command_RepairVehicleMRT</Cmd>
+		<Cmd>Command_SteelTalonsCallForTransportVehicle</Cmd>
+		<Cmd>Command_APCMinefield</Cmd>
+		<Cmd>Command_Evacuate</Cmd>
+		<Cmd>Command_Stop</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="SteelTalonsSurveyorCommandSet">
+		<Cmd>Command_SteelTalonsCallForTransportVehicle</Cmd>
+		<Cmd>Command_UnPackSurveyor</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="Traveler59ExplorerCommandSet">
+		<Cmd>Command_UnPackExplorer</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="Traveler59HarvesterCommandSet">
+		<Cmd>Command_HarvesterReturnToExtractor</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="Traveler59MCVCommandSet">
+		<Cmd>Command_UnPackALIENMCV</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="ZOCOMCommandPostCommandSet">
+		<Cmd>Command_CommandPostRadarScan</Cmd>
+		<Cmd>Command_PurchaseUpgradeGDIAPAmmo</Cmd>
+		<Cmd>Command_PurchaseUpgradeOrcaSensorPod</Cmd>
+		<Cmd>Command_UpgradeZoneRaiderScannerPack</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="ZOCOMEngineerCommandSet">
+		<Cmd>Command_ZOCOMCallForTransportInfantry</Cmd>
+		<Cmd>COmmand_CaptureBuilding</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="ZOCOMMCVCommandSet">
+		<Cmd>Command_UnPackGDIMCV</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+	<LogicCommandSet
+		id="ZOCOMSurveyorCommandSet">
+		<Cmd>Command_ZOCOMCallForTransportVehicle</Cmd>
+		<Cmd>Command_UnPackSurveyor</Cmd>
+		<Cmd>Command_AttackMove</Cmd>
+	</LogicCommandSet>
+	
+
+
+</AssetDeclaration>

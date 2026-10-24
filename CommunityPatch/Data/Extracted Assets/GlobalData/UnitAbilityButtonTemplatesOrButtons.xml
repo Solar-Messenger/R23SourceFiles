@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AssetDeclaration xmlns="uri:ea.com:eala:asset">
+	
+	<!--UnitAbilityButtonTemplates/Buttons(.xml) recovered:
+	- ButtonStateAbilityEvacuateAll
+	- ButtonStateAbilityRepairVehicleMRT
+	- ButtonStateCommand_SelectLoadout_03
+	- ButtonStateCommand_SelectLoadout_04
+	- ButtonStatePurchaseUpgradeSTEMPGrenades
+	- ButtonJumpJets
+	- ButtonPurchaseUpgradeSTEMPGrenades
+	- ButtonRepairVehicleMRT
+	- ButtonSTEMPGrenadesGetInRange
+	- ButtonTraveler59ProdigyBlinkPack
+	- ButtonUpgradeTraveler59ProdigyBlinkPack
+	- Button_SelectLoadout_03
+	- Button_SelectLoadout_04
+	-->
+	
+	<ButtonSingleStateData
+		id="ButtonStateAbilityEvacuateAll">
+		<State
+			Image="Button_Upgrade_EchoCannon"
+			Title="NAME:AbilityEvacuateAll"
+			Description="DESC:AbilityEvacuateAll" />
+	</ButtonSingleStateData>
+	
+	<ButtonSingleStateData
+		id="ButtonStateAbilityRepairVehicleMRT">
+		<State
+			Image="Button_AbilityRepairVehicle"
+			Title="Name:AbilityRepairVehicle"
+			Description="DESC:AbilityRepairVehicle" />
+	</ButtonSingleStateData>
+	
+	<ButtonSingleStateData
+		id="ButtonStateCommand_SelectLoadout_03">
+		<State
+			Image="Button_UpgradeMortar"
+			Title="NAME:MortarEnable_103"
+			Description="DESC:MortarEnable_103" />
+	</ButtonSingleStateData>
+
+	<ButtonSingleStateData
+		id="ButtonStateCommand_SelectLoadout_04">
+		<State
+			Image="Button_AbilityMissileLoadout"
+			Title="NAME:MortarDisable_103"
+			Description="DESC:MortarDisable_103" />
+	</ButtonSingleStateData>
+	
+	<ButtonSingleStateData
+		id="ButtonStatePurchaseUpgradeSTEMPGrenades">
+		<State
+			Image="Button_Ability_FireEMPGrenades"
+			Title="Name:PurcahseUpgradeEMPGrenades"
+			Description="DESC:PurchaseUpgradeEMPGrenades" />
+	</ButtonSingleStateData>
+	
+	<UnitAbilityButtonTemplate
+		id="ButtonJumpJets"
+		LogicCommand="Command_ZoneTrooperSquadGetToJumpJetRange">
+		<Data>
+			<TargetedSpecialPower
+				StateData="ButtonStateAbilityJumpJets"
+				ValidTargetCursor="Bombard" />
+		</Data>
+	</UnitAbilityButtonTemplate>
+	
+	<UnitAbilityButtonTemplate
+		id="ButtonPurchaseUpgradeSTEMPGrenades"
+		LogicCommand="Command_PurchaseUpgradeSTEMPGrenades">
+		<Data>
+			<PlayerUpgrade
+				StateData="ButtonStatePurchaseUpgradeEMPGrenades" />
+		</Data>
+	</UnitAbilityButtonTemplate>
+	
+	<UnitAbilityButtonTemplate
+		id="ButtonRepairVehicleMRT"
+		LogicCommand="Command_RepairVehicleMRT">
+		<Data>
+			<TargetedSpecialPower
+				StateData="ButtonStateAbilityRepairVehicle"
+				ValidTargetCursor="Bombard" />
+		</Data>
+	</UnitAbilityButtonTemplate>
+	
+	<UnitAbilityButtonTemplate
+		id="ButtonSTEMPGrenadesGetInRange"
+		LogicCommand="Command_STEMPGrenadesGetInRange">
+		<Data>
+			<TargetedSpecialPower
+				StateData="ButtonStateEMPGrenadesGetInRange"
+				RadiusCursor="TargetingDecal03" />
+		</Data>
+	</UnitAbilityButtonTemplate>
+	
+	<UnitAbilityButtonTemplate
+		id="ButtonTraveler59ProdigyBlinkPack"
+		LogicCommand="Command_UseTraveler59ProdigyBlinkPack">
+		<Data>
+			<TargetedSpecialPower
+				StateData="ButtonStateAbilityBlinkPack"
+				ValidTargetCursor="Bombard" />
+		</Data>
+	</UnitAbilityButtonTemplate>
+	
+	<UnitAbilityButtonTemplate
+		id="ButtonUpgradeTraveler59ProdigyBlinkPack"
+		LogicCommand="Asset not found in stream: [7D464170:F5912E85]">
+		<Data>
+			<PlayerUpgrade
+				StateData="ButtonStateUpgradeBlinkPack" />
+		</Data>
+	</UnitAbilityButtonTemplate>
+	
+	<UnitAbilityButtonTemplate
+		id="Button_SelectLoadout_03"
+		LogicCommand="Command_SelectLoadout_03">
+		<Data>
+			<ObjectUpgrade
+				StateData="ButtonStateCommand_SelectLoadout_03" />
+		</Data>
+	</UnitAbilityButtonTemplate>
+	
+	<UnitAbilityButtonTemplate
+		id="Button_SelectLoadout_04"
+		LogicCommand="Command_SelectLoadout_04">
+		<Data>
+			<ObjectUpgrade
+				StateData="ButtonStateCommand_SelectLoadout_04" />
+		</Data>
+	</UnitAbilityButtonTemplate>
+	
+	
+</AssetDeclaration>
