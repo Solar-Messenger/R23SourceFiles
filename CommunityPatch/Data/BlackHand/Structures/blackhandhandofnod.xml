@@ -828,7 +828,7 @@
 			<!-- dont create a destroyed building if object is destroyed while unpacking, instead disable geometry. -->
 			<CreateObjectDie
 				id="ModuleTag_CreatedDestroyedBuilding"
-				CreationList="OCL_NODDestroyedHandOfNOD">
+				CreationList="OCL_BlackHandDestroyedHandOfNOD">
 				<DieMuxData
 					ExemptStatus="RIDER4"
 					RequiredStatus=""

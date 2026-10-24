@@ -101,6 +101,15 @@
 	</ObjectCreationList>
 
 	<ObjectCreationList
+		id="OCL_BlackHandDestroyedHandOfNOD">
+		<CreateObject
+			Options="IGNORE_ALL_OBJECTS"
+			Disposition="LIKE_EXISTING">
+			<CreateObject>BlackHandHandOfNODDestroyed</CreateObject>
+		</CreateObject>
+	</ObjectCreationList>
+
+	<ObjectCreationList
 		id="OCL_NODDestroyedWarmechFacility">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
