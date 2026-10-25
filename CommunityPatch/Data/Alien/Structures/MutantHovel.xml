@@ -148,7 +148,7 @@
 					ButtonImage=""
 					RetainSubObjects="False">
 					<Model
-						Name="W3DContainer:TBMUTNTHOVL_D2"
+						Name="W3DContainer:TBMUTNTHOVL_D3"
 						ExtraMesh="False" />
 				</ModelConditionState>
 				<ModelConditionState
@@ -181,10 +181,34 @@
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE"
-					Flags="START_FRAME_LAST">
+					StateName="STATE_Rubble"
+					Flags="START_FRAME_LAST"
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="TBMUTNTHOVL_D3"
+						AnimationMode="MANUAL"
+						Distance="0"
+						AnimationBlendTime="5"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -242,6 +266,30 @@
 						UseWeaponTiming="False"
 						FadingIn="False" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble"
+					EnteringStateFX=""
+					FrameForPristineBonePositions="0"
+					ShareAnimation="False"
+					AllowRepeatInRandomPick="False"
+					SimilarRestart="False">
+					<Animation
+						AnimationName="TBMUTNTHOVL_D3"
+						AnimationMode="ONCE"
+						Distance="0"
+						AnimationBlendTime="0"
+						AnimationSpeedFactorMin="1"
+						AnimationSpeedFactorMax="1"
+						WeaponTimingOrdering="PRIMARY_WEAPON"
+						WeaponTimingSlotID="1"
+						AnimationPriority="1"
+						FadeBeginFrame="-1"
+						FadeEndFrame="-1"
+						AnimationMustCompleteBlend="False"
+						UseWeaponTiming="False"
+						FadingIn="False" />
+				</AnimationState>
 			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
@@ -249,10 +297,10 @@
 				id="513BC476" />
 			<SlowDeath
 				id="73542D4A"
-				SinkRate="99999"
+				SinkRate="3"
 				ProbabilityModifier="10"
 				ModifierBonusPerOverkillPercent="0%"
-				SinkDelay="0.05s"
+				SinkDelay="4s"
 				SinkDelayVariance="0s"
 				DestructionDelay="8s"
 				DestructionDelayVariance="0s"
@@ -268,6 +316,9 @@
 				DeathObjectStatusBits=""
 				ShadowWhenDead="False"
 				Fade="False">
+				<Sound
+					Type="INITIAL"
+					List="HumanFaction_MediumBuilding_DieMS" />
 				<DieMuxData
 					ExemptStatus=""
 					RequiredStatus=""
@@ -277,19 +328,6 @@
 					DeathTypes="ALL"
 					DeathTypesForbidden="" />
 			</SlowDeath>
-
-			<CreateObjectDie
-				id="ModuleTag_CreatedDestroyedBuilding"
-				CreationList="OCL_DestroyedMutantHovel">
-				<DieMuxData
-					ExemptStatus=""
-					RequiredStatus=""
-					DamageAmountRequired="-1"
-					MinKillerAngle="0.9999999d"
-					MaxKillerAngle="-0.9999999d"
-					DeathTypes="ALL"
-					DeathTypesForbidden="" />
-			</CreateObjectDie>
 			<FXListBehavior
 				id="C74C39D8">
 				<DieMuxData

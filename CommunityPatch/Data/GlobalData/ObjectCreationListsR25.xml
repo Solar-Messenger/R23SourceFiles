@@ -173,15 +173,6 @@
 	</ObjectCreationList>
 
 	<ObjectCreationList
-		id="OCL_DestroyedMutantHovel">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>MutantHovelDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
 		id="OCL_GDIDestroyedAirTower">
 		<CreateObject
 			Options="IGNORE_ALL_OBJECTS"
@@ -502,42 +493,6 @@
 			Options="IGNORE_ALL_OBJECTS"
 			Disposition="LIKE_EXISTING">
 			<CreateObject>AlienControlCenterDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
-		id="OCL_DestroyedCDMTower">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>CDMTowerDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
-		id="OCL_DestroyedElectroMagneticPulseControlCenter">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>ElectroMagneticPulseControlCenterDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
-		id="OCL_DestroyedTiberiumSilo">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>TiberiumSiloDestroyed</CreateObject>
-		</CreateObject>
-	</ObjectCreationList>
-
-	<ObjectCreationList
-		id="OCL_DestroyedTiberiumSpike">
-		<CreateObject
-			Options="IGNORE_ALL_OBJECTS"
-			Disposition="LIKE_EXISTING">
-			<CreateObject>TiberiumSpikeDestroyed</CreateObject>
 		</CreateObject>
 	</ObjectCreationList>
 

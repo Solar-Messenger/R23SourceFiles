@@ -34,7 +34,7 @@
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE">
 					<Model
-						Name="W3DContainer:CBPrpagand_D2" />
+						Name="W3DContainer:CBPrpagand_D3" />
 				</ModelConditionState>
 				<ModelConditionState
 					ParseCondStateType="PARSE_NORMAL"
@@ -55,10 +55,17 @@
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
 					ConditionsYes="RUBBLE"
+					StateName="STATE_Rubble"
 					Flags="START_FRAME_LAST">
 					<Animation
-						AnimationName=""
-						AnimationMode="LOOP" />
+						AnimationName="CBPrpagand_D3"
+						AnimationMode="MANUAL" />
+					<Script>
+						Prev = CurDrawablePrevAnimationState();
+						if Prev ~= "STATE_Rubble" and Prev ~= "TRANS_IntoRubble" then
+						CurDrawableSetTransitionAnimState("TRANS_IntoRubble")
+						end
+					</Script>
 				</AnimationState>
 				<AnimationState
 					ParseCondStateType="PARSE_NORMAL"
@@ -83,6 +90,14 @@
 						AnimationMode="ONCE"
 						AnimationBlendTime="0" />
 				</AnimationState>
+				<AnimationState
+					ParseCondStateType="PARSE_TRANSITION"
+					StateName="TRANS_IntoRubble">
+					<Animation
+						AnimationName="CBPrpagand_D3"
+						AnimationMode="ONCE"
+						AnimationBlendTime="0" />
+				</AnimationState>
 			</ScriptedModelDraw>
 		</Draws>
 		<Behaviors>
@@ -90,25 +105,13 @@
 				id="DefaultAttributeModifierPoolUpdate"/>
 			<SlowDeath
 				id="ModuleTag_Death"
-				SinkDelay="0.05s"
-				SinkRate="99999"
+				SinkDelay="4s"
+				SinkRate="3.0"
 				DestructionDelay="8.0s">
+				<Sound Type="INITIAL" List="HumanFaction_MediumBuilding_DieMS" />
 				<DieMuxData
 					DeathTypes="ALL" />
 			</SlowDeath>
-
-			<CreateObjectDie
-				id="ModuleTag_CreatedDestroyedBuilding"
-				CreationList="OCL_DestroyedCDMTower">
-				<DieMuxData
-					ExemptStatus=""
-					RequiredStatus=""
-					DamageAmountRequired="-1"
-					MinKillerAngle="0.9999999d"
-					MaxKillerAngle="-0.9999999d"
-					DeathTypes="ALL"
-					DeathTypesForbidden="" />
-			</CreateObjectDie>
 			<FXListBehavior
 				id="ModuleTag_FXList">
 				<DieMuxData
